@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789760840" data-alt-lang-url="/docs/reference/api/runtime.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789761265" data-alt-lang-url="/docs/reference/api/runtime.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -285,7 +285,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>response_format</code></td>
 <td><code>dict | JsonSchemaOutput | None</code></td>
 <td><code>None</code></td>
-<td>A bare JSON Schema or normalized <code>JsonSchemaOutput</code> envelope. Verified provider/model combinations use their registered native mapping; otherwise <code>fallback=&quot;auto&quot;</code> may use the verified hidden strict-tool path, while prompt fallback requires explicit <code>fallback=&quot;prompt&quot;</code>. Unsupported or lossy combinations fail closed. The terminal value is parsed and validated locally against the original schema and returned as a Python JSON value. <code>max_validation_retries</code> is <code>0</code> or <code>1</code>. Also forwarded to <code>_call()</code> for subclasses</td>
+<td>A bare JSON Schema or normalized <code>JsonSchemaOutput</code> envelope. Verified provider/model combinations use their registered native mapping; otherwise <code>fallback=&quot;auto&quot;</code> may use the verified hidden strict-tool path, while prompt fallback requires explicit <code>fallback=&quot;prompt&quot;</code>. Unsupported or lossy combinations fail closed. The terminal value is parsed and validated locally against the original schema and returned as a Python JSON value. <code>max_validation_retries</code> is <code>0</code>, <code>1</code>, or <code>2</code> (default <code>2</code>); validation repair and truncated generation share this allowance. Also forwarded to <code>_call()</code> for subclasses</td>
 </tr>
 <tr>
 <td><code>model</code></td>

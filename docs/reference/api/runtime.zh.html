@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789760840" data-alt-lang-url="/docs/reference/api/runtime.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789761265" data-alt-lang-url="/docs/reference/api/runtime.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -285,7 +285,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <td><code>response_format</code></td>
 <td><code>dict | JsonSchemaOutput | None</code></td>
 <td><code>None</code></td>
-<td>裸 JSON Schema 或规范化 <code>JsonSchemaOutput</code> 包络。已验证的 provider/model 组合使用已注册的原生映射；否则 <code>fallback=&quot;auto&quot;</code> 可使用已验证的隐藏 strict-tool 路径，提示词回退必须显式设置 <code>fallback=&quot;prompt&quot;</code>。不支持或有损的组合直接失败。终态按原始 schema 做本地解析与校验，并返回 Python JSON 值；<code>max_validation_retries</code> 只能是 <code>0</code> 或 <code>1</code>。同时仍转发给 <code>_call()</code> 供子类使用</td>
+<td>裸 JSON Schema 或规范化 <code>JsonSchemaOutput</code> 包络。已验证的 provider/model 组合使用已注册的原生映射；否则 <code>fallback=&quot;auto&quot;</code> 可使用已验证的隐藏 strict-tool 路径，提示词回退必须显式设置 <code>fallback=&quot;prompt&quot;</code>。不支持或有损的组合直接失败。终态按原始 schema 做本地解析与校验，并返回 Python JSON 值；<code>max_validation_retries</code> 可以是 <code>0</code>、<code>1</code> 或 <code>2</code>（默认 <code>2</code>）；校验修复与截断重新生成共享此次数。同时仍转发给 <code>_call()</code> 供子类使用</td>
 </tr>
 <tr>
 <td><code>model</code></td>

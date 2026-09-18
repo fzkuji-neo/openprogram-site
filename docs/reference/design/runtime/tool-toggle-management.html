@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789760840" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789761265" data-alt-lang-url="/docs/reference/design/runtime/tool-toggle-management.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -340,6 +340,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html">Runtime outbound URL and SSRF protection</a>
 <a class="navlink" href="/docs/reference/design/runtime/overview.html" data-title-zh="Runtime — 设计理由" data-href-en="/docs/reference/design/runtime/overview.html" data-href-zh="/docs/reference/design/runtime/overview.zh.html">Runtime — Design Rationale</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html">Self-Programming Agentic Workflow — 设计总览</a>
+<a class="navlink" href="/docs/reference/design/runtime/structured-generation-recovery.html">Structured generation recovery</a>
 <a class="navlink active" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具开关 / 工具集管理设计" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Tool toggles and toolset management</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-session-context.html" data-title-zh="统一 session 上下文创建" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html">Unified session context creation</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-frontend-spawn.html">Web frontend subprocess creation</a>
@@ -791,7 +792,7 @@ the unchanged runtime contract</li>
 <li><strong>Provider builtin web_search</strong> (§8): web_search currently uses the &quot;layer in the tool name&quot; path; once builtin support is confirmed per provider, it can be switched at <code>_overlay_web_search</code>.</li>
 <li><strong>New intent dimensions</strong> (restricting tools per channel, say): add a key to the dict intent and handle it in the dict branch of <code>resolve_tools</code> — do not revert to storing an expanded list.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Self-Programming Agentic Workflow — 设计总览</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/unified-session-context.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Unified session context creation</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/structured-generation-recovery.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Structured generation recovery</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/unified-session-context.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Unified session context creation</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#1-how-the-toolset-is-determined">1. How the toolset is determined</a>
