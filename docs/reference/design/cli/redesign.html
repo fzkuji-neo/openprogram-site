@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/cli/redesign.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/cli/redesign.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -470,12 +470,12 @@ validated path.</p>
 is one frozen spec:</p>
 <pre><code class="language-python"><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">SettingSpec</span><span class="p">:</span>
-    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span>                 <span class="c1"># stable id, e.g. &quot;ui.web_port&quot;</span>
-    <span class="n">path</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>    <span class="c1"># dot-path into config.json, e.g. (&quot;ui&quot;,&quot;port&quot;)</span>
-    <span class="n">group</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># &quot;Ports&quot; | &quot;Model&quot; | &quot;Theme&quot; | ...</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span>                 <span class="c1"># stable id, e.g. "ui.web_port"</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>    <span class="c1"># dot-path into config.json, e.g. ("ui","port")</span>
+    <span class="n">group</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># "Ports" | "Model" | "Theme" | ...</span>
     <span class="n">label</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">widget</span><span class="p">:</span> <span class="nb">str</span>              <span class="c1"># &quot;number&quot; | &quot;toggle&quot; | &quot;enum&quot; | &quot;checkbox&quot; | &quot;secret-status&quot;</span>
-    <span class="n">apply</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># &quot;live&quot; | &quot;next-start&quot;</span>
+    <span class="n">widget</span><span class="p">:</span> <span class="nb">str</span>              <span class="c1"># "number" | "toggle" | "enum" | "checkbox" | "secret-status"</span>
+    <span class="n">apply</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># "live" | "next-start"</span>
     <span class="n">choices</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># for enum/checkbox, computed at read time</span>
     <span class="n">validate</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># returns error or None</span>
     <span class="n">secret</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>

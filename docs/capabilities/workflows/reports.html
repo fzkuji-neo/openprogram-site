@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -199,14 +199,14 @@ produce a success draft.</p>
 <h2 id="prepare-several-reports">Prepare several reports<a class="header-anchor" href="#prepare-several-reports">#</a></h2>
 <p>Select <code>weekly_report</code> in Abilities and supply a JSON string as <code>task</code>:</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;personal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;week&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-W37&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;materials&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;week&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-W37&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Experiments remain in progress; next week we will check the results.&quot;</span><span class="p">}]</span>
+<span class="w">  </span><span class="nt">"requests"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"personal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"week"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-W37"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"materials"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p1"</span><span class="p">,</span><span class="w"> </span><span class="nt">"week"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-W37"</span><span class="p">,</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Experiments remain in progress; next week we will check the results."</span><span class="p">}]</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;tencent&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;week&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-W37&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;materials&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;week&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-W37&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Tencent evaluation is still in progress. No final performance conclusion is available.&quot;</span><span class="p">}]</span>
+<span class="w">    </span><span class="nt">"tencent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"week"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-W37"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"materials"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"t1"</span><span class="p">,</span><span class="w"> </span><span class="nt">"week"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-W37"</span><span class="p">,</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tencent evaluation is still in progress. No final performance conclusion is available."</span><span class="p">}]</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>

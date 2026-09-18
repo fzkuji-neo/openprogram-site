@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/ui/state-layer.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/ui/state-layer.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -745,7 +745,7 @@ badges, both subscribed to that one boolean. Clicking either badge opens
 <strong>both</strong> popovers simultaneously, and closing one closes both.</p>
 <p>The keyed-global answer is to stop storing &quot;is it open&quot; and store <strong>which
 session it is open for</strong>:</p>
-<pre><code class="language-ts"><span class="cm">/** /context floating popover: holds &quot;which session&#39;s panel is open&quot;</span>
+<pre><code class="language-ts"><span class="cm">/** /context floating popover: holds "which session's panel is open"</span>
 <span class="cm"> *  (null = closed). In a split view the two composers each render a</span>
 <span class="cm"> *  badge, so keying by session is what stops both popping at once. */</span>
 <span class="nx">contextPanelFor</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
@@ -771,7 +771,7 @@ both copies, and every session switch has to swap the mirror over
 <p>A mirror also leaks into components, which must branch on whether they are
 bound to an explicit session (<code>apps/web/components/chat/composer/index.tsx:166</code>):</p>
 <pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useSessionStore</span><span class="p">((</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span>
-<span class="w">  </span><span class="nx">bound</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">composerInput</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">composerDrafts</span><span class="p">[</span><span class="nx">bound</span><span class="p">]</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="nx">bound</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">composerInput</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">composerDrafts</span><span class="p">[</span><span class="nx">bound</span><span class="p">]</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">""</span><span class="p">),</span>
 <span class="p">);</span>
 </code></pre>
 <p>The same three-line ternary repeats for <code>fast</code> and <code>unattended</code>, and again

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/mcp.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/mcp.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -143,7 +143,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="quick-start">Quick start<a class="header-anchor" href="#quick-start">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>mcp<span class="w"> </span>add<span class="w"> </span>drawio<span class="w"> </span>npx<span class="w"> </span>-y<span class="w"> </span>@drawio/mcp<span class="w">     </span><span class="c1"># add a stdio server, effective immediately</span>
 openprogram<span class="w"> </span>mcp<span class="w"> </span>list<span class="w">                              </span><span class="c1"># status of every configured server</span>
-openprogram<span class="w"> </span>mcp<span class="w"> </span>show<span class="w"> </span>drawio<span class="w">                       </span><span class="c1"># that server&#39;s tools and full schemas</span>
+openprogram<span class="w"> </span>mcp<span class="w"> </span>show<span class="w"> </span>drawio<span class="w">                       </span><span class="c1"># that server's tools and full schemas</span>
 </code></pre>
 <p><code>mcp add</code> options: <code>--env KEY=VALUE</code> (inject an environment variable into the subprocess, repeatable), <code>--timeout</code> (startup and per-call timeout in seconds), <code>--disabled</code> (write the config without starting the server). The <code>name</code> becomes the prefix (<code>&lt;name&gt;__&lt;tool&gt;</code>) for all of that server's tools.</p>
 <p>All subcommands:</p>
@@ -155,7 +155,7 @@ openprogram<span class="w"> </span>mcp<span class="w"> </span>list<span class="w
 shell environment. Run it once, copy that line, and bind it to the serving
 process before <code>serve</code>:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>mcp<span class="w"> </span>token<span class="w"> </span>create
-<span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_MCP_TOKEN</span><span class="o">=</span><span class="s2">&quot;&lt;paste the token printed above&gt;&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_MCP_TOKEN</span><span class="o">=</span><span class="s2">"&lt;paste the token printed above&gt;"</span>
 openprogram<span class="w"> </span>mcp<span class="w"> </span>serve
 </code></pre>
 <p>If the token already exists, reuse the token you saved instead of running
@@ -170,19 +170,19 @@ openprogram<span class="w"> </span>mcp<span class="w"> </span>serve
 <h2 id="where-the-config-lives">Where the config lives<a class="header-anchor" href="#where-the-config-lives">#</a></h2>
 <p><code>~/.openprogram/mcp_servers.json</code> (with <code>--profile &lt;name&gt;</code>, <code>~/.openprogram-&lt;name&gt;/mcp_servers.json</code>). Format:</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;drawio&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;local&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;npx&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-y&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;@drawio/mcp&quot;</span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">      </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;timeout_seconds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span>
+<span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"drawio"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"local"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"npx"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-y"</span><span class="p">,</span><span class="w"> </span><span class="s2">"@drawio/mcp"</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">      </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;linear&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://mcp.linear.app/mcp&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;auth&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;oauth&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;client_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OpenProgram&quot;</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="nt">"linear"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://mcp.linear.app/mcp"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"auth"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oauth"</span><span class="p">,</span><span class="w"> </span><span class="nt">"client_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OpenProgram"</span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>

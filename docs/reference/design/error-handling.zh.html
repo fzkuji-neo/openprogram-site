@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/error-handling.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/error-handling.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -467,15 +467,15 @@ token 抛 <code>RuntimeError</code>。写出这个操作实际会抛的东西，
 <p>让持久写入的静默丢失变得可见：</p>
 <pre><code class="language-python"><span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
     <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-        <span class="s2">&quot;index.json not saved for session </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="s2">"index.json not saved for session </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre>
 <p>把原先掩盖缺陷的宽 catch 收窄：</p>
 <pre><code class="language-python"><span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
     <span class="c1"># ContextVar.reset raises ValueError for a token minted in another</span>
     <span class="c1"># context and RuntimeError for one already spent. Narrowing to only</span>
-    <span class="c1"># the first lets a cancelled turn&#39;s spent token escape and replace</span>
+    <span class="c1"># the first lets a cancelled turn's spent token escape and replace</span>
     <span class="c1"># the CancelledError.</span>
-    <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;context var token already spent or foreign&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"context var token already spent or foreign"</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre>
 <p>只有先弄清全集，收窄才是对的。去查这个调用实际会抛什么：上面的 <code>ContextVar.reset</code> 抛
 两种毫不相关的类型，只写其中一种的 handler，会把本来被吞掉的失败变成跑出去的失败。</p>
@@ -483,7 +483,7 @@ token 抛 <code>RuntimeError</code>。写出这个操作实际会抛的东西，
 <pre><code class="language-python"><span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
     <span class="c1"># Memory is optional: an unavailable provider degrades to no memory</span>
     <span class="c1"># block, never a failed turn.</span>
-    <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;memory system prompt block unavailable&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"memory system prompt block unavailable"</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre>
 <p>如果被保护的操作本身已经吞掉自己的错误，或者 catch 的是代码根本抛不出来的东西，这类
 handler 直接删掉，而不是加注释。</p>

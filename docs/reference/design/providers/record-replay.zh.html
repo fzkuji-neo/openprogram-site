@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/providers/record-replay.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/providers/record-replay.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -444,7 +444,7 @@ built-in 注册失败使 runtime 停在 FAILED，每个调用方看到同一稳�
 替换为录制事件来源。它不恢复历史 Session、不重放工具副作用、不回滚文件，也不定义任务步骤。</p>
 <h2 id="二录制文件格式">二、录制文件格式<a class="header-anchor" href="#二录制文件格式">#</a></h2>
 <p>JSONL,一行一个 JSON 对象,按事件发生顺序写。首行是头:</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;header&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;format_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">}</span>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"header"</span><span class="p">,</span><span class="w"> </span><span class="nt">"format_version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">}</span>
 </code></pre>
 <p><code>format_version</code> 是一个整数,定义在 <code>openprogram/providers/recording.py</code> 的 <code>RECORDING_FORMAT_VERSION</code>。回放按相等
 比较,不等就拒绝,这样格式改动之前录的录制文件会被拒掉而不是被误读。request/event/call_end 的必需字段或

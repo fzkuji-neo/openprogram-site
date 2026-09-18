@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/event-layer.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/event-layer.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -489,8 +489,8 @@ store's plain logging). To &quot;do something at a certain moment&quot;, you fir
     <span class="n">ts</span><span class="p">:</span> <span class="nb">float</span>        <span class="c1"># when it happened</span>
     <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>        <span class="c1"># what kind of event, see §2</span>
     <span class="n">origin</span><span class="p">:</span> <span class="nb">str</span>      <span class="c1"># who triggered it: user / agent / tool / system / proactive</span>
-    <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span>    <span class="c1"># the event&#39;s content (command, file path, which account got rate-limited, ...)</span>
-    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span>   <span class="c1"># open pocket: {&quot;session&quot;:..., &quot;turn&quot;:..., &quot;lane&quot;:...}, fill in only when needed</span>
+    <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span>    <span class="c1"># the event's content (command, file path, which account got rate-limited, ...)</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span>   <span class="c1"># open pocket: {"session":..., "turn":..., "lane":...}, fill in only when needed</span>
 </code></pre>
 <p>Why session/turn go into the pocket rather than being fixed fields: they are not intrinsic properties of an event, they are
 externally attached correlations, and for half the events (auth, channel) they have no meaning at all. An open dict also lets new
@@ -694,9 +694,9 @@ deny reason reaches the actor — for <code>tool.before</code> it becomes the mo
 <p>Shell subscribers come from the top-level <code>hooks</code> key in config.json
 (registered as the <code>hooks</code> setting in <code>config_schema.py</code>):</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;hooks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;turn.stop&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python check_done.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">}],</span>
-<span class="w">    </span><span class="nt">&quot;turn.end&quot;</span><span class="p">:</span><span class="w">  </span><span class="p">[{</span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;notify-send &#39;turn finished&#39;&quot;</span><span class="p">}]</span>
+<span class="w">  </span><span class="nt">"hooks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"turn.stop"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python check_done.py"</span><span class="p">,</span><span class="w"> </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">}],</span>
+<span class="w">    </span><span class="nt">"turn.end"</span><span class="p">:</span><span class="w">  </span><span class="p">[{</span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"notify-send 'turn finished'"</span><span class="p">}]</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre>

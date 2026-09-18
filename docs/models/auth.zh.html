@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/models/auth.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/models/auth.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,7 +86,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="凭据的几种来源">凭据的几种来源<a class="header-anchor" href="#凭据的几种来源">#</a></h2>
 <h3 id="api-key-登录">API key 登录<a class="header-anchor" href="#api-key-登录">#</a></h3>
 <pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>deepseek<span class="w">                       </span><span class="c1"># 交互式输入</span>
-<span class="nb">printf</span><span class="w"> </span>%s<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>deepseek<span class="w"> </span>--api-key-stdin<span class="w">   </span><span class="c1"># 脚本</span>
+<span class="nb">printf</span><span class="w"> </span>%s<span class="w"> </span><span class="s2">"</span><span class="nv">$KEY</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>deepseek<span class="w"> </span>--api-key-stdin<span class="w">   </span><span class="c1"># 脚本</span>
 </code></pre>
 <p><code>--api-key</code> 也可以直接传值，但会留在 shell 历史里，脚本优先用 <code>--api-key-stdin</code>。</p>
 <h3 id="oauth-登录">OAuth 登录<a class="header-anchor" href="#oauth-登录">#</a></h3>

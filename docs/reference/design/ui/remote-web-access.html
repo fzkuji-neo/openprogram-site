@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -993,11 +993,11 @@ upgrade denial, not an accepted socket followed by an application close frame.</
 <code>&lt;state-dir&gt;/config.json</code>. <code>allowed_origins</code> entries are full canonical
 origins:</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;web&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;allowed_origins&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="s2">&quot;https://agent.example.com&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="s2">&quot;http://192.168.1.20:18100&quot;</span>
+<span class="w">  </span><span class="nt">"web"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"allowed_origins"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">"https://agent.example.com"</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">"http://192.168.1.20:18100"</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
@@ -1124,16 +1124,16 @@ HTTPS, so a missing proxy header cannot create an insecure owner cookie. The
 proxy does not replace the instance token.</p>
 <p>The OpenProgram configuration for a same-host proxy remains loopback:</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;web&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;allowed_origins&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;https://agent.example.com&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="nt">"web"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"allowed_origins"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"https://agent.example.com"</span><span class="p">]</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 <p>Minimal nginx shape:</p>
 <pre><code class="language-nginx"><span class="k">map</span><span class="w"> </span><span class="nv">$http_upgrade</span><span class="w"> </span><span class="nv">$connection_upgrade</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kn">default</span><span class="w"> </span><span class="s">upgrade</span><span class="p">;</span>
-<span class="w">    </span><span class="kn">&#39;&#39;</span><span class="w">      </span><span class="s">close</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">''</span><span class="w">      </span><span class="s">close</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="k">server</span><span class="w"> </span><span class="p">{</span>
@@ -1147,9 +1147,9 @@ proxy does not replace the instance token.</p>
 <span class="w">        </span><span class="kn">proxy_http_version</span><span class="w"> </span><span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
 <span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$http_host</span><span class="p">;</span>
 <span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Proto</span><span class="w"> </span><span class="nv">$scheme</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Forwarded</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Host</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Forwarded</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Host</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
+<span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
 <span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Upgrade</span><span class="w"> </span><span class="nv">$http_upgrade</span><span class="p">;</span>
 <span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Connection</span><span class="w"> </span><span class="nv">$connection_upgrade</span><span class="p">;</span>
 <span class="w">        </span><span class="kn">proxy_buffering</span><span class="w"> </span><span class="no">off</span><span class="p">;</span>
@@ -1158,9 +1158,9 @@ proxy does not replace the instance token.</p>
 <span class="p">}</span>
 </code></pre>
 <p>Minimal Caddy shape:</p>
-<pre><code class="language-caddyfile">agent.example.com {
-    reverse_proxy 127.0.0.1:18100
-}
+<pre><code class="language-caddyfile">agent.example.com<span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">reverse_proxy</span><span class="w"> </span>127.0.0.1:18100
+<span class="p">}</span>
 </code></pre>
 <p>Caddy manages certificates only because the owner selected Caddy; OpenProgram
 does not call its certificate APIs. In both examples the configured origin is
@@ -1180,9 +1180,9 @@ origin applies. If the local side uses a different port, that exact
 <p>For a direct LAN or VPN address, the owner explicitly configures both bind and
 origin:</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;web&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;allowed_origins&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;http://192.168.1.20:18100&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="nt">"web"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"allowed_origins"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"http://192.168.1.20:18100"</span><span class="p">]</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre>

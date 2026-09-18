@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/workflows/research-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/workflows/research-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -145,7 +145,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="usage">Usage<a class="header-anchor" href="#usage">#</a></h2>
 <p>The entry function is <strong><code>research_agent</code></strong>, registered as a tool (<code>as_tool=True</code>, toolset <code>research</code>). In chat, just describe a research task to trigger it, e.g. &quot;Survey recent work on LLM uncertainty&quot;.</p>
 <p>Run it directly from the command line:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;Survey recent work on LLM uncertainty&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Survey recent work on LLM uncertainty"</span>
 </code></pre>
 <p>Internally it is a two-level controller. At the first level, the LLM chooses which research stage to enter (literature / idea / experiment / writing / review / rebuttal / presentation / theory / knowledge / project; stages have dependency ordering, and missing prerequisites are filled in first). At the second level, within a stage, the LLM picks and runs that stage's functions one by one. About 89 functions across 10 stages; each function is an ordinary Python file whose docstring is the prompt, directly editable.</p>
 <p>Hidden entry parameters (available to code / CLI callers):</p>

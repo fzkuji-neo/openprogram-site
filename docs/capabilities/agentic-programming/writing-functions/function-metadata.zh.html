@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -361,9 +361,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>content</code> 撰写规则：</p>
 <ul>
 <li>每一项都是形如 <code>{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: ...}</code> 或 <code>{&quot;type&quot;: &quot;image&quot;, &quot;path&quot;: ...}</code> 的字典。</li>
-<li>把这次 LLM 调用的指令<em>与</em>数据都嵌进去。示例：<pre><code class="language-python"><span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Classify the sentiment of the following text. Reply with exactly one &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;word: positive, negative, or neutral.</span><span class="se">\n\n</span><span class="s2">Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+<li>把这次 LLM 调用的指令<em>与</em>数据都嵌进去。示例：<pre><code class="language-python"><span class="n">llm</span><span class="p">([{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"Classify the sentiment of the following text. Reply with exactly one "</span>
+    <span class="sa">f</span><span class="s2">"word: positive, negative, or neutral.</span><span class="se">\n\n</span><span class="s2">Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)}])</span>
 </code></pre>
 </li>
@@ -374,33 +374,33 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h3 id="推荐写法新代码必须采用">推荐写法（新代码必须采用）<a class="header-anchor" href="#推荐写法新代码必须采用">#</a></h3>
 <p>最小示例：</p>
 <pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;text&quot;</span><span class="p">:</span>  <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Text to polish.&quot;</span><span class="p">},</span>
-    <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Output style.&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;academic&quot;</span><span class="p">,</span> <span class="s2">&quot;casual&quot;</span><span class="p">]},</span>
+    <span class="s2">"text"</span><span class="p">:</span>  <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Text to polish."</span><span class="p">},</span>
+    <span class="s2">"style"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Output style."</span><span class="p">,</span> <span class="s2">"options"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"academic"</span><span class="p">,</span> <span class="s2">"casual"</span><span class="p">]},</span>
 <span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Polish a text in the given style.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Polish a text in the given style."""</span>
     <span class="o">...</span>
 </code></pre>
 <p>更完整的示例，演练了更多元数据特性（placeholder、multiline、hidden、混合类型）：</p>
 <pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;essay&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Essay to review.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Paste the essay text here...&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;multiline&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">"essay"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Essay to review."</span><span class="p">,</span>
+        <span class="s2">"placeholder"</span><span class="p">:</span> <span class="s2">"Paste the essay text here..."</span><span class="p">,</span>
+        <span class="s2">"multiline"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s2">&quot;rubric_id&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Which rubric to apply.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ielts_writing&quot;</span><span class="p">,</span> <span class="s2">&quot;toefl_writing&quot;</span><span class="p">,</span> <span class="s2">&quot;gre_argument&quot;</span><span class="p">],</span>
+    <span class="s2">"rubric_id"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Which rubric to apply."</span><span class="p">,</span>
+        <span class="s2">"options"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"ielts_writing"</span><span class="p">,</span> <span class="s2">"toefl_writing"</span><span class="p">,</span> <span class="s2">"gre_argument"</span><span class="p">],</span>
     <span class="p">},</span>
-    <span class="s2">&quot;max_score&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Upper bound for the numeric score.&quot;</span><span class="p">,</span>
+    <span class="s2">"max_score"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Upper bound for the numeric score."</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s2">&quot;show_rubric_internals&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Include rubric breakdown in the output.&quot;</span><span class="p">,</span>
+    <span class="s2">"show_rubric_internals"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Include rubric breakdown in the output."</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s2">&quot;session_id&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"session_id"</span><span class="p">:</span> <span class="p">{</span>
         <span class="c1"># 由系统提供；LLM 看不到它。</span>
-        <span class="s2">&quot;hidden&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"hidden"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">review_essay</span><span class="p">(</span>
@@ -411,14 +411,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>           <span class="c1"># 由 Python 通过上下文填充，而非 LLM</span>
     <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">,</span>          <span class="c1"># 自动注入</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Score an essay against a named rubric and return a structured report.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Score an essay against a named rubric and return a structured report."""</span>
     <span class="o">...</span>
 </code></pre>
 <p>docstring 只保留一行摘要——<strong>没有 <code>Args:</code> 段落，也没有 <code>Returns:</code> 段落</strong>。如果返回值字段的含义对下游 LLM 驱动的调用很重要，就用结构化返回类型（例如 <code>TypedDict</code> 或 dataclass）来编码它，以便消费方能够反射它；不要在 docstring 段落里重复这套 schema。</p>
 <h3 id="旧写法仍受支持">旧写法（仍受支持）<a class="header-anchor" href="#旧写法仍受支持">#</a></h3>
 <pre><code class="language-python"><span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Polish a text in the given style.</span>
+<span class="w">    </span><span class="sd">"""Polish a text in the given style.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text: Text to polish.</span>
@@ -427,7 +427,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Polished text.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="o">...</span>
 </code></pre>
 <p>旧函数仍然能运行，但 <code>Args:</code> 段落是死文本——<strong>框架中任何地方都不存在 docstring-<code>Args:</code> 解析器</strong>（见 §10）。<code>_build_agentic_tool_spec</code> 的回落顺序如下：</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/api/providers.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/api/providers.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -160,8 +160,8 @@ npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </s
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span><span class="p">,</span> <span class="n">detect_provider</span><span class="p">,</span> <span class="n">check_providers</span>
 
 <span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">()</span>                                   <span class="c1"># 自动检测最优可用 provider</span>
-<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;anthropic&quot;</span><span class="p">)</span>               <span class="c1"># 显式 provider,用它的默认模型</span>
-<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;openai-codex&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-5.5&quot;</span><span class="p">)</span>
+<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">)</span>               <span class="c1"># 显式 provider,用它的默认模型</span>
+<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"openai-codex"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-5.5"</span><span class="p">)</span>
 </code></pre>
 <h3 id="create_runtimeprovidernone-modelnone-kwargs"><code>create_runtime(provider=None, model=None, **kwargs)</code><a class="header-anchor" href="#create_runtimeprovidernone-modelnone-kwargs">#</a></h3>
 <p>返回可直接使用的 <code>Runtime</code>。<code>provider=None</code>(或 <code>&quot;auto&quot;</code>)会跑 <code>detect_provider()</code>。下面六个 provider 里,三个订阅/CLI 凭据型由专属 <code>Runtime</code> 子类支撑(<code>create_runtime</code> 的实现细节);三个 API-key 型就是基类 <code>Runtime</code> 本身——<code>create_runtime</code> 从凭据库解析 key 后构建 <code>Runtime(&quot;&lt;命名空间&gt;:&lt;model&gt;&quot;, api_key=...)</code>。<strong>其它任何 provider 名</strong>(deepseek、groq、openrouter、minimax、kimi 以及整个社区列表)经模型注册表走基类 <code>Runtime(&quot;provider:model&quot;, ...)</code>——与 chat dispatcher 同一条路。每个 runtime 都带权威的 <code>provider_id</code> 属性(由模型命名空间推导,订阅类自行设置)。<code>**kwargs</code> 转发给 runtime 构造函数。</p>
@@ -232,7 +232,7 @@ npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </s
 <p>Anthropic Messages API,经 provider 层(流式、工具循环、DAG 记录全包)。<code>create_runtime</code> 解析凭据后直接返回基类 <code>Runtime(&quot;anthropic:&lt;model&gt;&quot;)</code>,<code>provider_id=&quot;anthropic&quot;</code>——没有专属类。</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
-<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;anthropic&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-6&quot;</span><span class="p">)</span>
+<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"sk-ant-..."</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-sonnet-4-6"</span><span class="p">)</span>
 </code></pre>
 <h3 id="选项">选项<a class="header-anchor" href="#选项">#</a></h3>
 <table>
@@ -269,7 +269,7 @@ npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </s
 <hr />
 <h2 id="openai">openai<a class="header-anchor" href="#openai">#</a></h2>
 <p>OpenAI Responses API,经 provider 层。<code>create_runtime</code> 解析 API key 后直接返回基类 <code>Runtime(&quot;openai:&lt;model&gt;&quot;)</code>,<code>provider_id=&quot;openai&quot;</code>——没有专属类。</p>
-<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;openai&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;sk-...&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4.1&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"openai"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"sk-..."</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4.1"</span><span class="p">)</span>
 </code></pre>
 <h3 id="选项-1">选项<a class="header-anchor" href="#选项-1">#</a></h3>
 <table>
@@ -306,7 +306,7 @@ npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </s
 <hr />
 <h2 id="gemini">gemini<a class="header-anchor" href="#gemini">#</a></h2>
 <p>Google Gemini Generative Language API,经 provider 层。<code>create_runtime</code> 解析 API key 后直接返回基类 <code>Runtime(&quot;google:&lt;model&gt;&quot;)</code>,<code>provider_id=&quot;google&quot;</code>——没有专属类;<code>gemini</code> provider 的模型走 <code>google</code> 注册表命名空间。</p>
-<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;gemini&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gemini-2.5-flash&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"gemini"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"..."</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gemini-2.5-flash"</span><span class="p">)</span>
 </code></pre>
 <h3 id="选项-2">选项<a class="header-anchor" href="#选项-2">#</a></h3>
 <table>
@@ -342,7 +342,7 @@ npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </s
 <hr />
 <h2 id="claude-code">claude-code<a class="header-anchor" href="#claude-code">#</a></h2>
 <p>用 <strong>Claude 订阅</strong> 跑 Claude——带订阅的 OAuth token 直连 <code>api.anthropic.com</code>(Bearer 认证 + Claude Code 身份 headers)。不走 API key 计费;token 每次调用现取,CLI 侧轮换自动跟上。由 <code>ClaudeCodeRuntime</code> 支撑。</p>
-<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;claude-code&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-sonnet-4"</span><span class="p">)</span>
 </code></pre>
 <p>准备：用 Claude Code CLI 登录一次（<code>claude login</code>）让 OAuth token 可被收编，或用统一账号流程执行 <code>openprogram providers login claude-code</code>。</p>
 <h3 id="选项转发给-runtime">选项(转发给 runtime)<a class="header-anchor" href="#选项转发给-runtime">#</a></h3>
@@ -380,7 +380,7 @@ npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </s
 <hr />
 <h2 id="openai-codex">openai-codex<a class="header-anchor" href="#openai-codex">#</a></h2>
 <p>ChatGPT / Codex <strong>订阅</strong> runtime。读取从 Codex CLI 的 <code>~/.codex/auth.json</code> 收编的 OAuth 凭据,访问 ChatGPT Responses 后端。刷新后的 token 会镜像回去,让 Codex CLI 保持同步。由 <code>OpenAICodexRuntime</code> 支撑。</p>
-<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;openai-codex&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-5.5&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"openai-codex"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-5.5"</span><span class="p">)</span>
 </code></pre>
 <p>准备:</p>
 <pre><code class="language-bash">npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@openai/codex
@@ -421,7 +421,7 @@ codex<span class="w"> </span>login<span class="w">          </span><span class="
 <hr />
 <h2 id="gemini-cli">gemini-cli<a class="header-anchor" href="#gemini-cli">#</a></h2>
 <p>用 <strong>Google 账号</strong>(Gemini CLI OAuth)跑 Gemini。复用 <code>~/.gemini/oauth_creds.json</code>,以 HTTP 直连 Cloud Code Assist 后端——不起子进程。由 <code>GeminiCLIRuntime</code> 支撑。</p>
-<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;gemini-cli&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gemini-2.5-flash&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"gemini-cli"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gemini-2.5-flash"</span><span class="p">)</span>
 </code></pre>
 <p>准备:</p>
 <pre><code class="language-bash">npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>@google/gemini-cli
@@ -463,11 +463,11 @@ gemini<span class="w">               </span><span class="c1"># 首次运行完�
 <h2 id="其它所有-provider">其它所有 provider<a class="header-anchor" href="#其它所有-provider">#</a></h2>
 <p>其余 provider——deepseek、groq、openrouter、minimax、kimi 以及全目录——经模型注册表使用:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runtime</span>
-<span class="n">rt</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;deepseek:deepseek-chat&quot;</span><span class="p">)</span>
+<span class="n">rt</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"deepseek:deepseek-chat"</span><span class="p">)</span>
 
 <span class="c1"># 或者等价地:</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
-<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;deepseek&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;deepseek-chat&quot;</span><span class="p">)</span>
+<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"deepseek"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"deepseek-chat"</span><span class="p">)</span>
 </code></pre>
 <p><code>create_runtime(provider=...)</code> 不给 model 时取该 provider 第一个已启用的模型;该 provider 还没有已注册模型时抛 <code>ValueError</code>(先在 Settings → Providers 或 <code>openprogram providers available &lt;provider&gt;</code> 启用一些)。</p>
 <hr />
@@ -476,16 +476,16 @@ gemini<span class="w">               </span><span class="c1"># 首次运行完�
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runtime</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">MyRuntime</span><span class="p">(</span><span class="n">Runtime</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;my-model&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"my-model"</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="n">api_key</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"default"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># 1. 把 content 块转成你的 API 格式</span>
         <span class="c1"># 2. 调用 API</span>
         <span class="c1"># 3. 返回 str</span>
-        <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;text&quot;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">my_api_call</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"text"</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">my_api_call</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
 </code></pre>
 <p>关键点:<code>_call()</code> 接收 <code>content: list[dict]</code>,返回 <code>str</code>。就这么简单。(给基类 <code>Runtime</code> 传 <code>call=fn</code> 不用子类也能达到同样效果。)</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/runtime.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Runtime</span></a><a class="pn-link pn-next" href="/docs/reference/api/agentic-function.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">agentic_function</span></a></div></article></main>

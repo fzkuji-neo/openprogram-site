@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/interfaces/acp.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/interfaces/acp.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,12 +86,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="配置-zed">配置 Zed<a class="header-anchor" href="#配置-zed">#</a></h2>
 <p>打开 Zed 的 <code>settings.json</code>（<code>cmd-shift-p</code> → <code>zed: open settings file</code>），在 <code>agent_servers</code> 下加一项：</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;agent_servers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;OpenProgram&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;custom&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openprogram&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;acp&quot;</span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;env&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">  </span><span class="nt">"agent_servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"OpenProgram"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openprogram"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"acp"</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
@@ -102,7 +102,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><code>--agent &lt;id&gt;</code> 用指定 agent 跑会话（默认 <code>main</code>），编辑器里的线程可以有一套跟终端会话不同的系统提示词和工具集。</li>
 <li><code>--permission &lt;mode&gt;</code> 设定工具调用的权限档位：<code>ask</code>（默认）、<code>acceptEdits</code>、<code>plan</code>、<code>auto</code>、<code>bypass</code>。见<a href="/docs/capabilities/tools.zh.html">权限</a>。</li>
 </ul>
-<pre><code class="language-json"><span class="nt">&quot;args&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;acp&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--agent&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;coding&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;--permission&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;acceptEdits&quot;</span><span class="p">]</span>
+<pre><code class="language-json"><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"acp"</span><span class="p">,</span><span class="w"> </span><span class="s2">"--agent"</span><span class="p">,</span><span class="w"> </span><span class="s2">"coding"</span><span class="p">,</span><span class="w"> </span><span class="s2">"--permission"</span><span class="p">,</span><span class="w"> </span><span class="s2">"acceptEdits"</span><span class="p">]</span>
 </code></pre>
 <h2 id="在编辑器里能用到什么">在编辑器里能用到什么<a class="header-anchor" href="#在编辑器里能用到什么">#</a></h2>
 <p><strong>流式回复。</strong> 文字逐字到达；模型有推理输出时，思考过程走单独一条流。</p>

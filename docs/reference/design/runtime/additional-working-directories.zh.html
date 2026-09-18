@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -482,16 +482,16 @@ _path_is_safe → check_path_safety(path, dirs)   permissions/policy.py → prog
 <p>围栏的工作目录集在 <code>openprogram/agent/permissions/policy.py</code> 组装：</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.worktree.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">current_worktree_path</span>
 <span class="n">work_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">current_worktree_path</span><span class="p">()</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
-             <span class="o">*</span><span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;additional_working_dirs&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+             <span class="o">*</span><span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"additional_working_dirs"</span><span class="p">,</span> <span class="p">[])]</span>
 </code></pre>
 <p>基准取 <code>current_worktree_path()</code>（dispatcher 每 turn 把真实 cwd——worktree 或项目路径——绑进这个 ContextVar，见 <code>dispatcher/__init__.py:387-403</code>），进程 <code>getcwd</code> 只作回落。这与 system prompt 的 cwd 同源（<code>_model_tools.py:322</code>）——模型被告知的 cwd 和围栏认可的 cwd 永远是同一个目录。若二者不一致，模型改项目内文件会被围栏判为&quot;工作区外&quot;，acceptEdits 不放行、反复弹审批。<code>worktree.context</code> 只依赖 stdlib，无循环 import。</p>
 <h3 id="32-后端ws-action-set_working_dirs">3.2 后端：ws action <code>set_working_dirs</code><a class="header-anchor" href="#32-后端ws-action-set_working_dirs">#</a></h3>
 <p>落 <code>openprogram/webui/ws_actions/session.py</code>（与其它会话配置 action 同居）。<strong>整表替换</strong>语义（前端算好增删后发完整列表）——幂等、无&quot;重复添加/删不存在&quot;的边界分支：</p>
 <pre><code class="language-python"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_set_working_dirs</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;整表替换会话的额外工作目录。dirs 逐条 expanduser + 必须是存在的目录,</span>
-<span class="sd">    非法条目整帧拒绝(error 帧带原因),不做部分写入。&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""整表替换会话的额外工作目录。dirs 逐条 expanduser + 必须是存在的目录,</span>
+<span class="sd">    非法条目整帧拒绝(error 帧带原因),不做部分写入。"""</span>
     <span class="c1"># 校验通过 → save_session_run_config(session_id, agent_id=..., additional_working_dirs=dirs)</span>
-    <span class="c1"># → 广播 {&quot;type&quot;: &quot;working_dirs&quot;, &quot;data&quot;: {&quot;session_id&quot;, &quot;dirs&quot;}}</span>
+    <span class="c1"># → 广播 {"type": "working_dirs", "data": {"session_id", "dirs"}}</span>
 </code></pre>
 <p>校验规则：<code>Path(d).expanduser()</code> 后 <code>is_dir()</code>；存的是 expanduser 后的绝对路径字符串（不 realpath——用户看到自己选的路径，realpath 归一交给 <code>check_path_safety</code> 消费端，它本来就做）。</p>
 <h3 id="33-后端session_loaded-回带-首条消息携带">3.3 后端：<code>session_loaded</code> 回带 + 首条消息携带<a class="header-anchor" href="#33-后端session_loaded-回带-首条消息携带">#</a></h3>

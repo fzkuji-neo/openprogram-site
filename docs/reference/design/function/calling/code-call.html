@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/function/calling/code-call.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/function/calling/code-call.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -431,7 +431,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="example-no-exec-pure-chaining">Example: No exec, Pure Chaining<a class="header-anchor" href="#example-no-exec-pure-chaining">#</a></h2>
 <pre><code class="language-python"><span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">research_pipeline</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the full research flow: survey → find gap → generate ideas.</span>
+<span class="w">    </span><span class="sd">"""Run the full research flow: survey → find gap → generate ideas.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        task: Research topic.</span>
@@ -439,17 +439,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A result dict containing survey, gaps, and ideas.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_ideas</span><span class="p">(</span><span class="n">gaps</span><span class="o">=</span><span class="n">gaps</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;survey&quot;</span><span class="p">:</span> <span class="n">survey</span><span class="p">,</span> <span class="s2">&quot;gaps&quot;</span><span class="p">:</span> <span class="n">gaps</span><span class="p">,</span> <span class="s2">&quot;ideas&quot;</span><span class="p">:</span> <span class="n">ideas</span><span class="p">}</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"survey"</span><span class="p">:</span> <span class="n">survey</span><span class="p">,</span> <span class="s2">"gaps"</span><span class="p">:</span> <span class="n">gaps</span><span class="p">,</span> <span class="s2">"ideas"</span><span class="p">:</span> <span class="n">ideas</span><span class="p">}</span>
 </code></pre>
 <h2 id="example-calling-exec-once-to-summarize">Example: Calling exec Once to Summarize<a class="header-anchor" href="#example-calling-exec-once-to-summarize">#</a></h2>
 <pre><code class="language-python"><span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">research_pipeline</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the full research flow and summarize the result.</span>
+<span class="w">    </span><span class="sd">"""Run the full research flow and summarize the result.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        task: Research topic.</span>
@@ -457,16 +457,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The consolidated research summary.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_ideas</span><span class="p">(</span><span class="n">gaps</span><span class="o">=</span><span class="n">gaps</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Survey:</span><span class="se">\n</span><span class="si">{</span><span class="n">survey</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Gaps:</span><span class="se">\n</span><span class="si">{</span><span class="n">gaps</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Ideas:</span><span class="se">\n</span><span class="si">{</span><span class="n">ideas</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Survey:</span><span class="se">\n</span><span class="si">{</span><span class="n">survey</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"Gaps:</span><span class="se">\n</span><span class="si">{</span><span class="n">gaps</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"Ideas:</span><span class="se">\n</span><span class="si">{</span><span class="n">ideas</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)},</span>
     <span class="p">])</span>
 </code></pre>
@@ -487,14 +487,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="c1"># Insert ordinary Python processing in between</span>
 <span class="n">key_points</span> <span class="o">=</span> <span class="n">extract_key_points</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span>
-<span class="n">filtered</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">key_points</span> <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="s2">&quot;relevance&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">filtered</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">key_points</span> <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="s2">"relevance"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]</span>
 
-<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">),</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">),</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 </code></pre>
 <h2 id="error-handling">Error Handling<a class="header-anchor" href="#error-handling">#</a></h2>
 <pre><code class="language-python"><span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">survey</span> <span class="ow">or</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">survey</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Survey failed&quot;</span><span class="p">,</span> <span class="s2">&quot;survey&quot;</span><span class="p">:</span> <span class="n">survey</span><span class="p">}</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">survey</span> <span class="ow">or</span> <span class="s2">"error"</span> <span class="ow">in</span> <span class="n">survey</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Survey failed"</span><span class="p">,</span> <span class="s2">"survey"</span><span class="p">:</span> <span class="n">survey</span><span class="p">}</span>
 
 <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 </code></pre>

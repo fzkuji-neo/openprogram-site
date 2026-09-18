@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/workflows/wiki-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/workflows/wiki-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,7 +152,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>&quot;find pages about distillation&quot;</li>
 </ul>
 <p>命令行直接运行：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>wiki_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;Ingest the notes above into the wiki&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>wiki_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Ingest the notes above into the wiki"</span>
 </code></pre>
 <p>函数签名 <code>wiki_agent(task, vault=&quot;&quot;, purpose=&quot;&quot;, audience=&quot;&quot;, ...)</code>。它是一个调度器：用 next-step decision（<code>decision.make</code>）把任务路由到五种内部操作之一——<strong>ingest / enrich / browse / lint / search</strong>，各分支处理器是调用 <code>wiki_agent_harness.Wiki</code> 的普通 Python。<code>vault</code>（知识库根目录）、<code>purpose</code>、<code>audience</code> 是隐藏参数，不出现在聊天工具表单里；<code>vault</code> 不传时回落到 runtime 的工作目录。</p>
 <p>harness 本身刻意保持松散：它只提供渲染层、slot 原语、全文搜索、文件夹自动索引和 ingest 流水线五样东西，移动 / 删除 / grep / 编辑等其余操作 agent 用普通的 shell 和文件工具完成。slot 是页面里 HTML 注释包围的区域，agent 每次只改一个 slot，多次 ingest 干净累积，不重写整页。</p>

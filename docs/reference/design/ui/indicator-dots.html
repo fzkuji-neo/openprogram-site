@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/ui/indicator-dots.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/ui/indicator-dots.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -444,7 +444,7 @@ stable while the optional scale animation runs.</p>
 <span class="c">   the optional scale animation runs. */</span>
 <span class="p">.</span><span class="nc">indicator-dot</span><span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="k">display</span><span class="p">:</span><span class="kc">inline-block</span><span class="p">;</span><span class="w"> </span><span class="k">position</span><span class="p">:</span><span class="kc">relative</span><span class="p">;</span>
 <span class="w">                          </span><span class="k">vertical-align</span><span class="p">:</span><span class="kc">middle</span><span class="p">;</span><span class="w"> </span><span class="k">width</span><span class="p">:</span><span class="mf">12.8</span><span class="kt">px</span><span class="p">;</span><span class="w"> </span><span class="k">height</span><span class="p">:</span><span class="mf">12.8</span><span class="kt">px</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
-<span class="p">.</span><span class="nc">indicator-dot</span><span class="p">::</span><span class="nd">before</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">content</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">position</span><span class="p">:</span><span class="kc">absolute</span><span class="p">;</span>
+<span class="p">.</span><span class="nc">indicator-dot</span><span class="p">::</span><span class="nd">before</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">content</span><span class="p">:</span><span class="s2">""</span><span class="p">;</span><span class="w"> </span><span class="k">position</span><span class="p">:</span><span class="kc">absolute</span><span class="p">;</span>
 <span class="w">                          </span><span class="k">inset</span><span class="p">:</span><span class="nf">var</span><span class="p">(</span><span class="nv">--dot-inset</span><span class="p">,</span><span class="w"> </span><span class="mf">1.5</span><span class="kt">px</span><span class="p">);</span>
 <span class="w">                          </span><span class="k">border-radius</span><span class="p">:</span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
 <span class="w">                          </span><span class="k">background</span><span class="p">:</span><span class="nf">var</span><span class="p">(</span><span class="nv">--dot-color</span><span class="p">,</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--accent-blue</span><span class="p">));</span><span class="w"> </span><span class="p">}</span>
@@ -461,7 +461,7 @@ stable while the optional scale animation runs.</p>
 <span class="p">.</span><span class="nc">indicator-dot</span><span class="p">.</span><span class="nc">--err</span><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nv">--dot-color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--accent-red</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
 <span class="p">.</span><span class="nc">indicator-dot</span><span class="p">.</span><span class="nc">--neutral</span><span class="p">{</span><span class="w"> </span><span class="nv">--dot-color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--accent-blue</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
 
-<span class="c">/* Animations — apply to ::before so the layout box doesn&#39;t jitter. */</span>
+<span class="c">/* Animations — apply to ::before so the layout box doesn't jitter. */</span>
 <span class="p">.</span><span class="nc">indicator-dot</span><span class="p">.</span><span class="nc">pulse-opacity</span><span class="p">::</span><span class="nd">before</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="n">indicatorPulseOpacity</span><span class="w"> </span><span class="mf">1.5</span><span class="kt">s</span><span class="w"> </span><span class="kc">ease-in-out</span><span class="w"> </span><span class="kc">infinite</span><span class="p">;</span>
 <span class="p">}</span>

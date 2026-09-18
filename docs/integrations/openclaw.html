@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/integrations/openclaw.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/integrations/openclaw.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -102,55 +102,55 @@ uv<span class="w"> </span>sync<span class="w"> </span>--locked
 </code></pre>
 <p><strong><code>scripts/analyze.py</code>:</strong></p>
 <pre><code class="language-python"><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">OpenClaw skill script that uses Agentic Programming internally.</span>
 <span class="sd">Called by the agent via the exec tool.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="c1"># Add the source checkout to the script path</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.openclaw/workspace/OpenProgram&quot;</span><span class="p">))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">"~/.openclaw/workspace/OpenProgram"</span><span class="p">))</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;claude-code&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;haiku&quot;</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">)</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">decompose</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Break a complex task into actionable steps.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Break a complex task into actionable steps."""</span>
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Break this task into 3-5 concrete, actionable steps:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Number each step. Be specific.&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Break this task into 3-5 concrete, actionable steps:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Number each step. Be specific."</span><span class="p">},</span>
     <span class="p">])</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">assess</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Assess difficulty and time estimate for a step.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Assess difficulty and time estimate for a step."""</span>
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;For this step, give: difficulty (easy/medium/hard) and time estimate.</span><span class="se">\n</span><span class="s2">Format: [difficulty] ~Xh</span><span class="se">\n\n</span><span class="s2">Step: </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"For this step, give: difficulty (easy/medium/hard) and time estimate.</span><span class="se">\n</span><span class="s2">Format: [difficulty] ~Xh</span><span class="se">\n\n</span><span class="s2">Step: </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
     <span class="p">])</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">plan</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a detailed plan for a task.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create a detailed plan for a task."""</span>
     <span class="n">steps_text</span> <span class="o">=</span> <span class="n">decompose</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">steps_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">steps_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
     <span class="n">assessments</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">assess</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="n">assessments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="se">\n</span><span class="s2">   → </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">assessments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="se">\n</span><span class="s2">   → </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assessments</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assessments</span><span class="p">)</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">task</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Build a REST API with authentication&quot;</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">"Build a REST API with authentication"</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">plan</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre>
@@ -167,7 +167,7 @@ When the user asks to plan, decompose, or break down a task, run:
 \`\`\`bash
 uv run --project ~/.openclaw/workspace/OpenProgram python \
   ~/.openclaw/workspace/skills/my-agentic-skill/scripts/analyze.py \
-  &quot;the task description&quot;
+  "the task description"
 \`\`\`
 </code></pre>
 <p>This runs the script with the source checkout's locked environment. Do not run
@@ -175,45 +175,45 @@ it with the system Python, which does not contain OpenProgram's dependencies.</p
 <p>OpenClaw and OpenProgram use the same AgentSkills-compatible <code>SKILL.md</code> format, so user, project, or plugin skills can be shared between them. OpenProgram does not ship default skills; product workflows are Programs.</p>
 <h2 id="usage-pattern-2-as-a-python-library-in-agent-scripts">Usage Pattern 2: As a Python Library in Agent Scripts<a class="header-anchor" href="#usage-pattern-2-as-a-python-library-in-agent-scripts">#</a></h2>
 <p>If your OpenClaw agent runs Python scripts, you can import agentic functions directly:</p>
-<pre><code class="language-python"><span class="sd">&quot;&quot;&quot;</span>
+<pre><code class="language-python"><span class="sd">"""</span>
 <span class="sd">Code review script called by an OpenClaw agent.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;claude-code&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;haiku&quot;</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">)</span>
 
 
 <span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">review_code</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Review code for bugs, style issues, and improvements.&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">review_code</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Review code for bugs, style issues, and improvements."""</span>
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Review this </span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2"> code. List:</span><span class="se">\n</span><span class="s2">1. Bugs (if any)</span><span class="se">\n</span><span class="s2">2. Style issues</span><span class="se">\n</span><span class="s2">3. Suggested improvements</span><span class="se">\n\n</span><span class="s2">```</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Review this </span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2"> code. List:</span><span class="se">\n</span><span class="s2">1. Bugs (if any)</span><span class="se">\n</span><span class="s2">2. Style issues</span><span class="se">\n</span><span class="s2">3. Suggested improvements</span><span class="se">\n\n</span><span class="s2">```</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span><span class="p">},</span>
     <span class="p">])</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">suggest_tests</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Suggest test cases for the given code.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Suggest test cases for the given code."""</span>
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Suggest 3 test cases for this code. For each, give: test name, input, expected output.</span><span class="se">\n\n</span><span class="s2">```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Suggest 3 test cases for this code. For each, give: test name, input, expected output.</span><span class="se">\n\n</span><span class="s2">```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span><span class="p">},</span>
     <span class="p">])</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">code_analysis</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Full code analysis: review + test suggestions.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Full code analysis: review + test suggestions."""</span>
     <span class="n">review</span> <span class="o">=</span> <span class="n">review_code</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="n">tests</span> <span class="o">=</span> <span class="n">suggest_tests</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;## Code Review</span><span class="se">\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">## Suggested Tests</span><span class="se">\n</span><span class="si">{</span><span class="n">tests</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"## Code Review</span><span class="se">\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">## Suggested Tests</span><span class="se">\n</span><span class="si">{</span><span class="n">tests</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 <h2 id="usage-pattern-3-mcp-tool-wrapper">Usage Pattern 3: MCP Tool Wrapper<a class="header-anchor" href="#usage-pattern-3-mcp-tool-wrapper">#</a></h2>
 <p>Wrap agentic functions as MCP tools that OpenClaw can call:</p>
 <pre><code class="language-python"><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">MCP-compatible tool server that exposes agentic functions.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
@@ -221,34 +221,34 @@ it with the system Python, which does not contain OpenProgram's dependencies.</p
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;claude-code&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;haiku&quot;</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">)</span>
 
 
 <span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">summarize_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;bullet_points&quot;</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Summarize text in the specified style.&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">summarize_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">"bullet_points"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Summarize text in the specified style."""</span>
     <span class="n">style_instructions</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;bullet_points&quot;</span><span class="p">:</span> <span class="s2">&quot;Summarize as 3-5 bullet points.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;one_paragraph&quot;</span><span class="p">:</span> <span class="s2">&quot;Summarize in one paragraph.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;eli5&quot;</span><span class="p">:</span> <span class="s2">&quot;Explain like I&#39;m 5.&quot;</span><span class="p">,</span>
+        <span class="s2">"bullet_points"</span><span class="p">:</span> <span class="s2">"Summarize as 3-5 bullet points."</span><span class="p">,</span>
+        <span class="s2">"one_paragraph"</span><span class="p">:</span> <span class="s2">"Summarize in one paragraph."</span><span class="p">,</span>
+        <span class="s2">"eli5"</span><span class="p">:</span> <span class="s2">"Explain like I'm 5."</span><span class="p">,</span>
     <span class="p">}</span>
-    <span class="n">instruction</span> <span class="o">=</span> <span class="n">style_instructions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="n">style_instructions</span><span class="p">[</span><span class="s2">&quot;bullet_points&quot;</span><span class="p">])</span>
+    <span class="n">instruction</span> <span class="o">=</span> <span class="n">style_instructions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="n">style_instructions</span><span class="p">[</span><span class="s2">"bullet_points"</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">instruction</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">instruction</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
     <span class="p">])</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">request</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-    <span class="n">tool</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool&quot;</span><span class="p">)</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;args&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">tool</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"tool"</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"args"</span><span class="p">,</span> <span class="p">{})</span>
 
-    <span class="k">if</span> <span class="n">tool</span> <span class="o">==</span> <span class="s2">&quot;summarize&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">tool</span> <span class="o">==</span> <span class="s2">"summarize"</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">summarize_text</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;result&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">}))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"result"</span><span class="p">:</span> <span class="n">result</span><span class="p">}))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Unknown tool: </span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Unknown tool: </span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2">"</span><span class="p">}))</span>
 </code></pre>
 <h2 id="why-use-agentic-programming-in-openclaw">Why Use Agentic Programming in OpenClaw?<a class="header-anchor" href="#why-use-agentic-programming-in-openclaw">#</a></h2>
 <table>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/workflows/research-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/workflows/research-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -145,7 +145,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
 <p>入口函数名为 <strong><code>research_agent</code></strong>，以工具形式（<code>as_tool=True</code>，toolset <code>research</code>）注册，聊天里直接描述研究任务即可触发，例如&quot;Survey recent work on LLM uncertainty&quot;。</p>
 <p>命令行直接运行：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;Survey recent work on LLM uncertainty&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>research_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Survey recent work on LLM uncertainty"</span>
 </code></pre>
 <p>内部是两级控制：第一级由 LLM 选择进入哪个研究阶段（literature / idea / experiment / writing / review / rebuttal / presentation / theory / knowledge / project，阶段有依赖顺序，缺前置产出时会先补前置阶段）；第二级在阶段内由 LLM 依次挑选并运行该阶段的函数。共约 89 个函数、10 个阶段，每个函数是一个普通 Python 文件，docstring 就是 prompt，可直接编辑。</p>
 <p>入口的几个隐藏参数（代码 / CLI 调用者可传）：</p>

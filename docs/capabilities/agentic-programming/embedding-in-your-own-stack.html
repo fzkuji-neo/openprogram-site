@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -164,11 +164,11 @@ use goes inside:</p>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">()</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">openai_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">openai_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"text"</span><span class="p">)</span>
     <span class="n">reply</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
         <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">}],</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">text</span><span class="p">}],</span>
         <span class="n">response_format</span><span class="o">=</span><span class="n">response_format</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">reply</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
@@ -176,7 +176,7 @@ use goes inside:</p>
 <h2 id="2-wrap-it-in-a-runtime">2. Wrap it in a Runtime<a class="header-anchor" href="#2-wrap-it-in-a-runtime">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">openai_call</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">openai_call</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">)</span>
 </code></pre>
 <p><code>Runtime(call=...)</code> is the constructor that takes your function directly; no
 provider is detected, no credential is read, no network call is made at
@@ -195,15 +195,15 @@ records who called whom — which is what later calls receive as context.</p>
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">classify_sentiment</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Classify the sentiment of a review as positive, negative, or neutral.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sentiment of this review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Classify the sentiment of a review as positive, negative, or neutral."""</span>
+    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Sentiment of this review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">summarize_review</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Summarize a customer review in one sentence, noting its sentiment.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Summarize a customer review in one sentence, noting its sentiment."""</span>
     <span class="n">sentiment</span> <span class="o">=</span> <span class="n">classify_sentiment</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Summarize this </span><span class="si">{</span><span class="n">sentiment</span><span class="si">}</span><span class="s2"> review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Summarize this </span><span class="si">{</span><span class="n">sentiment</span><span class="si">}</span><span class="s2"> review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre>
 <p>Pass your runtime to the <strong>outermost</strong> call only. It propagates down the call
 chain automatically; nested functions just forward it. Omit it at the top and
@@ -218,10 +218,10 @@ and nothing consults <code>~/.openprogram</code>. Each session is a git repo und
 root.</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">SessionStore</span><span class="p">,</span> <span class="n">session_scope</span>
 
-<span class="n">store</span> <span class="o">=</span> <span class="n">SessionStore</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="s2">&quot;/var/lib/myapp/sessions&quot;</span><span class="p">)</span>
-<span class="n">store</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="s2">&quot;review-42&quot;</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="p">)</span>
+<span class="n">store</span> <span class="o">=</span> <span class="n">SessionStore</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="s2">"/var/lib/myapp/sessions"</span><span class="p">)</span>
+<span class="n">store</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="s2">"review-42"</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="s2">"main"</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="n">session_scope</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">&quot;review-42&quot;</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">session_scope</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">"review-42"</span><span class="p">):</span>
     <span class="n">summary</span> <span class="o">=</span> <span class="n">summarize_review</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 </code></pre>
 <p><code>session_scope</code> routes DAG writes to that store for the duration of the block
@@ -234,10 +234,10 @@ output, and a <code>caller</code> edge. Following <code>caller</code> turns the 
 the call tree:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">SessionNodeWriter</span>
 
-<span class="n">graph</span> <span class="o">=</span> <span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">&quot;review-42&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">"review-42"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
-    <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;fn&quot;</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_code</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;llm&quot;</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_llm</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;usr&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;→&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="s2">"fn"</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_code</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"llm"</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_llm</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"usr"</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">"→"</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
 </code></pre>
 <p><strong>Handing functions to your own loop.</strong> Every <code>@agentic_function</code> exposes
 <code>.spec</code> (a JSON schema built from the signature and docstring) and <code>.execute</code>.
@@ -250,7 +250,7 @@ array:</p>
 
 <span class="n">reply</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model</span><span class="o">=...</span><span class="p">,</span> <span class="n">messages</span><span class="o">=...</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">reply</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>
-    <span class="n">fn</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;classify_sentiment&quot;</span><span class="p">:</span> <span class="n">classify_sentiment</span><span class="p">}[</span><span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"classify_sentiment"</span><span class="p">:</span> <span class="n">classify_sentiment</span><span class="p">}[</span><span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">,</span> <span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>
 </code></pre>
 <p><code>runtime</code> goes in alongside the model's arguments. The model never sees that

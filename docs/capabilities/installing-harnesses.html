@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/installing-harnesses.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -237,7 +237,7 @@ with their contract status; <code>openprogram programs uninstall &lt;Harness-Nam
 <details>
 <summary>Manual equivalent (mirror / no GitHub access)</summary>
 <p><code>&lt;PACKAGES&gt;</code> is the destination for newly installed Program packages. Run this with the Python environment that owns the mutable CLI:</p>
-<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from openprogram.programs._programs import packages_dir; print(packages_dir())&quot;</span>
+<pre><code class="language-bash">python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from openprogram.programs._programs import packages_dir; print(packages_dir())"</span>
 </code></pre>
 <pre><code class="language-bash">git<span class="w"> </span>clone<span class="w"> </span>&lt;repo-url&gt;<span class="w"> </span>/path/to/Harness-Name
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>file:///path/to/Harness-Name
@@ -248,7 +248,7 @@ contract — that's all the install command automates.</p>
 </details>
 <h2 id="developer-setup-work-on-a-harness-youre-writing">Developer setup (work on a harness you're writing)<a class="header-anchor" href="#developer-setup-work-on-a-harness-youre-writing">#</a></h2>
 <p>Symlink your working checkout instead of cloning a copy:</p>
-<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">&quot;&lt;PACKAGES&gt;/Harness-Checkout&quot;</span>
+<pre><code class="language-bash">ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/Harness-Checkout<span class="w"> </span><span class="s2">"&lt;PACKAGES&gt;/Harness-Checkout"</span>
 openprogram<span class="w"> </span>programs<span class="w"> </span>install<span class="w"> </span>file:///path/to/your/Harness-Checkout
 </code></pre>
 <p>Edits take effect on the next restart; <code>programs install</code> will refuse to
@@ -344,22 +344,22 @@ on <code>sys.path</code>, so the harness's own absolute imports
 
 
 <span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">my_tool</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="s2">&quot;One line: what this does (shown in catalogs).&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_tool</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="s2">"One line: what this does (shown in catalogs)."</span>
     <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
 
 <span class="n">AGENTIC_FUNCTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">my_tool</span><span class="p">]</span>
 </code></pre>
 <pre><code class="language-python"><span class="c1"># &lt;package&gt;/__init__.py</span>
-<span class="sd">&quot;&quot;&quot;My harness — keep this import-light (see hard rule 2).&quot;&quot;&quot;</span>
+<span class="sd">"""My harness — keep this import-light (see hard rule 2)."""</span>
 </code></pre>
 <pre><code class="language-toml"><span class="c1"># pyproject.toml</span>
 <span class="k">[project]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my-harness&quot;</span>
-<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
-<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.10&quot;</span>
-<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w">          </span><span class="c1"># the harness&#39;s own deps — NEVER openprogram</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"my-harness"</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0.1.0"</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&gt;=3.10"</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span><span class="w">          </span><span class="c1"># the harness's own deps — NEVER openprogram</span>
 </code></pre>
 <p>That's a complete installable harness.</p>
 <h2 id="two-hard-rules">Two hard rules<a class="header-anchor" href="#two-hard-rules">#</a></h2>

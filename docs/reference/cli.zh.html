@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/cli.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/cli.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -146,7 +146,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 每次构建文档站时从参数解析器重新生成，永不与代码脱节。本页是人工整理的总览。</p></div></div>
 <h2 id="全局用法">全局用法<a class="header-anchor" href="#全局用法">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w">                      </span><span class="c1"># 打开终端聊天 UI（TUI）</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w">        </span><span class="c1"># 一次性 prompt：发送、打印回复、退出</span>
+openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"..."</span><span class="w">        </span><span class="c1"># 一次性 prompt：发送、打印回复、退出</span>
 openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;id&gt;<span class="w">        </span><span class="c1"># 恢复此前的 CLI 聊天会话</span>
 openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;<span class="w">     </span><span class="c1"># 状态目录 profile，改道到 ~/.openprogram-&lt;name&gt;/</span>
 </code></pre>
@@ -412,7 +412,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <p><code>token create</code> 把原始 token 打印为一行，但不会设置
 <code>OPENPROGRAM_MCP_TOKEN</code>。只运行一次，复制打印出的那一行，在 <code>serve</code> 前设置变量：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>mcp<span class="w"> </span>token<span class="w"> </span>create
-<span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_MCP_TOKEN</span><span class="o">=</span><span class="s2">&quot;&lt;把上一步打印的 token 粘贴到这里&gt;&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_MCP_TOKEN</span><span class="o">=</span><span class="s2">"&lt;把上一步打印的 token 粘贴到这里&gt;"</span>
 openprogram<span class="w"> </span>mcp<span class="w"> </span>serve
 </code></pre>
 <p>如果 token 已经存在，请使用此前保存的 token。<code>serve</code> 要求

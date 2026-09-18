@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/models/auth.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/models/auth.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -86,7 +86,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="credential-sources">Credential sources<a class="header-anchor" href="#credential-sources">#</a></h2>
 <h3 id="api-key-login">API key login<a class="header-anchor" href="#api-key-login">#</a></h3>
 <pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>deepseek<span class="w">                       </span><span class="c1"># interactive input</span>
-<span class="nb">printf</span><span class="w"> </span>%s<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$KEY</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>deepseek<span class="w"> </span>--api-key-stdin<span class="w">   </span><span class="c1"># scripts</span>
+<span class="nb">printf</span><span class="w"> </span>%s<span class="w"> </span><span class="s2">"</span><span class="nv">$KEY</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>deepseek<span class="w"> </span>--api-key-stdin<span class="w">   </span><span class="c1"># scripts</span>
 </code></pre>
 <p><code>--api-key</code> also accepts the value directly, but it ends up in shell history; prefer <code>--api-key-stdin</code> in scripts.</p>
 <h3 id="oauth-login">OAuth login<a class="header-anchor" href="#oauth-login">#</a></h3>

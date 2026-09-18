@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/install/upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/install/upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,7 +107,7 @@ openprogram<span class="w"> </span>upgrade
 <pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">OPENPROGRAM_VERSION</span><span class="o">=</span>X.Y.Z<span class="w"> </span>sh
 </code></pre>
 <p>Windows 对应命令为：</p>
-<pre><code class="language-powershell"><span class="nv">$env:OPENPROGRAM_VERSION</span> <span class="p">=</span> <span class="s2">&quot;X.Y.Z&quot;</span>
+<pre><code class="language-powershell"><span class="nv">$env:OPENPROGRAM_VERSION</span> <span class="p">=</span> <span class="s2">"X.Y.Z"</span>
 <span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">openprogram</span><span class="p">.</span><span class="n">io</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
 </code></pre>
 <p>命令从不可变 release tag 取得版本化 installer。installer 下载同平台 runtime archive，在暂存目录验证 checksum 和完整 capability manifest，并在发布或激活该版本前执行 worker cold-start。macOS/Linux 会串行化升级并原子切换 <code>current</code> symlink；Windows 原子替换 PowerShell launcher，并保留上一份 launcher。激活前失败时，旧版本仍保持选中，尚未发布的暂存 runtime 会被删除。版本目录会保留，因此回滚时用上一版 <code>OPENPROGRAM_VERSION</code> 重跑同一命令即可；运行中的 worker 不会自动重启。</p>
@@ -149,7 +149,7 @@ candidate 所有可写路径之外，并要求候选浏览器资源树 hash 与�
 固定的 macOS 图标渲染检查也由可信控制器执行，不向候选构建开放宿主图形服务。</p>
 <p>源码 checkout 的聊天工具 <code>self_update_prepare</code> 接受可选的 <code>verification_plan</code>
 参数。计划包含在强制 owner 审批中，并与不可变请求一起保存。例如：</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;schema&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&quot;checks&quot;</span><span class="p">:[{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;diagnostics&quot;</span><span class="p">,</span><span class="nt">&quot;assertion_id&quot;</span><span class="p">:</span><span class="s2">&quot;acceptance-1&quot;</span><span class="p">,</span><span class="nt">&quot;entry&quot;</span><span class="p">:</span><span class="s2">&quot;/api/diagnostics&quot;</span><span class="p">,</span><span class="nt">&quot;timeout_seconds&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="nt">&quot;max_output_bytes&quot;</span><span class="p">:</span><span class="mi">65536</span><span class="p">}]}</span>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"schema"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"checks"</span><span class="p">:[{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"diagnostics"</span><span class="p">,</span><span class="nt">"assertion_id"</span><span class="p">:</span><span class="s2">"acceptance-1"</span><span class="p">,</span><span class="nt">"entry"</span><span class="p">:</span><span class="s2">"/api/diagnostics"</span><span class="p">,</span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="nt">"max_output_bytes"</span><span class="p">:</span><span class="mi">65536</span><span class="p">}]}</span>
 </code></pre>
 <p>每条 assertion（<code>acceptance-1</code>、<code>acceptance-2</code> 等）必须恰好对应一个 check，共 1–32 条。
 示例中的所有字段均必填，<code>schema</code> 必须是整数 <code>1</code>。
@@ -177,7 +177,7 @@ check ID、限制、模型和权限，不能重新延长迭代总期限。诊断
 证据绑定 runtime 身份、完整调用参数和退出状态；非零退出、超时、取消、身份变化、
 输出超限或清理失败均不能通过。这两个入口只检查 CLI 启动/帮助，不证明任意功能行为。</p>
 <p>候选源码测试可以使用这样的检查项：</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;source-test&quot;</span><span class="p">,</span><span class="nt">&quot;assertion_id&quot;</span><span class="p">:</span><span class="s2">&quot;acceptance-1&quot;</span><span class="p">,</span><span class="nt">&quot;entry&quot;</span><span class="p">:</span><span class="s2">&quot;test:python&quot;</span><span class="p">,</span><span class="nt">&quot;argv&quot;</span><span class="p">:[</span><span class="s2">&quot;tests/verify_feature.py&quot;</span><span class="p">,</span><span class="s2">&quot;expected&quot;</span><span class="p">],</span><span class="nt">&quot;timeout_seconds&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">&quot;max_output_bytes&quot;</span><span class="p">:</span><span class="mi">65536</span><span class="p">}</span>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"source-test"</span><span class="p">,</span><span class="nt">"assertion_id"</span><span class="p">:</span><span class="s2">"acceptance-1"</span><span class="p">,</span><span class="nt">"entry"</span><span class="p">:</span><span class="s2">"test:python"</span><span class="p">,</span><span class="nt">"argv"</span><span class="p">:[</span><span class="s2">"tests/verify_feature.py"</span><span class="p">,</span><span class="s2">"expected"</span><span class="p">],</span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">"max_output_bytes"</span><span class="p">:</span><span class="mi">65536</span><span class="p">}</span>
 </code></pre>
 <p><code>argv</code> 包含 1–32 个字符串，每项最多 4096 字符，不能包含 NUL。第一项是相对于候选
 根目录、已提交的普通 <code>.py</code> 文件，不能是符号链接、绝对路径、父目录跳转或解释器
@@ -191,7 +191,7 @@ verifier 不能修改。使用已安装候选版本的 Python，在登记的 can
 源码缺失、变脏、未登记或脚本变化都会阻止验收；证据记录源码 revision、脚本摘要和
 调用参数。<code>candidate_test</code> 结果只证明源码测试执行，不证明已安装 App 行为。</p>
 <p>对原会话的 App 主窗口进行只读截图，可以使用：</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;main-capture&quot;</span><span class="p">,</span><span class="nt">&quot;assertion_id&quot;</span><span class="p">:</span><span class="s2">&quot;acceptance-1&quot;</span><span class="p">,</span><span class="nt">&quot;entry&quot;</span><span class="p">:</span><span class="s2">&quot;ui:main&quot;</span><span class="p">,</span><span class="nt">&quot;timeout_seconds&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">&quot;max_output_bytes&quot;</span><span class="p">:</span><span class="mi">1048576</span><span class="p">}</span>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"main-capture"</span><span class="p">,</span><span class="nt">"assertion_id"</span><span class="p">:</span><span class="s2">"acceptance-1"</span><span class="p">,</span><span class="nt">"entry"</span><span class="p">:</span><span class="s2">"ui:main"</span><span class="p">,</span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">"max_output_bytes"</span><span class="p">:</span><span class="mi">1048576</span><span class="p">}</span>
 </code></pre>
 <p>准备阶段要求兼容的已打包 UI 验收描述文件、runtime 身份，以及恰好一个已连接的
 Desktop 主窗口。安装前，候选包和回退包都必须具有匹配的截图、后端和前端能力绑定；
@@ -212,7 +212,7 @@ PNG 必须为非交错的 8-bit RGB/RGBA，每个维度最多 16384，总像素�
 包括认证 bootstrap 和过期标记。检查期间，该窗口已有的 WebSocket 只允许观察回执
 和取消确切的 verifier Job，不接受普通应用命令。</p>
 <p>要在已批准的滚动之后截图，可添加 <code>interaction</code>：</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;scroll-history&quot;</span><span class="p">,</span><span class="nt">&quot;assertion_id&quot;</span><span class="p">:</span><span class="s2">&quot;acceptance-1&quot;</span><span class="p">,</span><span class="nt">&quot;entry&quot;</span><span class="p">:</span><span class="s2">&quot;ui:main&quot;</span><span class="p">,</span><span class="nt">&quot;timeout_seconds&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">&quot;max_output_bytes&quot;</span><span class="p">:</span><span class="mi">1048576</span><span class="p">,</span><span class="nt">&quot;interaction&quot;</span><span class="p">:{</span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="s2">&quot;scroll&quot;</span><span class="p">,</span><span class="nt">&quot;delta_y&quot;</span><span class="p">:</span><span class="mi">-400</span><span class="p">}}</span>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"scroll-history"</span><span class="p">,</span><span class="nt">"assertion_id"</span><span class="p">:</span><span class="s2">"acceptance-1"</span><span class="p">,</span><span class="nt">"entry"</span><span class="p">:</span><span class="s2">"ui:main"</span><span class="p">,</span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">"max_output_bytes"</span><span class="p">:</span><span class="mi">1048576</span><span class="p">,</span><span class="nt">"interaction"</span><span class="p">:{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"scroll"</span><span class="p">,</span><span class="nt">"delta_y"</span><span class="p">:</span><span class="mi">-400</span><span class="p">}}</span>
 </code></pre>
 <p><code>delta_y</code> 为 -1200 到 1200 CSS 像素之间的非零整数，目标始终是原会话的主聊天区域，
 不接受 selector 或脚本。候选包和回退包都必须具有 UI protocol 2，绑定实际原生滚动
@@ -223,7 +223,7 @@ PNG 必须为非交错的 8-bit RGB/RGBA，每个维度最多 16384，总像素�
 新位置。目标变化或恢复失败均不能通过。在滚动边界，位置可能不变；仅凭这一点不能
 证明要求发生位移的断言。</p>
 <p>要检查原会话的上下文图，可冻结视图检查：</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;context-view&quot;</span><span class="p">,</span><span class="nt">&quot;assertion_id&quot;</span><span class="p">:</span><span class="s2">&quot;acceptance-1&quot;</span><span class="p">,</span><span class="nt">&quot;entry&quot;</span><span class="p">:</span><span class="s2">&quot;ui:main&quot;</span><span class="p">,</span><span class="nt">&quot;timeout_seconds&quot;</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">&quot;max_output_bytes&quot;</span><span class="p">:</span><span class="mi">1048576</span><span class="p">,</span><span class="nt">&quot;interaction&quot;</span><span class="p">:{</span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="s2">&quot;view&quot;</span><span class="p">,</span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="s2">&quot;dag&quot;</span><span class="p">}}</span>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"context-view"</span><span class="p">,</span><span class="nt">"assertion_id"</span><span class="p">:</span><span class="s2">"acceptance-1"</span><span class="p">,</span><span class="nt">"entry"</span><span class="p">:</span><span class="s2">"ui:main"</span><span class="p">,</span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">"max_output_bytes"</span><span class="p">:</span><span class="mi">1048576</span><span class="p">,</span><span class="nt">"interaction"</span><span class="p">:{</span><span class="nt">"kind"</span><span class="p">:</span><span class="s2">"view"</span><span class="p">,</span><span class="nt">"target"</span><span class="p">:</span><span class="s2">"dag"</span><span class="p">}}</span>
 </code></pre>
 <p><code>target</code> 只能为 <code>session</code> 或 <code>dag</code>，不能是 URL 或其他会话。检查从可见的原会话开始，
 触发实际的视图切换控件，捕获指定视图，并在成功前恢复会话视图和滚动位置。开始时
@@ -327,8 +327,8 @@ App 原本打开时，激活与回退都使用该 ID 重新打开；原本关闭
 源码连接已经过 fixture 测试；真实已安装 App 的重启及会话/标签恢复验收仍待完成，
 因此这还不是已可发布的完整端到端功能。</p>
 <p>App 或普通 CLI 无法启动时，使用本次更新保存的独立入口：</p>
-<pre><code class="language-bash"><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.openprogram/self-updates/UPDATE_ID/recover.sh&quot;</span><span class="w"> </span>status
-<span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.openprogram/self-updates/UPDATE_ID/recover.sh&quot;</span><span class="w"> </span>repair
+<pre><code class="language-bash"><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.openprogram/self-updates/UPDATE_ID/recover.sh"</span><span class="w"> </span>status
+<span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.openprogram/self-updates/UPDATE_ID/recover.sh"</span><span class="w"> </span>repair
 </code></pre>
 <p>脚本使用 App 外保存的原 runtime，不传参数时默认只查状态。<code>repair</code> 仍要求 owner
 在交互式终端确认，不绕过证据校验或过期授权。<code>recover.sh resume</code> 在原授权和期限内

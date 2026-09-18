@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/events-and-state.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/events-and-state.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -498,12 +498,12 @@ overview 里点到为止，这里讲透。读这篇前先读完 <code>overview.m
     <span class="k">return</span> <span class="n">状况</span>                        <span class="c1"># 滚完 = 当前状况</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">更新</span><span class="p">(</span><span class="n">状况</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;file.changed&quot;</span><span class="p">:</span>
-        <span class="n">状况</span><span class="o">.</span><span class="n">改过的文件</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;tool.after&quot;</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;出错&quot;</span><span class="p">]:</span>
-        <span class="n">状况</span><span class="o">.</span><span class="n">该工具失败次数</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;工具&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;tool.after&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;出错&quot;</span><span class="p">]:</span>
-        <span class="n">状况</span><span class="o">.</span><span class="n">该工具失败次数</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;工具&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1"># 成功就清零</span>
+    <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"file.changed"</span><span class="p">:</span>
+        <span class="n">状况</span><span class="o">.</span><span class="n">改过的文件</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"path"</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"tool.after"</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"出错"</span><span class="p">]:</span>
+        <span class="n">状况</span><span class="o">.</span><span class="n">该工具失败次数</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"工具"</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"tool.after"</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"出错"</span><span class="p">]:</span>
+        <span class="n">状况</span><span class="o">.</span><span class="n">该工具失败次数</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"工具"</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1"># 成功就清零</span>
     <span class="c1"># ... 每种关心的事件，更新对应的状况</span>
     <span class="k">return</span> <span class="n">状况</span>
 </code></pre>
@@ -514,11 +514,11 @@ overview 里点到为止，这里讲透。读这篇前先读完 <code>overview.m
 <h3 id="42-规则怎么用状态">4.2 规则怎么用状态<a class="header-anchor" href="#42-规则怎么用状态">#</a></h3>
 <p>规则的 <code>evaluate</code> 拿到当前事件<strong>和</strong>当前状态，两个一起看：</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">StuckToolWatcher</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tool.after&quot;</span><span class="p">}</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tool.after"</span><span class="p">}</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="n">工具</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;工具&quot;</span><span class="p">]</span>
+        <span class="n">工具</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"工具"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">该工具失败次数</span><span class="p">[</span><span class="n">工具</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>        <span class="c1"># 读累加出来的状态</span>
-            <span class="k">return</span> <span class="n">提醒</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">工具</span><span class="si">}</span><span class="s2"> 连续失败了，可能卡住&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">提醒</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">工具</span><span class="si">}</span><span class="s2"> 连续失败了，可能卡住"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p>&quot;连续三次失败&quot;这种需要记忆的判断，因为有了 fold 出来的 state，写起来就这么直白。</p>

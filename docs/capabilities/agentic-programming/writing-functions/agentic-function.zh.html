@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,13 +149,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 
 <span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Text to translate.&quot;</span><span class="p">},</span>
+    <span class="s2">"text"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Text to translate."</span><span class="p">},</span>
 <span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">translate_to_chinese</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Translate text to Chinese.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
-        <span class="s2">&quot;Translate the following text to Chinese. Return only the translation.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="sd">"""Translate text to Chinese."""</span>
+    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s2">"Translate the following text to Chinese. Return only the translation.</span><span class="se">\n\n</span><span class="s2">"</span>
+        <span class="sa">f</span><span class="s2">"Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
     <span class="p">)}])</span>
 </code></pre>
 <p>声明一个 <code>runtime</code> 参数，但永远不要自己传它：无论是直接的 Python 调用还是工具
@@ -166,14 +166,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="直接组合">直接组合<a class="header-anchor" href="#直接组合">#</a></h2>
 <p>当顺序固定时，使用直接的 Python 调用。</p>
 <pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Research task.&quot;</span><span class="p">},</span>
+    <span class="s2">"task"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Research task."</span><span class="p">},</span>
 <span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">research_pipeline</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run a fixed research pipeline.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Run a fixed research pipeline."""</span>
     <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
     <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_ideas</span><span class="p">(</span><span class="n">gaps</span><span class="o">=</span><span class="n">gaps</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;survey&quot;</span><span class="p">:</span> <span class="n">survey</span><span class="p">,</span> <span class="s2">&quot;gaps&quot;</span><span class="p">:</span> <span class="n">gaps</span><span class="p">,</span> <span class="s2">&quot;ideas&quot;</span><span class="p">:</span> <span class="n">ideas</span><span class="p">}</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"survey"</span><span class="p">:</span> <span class="n">survey</span><span class="p">,</span> <span class="s2">"gaps"</span><span class="p">:</span> <span class="n">gaps</span><span class="p">,</span> <span class="s2">"ideas"</span><span class="p">:</span> <span class="n">ideas</span><span class="p">}</span>
 </code></pre>
 <h2 id="llm-选择的工具">LLM 选择的工具<a class="header-anchor" href="#llm-选择的工具">#</a></h2>
 <p>当应当由模型从一份指定的函数菜单中挑选时，使用 <code>runtime.exec(tools=[...])</code>。注意
@@ -182,14 +182,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 纯推理调用请传 <code>toolset=&quot;none&quot;</code>（或 <code>tools=[]</code>）——
 见 <a href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html"><code>tool-calling.md</code></a>。</p>
 <pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;User task.&quot;</span><span class="p">},</span>
+    <span class="s2">"task"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"User task."</span><span class="p">},</span>
 <span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">research_assistant</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Choose and run the appropriate research helper.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Choose and run the appropriate research helper."""</span>
     <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-        <span class="n">content</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
-            <span class="s2">&quot;Choose the appropriate helper for this task and complete the work.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Task:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">content</span><span class="o">=</span><span class="p">[{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s2">"Choose the appropriate helper for this task and complete the work.</span><span class="se">\n\n</span><span class="s2">"</span>
+            <span class="sa">f</span><span class="s2">"Task:</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)}],</span>
         <span class="n">tools</span><span class="o">=</span><span class="p">[</span><span class="n">survey_topic</span><span class="p">,</span> <span class="n">identify_gaps</span><span class="p">,</span> <span class="n">generate_ideas</span><span class="p">],</span>
     <span class="p">)</span>

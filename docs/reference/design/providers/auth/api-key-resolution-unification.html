@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -442,26 +442,26 @@ found: layered (env → config → cloud-credential chain), cached on the hot pa
 and reverse-mappable. Adding a provider is one table entry.</p>
 <h2 id="3-the-api">3. The API<a class="header-anchor" href="#3-the-api">#</a></h2>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">env_vars_for</span><span class="p">(</span><span class="n">provider_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Accepted env-var names for this provider, in precedence order.</span>
+<span class="w">    </span><span class="sd">"""Accepted env-var names for this provider, in precedence order.</span>
 <span class="sd">    google -&gt; [GEMINI_API_KEY, GOOGLE_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY]</span>
 <span class="sd">    anthropic -&gt; [ANTHROPIC_OAUTH_TOKEN, ANTHROPIC_API_KEY]</span>
-<span class="sd">    github-copilot -&gt; [COPILOT_GITHUB_TOKEN, GH_TOKEN, GITHUB_TOKEN]&quot;&quot;&quot;</span>
+<span class="sd">    github-copilot -&gt; [COPILOT_GITHUB_TOKEN, GH_TOKEN, GITHUB_TOKEN]"""</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">resolve_api_key</span><span class="p">(</span><span class="n">provider_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_config</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The real, usable key/token, or None.</span>
+<span class="w">    </span><span class="sd">"""The real, usable key/token, or None.</span>
 <span class="sd">    1. each env var in env_vars_for(), first hit wins;</span>
 <span class="sd">    2. if allow_config: config.json api_keys[&lt;name&gt;] for each name (cached);</span>
 <span class="sd">    3. cloud-credential providers (bedrock/vertex) -&gt; None here (no bearer key);</span>
-<span class="sd">       their state is is_configured(), not a key.&quot;&quot;&quot;</span>
+<span class="sd">       their state is is_configured(), not a key."""</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">is_configured</span><span class="p">(</span><span class="n">provider_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;True when the provider has working credentials, INCLUDING cloud-cred</span>
+<span class="w">    </span><span class="sd">"""True when the provider has working credentials, INCLUDING cloud-cred</span>
 <span class="sd">    chains: resolve_api_key() is not None, OR the bedrock AWS chain / vertex ADC</span>
-<span class="sd">    is satisfied.&quot;&quot;&quot;</span>
+<span class="sd">    is satisfied."""</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">provider_id_for_env_var</span><span class="p">(</span><span class="n">env_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reverse of env_vars_for, for the save-key verify path that only knows the</span>
-<span class="sd">    env-var name.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Reverse of env_vars_for, for the save-key verify path that only knows the</span>
+<span class="sd">    env-var name."""</span>
 </code></pre>
 <p>Two questions, two functions. <code>resolve_api_key</code> returns a key or <code>None</code>;
 <code>is_configured</code> answers configured-or-not, including the cloud-credential

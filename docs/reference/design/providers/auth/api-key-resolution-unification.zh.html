@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/providers/auth/api-key-resolution-unification.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/providers/auth/api-key-resolution-unification.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -435,24 +435,24 @@ token、Anthropic 的 OAuth 优先于 key、Amazon Bedrock 与 Google Vertex 的
 云凭据链）、在热路径上带缓存、且可反向映射。新增一个 provider 只需一条表项。</p>
 <h2 id="3-api">3. API<a class="header-anchor" href="#3-api">#</a></h2>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">env_vars_for</span><span class="p">(</span><span class="n">provider_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;该 provider 接受的 env-var 名称，按优先级排序。</span>
+<span class="w">    </span><span class="sd">"""该 provider 接受的 env-var 名称，按优先级排序。</span>
 <span class="sd">    google -&gt; [GEMINI_API_KEY, GOOGLE_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY]</span>
 <span class="sd">    anthropic -&gt; [ANTHROPIC_OAUTH_TOKEN, ANTHROPIC_API_KEY]</span>
-<span class="sd">    github-copilot -&gt; [COPILOT_GITHUB_TOKEN, GH_TOKEN, GITHUB_TOKEN]&quot;&quot;&quot;</span>
+<span class="sd">    github-copilot -&gt; [COPILOT_GITHUB_TOKEN, GH_TOKEN, GITHUB_TOKEN]"""</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">resolve_api_key</span><span class="p">(</span><span class="n">provider_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_config</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;真实可用的 key/token，或 None。</span>
+<span class="w">    </span><span class="sd">"""真实可用的 key/token，或 None。</span>
 <span class="sd">    1. 按 env_vars_for() 中的每个 env var 逐一尝试，第一个命中者胜出；</span>
 <span class="sd">    2. 若 allow_config：对每个名称查 config.json api_keys[&lt;name&gt;]（带缓存）；</span>
 <span class="sd">    3. 云凭据 provider（bedrock/vertex）-&gt; 这里返回 None（没有 bearer key）；</span>
-<span class="sd">       它们的状态由 is_configured() 表达，而不是一个 key。&quot;&quot;&quot;</span>
+<span class="sd">       它们的状态由 is_configured() 表达，而不是一个 key。"""</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">is_configured</span><span class="p">(</span><span class="n">provider_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;当 provider 拥有可用凭据时为 True，包括云凭据链：</span>
-<span class="sd">    resolve_api_key() 不为 None，或者 bedrock AWS 链 / vertex ADC 被满足。&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""当 provider 拥有可用凭据时为 True，包括云凭据链：</span>
+<span class="sd">    resolve_api_key() 不为 None，或者 bedrock AWS 链 / vertex ADC 被满足。"""</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">provider_id_for_env_var</span><span class="p">(</span><span class="n">env_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;env_vars_for 的反向映射，供只知道 env-var 名称的 save-key verify 路径使用。&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""env_vars_for 的反向映射，供只知道 env-var 名称的 save-key verify 路径使用。"""</span>
 </code></pre>
 <p>两个问题，两个函数。<code>resolve_api_key</code> 返回一个 key 或 <code>None</code>；<code>is_configured</code>
 回答是否已配置，涵盖那些根本没有 bearer key 的云凭据 provider。若把两者合成一个

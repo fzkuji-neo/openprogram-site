@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/cli.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/cli.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -148,7 +148,7 @@ docs build, so they can never drift from the code. This page is the
 curated overview.</p></div></div>
 <h2 id="global-usage">Global usage<a class="header-anchor" href="#global-usage">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w">                      </span><span class="c1"># open the terminal chat UI (TUI)</span>
-openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w">        </span><span class="c1"># one-shot prompt: send, print the reply, exit</span>
+openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"..."</span><span class="w">        </span><span class="c1"># one-shot prompt: send, print the reply, exit</span>
 openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;id&gt;<span class="w">        </span><span class="c1"># resume a previous CLI chat session</span>
 openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;<span class="w">     </span><span class="c1"># state-directory profile, reroutes to ~/.openprogram-&lt;name&gt;/</span>
 </code></pre>
@@ -415,7 +415,7 @@ openprogram<span class="w"> </span>--profile<span class="w"> </span>&lt;name&gt;
 <code>OPENPROGRAM_MCP_TOKEN</code>. Run it once, copy the printed line, and set the
 variable before <code>serve</code>:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>mcp<span class="w"> </span>token<span class="w"> </span>create
-<span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_MCP_TOKEN</span><span class="o">=</span><span class="s2">&quot;&lt;paste the token printed above&gt;&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OPENPROGRAM_MCP_TOKEN</span><span class="o">=</span><span class="s2">"&lt;paste the token printed above&gt;"</span>
 openprogram<span class="w"> </span>mcp<span class="w"> </span>serve
 </code></pre>
 <p>If a token already exists, reuse the token you previously saved. <code>serve</code>

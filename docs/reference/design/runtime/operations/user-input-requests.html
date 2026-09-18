@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/operations/user-input-requests.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/operations/user-input-requests.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -483,8 +483,8 @@ already run in threads/subprocesses).</p>
 <p>On <code>runtime</code>, next to <code>runtime.exec</code> / <code>decision</code>:</p>
 <pre><code class="language-python"><span class="c1"># Inside any @agentic_function / @function body</span>
 <span class="n">answer</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span>
-    <span class="s2">&quot;Which library for date formatting?&quot;</span><span class="p">,</span>
-    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;dayjs&quot;</span><span class="p">,</span> <span class="s2">&quot;date-fns&quot;</span><span class="p">,</span> <span class="s2">&quot;luxon&quot;</span><span class="p">],</span>  <span class="c1"># optional; None = free text</span>
+    <span class="s2">"Which library for date formatting?"</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">"dayjs"</span><span class="p">,</span> <span class="s2">"date-fns"</span><span class="p">,</span> <span class="s2">"luxon"</span><span class="p">],</span>  <span class="c1"># optional; None = free text</span>
     <span class="n">multi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>                <span class="c1"># True -&gt; returns list[str]</span>
     <span class="n">allow_custom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>          <span class="c1"># free text allowed besides options</span>
     <span class="n">timeout</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span>               <span class="c1"># seconds, default 30 min</span>
@@ -492,7 +492,7 @@ already run in threads/subprocesses).</p>
 <span class="p">)</span>
 <span class="c1"># -&gt; str (or list[str]); user pressing Decline raises UserDeclined</span>
 
-<span class="n">ok</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="s2">&quot;Archive all 87 emails?&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="n">preview</span><span class="p">,</span>
+<span class="n">ok</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="s2">"Archive all 87 emails?"</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="n">preview</span><span class="p">,</span>
                      <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># -&gt; bool, never raises on timeout</span>
 
 <span class="n">runtime</span><span class="o">.</span><span class="n">can_ask</span><span class="p">()</span>  <span class="c1"># -&gt; bool; False in headless runs so authors can branch</span>

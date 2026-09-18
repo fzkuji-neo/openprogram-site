@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/session/context.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/session/context.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -418,25 +418,25 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <span class="k">def</span><span class="w"> </span><span class="nf">session_context</span><span class="p">(</span>
     <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span>
+    <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"main"</span><span class="p">,</span>
     <span class="n">turn_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">create_runtime_if_none</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">db</span> <span class="o">=</span> <span class="n">default_db</span><span class="p">()</span>
-    <span class="n">sid</span> <span class="o">=</span> <span class="n">session_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;adhoc_&quot;</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
+    <span class="n">sid</span> <span class="o">=</span> <span class="n">session_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"adhoc_"</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">get_session</span><span class="p">(</span><span class="n">sid</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">db</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;cli&quot;</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"cli"</span><span class="p">)</span>
     <span class="n">rt</span> <span class="o">=</span> <span class="n">runtime</span>
     <span class="k">if</span> <span class="n">rt</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">create_runtime_if_none</span><span class="p">:</span>
         <span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">()</span>
-    <span class="n">tid</span> <span class="o">=</span> <span class="n">turn_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;turn_&quot;</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
+    <span class="n">tid</span> <span class="o">=</span> <span class="n">turn_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"turn_"</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
 
     <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_store&quot;</span><span class="p">,</span>  <span class="n">_store</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">sid</span><span class="p">))))</span>
-    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_turn&quot;</span><span class="p">,</span>   <span class="n">_current_turn_id</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">tid</span><span class="p">)))</span>
+    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_store"</span><span class="p">,</span>  <span class="n">_store</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">sid</span><span class="p">))))</span>
+    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_turn"</span><span class="p">,</span>   <span class="n">_current_turn_id</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">tid</span><span class="p">)))</span>
     <span class="k">if</span> <span class="n">rt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_rt&quot;</span><span class="p">,</span> <span class="n">_current_runtime</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rt</span><span class="p">)))</span>
+        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_rt"</span><span class="p">,</span> <span class="n">_current_runtime</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rt</span><span class="p">)))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">SessionHandle</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="n">sid</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">,</span> <span class="n">turn_id</span><span class="o">=</span><span class="n">tid</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>

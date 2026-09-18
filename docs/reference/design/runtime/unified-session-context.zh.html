@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/unified-session-context.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/unified-session-context.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -491,33 +491,33 @@ research / process_runner / tests)都用它。形态用 context manager(保证 s
 <span class="k">def</span><span class="w"> </span><span class="nf">session_context</span><span class="p">(</span>
     <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span>
+    <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"main"</span><span class="p">,</span>
     <span class="n">turn_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>            <span class="c1"># 已有 runtime 就复用,否则按需建</span>
     <span class="n">create_runtime_if_none</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install the per-turn session ContextVars and tear them down on exit.</span>
+<span class="w">    </span><span class="sd">"""Install the per-turn session ContextVars and tear them down on exit.</span>
 
 <span class="sd">    The single place that wires _store / _current_turn_id / _current_runtime</span>
 <span class="sd">    so docstring-into-prompt, DAG persistence, ask_user tracking all work the</span>
 <span class="sd">    SAME whether the caller is the web dispatcher, the CLI, research harness,</span>
 <span class="sd">    a subprocess, or a test. Standalone callers that pass nothing still get a</span>
 <span class="sd">    real (ad-hoc) session instead of silently degrading.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">db</span> <span class="o">=</span> <span class="n">default_db</span><span class="p">()</span>
-    <span class="n">sid</span> <span class="o">=</span> <span class="n">session_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;adhoc_&quot;</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
+    <span class="n">sid</span> <span class="o">=</span> <span class="n">session_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"adhoc_"</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">get_session</span><span class="p">(</span><span class="n">sid</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">db</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;cli&quot;</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"cli"</span><span class="p">)</span>
     <span class="n">rt</span> <span class="o">=</span> <span class="n">runtime</span>
     <span class="k">if</span> <span class="n">rt</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">create_runtime_if_none</span><span class="p">:</span>
         <span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">()</span>           <span class="c1"># 降级:无 provider 则 rt=None,store 仍装</span>
-    <span class="n">tid</span> <span class="o">=</span> <span class="n">turn_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;turn_&quot;</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
+    <span class="n">tid</span> <span class="o">=</span> <span class="n">turn_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"turn_"</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
 
     <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_store&quot;</span><span class="p">,</span>  <span class="n">_store</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">sid</span><span class="p">))))</span>
-    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_turn&quot;</span><span class="p">,</span>   <span class="n">_current_turn_id</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">tid</span><span class="p">)))</span>
+    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_store"</span><span class="p">,</span>  <span class="n">_store</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">sid</span><span class="p">))))</span>
+    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_turn"</span><span class="p">,</span>   <span class="n">_current_turn_id</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">tid</span><span class="p">)))</span>
     <span class="k">if</span> <span class="n">rt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_rt&quot;</span><span class="p">,</span> <span class="n">_current_runtime</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rt</span><span class="p">)))</span>
+        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_rt"</span><span class="p">,</span> <span class="n">_current_runtime</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rt</span><span class="p">)))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">SessionHandle</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="n">sid</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">,</span> <span class="n">turn_id</span><span class="o">=</span><span class="n">tid</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
@@ -566,11 +566,11 @@ OpenProgram 已有的机制(<code>openprogram --resume &lt;id&gt;</code>、webui
 </ul>
 <p>这样连续性由 <strong>id 的传递</strong> 表达,与调用几次无关:</p>
 <pre><code class="language-python"><span class="c1"># 代码 client 的理想用法</span>
-<span class="n">r1</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">&quot;survey agent reliability&quot;</span><span class="p">)</span>          <span class="c1"># session_id=None → 新建</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">"survey agent reliability"</span><span class="p">)</span>          <span class="c1"># session_id=None → 新建</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>                                   <span class="c1"># -&gt; research_ab12cd</span>
-<span class="n">r2</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">&quot;now turn it into a paper&quot;</span><span class="p">,</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">"now turn it into a paper"</span><span class="p">,</span>
                   <span class="n">session_id</span><span class="o">=</span><span class="n">r1</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>            <span class="c1"># 续同一 session,历史接上</span>
-<span class="n">r3</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">&quot;unrelated: GUI agent benchmark&quot;</span><span class="p">)</span>    <span class="c1"># 不传 → 独立新 session</span>
+<span class="n">r3</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">"unrelated: GUI agent benchmark"</span><span class="p">)</span>    <span class="c1"># 不传 → 独立新 session</span>
 </code></pre>
 <p>CLI 对应:首跑不带 <code>--session</code> → 打印新 id;<code>--session &lt;id&gt;</code>(或复用 <code>--resume</code>)续。</p>
 <h3 id="session-的结束">session 的结束<a class="header-anchor" href="#session-的结束">#</a></h3>
@@ -582,7 +582,7 @@ session 列表 / 删除)处理,不在每次调用的职责里。</p>
 <ul>
 <li><strong>dispatcher</strong>:把现有内联的 set/reset 替换成 <code>with session_context(req.session_id, ...)</code>。
 行为不变(它本来就建 session),只是去重。</li>
-<li><strong>research harness <code>main.py</code></strong>:在调 <code>research_agent</code> 外面包一层——<pre><code class="language-python"><span class="k">with</span> <span class="n">session_context</span><span class="p">(</span><span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;research_&quot;</span> <span class="o">+</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+<li><strong>research harness <code>main.py</code></strong>:在调 <code>research_agent</code> 外面包一层——<pre><code class="language-python"><span class="k">with</span> <span class="n">session_context</span><span class="p">(</span><span class="n">session_id</span><span class="o">=</span><span class="s2">"research_"</span> <span class="o">+</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">research_agent</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">h</span><span class="o">.</span><span class="n">runtime</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
 </code></pre>
 这一层让 docstring 机制在命令行也生效,<strong>不用改任何 stage 函数、不用把指令搬进

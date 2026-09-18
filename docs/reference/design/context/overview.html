@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/context/overview.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/context/overview.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -456,8 +456,8 @@ summary, and attach expansion). See §3.</li>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">seq</span><span class="p">:</span> <span class="nb">int</span>                      <span class="c1"># monotonically increasing within a session; the sole ordering key (≠ wall-clock)</span>
     <span class="n">created_at</span><span class="p">:</span> <span class="nb">float</span>
-    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;tool&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">]</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>                     <span class="c1"># tool name / model name / &quot;&quot;</span>
+    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"user"</span><span class="p">,</span> <span class="s2">"assistant"</span><span class="p">,</span> <span class="s2">"tool"</span><span class="p">,</span> <span class="s2">"system"</span><span class="p">]</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>                     <span class="c1"># tool name / model name / ""</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span>                    <span class="c1"># tool args / system text</span>
     <span class="n">output</span><span class="p">:</span> <span class="n">Any</span>                   <span class="c1"># tool result / assistant content / user content (permanent original text)</span>
     <span class="n">predecessor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>    <span class="c1"># conversation edge (user/assistant chain)        ┐ mutually exclusive</span>
@@ -518,17 +518,17 @@ are essentially identical — hanging a divergent sibling under some node's pare
     <span class="n">rules_version</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">total_tokens</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ContextItem</span><span class="p">]</span>
-    <span class="n">summary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">summary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ContextItem</span><span class="p">:</span>
     <span class="n">source_node_id</span><span class="p">:</span> <span class="nb">str</span>          <span class="c1"># corresponding DAG node (summaries use a virtual sm_&lt;hex&gt;)</span>
     <span class="n">role</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">state</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="s2">&quot;aged&quot;</span><span class="p">,</span> <span class="s2">&quot;cleared&quot;</span><span class="p">,</span> <span class="s2">&quot;summarized&quot;</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">]</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"full"</span><span class="p">,</span> <span class="s2">"aged"</span><span class="p">,</span> <span class="s2">"cleared"</span><span class="p">,</span> <span class="s2">"summarized"</span><span class="p">,</span> <span class="s2">"summary"</span><span class="p">]</span>
     <span class="n">locked</span><span class="p">:</span> <span class="nb">bool</span>                 <span class="c1"># True = rules no longer touch it</span>
     <span class="n">rendered</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">tokens</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span>                  <span class="c1"># &quot;new&quot; / &quot;tail_window&quot; / &quot;idle_60min&quot; / &quot;attached_from:X&quot;</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span>                  <span class="c1"># "new" / "tail_window" / "idle_60min" / "attached_from:X"</span>
     <span class="n">merged_into</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">is_anchor</span><span class="p">:</span> <span class="nb">bool</span>              <span class="c1"># high-value original text retained during summarization</span>
     <span class="n">attached_from</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="c1"># source commit this came from via an attach expansion</span>
@@ -644,8 +644,8 @@ retry branches / merge confluences (drawing forks from <code>parent_ids</code>).
 (<code>apps/web/components/chat/context-badge.tsx</code>) and the <code>/context</code> breakdown panel it
 opens (<code>apps/web/components/chat/context-breakdown-panel.tsx</code>). Both render the same
 server-computed record, so they agree at every moment:</p>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;total_used&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="s2">&quot;measured&quot;</span> <span class="o">|</span> <span class="s2">&quot;estimated&quot;</span><span class="p">,</span>
- <span class="s2">&quot;estimated&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;calibration&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>   <span class="c1"># calibration only when measured</span>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">"window"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"total_used"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"basis"</span><span class="p">:</span> <span class="s2">"measured"</span> <span class="o">|</span> <span class="s2">"estimated"</span><span class="p">,</span>
+ <span class="s2">"estimated"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"calibration"</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>   <span class="c1"># calibration only when measured</span>
 </code></pre>
 <p><code>openprogram/context/session_stats.py</code> builds it; <code>server.session_context_stats</code>
 serves it to <code>/context</code> and <code>server._broadcast_context_stats</code> pushes it over the

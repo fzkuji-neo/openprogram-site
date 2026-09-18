@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/policies-mvp.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/policies-mvp.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -450,16 +450,16 @@ review。先做三条把机制跑通、把每条都打磨到真有用，再加�
 <h2 id="1-dangerouscommandguard挡路">1. DangerousCommandGuard（挡路）<a class="header-anchor" href="#1-dangerouscommandguard挡路">#</a></h2>
 <p><strong>做什么</strong>：工具即将执行时，如果是危险的 shell 命令，拦下来问用户。</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">DangerousCommandGuard</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tool.before&quot;</span><span class="p">}</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;gate&quot;</span>            <span class="c1"># 挡路：在命令真正跑之前拦</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tool.before"</span><span class="p">}</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"gate"</span>            <span class="c1"># 挡路：在命令真正跑之前拦</span>
     <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;工具&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;bash&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"工具"</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"bash"</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">命令</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;命令&quot;</span><span class="p">]</span>
+        <span class="n">命令</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"命令"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">是危险命令</span><span class="p">(</span><span class="n">命令</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">Gate</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;这条命令有风险：</span><span class="si">{</span><span class="n">命令</span><span class="si">}</span><span class="se">\n</span><span class="s2">确认执行吗？&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Gate</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="sa">f</span><span class="s2">"这条命令有风险：</span><span class="si">{</span><span class="n">命令</span><span class="si">}</span><span class="se">\n</span><span class="s2">确认执行吗？"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p><strong>关键：判断要看到参数，不能只匹配关键词。</strong> 否则误报会多到用户习惯性秒点确认，护栏就废了
@@ -498,17 +498,17 @@ base64 编码、写进脚本再执行、用别的工具代替 bash）它都拦�
 <p><strong>做什么</strong>：用户/模型表示这轮要收尾了（要提交了、说做完了），如果改了核心代码却没动测试，
 提醒一下。</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">TestGapWatcher</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model.response_completed&quot;</span><span class="p">}</span>    <span class="c1"># 模型说完一轮话时检查</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;observer&quot;</span>                    <span class="c1"># 旁观：不挡路</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"model.response_completed"</span><span class="p">}</span>    <span class="c1"># 模型说完一轮话时检查</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"observer"</span>                    <span class="c1"># 旁观：不挡路</span>
     <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">1800</span>                    <span class="c1"># 同一情况半小时内不重复提</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="c1"># 只在&quot;要收尾了&quot;的时候才检查，不是每次改文件都查</span>
+        <span class="c1"># 只在"要收尾了"的时候才检查，不是每次改文件都查</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">是收尾信号</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">改了核心代码</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">动了测试</span><span class="p">:</span>
             <span class="c1"># 不直接提醒——先派个只读后台任务去核实</span>
-            <span class="k">return</span> <span class="n">Prepare</span><span class="p">(</span><span class="n">任务</span><span class="o">=</span><span class="s2">&quot;看看这个改动到底缺不缺测试、值不值得提醒&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Prepare</span><span class="p">(</span><span class="n">任务</span><span class="o">=</span><span class="s2">"看看这个改动到底缺不缺测试、值不值得提醒"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p><strong>为什么&quot;先做功课&quot;（Prepare）</strong>：一看到&quot;改了代码没测试&quot;就提醒，误报会很多——改个注释、
@@ -526,15 +526,15 @@ base64 编码、写进脚本再执行、用别的工具代替 bash）它都拦�
 <h2 id="3-unvalidatedcompletionnudge旁观-先提醒模型">3. UnvalidatedCompletionNudge（旁观 + 先提醒模型）<a class="header-anchor" href="#3-unvalidatedcompletionnudge旁观-先提醒模型">#</a></h2>
 <p><strong>做什么</strong>：模型说&quot;完成了&quot;，但这一轮根本没跑过测试/没验证，那多半是没真验。</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">UnvalidatedCompletionNudge</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model.response_completed&quot;</span><span class="p">}</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;observer&quot;</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"model.response_completed"</span><span class="p">}</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"observer"</span>
     <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">900</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;声称完成&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">本轮有文件改动</span> \
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"声称完成"</span><span class="p">]</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">本轮有文件改动</span> \
                 <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">本轮有验证动作</span><span class="p">:</span>
             <span class="c1"># 默认不打扰用户——先悄悄提醒模型自己去验</span>
-            <span class="k">return</span> <span class="n">Inject</span><span class="p">(</span><span class="s2">&quot;你说完成了，但这一轮没有验证动作。请先验证再下结论。&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Inject</span><span class="p">(</span><span class="s2">"你说完成了，但这一轮没有验证动作。请先验证再下结论。"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p><strong>为什么默认用 Inject（提醒模型）而不是 Notify（提醒用户）</strong>：这个 repo 的规范本来就要求

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/providers/models/overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/providers/models/overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -471,20 +471,20 @@ Thinking effort 的参数细节见 <a href="/docs/reference/design/providers/mod
 <h2 id="3-providerjson唯一的手写文件">3. provider.json：唯一的手写文件<a class="header-anchor" href="#3-providerjson唯一的手写文件">#</a></h2>
 <p>一个 provider 的所有人工配置集中一份，全部字段可省略：</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;deepseek&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;endpoints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;api&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;openai-completions&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;base_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://api.deepseek.com/v1&quot;</span><span class="p">}</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"deepseek"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"endpoints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"api"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openai-completions"</span><span class="p">,</span><span class="w"> </span><span class="nt">"base_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.deepseek.com/v1"</span><span class="p">}</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;thinking&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;wire_format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;effort_string&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;effort_map&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;minimal&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;minimal&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;low&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;low&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;medium&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;high&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;max&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;max&quot;</span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;default_effort&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span>
+<span class="w">  </span><span class="nt">"thinking"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"wire_format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"effort_string"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"effort_map"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"minimal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"minimal"</span><span class="p">,</span><span class="w"> </span><span class="nt">"low"</span><span class="p">:</span><span class="w"> </span><span class="s2">"low"</span><span class="p">,</span><span class="w"> </span><span class="nt">"medium"</span><span class="p">:</span><span class="w"> </span><span class="s2">"medium"</span><span class="p">,</span><span class="w"> </span><span class="nt">"high"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span><span class="p">,</span><span class="w"> </span><span class="nt">"max"</span><span class="p">:</span><span class="w"> </span><span class="s2">"max"</span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"default_effort"</span><span class="p">:</span><span class="w"> </span><span class="s2">"medium"</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;cache&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;none&quot;</span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;model_overrides&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;some-model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;X-Foo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;compat&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;no_stream_options&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}}</span>
+<span class="w">  </span><span class="nt">"cache"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"model_overrides"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"some-model"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"headers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"X-Foo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">},</span><span class="w"> </span><span class="nt">"compat"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"no_stream_options"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}}</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;models_from&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">  </span><span class="nt">"models_from"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
 <span class="p">}</span>
 </code></pre>
 <table>
@@ -585,7 +585,7 @@ Thinking effort 的参数细节见 <a href="/docs/reference/design/providers/mod
 </ul>
 <h2 id="5-后端怎么用">5. 后端怎么用<a class="header-anchor" href="#5-后端怎么用">#</a></h2>
 <pre><code class="language-python"><span class="c1"># openprogram/providers/enabled_models.py</span>
-<span class="n">ENABLED_MODELS</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Model</span><span class="p">]</span>   <span class="c1"># key = &quot;&lt;prefix&gt;/&lt;id&gt;&quot;，内容 = config 规格 + 推导字段</span>
+<span class="n">ENABLED_MODELS</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Model</span><span class="p">]</span>   <span class="c1"># key = "&lt;prefix&gt;/&lt;id&gt;"，内容 = config 规格 + 推导字段</span>
 </code></pre>
 <p>启动时从 config 加载（几十行，瞬时），config 变更后重载。<code>get_model</code> / <code>get_providers</code> / <code>get_models</code> 三个查询函数接口不变，20+ 个运行时调用方（agent、runtime、failover…）零改动。<code>get_model</code> miss 时经 <code>auth.aliases</code> 试等价 provider 名。</p>
 <p><strong>约定：系统只认启用的模型。</strong> failover 链、agent 配置引用的模型必须在启用集里；引用未启用的模型 = 配置错误，报错信息提示去设置页启用。旧会话引用已删除的模型时正常显示历史，仅不能继续用该模型发消息。</p>

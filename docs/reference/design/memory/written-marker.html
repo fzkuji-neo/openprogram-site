@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/memory/written-marker.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/memory/written-marker.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -693,8 +693,8 @@ of &quot;memory has written this turn&quot; is stored on that turn.</p>
 <h3 id="where-the-mark-goes">Where the mark goes<a class="header-anchor" href="#where-the-mark-goes">#</a></h3>
 <p>On the node, in <code>metadata</code>, under a key naming the memory provider that
 wrote it, with the memory workspace's identity as the value:</p>
-<pre><code class="language-json"><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a3f1c2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;predecessor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9d0e77&quot;</span><span class="p">,</span>
-<span class="w"> </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;memory_written_scriptorium&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;w-4f21c8e0&quot;</span><span class="p">}}</span>
+<pre><code class="language-json"><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a3f1c2"</span><span class="p">,</span><span class="w"> </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w"> </span><span class="nt">"predecessor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9d0e77"</span><span class="p">,</span>
+<span class="w"> </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"memory_written_scriptorium"</span><span class="p">:</span><span class="w"> </span><span class="s2">"w-4f21c8e0"</span><span class="p">}}</span>
 </code></pre>
 <p>The key names the provider because the memory interface is pluggable and
 two providers would each want their own answer; one boolean shared
@@ -733,7 +733,7 @@ read-side walk in <code>get_branch</code> reads the same set plus <code>rewound<
 assistant roles, non-empty text, runtime-scheduled turns dropped. The
 walk runs on that filtered list, from the end:</p>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">unwritten_turns</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="n">marked_ids</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The trailing run of records nothing has marked, oldest first.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""The trailing run of records nothing has marked, oldest first."""</span>
     <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">records</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">message_id</span> <span class="ow">in</span> <span class="n">marked_ids</span><span class="p">:</span>

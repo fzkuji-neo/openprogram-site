@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/extension-gating/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/extension-gating/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -446,16 +446,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>LLM 直接看到的每一种扩展类型，都在 agent profile 中通过<strong>相同的结构</strong>进行门控：</p>
 <pre><code class="language-yaml"><span class="c1"># agent.json</span>
 <span class="nt">tools</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;bash&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;*_dangerous&quot;</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># fnmatch 模式</span>
+<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"bash"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"*_dangerous"</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># fnmatch 模式</span>
 <span class="w">  </span><span class="nt">allowed</span><span class="p">:</span><span class="w">  </span><span class="p p-Indicator">[]</span><span class="w">                         </span><span class="c1"># 白名单；为空表示无约束</span>
 <span class="nt">skills</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;devops/*&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"devops/*"</span><span class="p p-Indicator">]</span>
 <span class="w">  </span><span class="nt">allowed</span><span class="p">:</span><span class="w">  </span><span class="p p-Indicator">[]</span>
-<span class="w">  </span><span class="nt">categories</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;research&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;writing&quot;</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># 仅 skill：按 frontmatter category 门控</span>
+<span class="w">  </span><span class="nt">categories</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"research"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"writing"</span><span class="p p-Indicator">]</span><span class="w">  </span><span class="c1"># 仅 skill：按 frontmatter category 门控</span>
 <span class="nt">mcp</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;slack/*&quot;</span><span class="p p-Indicator">]</span><span class="w">                </span><span class="c1"># 过滤名为 &quot;&lt;server&gt;__&lt;tool&gt;&quot; 的 MCP 工具</span>
+<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"slack/*"</span><span class="p p-Indicator">]</span><span class="w">                </span><span class="c1"># 过滤名为 "&lt;server&gt;__&lt;tool&gt;" 的 MCP 工具</span>
 <span class="w">  </span><span class="nt">allowed</span><span class="p">:</span><span class="w">  </span><span class="p p-Indicator">[]</span>
-<span class="w">  </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;drawio*&quot;</span><span class="p p-Indicator">]</span><span class="w">                </span><span class="c1"># 无任何匹配时该 agent 不可用</span>
+<span class="w">  </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"drawio*"</span><span class="p p-Indicator">]</span><span class="w">                </span><span class="c1"># 无任何匹配时该 agent 不可用</span>
 </code></pre>
 <p>Plugin <strong>不在</strong>这个列表中 —— plugin 是宿主层面的“贡献者”。门控作用于 plugin 所贡献的东西（skills / tools / MCP），而非 plugin 本身。</p>
 <hr />
@@ -506,29 +506,29 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h3 id="1-客服-agent-善于对话无编辑类工具">1. 客服 agent —— 善于对话，无编辑类工具<a class="header-anchor" href="#1-客服-agent-善于对话无编辑类工具">#</a></h3>
 <pre><code class="language-yaml"><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">customer-service</span>
 <span class="nt">tools</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;write&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;edit&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;execute_*&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;apply_patch&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"write"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"edit"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"execute_*"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"apply_patch"</span><span class="p p-Indicator">]</span>
 <span class="nt">skills</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">categories</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;customer-service&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;writing&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">categories</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"customer-service"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"writing"</span><span class="p p-Indicator">]</span>
 <span class="nt">mcp</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;*&quot;</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># 完全不启用 MCP</span>
+<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"*"</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># 完全不启用 MCP</span>
 </code></pre>
 <p>效果：LLM 只看到只读类 + 检索类工具，只看到标记为客服或写作的技能，没有任何 MCP 服务器。</p>
 <h3 id="2-devops-agent-除破坏性生产技能外全部启用">2. DevOps agent —— 除破坏性生产技能外全部启用<a class="header-anchor" href="#2-devops-agent-除破坏性生产技能外全部启用">#</a></h3>
 <pre><code class="language-yaml"><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">devops</span>
 <span class="nt">skills</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;prod-deploy&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;drop-database&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">disabled</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"prod-deploy"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"drop-database"</span><span class="p p-Indicator">]</span>
 <span class="nt">mcp</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;github*&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;k8s*&quot;</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># 若未配置这些则该 agent 不可用</span>
+<span class="w">  </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"github*"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"k8s*"</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># 若未配置这些则该 agent 不可用</span>
 </code></pre>
 <p>效果：仅当安装了 GitHub + k8s MCP 时该 agent 才加载；否则 dispatcher 会跳过它。两个特定技能被列入黑名单。</p>
 <h3 id="3-研究-agent-偏重读取mcp-范围狭窄">3. 研究 agent —— 偏重读取，MCP 范围狭窄<a class="header-anchor" href="#3-研究-agent-偏重读取mcp-范围狭窄">#</a></h3>
 <pre><code class="language-yaml"><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">research</span>
 <span class="nt">tools</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">allowed</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;read&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;grep&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;glob&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;web_search&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;web_fetch&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">allowed</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"read"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"grep"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"glob"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"web_search"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"web_fetch"</span><span class="p p-Indicator">]</span>
 <span class="nt">skills</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">categories</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;research&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">categories</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"research"</span><span class="p p-Indicator">]</span>
 <span class="nt">mcp</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">allowed</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;arxiv*&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;scholar*&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">allowed</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"arxiv*"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"scholar*"</span><span class="p p-Indicator">]</span>
 </code></pre>
 <p>效果：工具收缩为读取/检索五个，只看到标记为 research 的技能，只看到 arxiv/scholar 的 MCP。</p>
 <hr />

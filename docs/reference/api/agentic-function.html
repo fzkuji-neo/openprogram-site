@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/api/agentic-function.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,8 +152,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;One-line summary of what f does.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">}])</span>
+<span class="w">    </span><span class="sd">"""One-line summary of what f does."""</span>
+    <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">..."</span><span class="p">}])</span>
 </code></pre>
 <p>You can use bare <code>@agentic_function</code> or the parameterized form <code>@agentic_function(...)</code>.</p>
 <h2 id="decorator-parameters">Decorator parameters<a class="header-anchor" href="#decorator-parameters">#</a></h2>
@@ -357,8 +357,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="nd">@agentic_function</span><span class="p">(</span><span class="n">resumable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">report</span><span class="p">(</span><span class="n">topic</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="n">research</span> <span class="o">=</span> <span class="n">step</span><span class="p">(</span><span class="s2">&quot;research&quot;</span><span class="p">,</span> <span class="n">collect_research</span><span class="p">,</span> <span class="n">topic</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">step</span><span class="p">(</span><span class="s2">&quot;write&quot;</span><span class="p">,</span> <span class="n">write_report</span><span class="p">,</span> <span class="n">research</span><span class="p">)</span>
+    <span class="n">research</span> <span class="o">=</span> <span class="n">step</span><span class="p">(</span><span class="s2">"research"</span><span class="p">,</span> <span class="n">collect_research</span><span class="p">,</span> <span class="n">topic</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">step</span><span class="p">(</span><span class="s2">"write"</span><span class="p">,</span> <span class="n">write_report</span><span class="p">,</span> <span class="n">research</span><span class="p">)</span>
 </code></pre>
 <p>Define <code>collect_research</code> and <code>write_report</code> as ordinary source-defined functions. Step inputs and results must be JSON-compatible. A completed step returns its saved result on continuation, without calling its action again. Repeated step names are distinguished by occurrence; keep their order and completed inputs stable. Put nested orchestration in <code>workflow(&quot;name&quot;, function, *args, **kwargs)</code>. <code>parallel({&quot;branch&quot;: (function, args, kwargs)})</code> runs named workflows concurrently and waits for every branch before releasing ownership. Each branch has independent durable progress.</p>
 <p>In Settings, <code>execution.code_change_policy</code> selects <code>keep_original</code> (default) or <code>use_latest</code>. The task's Continue control can override that policy. Python function and helper source is retained with the execution. After adopting B, a later restart with <code>keep_original</code> retains B, even if the installed code is now C. A candidate that fails compatibility before adopting any remaining step does not replace the retained active version. Imported module identities are checked; an unavailable or changed pinned dependency pauses recovery. With <code>use_latest</code>, completed results remain saved and the current function executes the remaining compatible steps. Deleted or reordered recorded steps and changed completed inputs pause the task instead of repeating an action. Changes to permissions or tool parameter contracts still require compatibility checks. If B needs a different local state shape, write that conversion as pure orchestration over saved JSON before its remaining steps.</p>

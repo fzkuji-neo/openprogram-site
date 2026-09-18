@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/extension-gating/implementation.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/extension-gating/implementation.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -433,7 +433,7 @@ openprogram/programs/
     <span class="c1"># fnmatch.fnmatchcase 通配符匹配</span>
     <span class="c1"># 空/假值 patterns → False（调用方意为“无约束”）</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">gate</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">disabled</span><span class="o">=</span><span class="p">(),</span> <span class="n">allowed</span><span class="o">=</span><span class="p">(),</span> <span class="n">categories</span><span class="o">=</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gate</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">disabled</span><span class="o">=</span><span class="p">(),</span> <span class="n">allowed</span><span class="o">=</span><span class="p">(),</span> <span class="n">categories</span><span class="o">=</span><span class="p">())</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
     <span class="c1"># 项目通过则返回 None，否则返回拒绝原因字符串</span>
     <span class="c1"># 解析顺序：disabled → allowed → categories</span>
 
@@ -447,16 +447,16 @@ openprogram/programs/
 <pre><code class="language-python"><span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">AgentSpec</span><span class="p">:</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
     <span class="o">...</span>
     <span class="n">skills</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;disabled&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">"disabled"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"categories"</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">})</span>
     <span class="n">tools</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;disabled&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">"disabled"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">})</span>
     <span class="n">mcp</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;disabled&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;allowed&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">"disabled"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"allowed"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"required"</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">})</span>
 </code></pre>
 <p>每个块都是普通的 <code>dict</code>，因此 JSON 可轻松往返序列化。默认值全部为空（无约束）。</p>
@@ -473,10 +473,10 @@ openprogram/programs/
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agent.management.gating</span><span class="w"> </span><span class="kn">import</span> <span class="n">gate</span> <span class="k">as</span> <span class="n">_gate</span>
 <span class="n">gate_error</span> <span class="o">=</span> <span class="n">_gate</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="n">resolved</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="n">resolved</span><span class="o">.</span><span class="n">category</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-    <span class="n">disabled</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span>
-    <span class="n">allowed</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allowed&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span>
-    <span class="n">categories</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;categories&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span>
+    <span class="n">category</span><span class="o">=</span><span class="n">resolved</span><span class="o">.</span><span class="n">category</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="n">disabled</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"disabled"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span>
+    <span class="n">allowed</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"allowed"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span>
+    <span class="n">categories</span><span class="o">=</span><span class="n">prof</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"categories"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[],</span>
 <span class="p">)</span>
 <span class="k">if</span> <span class="n">gate_error</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">PermissionError</span><span class="p">(</span><span class="n">gate_error</span><span class="p">)</span>
@@ -491,8 +491,8 @@ openprogram/programs/
 </ul>
 <p>通配符门控发生在 238-262 行：</p>
 <pre><code class="language-python"><span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wanted</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-    <span class="n">disabled_patterns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">wanted</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[])</span>
-    <span class="n">allowed_patterns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">wanted</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allowed&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[])</span>
+    <span class="n">disabled_patterns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">wanted</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"disabled"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[])</span>
+    <span class="n">allowed_patterns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">wanted</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"allowed"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[])</span>
     <span class="o">...</span>
     <span class="n">names</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">DEFAULT_TOOLS</span>
@@ -507,7 +507,7 @@ openprogram/programs/
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">_apply_mcp_gate</span><span class="p">(</span><span class="n">tool_list</span><span class="p">):</span>
     <span class="o">...</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_server_of</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">in</span> <span class="n">name</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"__"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="s2">"__"</span> <span class="ow">in</span> <span class="n">name</span> <span class="k">else</span> <span class="s2">""</span>
     <span class="n">seen_servers</span> <span class="o">=</span> <span class="p">{</span><span class="n">_server_of</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tool_list</span> <span class="k">if</span> <span class="n">_server_of</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">)}</span>
     <span class="n">missing</span> <span class="o">=</span> <span class="n">check_required</span><span class="p">(</span><span class="n">seen_servers</span><span class="p">,</span> <span class="n">required</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>

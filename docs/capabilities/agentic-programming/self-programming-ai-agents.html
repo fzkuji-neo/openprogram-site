@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,14 +152,14 @@ execution, and normal source control.</p>
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">review_then_revise</span><span class="p">(</span><span class="n">draft</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Review a draft, then revise it against the review.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Review a draft, then revise it against the review."""</span>
     <span class="n">review</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-        <span class="n">content</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Identify concrete defects in this draft:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">toolset</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="n">content</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Identify concrete defects in this draft:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">toolset</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-        <span class="n">content</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Revise the draft using this review:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">toolset</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="n">content</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Revise the draft using this review:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">toolset</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
     <span class="p">)</span>
 </code></pre>
 <p>The Python body fixes the required order. The model handles the two semantic

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -445,15 +445,15 @@ functions into the shared tool registry. The list is also the harness's
 declared public surface.</p>
 <p><strong>Required pattern — degrade gracefully, never crash the host:</strong></p>
 <pre><code class="language-python"><span class="c1"># &lt;pkg&gt;/agentics/__init__.py</span>
-<span class="sd">&quot;&quot;&quot;Entry point for the Foo harness.&quot;&quot;&quot;</span>
+<span class="sd">"""Entry point for the Foo harness."""</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">.foo_agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">foo_agent</span><span class="p">,</span> <span class="n">foo_helper</span>
     <span class="n">AGENTIC_FUNCTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">foo_agent</span><span class="p">,</span> <span class="n">foo_helper</span><span class="p">]</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>          <span class="c1"># missing optional dep, unsupported platform, …</span>
-    <span class="c1"># The host imports this module during discovery. If the harness can&#39;t</span>
-    <span class="c1"># load on this machine (a heavy dep isn&#39;t installed, this OS has no</span>
-    <span class="c1"># backend, …), expose NOTHING rather than raising — &quot;can run → listed,</span>
-    <span class="c1"># can&#39;t → skipped&quot;, per the discovery contract. The host logs the</span>
+    <span class="c1"># The host imports this module during discovery. If the harness can't</span>
+    <span class="c1"># load on this machine (a heavy dep isn't installed, this OS has no</span>
+    <span class="c1"># backend, …), expose NOTHING rather than raising — "can run → listed,</span>
+    <span class="c1"># can't → skipped", per the discovery contract. The host logs the</span>
     <span class="c1"># cause under OPENPROGRAM_DEBUG_REGISTRY=1.</span>
     <span class="n">AGENTIC_FUNCTIONS</span> <span class="o">=</span> <span class="p">[]</span>
 </code></pre>
@@ -485,7 +485,7 @@ work dir; Wiki: a vault path; GUI: vision model + platform backend). The
 <strong>standard is the mechanism, not the parameters</strong>:</p>
 <ol>
 <li><strong>Per-call parameters first.</strong> Anything that varies per invocation is a
-function argument with a sane default:<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo_agent&quot;</span><span class="p">)</span>
+function argument with a sane default:<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"foo_agent"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">foo_agent</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span> <span class="o">...</span>
 </code></pre>
 </li>
@@ -523,7 +523,7 @@ an environment that already has openprogram&quot;), not a hard dep.</li>
 <strong>harness's</strong> install step (run when the user installs the harness),
 not OpenProgram's concern — the host never auto-installs harness deps.</li>
 <li><strong>Heavy / native deps go behind an extra</strong> so a light clone stays light:<pre><code class="language-toml"><span class="k">[project.optional-dependencies]</span>
-<span class="n">ocr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;easyocr&quot;</span><span class="p">]</span>
+<span class="n">ocr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"easyocr"</span><span class="p">]</span>
 </code></pre>
 </li>
 <li>The graceful-degrade <code>try/except</code> in §1 is what lets a harness be

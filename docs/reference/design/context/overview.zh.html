@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/context/overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/context/overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -455,8 +455,8 @@ summary、attach 展开后的结果)。见 §三。</li>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">seq</span><span class="p">:</span> <span class="nb">int</span>                      <span class="c1"># session 内单调递增,排序唯一依据(≠ wall-clock)</span>
     <span class="n">created_at</span><span class="p">:</span> <span class="nb">float</span>
-    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="s2">&quot;tool&quot;</span><span class="p">,</span> <span class="s2">&quot;system&quot;</span><span class="p">]</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>                     <span class="c1"># tool 名 / model 名 / &quot;&quot;</span>
+    <span class="n">role</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"user"</span><span class="p">,</span> <span class="s2">"assistant"</span><span class="p">,</span> <span class="s2">"tool"</span><span class="p">,</span> <span class="s2">"system"</span><span class="p">]</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>                     <span class="c1"># tool 名 / model 名 / ""</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span>                    <span class="c1"># tool args / system text</span>
     <span class="n">output</span><span class="p">:</span> <span class="n">Any</span>                   <span class="c1"># tool result / assistant 内容 / user 内容(永久原文)</span>
     <span class="n">predecessor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>    <span class="c1"># 对话边(user/assistant 链)        ┐ 互斥</span>
@@ -517,17 +517,17 @@ edit/retry</strong>(避免把活动执行树挂到即将&quot;变旧&quot;的节
     <span class="n">rules_version</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">total_tokens</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ContextItem</span><span class="p">]</span>
-    <span class="n">summary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">summary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ContextItem</span><span class="p">:</span>
     <span class="n">source_node_id</span><span class="p">:</span> <span class="nb">str</span>          <span class="c1"># 对应 DAG 节点(summary 用虚拟 sm_&lt;hex&gt;)</span>
     <span class="n">role</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">state</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="s2">&quot;aged&quot;</span><span class="p">,</span> <span class="s2">&quot;cleared&quot;</span><span class="p">,</span> <span class="s2">&quot;summarized&quot;</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">]</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"full"</span><span class="p">,</span> <span class="s2">"aged"</span><span class="p">,</span> <span class="s2">"cleared"</span><span class="p">,</span> <span class="s2">"summarized"</span><span class="p">,</span> <span class="s2">"summary"</span><span class="p">]</span>
     <span class="n">locked</span><span class="p">:</span> <span class="nb">bool</span>                 <span class="c1"># True = 规则不再动它</span>
     <span class="n">rendered</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">tokens</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span>                  <span class="c1"># &quot;new&quot; / &quot;tail_window&quot; / &quot;idle_60min&quot; / &quot;attached_from:X&quot;</span>
+    <span class="n">reason</span><span class="p">:</span> <span class="nb">str</span>                  <span class="c1"># "new" / "tail_window" / "idle_60min" / "attached_from:X"</span>
     <span class="n">merged_into</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">is_anchor</span><span class="p">:</span> <span class="nb">bool</span>              <span class="c1"># summary 时保留的高价值原文</span>
     <span class="n">attached_from</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="c1"># 来自某个 attach 展开的 source commit</span>
@@ -643,8 +643,8 @@ retry 分支 / merge 汇流(靠 <code>parent_ids</code> 画分叉)。</li>
 （<code>apps/web/components/chat/context-badge.tsx</code>）和点开它弹出的 <code>/context</code> 分解面板
 （<code>apps/web/components/chat/context-breakdown-panel.tsx</code>）。两者渲染的是服务端算好的
 同一份记录，因此任何时刻都一致：</p>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;window&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;total_used&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="s2">&quot;measured&quot;</span> <span class="o">|</span> <span class="s2">&quot;estimated&quot;</span><span class="p">,</span>
- <span class="s2">&quot;estimated&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">&quot;calibration&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>   <span class="c1"># calibration 仅在 measured 时给出</span>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">"window"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"total_used"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"basis"</span><span class="p">:</span> <span class="s2">"measured"</span> <span class="o">|</span> <span class="s2">"estimated"</span><span class="p">,</span>
+ <span class="s2">"estimated"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"calibration"</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>   <span class="c1"># calibration 仅在 measured 时给出</span>
 </code></pre>
 <p>由 <code>openprogram/context/session_stats.py</code> 构建，<code>server.session_context_stats</code>
 供给 <code>/context</code>，<code>server._broadcast_context_stats</code> 通过 <code>context_stats</code> WS 帧推送。

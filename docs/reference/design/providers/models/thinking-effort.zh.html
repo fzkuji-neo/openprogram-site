@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/providers/models/thinking-effort.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/providers/models/thinking-effort.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -561,8 +561,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-python"><span class="c1"># 先尝试 thinking.json（优先级 1-2）</span>
 <span class="n">levels</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">variant</span> <span class="o">=</span> <span class="n">derive_thinking_fields</span><span class="p">(</span><span class="n">provider_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">reasoning</span><span class="p">)</span>
 <span class="c1"># 如果 thinking.json 没给出结果，看 Fetch 数据（优先级 3）</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">levels</span> <span class="ow">and</span> <span class="n">raw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;thinking_levels&quot;</span><span class="p">):</span>
-    <span class="n">levels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;thinking_levels&quot;</span><span class="p">])</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">levels</span> <span class="ow">and</span> <span class="n">raw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"thinking_levels"</span><span class="p">):</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="s2">"thinking_levels"</span><span class="p">])</span>
 <span class="c1"># 优先级 4 的 fallback 已经包含在 derive_thinking_fields 内部</span>
 </code></pre>
 <p><strong>单一数据源原则：</strong> <code>_thinking.py</code>（UI picker）、<code>list_enabled_models</code>（模型列表）、<code>list_models_for_provider</code>（provider 详情）三个消费方全部走同一条推导路径。<code>_thinking.py</code> 委托给 <code>list_models_for_provider</code>，<code>list_enabled_models</code> 也委托给它。不存在分叉。</p>
@@ -572,19 +572,19 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <span class="n">spec</span> <span class="o">=</span> <span class="n">get_thinking_spec</span><span class="p">(</span><span class="n">provider_id</span><span class="p">)</span>
 
     <span class="c1"># 1. 看 model_overrides（精确到模型）</span>
-    <span class="n">override</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model_overrides&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+    <span class="n">override</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"model_overrides"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
-        <span class="n">emap</span> <span class="o">=</span> <span class="n">override</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;effort_map&quot;</span><span class="p">)</span>
+        <span class="n">emap</span> <span class="o">=</span> <span class="n">override</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"effort_map"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">emap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">emap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span> <span class="k">if</span> <span class="n">emap</span> <span class="k">else</span> <span class="kc">None</span>  <span class="c1"># 空 dict = 不支持</span>
 
     <span class="c1"># 2. provider 级别翻译</span>
-    <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="s2">&quot;wire_format&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;effort_string&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">spec</span><span class="p">[</span><span class="s2">&quot;effort_map&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="s2">&quot;wire_format&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;budget_tokens&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">spec</span><span class="p">[</span><span class="s2">&quot;budget_map&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"wire_format"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"effort_string"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"effort_map"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"wire_format"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"budget_tokens"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"budget_map"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># wire_format == &quot;none&quot;</span>
+    <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># wire_format == "none"</span>
 </code></pre>
 <p>返回值直接塞进各 provider 的 API 请求体。每个 provider 的 <code>stream_simple()</code> 只需要关心&quot;拿到一个值，放到请求的哪个字段&quot;，不需要关心翻译逻辑。</p>
 <h2 id="7-探测策略">7. 探测策略<a class="header-anchor" href="#7-探测策略">#</a></h2>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -204,10 +204,10 @@ runtime，也不写 <code>if</code>：</p>
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">route_message</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">decision</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;Pick one way to handle this message.&quot;</span><span class="p">,</span> <span class="p">{</span>
-        <span class="s2">&quot;analyze&quot;</span><span class="p">:</span>  <span class="n">analyze_sentiment</span><span class="p">,</span>        <span class="c1"># 一个函数</span>
-        <span class="s2">&quot;fallback&quot;</span><span class="p">:</span> <span class="n">fallback_reply</span><span class="p">,</span>           <span class="c1"># 一个函数</span>
-        <span class="s2">&quot;done&quot;</span><span class="p">:</span>     <span class="s2">&quot;CONVERSATION_OVER&quot;</span><span class="p">,</span>      <span class="c1"># 一个值</span>
+    <span class="k">return</span> <span class="n">decision</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">"Pick one way to handle this message."</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s2">"analyze"</span><span class="p">:</span>  <span class="n">analyze_sentiment</span><span class="p">,</span>        <span class="c1"># 一个函数</span>
+        <span class="s2">"fallback"</span><span class="p">:</span> <span class="n">fallback_reply</span><span class="p">,</span>           <span class="c1"># 一个函数</span>
+        <span class="s2">"done"</span><span class="p">:</span>     <span class="s2">"CONVERSATION_OVER"</span><span class="p">,</span>      <span class="c1"># 一个值</span>
     <span class="p">})</span>
 </code></pre>
 <p><code>decision.make</code> 渲染菜单、调用模型、解析回复，然后
@@ -223,14 +223,14 @@ runtime，也不写 <code>if</code>：</p>
 <strong>收尾</strong>的返回必须是一个决策。使用 <code>exec</code> 的 <code>choices=</code> 参数：</p>
 <pre><code class="language-python"><span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">handle_ticket</span><span class="p">(</span><span class="n">ticket</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read the ticket, look things up, then decide which flow to route to.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Read the ticket, look things up, then decide which flow to route to."""</span>
     <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Handle this ticket: </span><span class="si">{</span><span class="n">ticket</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">toolset</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>          <span class="c1"># 之前：模型用 tool 做调研、执行命令</span>
+        <span class="sa">f</span><span class="s2">"Handle this ticket: </span><span class="si">{</span><span class="n">ticket</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">toolset</span><span class="o">=</span><span class="s2">"default"</span><span class="p">,</span>          <span class="c1"># 之前：模型用 tool 做调研、执行命令</span>
         <span class="n">choices</span><span class="o">=</span><span class="p">{</span>                   <span class="c1"># 收尾：返回必须是其中之一</span>
-            <span class="s2">&quot;refund&quot;</span><span class="p">:</span>    <span class="n">issue_refund</span><span class="p">,</span>
-            <span class="s2">&quot;escalate&quot;</span><span class="p">:</span>  <span class="n">escalate_to_human</span><span class="p">,</span>
-            <span class="s2">&quot;close&quot;</span><span class="p">:</span>     <span class="p">{</span><span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;closed&quot;</span><span class="p">},</span>
+            <span class="s2">"refund"</span><span class="p">:</span>    <span class="n">issue_refund</span><span class="p">,</span>
+            <span class="s2">"escalate"</span><span class="p">:</span>  <span class="n">escalate_to_human</span><span class="p">,</span>
+            <span class="s2">"close"</span><span class="p">:</span>     <span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"closed"</span><span class="p">},</span>
         <span class="p">},</span>
     <span class="p">)</span>
 </code></pre>
@@ -276,13 +276,13 @@ prompt，然后跑一轮正常的 exec —— 来自 <code>tools</code> /
 </table>
 <p><code>options</code> 可以是 dict 或 list。</p>
 <p><strong>dict 形式</strong> <code>{name: handler}</code>，其中 key 是选项名：</p>
-<pre><code class="language-python"><span class="n">decision</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="p">{</span>
-    <span class="s2">&quot;retry&quot;</span><span class="p">:</span>     <span class="n">retry_fn</span><span class="p">,</span>                            <span class="c1"># 函数选项</span>
-    <span class="s2">&quot;skip&quot;</span><span class="p">:</span>      <span class="s2">&quot;SKIPPED&quot;</span><span class="p">,</span>                           <span class="c1"># 值选项</span>
-    <span class="s2">&quot;abort&quot;</span><span class="p">:</span>     <span class="p">(</span><span class="n">AbortSignal</span><span class="p">(),</span> <span class="s2">&quot;pick when stuck&quot;</span><span class="p">),</span>  <span class="c1"># 值选项 + 描述</span>
-    <span class="s2">&quot;emit_plan&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Produce a plan.&quot;</span><span class="p">,</span> <span class="p">{</span>                <span class="c1"># schema 选项：(&quot;description&quot;, schema)</span>
-        <span class="s2">&quot;steps&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">}],</span>
-        <span class="s2">&quot;rationale&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<pre><code class="language-python"><span class="n">decision</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">"..."</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">"retry"</span><span class="p">:</span>     <span class="n">retry_fn</span><span class="p">,</span>                            <span class="c1"># 函数选项</span>
+    <span class="s2">"skip"</span><span class="p">:</span>      <span class="s2">"SKIPPED"</span><span class="p">,</span>                           <span class="c1"># 值选项</span>
+    <span class="s2">"abort"</span><span class="p">:</span>     <span class="p">(</span><span class="n">AbortSignal</span><span class="p">(),</span> <span class="s2">"pick when stuck"</span><span class="p">),</span>  <span class="c1"># 值选项 + 描述</span>
+    <span class="s2">"emit_plan"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"Produce a plan."</span><span class="p">,</span> <span class="p">{</span>                <span class="c1"># schema 选项：("description", schema)</span>
+        <span class="s2">"steps"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"action"</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">"target"</span><span class="p">:</span> <span class="nb">str</span><span class="p">}],</span>
+        <span class="s2">"rationale"</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">}),</span>
 <span class="p">})</span>
 </code></pre>

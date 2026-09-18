@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/ui/state-layer.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/ui/state-layer.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -706,7 +706,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>如果写成一个普通的全局布尔值 <code>contextPanelOpen</code>，分屏会渲染两个徽标，都订阅那一个布尔
 值。点任意一个徽标会<strong>同时</strong>弹出两个浮窗，关掉一个则两个都关。</p>
 <p>全局分键的答案是：不存&quot;开没开&quot;，改存<strong>开在哪个会话上</strong>：</p>
-<pre><code class="language-ts"><span class="cm">/** /context 浮动弹窗：存&quot;哪个会话的面板开着&quot;（null = 关）。分屏时</span>
+<pre><code class="language-ts"><span class="cm">/** /context 浮动弹窗：存"哪个会话的面板开着"（null = 关）。分屏时</span>
 <span class="cm"> *  两个 composer 各渲染一个 badge，按会话区分才不会两边同时弹。*/</span>
 <span class="nx">contextPanelFor</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 </code></pre>
@@ -725,7 +725,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>镜像还会渗进组件，组件不得不按&quot;是否绑定了明确的会话&quot;分支
 （<code>apps/web/components/chat/composer/index.tsx:166</code>）：</p>
 <pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useSessionStore</span><span class="p">((</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span>
-<span class="w">  </span><span class="nx">bound</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">composerInput</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">composerDrafts</span><span class="p">[</span><span class="nx">bound</span><span class="p">]</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+<span class="w">  </span><span class="nx">bound</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">composerInput</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">composerDrafts</span><span class="p">[</span><span class="nx">bound</span><span class="p">]</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s2">""</span><span class="p">),</span>
 <span class="p">);</span>
 </code></pre>
 <p>同样的三行三元在 <code>fast</code> 和 <code>unattended</code> 上重复，在 <code>composer/state/use-composer-settings.ts</code> 里又重复一次。

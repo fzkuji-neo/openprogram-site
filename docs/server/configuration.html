@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/server/configuration.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/server/configuration.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -226,7 +226,7 @@ request â€” that is the terminal UI, <code>curl</code>, and the Python clients â
 passes.</p>
 <p>If you front the server with something you run yourself, a reverse proxy on
 your own domain, add that origin so its pages are accepted too:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>web.allowed_origins<span class="w"> </span><span class="s1">&#39;[&quot;https://agent.example.com&quot;]&#39;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>web.allowed_origins<span class="w"> </span><span class="s1">'["https://agent.example.com"]'</span>
 </code></pre>
 <h2 id="network-proxy">Network proxy<a class="header-anchor" href="#network-proxy">#</a></h2>
 <p>All LLM provider traffic resolves its proxy the same way, in this order:</p>

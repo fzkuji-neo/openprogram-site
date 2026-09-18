@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/providers/models/thinking-effort.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/providers/models/thinking-effort.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -562,8 +562,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <pre><code class="language-python"><span class="c1"># first try thinking.json (priority 1-2)</span>
 <span class="n">levels</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">variant</span> <span class="o">=</span> <span class="n">derive_thinking_fields</span><span class="p">(</span><span class="n">provider_id</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">reasoning</span><span class="p">)</span>
 <span class="c1"># if thinking.json gives no result, look at Fetch data (priority 3)</span>
-<span class="k">if</span> <span class="ow">not</span> <span class="n">levels</span> <span class="ow">and</span> <span class="n">raw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;thinking_levels&quot;</span><span class="p">):</span>
-    <span class="n">levels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;thinking_levels&quot;</span><span class="p">])</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">levels</span> <span class="ow">and</span> <span class="n">raw</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"thinking_levels"</span><span class="p">):</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="s2">"thinking_levels"</span><span class="p">])</span>
 <span class="c1"># the priority 4 fallback is already included inside derive_thinking_fields</span>
 </code></pre>
 <p><strong>Single source of truth:</strong> all three consumers — <code>_thinking.py</code> (the UI picker), <code>list_enabled_models</code> (the model list), and <code>list_models_for_provider</code> (provider details) — go through the same derivation path. <code>_thinking.py</code> delegates to <code>list_models_for_provider</code>, and <code>list_enabled_models</code> delegates to it as well. There is no divergence.</p>
@@ -573,19 +573,19 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <span class="n">spec</span> <span class="o">=</span> <span class="n">get_thinking_spec</span><span class="p">(</span><span class="n">provider_id</span><span class="p">)</span>
 
     <span class="c1"># 1. check model_overrides (specific to the model)</span>
-    <span class="n">override</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model_overrides&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+    <span class="n">override</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"model_overrides"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
-        <span class="n">emap</span> <span class="o">=</span> <span class="n">override</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;effort_map&quot;</span><span class="p">)</span>
+        <span class="n">emap</span> <span class="o">=</span> <span class="n">override</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"effort_map"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">emap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">emap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span> <span class="k">if</span> <span class="n">emap</span> <span class="k">else</span> <span class="kc">None</span>  <span class="c1"># empty dict = not supported</span>
 
     <span class="c1"># 2. provider-level translation</span>
-    <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="s2">&quot;wire_format&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;effort_string&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">spec</span><span class="p">[</span><span class="s2">&quot;effort_map&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="s2">&quot;wire_format&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;budget_tokens&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">spec</span><span class="p">[</span><span class="s2">&quot;budget_map&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"wire_format"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"effort_string"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"effort_map"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"wire_format"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"budget_tokens"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"budget_map"</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># wire_format == &quot;none&quot;</span>
+    <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># wire_format == "none"</span>
 </code></pre>
 <p>The return value is inserted directly into each provider's API request body. Each provider's <code>stream_simple()</code> only needs to worry about &quot;given a value, which request field to put it in,&quot; not about the translation logic.</p>
 <h2 id="7-probing-strategy">7. Probing Strategy<a class="header-anchor" href="#7-probing-strategy">#</a></h2>

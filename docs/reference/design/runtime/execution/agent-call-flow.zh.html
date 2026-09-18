@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-call-flow.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-call-flow.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -769,8 +769,8 @@ AgentOptions,让 exec 可注入流(<code>test_exec_stream_fn_injection</code>)�
 </tbody>
 </table>
 <p>原语签名升级(可选参数,exec 不传、dispatcher 传):</p>
-<pre><code class="language-python"><span class="n">open_model_call_node</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;llm&quot;</span><span class="p">,</span> <span class="n">parent_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">content_text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">node_id</span>
-<span class="n">close_model_call_node</span><span class="p">(</span><span class="n">node_id</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">reply</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="n">blocks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">usage</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">open_model_call_node</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">"llm"</span><span class="p">,</span> <span class="n">parent_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">content_text</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">node_id</span>
+<span class="n">close_model_call_node</span><span class="p">(</span><span class="n">node_id</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">reply</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s2">"success"</span><span class="p">,</span> <span class="n">blocks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">usage</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </code></pre>
 <p>前端无需改动:<code>_node_to_msg</code> 仍输出 &quot;assistant&quot;,前端读的字段(blocks/token/parent_id)都还在,只是改由统一原语写。</p>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>

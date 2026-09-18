@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/event-layer.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/event-layer.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -490,7 +490,7 @@ store 的普通日志）。想&quot;在某个时机做点什么&quot;，得先�
     <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>        <span class="c1"># 哪类事件，见 §2</span>
     <span class="n">origin</span><span class="p">:</span> <span class="nb">str</span>      <span class="c1"># 谁触发的：user / agent / tool / system / proactive</span>
     <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span>    <span class="c1"># 事件内容（命令、文件路径、哪个账号被限流……）</span>
-    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span>   <span class="c1"># 开放口袋：{&quot;session&quot;:..., &quot;turn&quot;:...}，需要才填</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="nb">dict</span>   <span class="c1"># 开放口袋：{"session":..., "turn":...}，需要才填</span>
 </code></pre>
 <p>session/turn 进口袋而非固定字段：它们不是事件的固有属性，是外挂的关联，且对一半事件（auth、
 channel）根本没有意义。开放 dict 也让以后新增关联维度不用改模型。</p>
@@ -686,9 +686,9 @@ channel）根本没有意义。开放 dict 也让以后新增关联维度不用�
 </table>
 <p>shell 订阅者来自 config.json 顶层 <code>hooks</code> 键（<code>config_schema.py</code> 登记为 <code>hooks</code> 设置项）：</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;hooks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;turn.stop&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python check_done.py&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">}],</span>
-<span class="w">    </span><span class="nt">&quot;turn.end&quot;</span><span class="p">:</span><span class="w">  </span><span class="p">[{</span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;notify-send &#39;turn finished&#39;&quot;</span><span class="p">}]</span>
+<span class="w">  </span><span class="nt">"hooks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"turn.stop"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python check_done.py"</span><span class="p">,</span><span class="w"> </span><span class="nt">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">}],</span>
+<span class="w">    </span><span class="nt">"turn.end"</span><span class="p">:</span><span class="w">  </span><span class="p">[{</span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"notify-send 'turn finished'"</span><span class="p">}]</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/framework-control.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/framework-control.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -145,8 +145,8 @@ management without asking an Agent to click OpenProgram's interface. The
 <code>resource</code> tool operates persistent environments: Web pages, Terminals and
 installed applications.</p>
 <h2 id="discover-a-business-operation">Discover a business operation<a class="header-anchor" href="#discover-a-business-operation">#</a></h2>
-<pre><code class="language-python"><span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;describe&quot;</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;settings&quot;</span><span class="p">)</span>
-<span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;invoke&quot;</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;GET /api/settings&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">"describe"</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">"settings"</span><span class="p">)</span>
+<span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">"invoke"</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">"GET /api/settings"</span><span class="p">)</span>
 </code></pre>
 <p>Use the exact operation ID returned by discovery. HTTP arguments use <code>path</code>
 for named path parameters, <code>query</code> for query parameters, and <code>body</code> for JSON.
@@ -154,18 +154,18 @@ Binary endpoints accept <code>content_base64</code> and <code>content_type</code
 HTTP status; an unsuccessful response does not mean a mutation is safe to retry.
 Discovery supports <code>arguments={&quot;offset&quot;: 50}</code> and returns <code>next_offset</code>.</p>
 <p>Existing WebSocket business commands also have request/response backend entries:</p>
-<pre><code class="language-python"><span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;commands&quot;</span><span class="p">)</span>
-<span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;rename_session&quot;</span><span class="p">,</span>
-          <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;session_id&quot;</span><span class="p">:</span> <span class="s2">&quot;EXACT_SESSION_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Research&quot;</span><span class="p">})</span>
+<pre><code class="language-python"><span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">"commands"</span><span class="p">)</span>
+<span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">"command"</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">"rename_session"</span><span class="p">,</span>
+          <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">"session_id"</span><span class="p">:</span> <span class="s2">"EXACT_SESSION_ID"</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Research"</span><span class="p">})</span>
 </code></pre>
 <p>Consult the returned fields and the command's canonical validation. Command
 results contain response frames. Long-running work remains owned by the worker;
 read its execution or session state for progress and completion. File operations
 retain their existing request IDs, idempotency keys and revision checks.</p>
 <h2 id="operate-a-window-without-screen-automation">Operate a window without screen automation<a class="header-anchor" href="#operate-a-window-without-screen-automation">#</a></h2>
-<pre><code class="language-python"><span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;interface&quot;</span><span class="p">)</span>
-<span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;interface&quot;</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;tabs.list&quot;</span><span class="p">,</span>
-          <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;window_id&quot;</span><span class="p">:</span> <span class="s2">&quot;EXACT_WINDOW_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;arguments&quot;</span><span class="p">:</span> <span class="p">[]})</span>
+<pre><code class="language-python"><span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">"interface"</span><span class="p">)</span>
+<span class="n">framework</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">"interface"</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">"tabs.list"</span><span class="p">,</span>
+          <span class="n">arguments</span><span class="o">=</span><span class="p">{</span><span class="s2">"window_id"</span><span class="p">:</span> <span class="s2">"EXACT_WINDOW_ID"</span><span class="p">,</span> <span class="s2">"arguments"</span><span class="p">:</span> <span class="p">[]})</span>
 </code></pre>
 <p>The returned catalogue declares supported tab, group, split, sidebar, resource
 view, appearance, bookmark and native Desktop commands with argument schemas.

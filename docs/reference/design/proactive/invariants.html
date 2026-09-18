@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/invariants.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/invariants.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -435,7 +435,7 @@ For example, an observer rule kicks off a <code>Prepare</code> background task, 
 <p>The implementation is simple: every event carries a flag recording &quot;whether this causal chain was started by the framework itself.&quot; Before letting a rule act, the framework checks this flag — if the framework started the chain, the event is only allowed to reach &quot;notify once&quot; and is not allowed to propagate any further.</p>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">allow_action</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">started_by_framework</span><span class="p">:</span>
-        <span class="c1"># On the framework&#39;s own chain, only one user notification is allowed — no more background tasks / no more injection</span>
+        <span class="c1"># On the framework's own chain, only one user notification is allowed — no more background tasks / no more injection</span>
         <span class="k">return</span> <span class="n">action</span> <span class="ow">is</span> <span class="n">Notify</span> <span class="ow">and</span> <span class="n">chain_within_one_hop</span>
     <span class="k">return</span> <span class="kc">True</span>   <span class="c1"># normal event, act freely</span>
 </code></pre>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/policies-mvp.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/policies-mvp.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -446,16 +446,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="1-dangerouscommandguard-block-the-path">1. DangerousCommandGuard (block the path)<a class="header-anchor" href="#1-dangerouscommandguard-block-the-path">#</a></h2>
 <p><strong>What it does</strong>: when a tool is about to run, if it's a dangerous shell command, catch it and ask the user.</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">DangerousCommandGuard</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tool.before&quot;</span><span class="p">}</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;gate&quot;</span>            <span class="c1"># block the path: intercept before the command actually runs</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tool.before"</span><span class="p">}</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"gate"</span>            <span class="c1"># block the path: intercept before the command actually runs</span>
     <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;tool&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;bash&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"tool"</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"bash"</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;command&quot;</span><span class="p">]</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"command"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">is_dangerous_command</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">Gate</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;This command is risky: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="se">\n</span><span class="s2">Confirm execution?&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Gate</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="sa">f</span><span class="s2">"This command is risky: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="se">\n</span><span class="s2">Confirm execution?"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p><strong>Key: the judgment must see the arguments, not just match keywords.</strong> Otherwise false positives pile up until the user reflexively clicks &quot;confirm&quot; in a split second, and the guardrail is useless (this is precisely how UAC pop-ups die). You have to distinguish:</p>
@@ -488,17 +488,17 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="2-testgapwatcher-observe-do-homework-first">2. TestGapWatcher (observe + do homework first)<a class="header-anchor" href="#2-testgapwatcher-observe-do-homework-first">#</a></h2>
 <p><strong>What it does</strong>: when the user/model signals the round is wrapping up (about to commit, says it's done), if core code changed but tests didn't, give a reminder.</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">TestGapWatcher</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model.response_completed&quot;</span><span class="p">}</span>    <span class="c1"># check when the model finishes a round of talking</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;observer&quot;</span>                    <span class="c1"># observe: don&#39;t block the path</span>
-    <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">1800</span>                    <span class="c1"># don&#39;t re-raise the same situation within half an hour</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"model.response_completed"</span><span class="p">}</span>    <span class="c1"># check when the model finishes a round of talking</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"observer"</span>                    <span class="c1"># observe: don't block the path</span>
+    <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">1800</span>                    <span class="c1"># don't re-raise the same situation within half an hour</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="c1"># only check when &quot;wrapping up&quot;, not on every file change</span>
+        <span class="c1"># only check when "wrapping up", not on every file change</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_wrapup_signal</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">changed_core_code</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">touched_tests</span><span class="p">:</span>
-            <span class="c1"># don&#39;t remind directly — first dispatch a read-only background task to verify</span>
-            <span class="k">return</span> <span class="n">Prepare</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s2">&quot;check whether this change really lacks tests and whether it&#39;s worth a reminder&quot;</span><span class="p">)</span>
+            <span class="c1"># don't remind directly — first dispatch a read-only background task to verify</span>
+            <span class="k">return</span> <span class="n">Prepare</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s2">"check whether this change really lacks tests and whether it's worth a reminder"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p><strong>Why &quot;do homework first&quot; (Prepare)</strong>: reminding the moment you see &quot;code changed without tests&quot; produces many false positives — a comment edit, a rename, a config change, a dependency bump, a frontend change (frontend directories often have no testing culture at all) would all trigger it. So instead of speaking up directly, it first spins up a <strong>read-only</strong> background task to actually look at whether the change really lacks tests and whether the gap is worth raising. That task returns a judgment, and <strong>only when it's confident enough does it Notify</strong>; if it's not confident, it swallows the reminder and doesn't bother the user.</p>
@@ -512,15 +512,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="3-unvalidatedcompletionnudge-observe-nudge-the-model-first">3. UnvalidatedCompletionNudge (observe + nudge the model first)<a class="header-anchor" href="#3-unvalidatedcompletionnudge-observe-nudge-the-model-first">#</a></h2>
 <p><strong>What it does</strong>: the model says &quot;done,&quot; but this round never ran tests / never verified, which usually means it didn't actually verify.</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">UnvalidatedCompletionNudge</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model.response_completed&quot;</span><span class="p">}</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;observer&quot;</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"model.response_completed"</span><span class="p">}</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"observer"</span>
     <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">900</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;claimed_done&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">round_had_file_changes</span> \
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"claimed_done"</span><span class="p">]</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">round_had_file_changes</span> \
                 <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">round_had_verification</span><span class="p">:</span>
             <span class="c1"># default to not bothering the user — first quietly nudge the model to verify itself</span>
-            <span class="k">return</span> <span class="n">Inject</span><span class="p">(</span><span class="s2">&quot;You said it&#39;s done, but this round had no verification action. Verify first, then conclude.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Inject</span><span class="p">(</span><span class="s2">"You said it's done, but this round had no verification action. Verify first, then conclude."</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p><strong>Why default to Inject (nudge the model) instead of Notify (notify the user)</strong>: this repo's conventions already require the model to verify its own work after a change. If the model follows the rules, this rule never fires; if the model cuts corners, <strong>the cheaper fix is to quietly nudge the model</strong> to go back and verify, rather than kicking the ball to the user to click confirm. Only when the model is nudged and still doesn't verify does it escalate to notifying the user. This also echoes the action table in the overview: Inject is &quot;inject a sentence into the model without bothering the user.&quot;</p>

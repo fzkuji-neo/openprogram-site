@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/server/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/server/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,7 +108,7 @@ openprogram<span class="w"> </span>restart<span class="w">    </span><span class
 <h2 id="logs">Logs<a class="header-anchor" href="#logs">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>logs<span class="w"> </span>list<span class="w">           </span><span class="c1"># all log files (size, last updated)</span>
 openprogram<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span><span class="o">[</span>name<span class="o">]</span><span class="w">    </span><span class="c1"># last N lines (default 50); -n line count, -f follow</span>
-openprogram<span class="w"> </span>logs<span class="w"> </span>path<span class="w"> </span><span class="o">[</span>name<span class="o">]</span><span class="w">    </span><span class="c1"># print the log file&#39;s absolute path</span>
+openprogram<span class="w"> </span>logs<span class="w"> </span>path<span class="w"> </span><span class="o">[</span>name<span class="o">]</span><span class="w">    </span><span class="c1"># print the log file's absolute path</span>
 </code></pre>
 <p>There are three log names: <code>worker</code> (the default, <code>~/.openprogram/worker.log</code>), <code>runtime</code> (<code>~/.openprogram/logs/runtime.log</code>), and <code>ink-startup</code> (TUI startup log, <code>~/.openprogram/logs/ink-startup.log</code>). Prefixes match, so <code>openprogram logs tail ink</code> works.</p>
 <h2 id="running-as-a-login-service">Running as a login service<a class="header-anchor" href="#running-as-a-login-service">#</a></h2>

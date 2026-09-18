@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/start/features.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/start/features.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -97,7 +97,7 @@ messages and LLM calls. Nested calls thread automatically:</p>
 you write functions, the runtime threads the DAG.</p>
 <p>Two decorator knobs control what a call contributes to later
 LLM calls:</p>
-<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">expose</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">render_range</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;callers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">expose</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">render_range</span><span class="o">=</span><span class="p">{</span><span class="s2">"callers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">navigate</span><span class="p">(</span><span class="n">target</span><span class="p">):</span> <span class="o">...</span>
 </code></pre>
 <p><code>expose</code> sets how much of the call's internals later calls see —
@@ -214,7 +214,7 @@ way from every surface. An <strong>account is a profile</strong>: an independent
 credentials for a provider.</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>work<span class="w">      </span><span class="c1"># add a second account</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>personal
-openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w"> </span>work<span class="w">                  </span><span class="c1"># run openai on &quot;work&quot;</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w"> </span>work<span class="w">                  </span><span class="c1"># run openai on "work"</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w">                        </span><span class="c1"># back to the default account</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                              </span><span class="c1"># the active one is marked</span>
 </code></pre>

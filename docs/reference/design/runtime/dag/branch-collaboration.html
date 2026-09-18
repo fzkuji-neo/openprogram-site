@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/dag/branch-collaboration.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/dag/branch-collaboration.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -506,13 +506,13 @@ is a <strong>double ring ◎</strong>, the graph's unique convergence shape, and
 branch lane — the post-merge mainline continues base. The attach pointer node itself is
 not drawn in the viewport; only the convergence line is.</p>
 <h2 id="3-the-messaging-tool">3. The messaging tool<a class="header-anchor" href="#3-the-messaging-tool">#</a></h2>
-<pre><code class="language-python"><span class="nd">@function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;send_to_branch&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="nd">@function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"send_to_branch"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">send_to_branch</span><span class="p">(</span><span class="n">target_branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wait_reply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Send a message to another branch.</span>
+<span class="w">    </span><span class="sd">"""Send a message to another branch.</span>
 <span class="sd">    target_branch: target branch head_id or branch name</span>
 <span class="sd">    message: content</span>
-<span class="sd">    wait_reply: if True, synchronously wait for the target branch&#39;s LLM reply and return it; if False, just deliver</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    wait_reply: if True, synchronously wait for the target branch's LLM reply and return it; if False, just deliver</span>
+<span class="sd">    """</span>
 </code></pre>
 <p>Design points:</p>
 <ul>

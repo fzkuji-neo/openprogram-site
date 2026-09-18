@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/function/calling-unification.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/function/calling-unification.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -714,12 +714,12 @@ a tool profile by name in their <code>tools.toolset</code> field.</li>
 <p>Profiles are persisted in <code>functions_meta.json</code> (same location as
 <code>programs_meta.json</code>), shape:</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;profiles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;bash&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;read&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;write&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">   </span><span class="c1">// immutable = all exposed</span>
-<span class="w">    </span><span class="nt">&quot;research&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;web_search&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;web_fetch&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;read&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;write&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;bash&quot;</span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;safe&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;read&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;glob&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;grep&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;web_search&quot;</span><span class="p">]</span>
+<span class="w">  </span><span class="nt">"profiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"bash"</span><span class="p">,</span><span class="w"> </span><span class="s2">"read"</span><span class="p">,</span><span class="w"> </span><span class="s2">"write"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">   </span><span class="c1">// immutable = all exposed</span>
+<span class="w">    </span><span class="nt">"research"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"web_search"</span><span class="p">,</span><span class="w"> </span><span class="s2">"web_fetch"</span><span class="p">,</span><span class="w"> </span><span class="s2">"read"</span><span class="p">,</span><span class="w"> </span><span class="s2">"write"</span><span class="p">,</span><span class="w"> </span><span class="s2">"bash"</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">"safe"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"read"</span><span class="p">,</span><span class="w"> </span><span class="s2">"glob"</span><span class="p">,</span><span class="w"> </span><span class="s2">"grep"</span><span class="p">,</span><span class="w"> </span><span class="s2">"web_search"</span><span class="p">]</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="w">   </span><span class="c1">// which profile the chat composer is using</span>
+<span class="w">  </span><span class="nt">"active"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="w">   </span><span class="c1">// which profile the chat composer is using</span>
 <span class="p">}</span>
 </code></pre>
 <p>Creating a new profile = copy of &quot;default&quot; (all tools). The user then

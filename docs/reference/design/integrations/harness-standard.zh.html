@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -441,14 +441,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 该列表同时也是 harness 声明的公开接口面。</p>
 <p><strong>必需模式 —— 优雅降级，绝不让 host 崩溃：</strong></p>
 <pre><code class="language-python"><span class="c1"># &lt;pkg&gt;/agentics/__init__.py</span>
-<span class="sd">&quot;&quot;&quot;Entry point for the Foo harness.&quot;&quot;&quot;</span>
+<span class="sd">"""Entry point for the Foo harness."""</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">.foo_agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">foo_agent</span><span class="p">,</span> <span class="n">foo_helper</span>
     <span class="n">AGENTIC_FUNCTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">foo_agent</span><span class="p">,</span> <span class="n">foo_helper</span><span class="p">]</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>          <span class="c1"># 缺失可选依赖、不支持的平台，等等</span>
     <span class="c1"># host 在发现阶段会导入此模块。如果该 harness 无法在本机加载</span>
     <span class="c1">#（某个重依赖未安装、本 OS 没有对应 backend，等等），就什么都不</span>
-    <span class="c1"># 暴露，而不是抛异常 —— 按发现契约：&quot;能跑 → 列出，不能跑 → 跳过&quot;。</span>
+    <span class="c1"># 暴露，而不是抛异常 —— 按发现契约："能跑 → 列出，不能跑 → 跳过"。</span>
     <span class="c1"># host 会在 OPENPROGRAM_DEBUG_REGISTRY=1 下记录原因。</span>
     <span class="n">AGENTIC_FUNCTIONS</span> <span class="o">=</span> <span class="p">[]</span>
 </code></pre>
@@ -479,7 +479,7 @@ vault 路径；GUI：vision 模型 + 平台 backend）。<strong>标准规定的
 具体参数</strong>：</p>
 <ol>
 <li><strong>优先使用按调用传入的参数。</strong> 任何随每次调用而变化的东西，都作为带有
-合理默认值的函数参数：<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo_agent&quot;</span><span class="p">)</span>
+合理默认值的函数参数：<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"foo_agent"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">foo_agent</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span> <span class="o">...</span>
 </code></pre>
 </li>
@@ -513,7 +513,7 @@ GUI_AGENT_MEMORY   # GUI：已学习组件的存储
 步骤（在用户安装该 harness 时执行），不归 OpenProgram 管 —— host 绝不
 自动安装 harness 的依赖。</li>
 <li><strong>重 / 原生依赖放在一个 extra 之后</strong>，让轻量克隆保持轻量：<pre><code class="language-toml"><span class="k">[project.optional-dependencies]</span>
-<span class="n">ocr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;easyocr&quot;</span><span class="p">]</span>
+<span class="n">ocr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"easyocr"</span><span class="p">]</span>
 </code></pre>
 </li>
 <li>§1 中那个优雅降级的 <code>try/except</code> 正是让 harness 能在其依赖装好之前就被

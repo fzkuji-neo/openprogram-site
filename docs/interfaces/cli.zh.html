@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/interfaces/cli.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/interfaces/cli.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -81,19 +81,19 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">CLI</span></nav><h1 id="cli">CLI<a class="header-anchor" href="#cli">#</a></h1>
 <p>在脚本或其他程序里调用 OpenProgram，一条命令拿到一次回复。</p>
 <h2 id="单发">单发<a class="header-anchor" href="#单发">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;总结这个目录里的 python 文件都做什么&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"总结这个目录里的 python 文件都做什么"</span>
 </code></pre>
 <p>发送 prompt、打印回复、退出。不进入 TUI，也不依赖 worker 在跑（本次调用在进程内完成）。对话会写入会话存储，事后可在 Web UI 或 TUI 里翻看、续聊。</p>
 <p>注意：<code>--print</code> 只接受参数里的字符串，不读 stdin。要把文件内容塞进 prompt，用 shell 替换：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;review 这段代码：</span><span class="k">$(</span>cat<span class="w"> </span>main.py<span class="k">)</span><span class="s2">&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"review 这段代码：</span><span class="k">$(</span>cat<span class="w"> </span>main.py<span class="k">)</span><span class="s2">"</span>
 </code></pre>
 <h2 id="续接指定会话">续接指定会话<a class="header-anchor" href="#续接指定会话">#</a></h2>
 <pre><code class="language-bash">openprogram<span class="w"> </span>sessions<span class="w"> </span>list<span class="w">                 </span><span class="c1"># 找会话 id</span>
-openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;session-id&gt;<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;接着上次的结论，下一步怎么做&quot;</span>
+openprogram<span class="w"> </span>--resume<span class="w"> </span>&lt;session-id&gt;<span class="w"> </span>--print<span class="w"> </span><span class="s2">"接着上次的结论，下一步怎么做"</span>
 </code></pre>
 <p><code>--resume</code> 与 <code>--print</code> 搭配才生效。交互式续聊请在 TUI 里用 <code>/resume</code> 挑选会话（该参数目前在启动交互式 TUI 时被忽略），见<a href="/docs/interfaces/tui.html">终端 TUI</a>。</p>
 <h2 id="隔离环境">隔离环境<a class="header-anchor" href="#隔离环境">#</a></h2>
-<pre><code class="language-bash">openprogram<span class="w"> </span>--profile<span class="w"> </span>ci<span class="w"> </span>--print<span class="w"> </span><span class="s2">&quot;...&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>--profile<span class="w"> </span>ci<span class="w"> </span>--print<span class="w"> </span><span class="s2">"..."</span>
 </code></pre>
 <p><code>--profile &lt;name&gt;</code> 把配置、会话、凭据整体切换到 <code>~/.openprogram-&lt;name&gt;/</code>，脚本环境不污染日常环境。也可以用环境变量 <code>OPENPROGRAM_PROFILE</code> 设置。</p>
 <h2 id="其他脚本化入口">其他脚本化入口<a class="header-anchor" href="#其他脚本化入口">#</a></h2>

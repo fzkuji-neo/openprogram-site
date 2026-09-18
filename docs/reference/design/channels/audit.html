@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/channels/audit.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/channels/audit.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -433,7 +433,7 @@ OpenClaw and hermes do at each of these points and why our answer differs.</p>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Channel</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
-    <span class="n">platform_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">platform_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
@@ -605,7 +605,7 @@ OpenClaw's: no Plugin SDK layer, and a single file holds a complete adapter
 <span class="k">class</span><span class="w"> </span><span class="nc">SessionSource</span><span class="p">:</span>
     <span class="n">platform</span><span class="p">:</span> <span class="n">Platform</span>
     <span class="n">chat_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">chat_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dm&quot;</span> <span class="o">|</span> <span class="s2">&quot;group&quot;</span> <span class="o">|</span> <span class="s2">&quot;channel&quot;</span> <span class="o">|</span> <span class="s2">&quot;thread&quot;</span>
+    <span class="n">chat_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"dm"</span> <span class="o">|</span> <span class="s2">"group"</span> <span class="o">|</span> <span class="s2">"channel"</span> <span class="o">|</span> <span class="s2">"thread"</span>
     <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">thread_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">guild_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -640,7 +640,7 @@ group edits the current bubble, later groups become new bubbles.</p>
     <span class="n">first_ts</span><span class="p">,</span> <span class="n">last_ts</span><span class="p">:</span> <span class="nb">float</span>
 
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_queue_text_debounce</span><span class="p">(</span><span class="n">session_key</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;merge consecutively arriving texts of the same session into one, delay 0.35s, hard cap 1.0s&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""merge consecutively arriving texts of the same session into one, delay 0.35s, hard cap 1.0s"""</span>
 </code></pre>
 <p>Three messages sent in a row (&quot;hi&quot;, &quot;you there&quot;, &quot;got a question&quot;) reach the
 agent as one merged turn rather than three agent runs.</p>
@@ -652,28 +652,28 @@ agent as one merged turn rather than three agent runs.</p>
 waiting for the agent's current task.</p>
 <p><strong>Attachment local caching</strong>:</p>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">cache_document_from_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;synchronously write to cache_dir, filename doc_{uuid12}_{original name}&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""synchronously write to cache_dir, filename doc_{uuid12}_{original name}"""</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">cleanup_document_cache</span><span class="p">(</span><span class="n">max_age_hours</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">24</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;delete caches older than 24h&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""delete caches older than 24h"""</span>
 </code></pre>
 <p>Telegram URLs are downloaded locally before their one-hour expiry so the agent
 can read them repeatedly, with cleanup after 24h.</p>
 <p><strong>DeliveryRouter</strong> (<code>gateway/delivery.py</code>):</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">DeliveryTarget</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;origin | local | telegram:123 | slack:...&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""origin | local | telegram:123 | slack:..."""</span>
     <span class="n">platform</span><span class="p">:</span> <span class="n">Platform</span>
     <span class="n">chat_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DeliveryRouter</span><span class="p">:</span>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">deliver</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">targets</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Route to all targets via adapter instances.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Route to all targets via adapter instances."""</span>
 </code></pre>
 <p>The <code>outbound.send</code> equivalent also goes through adapter instances rather than a
 separate raw HTTP path.</p>
 <p><strong>Approval flow</strong>: text commands rather than reactions.</p>
 <pre><code class="language-python"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_handle_slash_approve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle /approve — unblock waiting agent thread(s).&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Handle /approve — unblock waiting agent thread(s)."""</span>
 
 <span class="n">_pending_approvals</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>   <span class="c1"># session → pending</span>
 <span class="c1"># tool thread: Event.wait() blocks</span>
@@ -688,7 +688,7 @@ reactions are not on the approval critical path.</p>
     <span class="n">validate_config</span><span class="p">,</span> <span class="n">install_hint</span>
 
 <span class="n">platform_registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">PlatformEntry</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
-<span class="n">adapter</span> <span class="o">=</span> <span class="n">platform_registry</span><span class="o">.</span><span class="n">create_adapter</span><span class="p">(</span><span class="s2">&quot;slack&quot;</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">platform_registry</span><span class="o">.</span><span class="n">create_adapter</span><span class="p">(</span><span class="s2">"slack"</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
 </code></pre>
 <p>Built-ins take a hardcoded fast path; plugin platforms self-register through the
 registry.</p>

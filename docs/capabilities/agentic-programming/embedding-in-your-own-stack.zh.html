@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -160,11 +160,11 @@ DAG 上下文函数调用当作其中一个组件时，就用嵌入。如果你�
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">()</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">openai_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">openai_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"text"</span><span class="p">)</span>
     <span class="n">reply</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
         <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">}],</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">text</span><span class="p">}],</span>
         <span class="n">response_format</span><span class="o">=</span><span class="n">response_format</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">reply</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
@@ -172,7 +172,7 @@ DAG 上下文函数调用当作其中一个组件时，就用嵌入。如果你�
 <h2 id="2-用-runtime-包起来">2. 用 Runtime 包起来<a class="header-anchor" href="#2-用-runtime-包起来">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">openai_call</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">openai_call</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">)</span>
 </code></pre>
 <p><code>Runtime(call=...)</code> 直接接收你的函数：不做 provider 探测，不读凭证，构造时不发任何网络
 请求。（另一个入口 <code>create_runtime()</code> 会按本机配置的 provider 构建 runtime——写独立脚本
@@ -185,15 +185,15 @@ re-export，且是懒加载的：光 <code>import openprogram</code> 不会拉�
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">classify_sentiment</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Classify the sentiment of a review as positive, negative, or neutral.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sentiment of this review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Classify the sentiment of a review as positive, negative, or neutral."""</span>
+    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Sentiment of this review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">summarize_review</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Summarize a customer review in one sentence, noting its sentiment.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Summarize a customer review in one sentence, noting its sentiment."""</span>
     <span class="n">sentiment</span> <span class="o">=</span> <span class="n">classify_sentiment</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Summarize this </span><span class="si">{</span><span class="n">sentiment</span><span class="si">}</span><span class="s2"> review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Summarize this </span><span class="si">{</span><span class="n">sentiment</span><span class="si">}</span><span class="s2"> review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre>
 <p>runtime 只传给<strong>最外层</strong>那次调用。它会沿调用链自动向下传播，嵌套函数转发一下就行。
 最外层不传，入口函数就会按本机配置的 provider 自建 runtime，那会去摸凭证和网络。</p>
@@ -204,10 +204,10 @@ re-export，且是懒加载的：光 <code>import openprogram</code> 不会拉�
 每个会话是该根目录下的一个 git 仓库。</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">SessionStore</span><span class="p">,</span> <span class="n">session_scope</span>
 
-<span class="n">store</span> <span class="o">=</span> <span class="n">SessionStore</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="s2">&quot;/var/lib/myapp/sessions&quot;</span><span class="p">)</span>
-<span class="n">store</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="s2">&quot;review-42&quot;</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="s2">&quot;main&quot;</span><span class="p">)</span>
+<span class="n">store</span> <span class="o">=</span> <span class="n">SessionStore</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="s2">"/var/lib/myapp/sessions"</span><span class="p">)</span>
+<span class="n">store</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="s2">"review-42"</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="s2">"main"</span><span class="p">)</span>
 
-<span class="k">with</span> <span class="n">session_scope</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">&quot;review-42&quot;</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">session_scope</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">"review-42"</span><span class="p">):</span>
     <span class="n">summary</span> <span class="o">=</span> <span class="n">summarize_review</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 </code></pre>
 <p><code>session_scope</code> 在块内把 DAG 写入路由到这个 store，退出时恢复之前的绑定。不进这个
@@ -217,10 +217,10 @@ re-export，且是懒加载的：光 <code>import openprogram</code> 不会拉�
 顺着 <code>caller</code> 就能把扁平节点列表还原成调用树：</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">SessionNodeWriter</span>
 
-<span class="n">graph</span> <span class="o">=</span> <span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">&quot;review-42&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">"review-42"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
-    <span class="n">kind</span> <span class="o">=</span> <span class="s2">&quot;fn&quot;</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_code</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;llm&quot;</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_llm</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;usr&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;→&quot;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">kind</span> <span class="o">=</span> <span class="s2">"fn"</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_code</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"llm"</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_llm</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"usr"</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">"→"</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
 </code></pre>
 <p><strong>把函数交给你自己的循环。</strong> 每个 <code>@agentic_function</code> 都提供 <code>.spec</code>（由签名和 docstring
 生成的 JSON schema）和 <code>.execute</code>。<code>to_openai_tools</code> 把 spec 重塑成 Chat Completions
@@ -232,7 +232,7 @@ re-export，且是懒加载的：光 <code>import openprogram</code> 不会拉�
 
 <span class="n">reply</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model</span><span class="o">=...</span><span class="p">,</span> <span class="n">messages</span><span class="o">=...</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">reply</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>
-    <span class="n">fn</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;classify_sentiment&quot;</span><span class="p">:</span> <span class="n">classify_sentiment</span><span class="p">}[</span><span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"classify_sentiment"</span><span class="p">:</span> <span class="n">classify_sentiment</span><span class="p">}[</span><span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">,</span> <span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>
 </code></pre>
 <p><code>runtime</code> 和模型给的参数并列传进去。模型永远看不到这个参数——它被从 spec 里过滤掉了——

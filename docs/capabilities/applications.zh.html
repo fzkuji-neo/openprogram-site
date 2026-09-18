@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/applications.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/applications.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -167,8 +167,8 @@ openprogram<span class="w"> </span>apps<span class="w"> </span>list
 <p>Python 操作使用 <code>context.load()</code>、<code>context.save(value, expected_version=...)</code>、<code>context.progress(value)</code>、<code>context.ask(question)</code> 和 <code>context.read_file(relative_path)</code>。读取项目文件需要声明能力并绑定项目。声明模型能力的操作可直接使用现有 <code>llm()</code>、<code>agent()</code> 和 ambient Runtime，模型凭据留在后端。应用提问使用 <code>context.ask()</code>；要求预声明持久等待点的 Runtime 工作流交互仍保留原有要求。</p>
 <p>Program 调用同一套操作：</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.application_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">run</span><span class="p">,</span> <span class="n">status</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="s2">&quot;local.notes&quot;</span><span class="p">,</span> <span class="s2">&quot;summarize&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">},</span> <span class="n">request_key</span><span class="o">=</span><span class="s2">&quot;summary-1&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]))</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="s2">"local.notes"</span><span class="p">,</span> <span class="s2">"summarize"</span><span class="p">,</span> <span class="p">{</span><span class="s2">"text"</span><span class="p">:</span> <span class="s2">"..."</span><span class="p">},</span> <span class="n">request_key</span><span class="o">=</span><span class="s2">"summary-1"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="p">(</span><span class="n">job</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]))</span>
 </code></pre>
 <p>CLI 对应 <code>programs apps run APP OPERATION --input JSON</code>，项目级应用增加 <code>--project ID</code>；查看和取消使用 <code>programs apps status RUN_ID</code>、<code>programs apps cancel RUN_ID</code>。</p>
 <h2 id="数据与生命周期">数据与生命周期<a class="header-anchor" href="#数据与生命周期">#</a></h2>

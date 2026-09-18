@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/unified-session-context.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/unified-session-context.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -491,33 +491,33 @@ paired and no token leaks):</p>
 <span class="k">def</span><span class="w"> </span><span class="nf">session_context</span><span class="p">(</span>
     <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;main&quot;</span><span class="p">,</span>
+    <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"main"</span><span class="p">,</span>
     <span class="n">turn_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>            <span class="c1"># reuse an existing runtime if present, otherwise build on demand</span>
     <span class="n">create_runtime_if_none</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install the per-turn session ContextVars and tear them down on exit.</span>
+<span class="w">    </span><span class="sd">"""Install the per-turn session ContextVars and tear them down on exit.</span>
 
 <span class="sd">    The single place that wires _store / _current_turn_id / _current_runtime</span>
 <span class="sd">    so docstring-into-prompt, DAG persistence, ask_user tracking all work the</span>
 <span class="sd">    SAME whether the caller is the web dispatcher, the CLI, research harness,</span>
 <span class="sd">    a subprocess, or a test. Standalone callers that pass nothing still get a</span>
 <span class="sd">    real (ad-hoc) session instead of silently degrading.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">db</span> <span class="o">=</span> <span class="n">default_db</span><span class="p">()</span>
-    <span class="n">sid</span> <span class="o">=</span> <span class="n">session_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;adhoc_&quot;</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
+    <span class="n">sid</span> <span class="o">=</span> <span class="n">session_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"adhoc_"</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">get_session</span><span class="p">(</span><span class="n">sid</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">db</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;cli&quot;</span><span class="p">)</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"cli"</span><span class="p">)</span>
     <span class="n">rt</span> <span class="o">=</span> <span class="n">runtime</span>
     <span class="k">if</span> <span class="n">rt</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">create_runtime_if_none</span><span class="p">:</span>
         <span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">()</span>           <span class="c1"># fallback: if no provider then rt=None, store is still installed</span>
-    <span class="n">tid</span> <span class="o">=</span> <span class="n">turn_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;turn_&quot;</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
+    <span class="n">tid</span> <span class="o">=</span> <span class="n">turn_id</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">"turn_"</span> <span class="o">+</span> <span class="n">_short_uuid</span><span class="p">())</span>
 
     <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_store&quot;</span><span class="p">,</span>  <span class="n">_store</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">sid</span><span class="p">))))</span>
-    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_turn&quot;</span><span class="p">,</span>   <span class="n">_current_turn_id</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">tid</span><span class="p">)))</span>
+    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_store"</span><span class="p">,</span>  <span class="n">_store</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">sid</span><span class="p">))))</span>
+    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_turn"</span><span class="p">,</span>   <span class="n">_current_turn_id</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">tid</span><span class="p">)))</span>
     <span class="k">if</span> <span class="n">rt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;_rt&quot;</span><span class="p">,</span> <span class="n">_current_runtime</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rt</span><span class="p">)))</span>
+        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">"_rt"</span><span class="p">,</span> <span class="n">_current_runtime</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rt</span><span class="p">)))</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">SessionHandle</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="n">db</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="n">sid</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">,</span> <span class="n">turn_id</span><span class="o">=</span><span class="n">tid</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
@@ -565,11 +565,11 @@ unified session just makes every entry point follow the same rules; it invents n
 </ul>
 <p>This way continuity is expressed by <strong>passing the id</strong>, independent of how many times you call:</p>
 <pre><code class="language-python"><span class="c1"># ideal usage from a code client</span>
-<span class="n">r1</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">&quot;survey agent reliability&quot;</span><span class="p">)</span>          <span class="c1"># session_id=None → create new</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">"survey agent reliability"</span><span class="p">)</span>          <span class="c1"># session_id=None → create new</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>                                   <span class="c1"># -&gt; research_ab12cd</span>
-<span class="n">r2</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">&quot;now turn it into a paper&quot;</span><span class="p">,</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">"now turn it into a paper"</span><span class="p">,</span>
                   <span class="n">session_id</span><span class="o">=</span><span class="n">r1</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>            <span class="c1"># continue the same session, history carries over</span>
-<span class="n">r3</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">&quot;unrelated: GUI agent benchmark&quot;</span><span class="p">)</span>    <span class="c1"># not passed → independent new session</span>
+<span class="n">r3</span> <span class="o">=</span> <span class="n">run_research</span><span class="p">(</span><span class="s2">"unrelated: GUI agent benchmark"</span><span class="p">)</span>    <span class="c1"># not passed → independent new session</span>
 </code></pre>
 <p>The CLI equivalent: the first run without <code>--session</code> → prints a new id; <code>--session &lt;id&gt;</code> (or reuse <code>--resume</code>) continues.</p>
 <h3 id="ending-a-session">Ending a session<a class="header-anchor" href="#ending-a-session">#</a></h3>
@@ -581,7 +581,7 @@ session list / delete), not by the responsibility of each individual call.</p>
 <ul>
 <li><strong>dispatcher</strong>: replace the existing inlined set/reset with <code>with session_context(req.session_id, ...)</code>.
 Behavior is unchanged (it already builds a session); this is just deduplication.</li>
-<li><strong>research harness <code>main.py</code></strong>: wrap a layer around the call to <code>research_agent</code> —<pre><code class="language-python"><span class="k">with</span> <span class="n">session_context</span><span class="p">(</span><span class="n">session_id</span><span class="o">=</span><span class="s2">&quot;research_&quot;</span> <span class="o">+</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
+<li><strong>research harness <code>main.py</code></strong>: wrap a layer around the call to <code>research_agent</code> —<pre><code class="language-python"><span class="k">with</span> <span class="n">session_context</span><span class="p">(</span><span class="n">session_id</span><span class="o">=</span><span class="s2">"research_"</span> <span class="o">+</span> <span class="n">uuid</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">)</span> <span class="k">as</span> <span class="n">h</span><span class="p">:</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">research_agent</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">h</span><span class="o">.</span><span class="n">runtime</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
 </code></pre>
 This layer makes the docstring mechanism take effect on the command line too, <strong>without changing any stage function and without moving instructions into

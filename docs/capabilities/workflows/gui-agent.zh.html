@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -146,11 +146,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="怎么用">怎么用<a class="header-anchor" href="#怎么用">#</a></h2>
 <p>公开入口函数名为 <strong><code>gui_agent</code></strong>，以工具形式（<code>as_tool=True</code>，toolset <code>harness</code>）注册。公开输入只有 <code>task</code>。规划函数和三个 <code>*_use</code> 函数仍会生成可追踪的子函数节点，但不会分别注册成公开工具。</p>
 <p>命令行直接运行：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;Open Firefox and go to google.com&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Open Firefox and go to google.com"</span>
 </code></pre>
 <p>Programs 卡片只填写 <code>task</code>，不要求用户选择 surface。控制器每一轮都会读取原始任务、此前由规划器选择的能力参数和完整输出，以及当前能力可用状态，再决定下一步调用。</p>
 <p>任务适合由当前内置浏览器 Page 完成时，仍使用同一个入口：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;在不置顶窗口的情况下检查并完成当前内置浏览器表单&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"在不置顶窗口的情况下检查并完成当前内置浏览器表单"</span>
 </code></pre>
 <p>受信任调用方还可以提供隐藏的控制器设置：<code>max_steps</code> 是动作安全上限，默认 150；<code>max_seconds</code> 是可选的总耗时安全上限；<code>app_name</code> 选择组件记忆；<code>backend</code> 指定已有 Page backend；<code>vm_url</code> 启用 <code>vm_use</code>。<code>surface=&quot;browser&quot;</code>，或未指定其他 surface 时设置 <code>backend</code>，会选择下文的标准浏览器 Agent 路径。其他 surface 设置仍为兼容性偏好。这些设置不出现在公开函数 schema 中。</p>
 <h2 id="显式浏览器执行">显式浏览器执行<a class="header-anchor" href="#显式浏览器执行">#</a></h2>

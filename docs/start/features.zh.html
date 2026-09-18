@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/start/features.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/start/features.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,7 +95,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <code>observe</code> 和 <code>click</code> 返回的内容。无需手动管理上下文：
 你只管编写函数，运行时会把 DAG 串接起来。</p>
 <p>装饰器上有两个开关，控制一次调用向后续 LLM 调用贡献什么：</p>
-<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">expose</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">render_range</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;callers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">expose</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">render_range</span><span class="o">=</span><span class="p">{</span><span class="s2">"callers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">navigate</span><span class="p">(</span><span class="n">target</span><span class="p">):</span> <span class="o">...</span>
 </code></pre>
 <p><code>expose</code> 决定后续调用能看到这次调用内部的多少 ——
@@ -198,7 +198,7 @@ openprogram<span class="w"> </span>memory<span class="w"> </span><span class="nb
 一套独立凭据。</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>work<span class="w">      </span><span class="c1"># 添加第二个账户</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>login<span class="w"> </span>openai<span class="w"> </span>--account<span class="w"> </span>personal
-openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w"> </span>work<span class="w">                  </span><span class="c1"># 用 &quot;work&quot; 账户运行 openai</span>
+openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w"> </span>work<span class="w">                  </span><span class="c1"># 用 "work" 账户运行 openai</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>use<span class="w"> </span>openai<span class="w">                        </span><span class="c1"># 切回默认账户</span>
 openprogram<span class="w"> </span>providers<span class="w"> </span>list<span class="w">                              </span><span class="c1"># 当前激活的会被标记</span>
 </code></pre>

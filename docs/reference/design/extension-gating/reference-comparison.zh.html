@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/extension-gating/reference-comparison.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/extension-gating/reference-comparison.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -499,8 +499,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <span class="w">  </span><span class="p">...</span>
 <span class="p">})</span>
 
-<span class="c1">// Ruleset = {pattern, action: &quot;allow&quot; | &quot;deny&quot;} 的列表</span>
-<span class="c1">// 针对 &quot;tools:bash&quot;、&quot;mcp:slack/*&quot; 这类权限键进行求值</span>
+<span class="c1">// Ruleset = {pattern, action: "allow" | "deny"} 的列表</span>
+<span class="c1">// 针对 "tools:bash"、"mcp:slack/*" 这类权限键进行求值</span>
 </code></pre>
 <p><strong>模式</strong>：每个 agent 一份 ruleset，按 glob 匹配带命名空间的权限键（<code>tools:</code>、<code>mcp:</code>、<code>skills:</code>）。每条规则是一个 <code>{pattern, action}</code> 对；首条匹配生效。</p>
 <p><strong>它更进一步的地方</strong>：</p>

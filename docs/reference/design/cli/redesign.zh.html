@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/cli/redesign.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/cli/redesign.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -454,12 +454,12 @@ web 页面中，无需任何按界面单写的代码。</p>
 就是一条不可变的 spec：</p>
 <pre><code class="language-python"><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">SettingSpec</span><span class="p">:</span>
-    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span>                 <span class="c1"># 稳定 id，例如 &quot;ui.web_port&quot;</span>
-    <span class="n">path</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>    <span class="c1"># 进入 config.json 的点路径，例如 (&quot;ui&quot;,&quot;port&quot;)</span>
-    <span class="n">group</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># &quot;Ports&quot; | &quot;Model&quot; | &quot;Theme&quot; | ...</span>
+    <span class="n">key</span><span class="p">:</span> <span class="nb">str</span>                 <span class="c1"># 稳定 id，例如 "ui.web_port"</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>    <span class="c1"># 进入 config.json 的点路径，例如 ("ui","port")</span>
+    <span class="n">group</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># "Ports" | "Model" | "Theme" | ...</span>
     <span class="n">label</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">widget</span><span class="p">:</span> <span class="nb">str</span>              <span class="c1"># &quot;number&quot; | &quot;toggle&quot; | &quot;enum&quot; | &quot;checkbox&quot; | &quot;secret-status&quot;</span>
-    <span class="n">apply</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># &quot;live&quot; | &quot;next-start&quot;</span>
+    <span class="n">widget</span><span class="p">:</span> <span class="nb">str</span>              <span class="c1"># "number" | "toggle" | "enum" | "checkbox" | "secret-status"</span>
+    <span class="n">apply</span><span class="p">:</span> <span class="nb">str</span>               <span class="c1"># "live" | "next-start"</span>
     <span class="n">choices</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>   <span class="c1"># 用于 enum/checkbox，读取时计算</span>
     <span class="n">validate</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 返回错误或 None</span>
     <span class="n">secret</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>

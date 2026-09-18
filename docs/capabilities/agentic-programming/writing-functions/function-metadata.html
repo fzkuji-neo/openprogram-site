@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -361,9 +361,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>content</code> writing rules:</p>
 <ul>
 <li>Each item is a dict like <code>{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: ...}</code> or <code>{&quot;type&quot;: &quot;image&quot;, &quot;path&quot;: ...}</code>.</li>
-<li>Embed both the instruction <em>and</em> the data for this LLM call. Example:<pre><code class="language-python"><span class="n">llm</span><span class="p">([{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Classify the sentiment of the following text. Reply with exactly one &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;word: positive, negative, or neutral.</span><span class="se">\n\n</span><span class="s2">Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
+<li>Embed both the instruction <em>and</em> the data for this LLM call. Example:<pre><code class="language-python"><span class="n">llm</span><span class="p">([{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"Classify the sentiment of the following text. Reply with exactly one "</span>
+    <span class="sa">f</span><span class="s2">"word: positive, negative, or neutral.</span><span class="se">\n\n</span><span class="s2">Text:</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)}])</span>
 </code></pre>
 </li>
@@ -374,33 +374,33 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h3 id="recommended-style-required-for-new-code">Recommended style (required for new code)<a class="header-anchor" href="#recommended-style-required-for-new-code">#</a></h3>
 <p>Minimal example:</p>
 <pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;text&quot;</span><span class="p">:</span>  <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Text to polish.&quot;</span><span class="p">},</span>
-    <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Output style.&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;academic&quot;</span><span class="p">,</span> <span class="s2">&quot;casual&quot;</span><span class="p">]},</span>
+    <span class="s2">"text"</span><span class="p">:</span>  <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Text to polish."</span><span class="p">},</span>
+    <span class="s2">"style"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Output style."</span><span class="p">,</span> <span class="s2">"options"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"academic"</span><span class="p">,</span> <span class="s2">"casual"</span><span class="p">]},</span>
 <span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Polish a text in the given style.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Polish a text in the given style."""</span>
     <span class="o">...</span>
 </code></pre>
 <p>Fuller example exercising more metadata features (placeholder, multiline, hidden, mixed types):</p>
 <pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">&quot;essay&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Essay to review.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;placeholder&quot;</span><span class="p">:</span> <span class="s2">&quot;Paste the essay text here...&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;multiline&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">"essay"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Essay to review."</span><span class="p">,</span>
+        <span class="s2">"placeholder"</span><span class="p">:</span> <span class="s2">"Paste the essay text here..."</span><span class="p">,</span>
+        <span class="s2">"multiline"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s2">&quot;rubric_id&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Which rubric to apply.&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ielts_writing&quot;</span><span class="p">,</span> <span class="s2">&quot;toefl_writing&quot;</span><span class="p">,</span> <span class="s2">&quot;gre_argument&quot;</span><span class="p">],</span>
+    <span class="s2">"rubric_id"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Which rubric to apply."</span><span class="p">,</span>
+        <span class="s2">"options"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"ielts_writing"</span><span class="p">,</span> <span class="s2">"toefl_writing"</span><span class="p">,</span> <span class="s2">"gre_argument"</span><span class="p">],</span>
     <span class="p">},</span>
-    <span class="s2">&quot;max_score&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Upper bound for the numeric score.&quot;</span><span class="p">,</span>
+    <span class="s2">"max_score"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Upper bound for the numeric score."</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s2">&quot;show_rubric_internals&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Include rubric breakdown in the output.&quot;</span><span class="p">,</span>
+    <span class="s2">"show_rubric_internals"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Include rubric breakdown in the output."</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="s2">&quot;session_id&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"session_id"</span><span class="p">:</span> <span class="p">{</span>
         <span class="c1"># System-supplied; LLM does not see this.</span>
-        <span class="s2">&quot;hidden&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">"hidden"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">review_essay</span><span class="p">(</span>
@@ -411,14 +411,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>           <span class="c1"># filled by Python via context, not LLM</span>
     <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">,</span>          <span class="c1"># auto-injected</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Score an essay against a named rubric and return a structured report.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Score an essay against a named rubric and return a structured report."""</span>
     <span class="o">...</span>
 </code></pre>
 <p>The docstring keeps only the one-line summary — <strong>no <code>Args:</code> section and no <code>Returns:</code> section</strong>. If the meaning of return-value fields matters to downstream LLM-driven calls, encode it with a structured return type (e.g. <code>TypedDict</code> or a dataclass) so consumers can introspect it; do not duplicate the schema in a docstring paragraph.</p>
 <h3 id="legacy-style-still-supported">Legacy style (still supported)<a class="header-anchor" href="#legacy-style-still-supported">#</a></h3>
 <pre><code class="language-python"><span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Polish a text in the given style.</span>
+<span class="w">    </span><span class="sd">"""Polish a text in the given style.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text: Text to polish.</span>
@@ -427,7 +427,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Polished text.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="o">...</span>
 </code></pre>
 <p>Legacy functions still run, but the <code>Args:</code> section is dead text — <strong>no docstring-<code>Args:</code> parser exists anywhere in the framework</strong> (see §10). <code>_build_agentic_tool_spec</code> falls back as follows:</p>

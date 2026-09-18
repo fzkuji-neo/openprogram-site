@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/pure-python.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/pure-python.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -156,27 +156,27 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </ul>
 <h2 id="示例">示例<a class="header-anchor" href="#示例">#</a></h2>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">word_count</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count the number of words in a text.</span>
+<span class="w">    </span><span class="sd">"""Count the number of words in a text.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text: Input text.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The word count.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 </code></pre>
 <pre><code class="language-python"><span class="k">def</span><span class="w"> </span><span class="nf">extract_emails</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract every email address from a text.</span>
+<span class="w">    </span><span class="sd">"""Extract every email address from a text.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text: Input text.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        List of email addresses.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\w.+-]+@[\w-]+\.[\w.-]+&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[\w.+-]+@[\w-]+\.[\w.-]+'</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
 </code></pre>
 <h2 id="会话-dag">会话 DAG<a class="header-anchor" href="#会话-dag">#</a></h2>
 <p>纯 Python 函数不会在会话 DAG 上留下节点（除非用 <code>@traced</code> 装饰）。</p>
@@ -185,7 +185,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
 <span class="nd">@traced</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">word_count</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count the number of words in a text.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Count the number of words in a text."""</span>
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 </code></pre>
 <p>该节点会记录函数名、绑定的参数（已剥离 <code>self</code>/<code>cls</code>/<code>runtime</code>/<code>callback</code>）以及返回值，<code>expose</code> 固定为 <code>'io'</code>。<code>async def</code> 函数同样受支持。</p>

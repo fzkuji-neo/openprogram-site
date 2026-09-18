@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/integrations/claude-code.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/integrations/claude-code.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,7 +90,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </li>
 <li>
 <p><strong>Verify it works:</strong></p>
-<pre><code class="language-bash">claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;Hello, world!&quot;</span>
+<pre><code class="language-bash">claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">"Hello, world!"</span>
 </code></pre>
 </li>
 </ol>
@@ -101,22 +101,22 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
 <span class="c1"># No API key needed — uses your Claude Code subscription</span>
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;claude-code&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;haiku&quot;</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">)</span>
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">explain</span><span class="p">(</span><span class="n">concept</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Explain a concept clearly and concisely.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Explain a concept clearly and concisely."""</span>
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Explain &#39;</span><span class="si">{</span><span class="n">concept</span><span class="si">}</span><span class="s2">&#39; in 2-3 sentences. Be clear and concise.&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Explain '</span><span class="si">{</span><span class="n">concept</span><span class="si">}</span><span class="s2">' in 2-3 sentences. Be clear and concise."</span><span class="p">},</span>
     <span class="p">])</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">concept</span><span class="o">=</span><span class="s2">&quot;gradient descent&quot;</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">explain</span><span class="p">(</span><span class="n">concept</span><span class="o">=</span><span class="s2">"gradient descent"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre>
 <h2 id="configuration-options">Configuration Options<a class="header-anchor" href="#configuration-options">#</a></h2>
 <pre><code class="language-python"><span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span>
-    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;claude-code&quot;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;haiku&quot;</span><span class="p">,</span>        <span class="c1"># model name or family alias (see the table below)</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">,</span>        <span class="c1"># model name or family alias (see the table below)</span>
     <span class="n">api_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>         <span class="c1"># usually omitted; when omitted, resolved from the credential pool on every call</span>
     <span class="n">max_retries</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>        <span class="c1"># retries for transient API-layer failures</span>
 <span class="p">)</span>
@@ -168,52 +168,52 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li><strong>Subscription tokens expire</strong> (roughly every 8 hours). The runtime re-resolves them on every call, so refreshes on the Claude Code CLI side take effect automatically; if you haven't used <code>claude</code> in a long time, just log in again.</li>
 </ul>
 <h2 id="complete-example">Complete Example<a class="header-anchor" href="#complete-example">#</a></h2>
-<pre><code class="language-python"><span class="sd">&quot;&quot;&quot;</span>
+<pre><code class="language-python"><span class="sd">"""</span>
 <span class="sd">Claude Code integration demo — no API key needed.</span>
 <span class="sd">Demonstrates a multi-step agentic workflow.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;claude-code&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;haiku&quot;</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">)</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">brainstorm</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate 3 creative ideas about a topic.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Generate 3 creative ideas about a topic."""</span>
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Generate exactly 3 creative ideas about: </span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="se">\n</span><span class="s2">Number them 1-3, one per line.&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Generate exactly 3 creative ideas about: </span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="se">\n</span><span class="s2">Number them 1-3, one per line."</span><span class="p">},</span>
     <span class="p">])</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="n">idea</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rate an idea&#39;s feasibility on a scale of 1-10 with brief reasoning.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Rate an idea's feasibility on a scale of 1-10 with brief reasoning."""</span>
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Rate this idea&#39;s feasibility (1-10) and explain in one sentence:</span><span class="se">\n</span><span class="si">{</span><span class="n">idea</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Rate this idea's feasibility (1-10) and explain in one sentence:</span><span class="se">\n</span><span class="si">{</span><span class="n">idea</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
     <span class="p">])</span>
 
 
 <span class="nd">@agentic_function</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">ideate</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Brainstorm ideas and evaluate each one.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Brainstorm ideas and evaluate each one."""</span>
     <span class="n">ideas_text</span> <span class="o">=</span> <span class="n">brainstorm</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">topic</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ideas:</span><span class="se">\n</span><span class="si">{</span><span class="n">ideas_text</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ideas:</span><span class="se">\n</span><span class="si">{</span><span class="n">ideas_text</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">ideas_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">ideas_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
         <span class="n">rating</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">idea</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">rating</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">rating</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Pick the best idea from the evaluation above and explain why in 2 sentences.&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Pick the best idea from the evaluation above and explain why in 2 sentences."</span><span class="p">},</span>
     <span class="p">])</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">ideate</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s2">&quot;improving developer productivity with AI&quot;</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Best idea:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">ideate</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s2">"improving developer productivity with AI"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Best idea:</span><span class="se">\n</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre>
 <h2 id="troubleshooting">Troubleshooting<a class="header-anchor" href="#troubleshooting">#</a></h2>
 <table>

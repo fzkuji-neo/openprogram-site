@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/execution-model.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/execution-model.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -417,8 +417,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>A rule is just a Python class, and the framework recognizes these few things:</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">Policy</span><span class="p">:</span>
     <span class="n">on</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>          <span class="c1"># which kinds of events I watch</span>
-    <span class="n">lane</span><span class="p">:</span> <span class="nb">str</span>             <span class="c1"># am I a &quot;blocker&quot; (gate) or a &quot;watcher&quot; (observer)</span>
-    <span class="n">cooldown_s</span><span class="p">:</span> <span class="nb">float</span>     <span class="c1"># after I act, how long before I&#39;m allowed to act again (anti-spam)</span>
+    <span class="n">lane</span><span class="p">:</span> <span class="nb">str</span>             <span class="c1"># am I a "blocker" (gate) or a "watcher" (observer)</span>
+    <span class="n">cooldown_s</span><span class="p">:</span> <span class="nb">float</span>     <span class="c1"># after I act, how long before I'm allowed to act again (anti-spam)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Action</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># an event arrives; take a look at the current event + current state, decide whether to act or stay out of it</span>
@@ -430,16 +430,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="2-the-blocking-ones-gate">2. The Blocking Ones (gate)<a class="header-anchor" href="#2-the-blocking-ones-gate">#</a></h2>
 <p><strong>Stop something before it happens.</strong> They watch only one kind of event: <code>tool.before</code> (a tool is about to execute). Because &quot;blocking&quot; only makes sense before the thing has happened — blocking after the tool has already run is pointless.</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">DangerousCommandGuard</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tool.before&quot;</span><span class="p">}</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;gate&quot;</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tool.before"</span><span class="p">}</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"gate"</span>
     <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;tool&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;bash&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"tool"</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"bash"</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;command&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s2">&quot;rm -rf&quot;</span> <span class="ow">in</span> <span class="n">command</span> <span class="ow">or</span> <span class="s2">&quot;git push --force&quot;</span> <span class="ow">in</span> <span class="n">command</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Gate</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;This command is risky: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">, confirm execution?&quot;</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"command"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"rm -rf"</span> <span class="ow">in</span> <span class="n">command</span> <span class="ow">or</span> <span class="s2">"git push --force"</span> <span class="ow">in</span> <span class="n">command</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Gate</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="sa">f</span><span class="s2">"This command is risky: </span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">, confirm execution?"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p>A blocking rule can only return three actions: <code>Gate.allow()</code> (let it through), <code>Gate.deny(reason)</code> (block it outright), and <code>Gate.ask(question)</code> (ask the user, only let it through if the user says OK).</p>
@@ -450,14 +450,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <h2 id="3-the-watching-ones-observer">3. The Watching Ones (observer)<a class="header-anchor" href="#3-the-watching-ones-observer">#</a></h2>
 <p><strong>Watch after something happens, think it over slowly, don't hold up the agent.</strong> They watch all kinds of events — a tool finished, the model finished replying, a file changed.</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">StuckToolWatcher</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tool.after&quot;</span><span class="p">}</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;observer&quot;</span>
-    <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">300</span>                 <span class="c1"># already reminded once, don&#39;t bring up the same thing again within 5 minutes</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tool.after"</span><span class="p">}</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"observer"</span>
+    <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">300</span>                 <span class="c1"># already reminded once, don't bring up the same thing again within 5 minutes</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="n">tool</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;tool&quot;</span><span class="p">]</span>
+        <span class="n">tool</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"tool"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">tool_failure_count</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Notify</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2"> has failed repeatedly, might be stuck&quot;</span><span class="p">,</span> <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Notify</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2"> has failed repeatedly, might be stuck"</span><span class="p">,</span> <span class="n">severity</span><span class="o">=</span><span class="s2">"info"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p>A watching rule can return these actions:</p>

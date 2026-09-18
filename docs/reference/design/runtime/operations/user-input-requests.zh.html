@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/operations/user-input-requests.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/operations/user-input-requests.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -473,8 +473,8 @@ generator/coroutine 那套花活。我们的做法是阻塞一个线程（函数
 <p>在 <code>runtime</code> 上，紧挨着 <code>runtime.exec</code> / <code>decision</code>：</p>
 <pre><code class="language-python"><span class="c1"># 在任意 @agentic_function / @function 函数体内</span>
 <span class="n">answer</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span>
-    <span class="s2">&quot;Which library for date formatting?&quot;</span><span class="p">,</span>
-    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;dayjs&quot;</span><span class="p">,</span> <span class="s2">&quot;date-fns&quot;</span><span class="p">,</span> <span class="s2">&quot;luxon&quot;</span><span class="p">],</span>  <span class="c1"># 可选；None = 自由文本</span>
+    <span class="s2">"Which library for date formatting?"</span><span class="p">,</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">"dayjs"</span><span class="p">,</span> <span class="s2">"date-fns"</span><span class="p">,</span> <span class="s2">"luxon"</span><span class="p">],</span>  <span class="c1"># 可选；None = 自由文本</span>
     <span class="n">multi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>                <span class="c1"># True -&gt; 返回 list[str]</span>
     <span class="n">allow_custom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>          <span class="c1"># 除选项外还允许自由文本</span>
     <span class="n">timeout</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span>               <span class="c1"># 秒，默认 30 分钟</span>
@@ -482,7 +482,7 @@ generator/coroutine 那套花活。我们的做法是阻塞一个线程（函数
 <span class="p">)</span>
 <span class="c1"># -&gt; str（或 list[str]）；用户按下 Decline 抛 UserDeclined</span>
 
-<span class="n">ok</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="s2">&quot;Archive all 87 emails?&quot;</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="n">preview</span><span class="p">,</span>
+<span class="n">ok</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="s2">"Archive all 87 emails?"</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="n">preview</span><span class="p">,</span>
                      <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># -&gt; bool，超时永不抛异常</span>
 
 <span class="n">runtime</span><span class="o">.</span><span class="n">can_ask</span><span class="p">()</span>  <span class="c1"># -&gt; bool；无头运行时为 False，作者可据此分支</span>

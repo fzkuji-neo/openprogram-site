@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -482,17 +482,17 @@ _path_is_safe → check_path_safety(path, dirs)   permissions/policy.py → prog
 <p>The fence's working-directory set is assembled in <code>openprogram/agent/permissions/policy.py</code>:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.worktree.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">current_worktree_path</span>
 <span class="n">work_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">current_worktree_path</span><span class="p">()</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
-             <span class="o">*</span><span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">&quot;additional_working_dirs&quot;</span><span class="p">,</span> <span class="p">[])]</span>
+             <span class="o">*</span><span class="nb">getattr</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="s2">"additional_working_dirs"</span><span class="p">,</span> <span class="p">[])]</span>
 </code></pre>
 <p>The baseline comes from <code>current_worktree_path()</code> — the dispatcher binds the real cwd (worktree or project path) into that ContextVar on every turn, see <code>dispatcher/__init__.py:387-403</code> — and the process <code>getcwd</code> is only a fallback. This shares a source with the cwd in the system prompt (<code>_model_tools.py:322</code>), so the cwd the model is told about and the cwd the fence honors are always the same directory. If they diverge, edits to files inside the project are judged &quot;outside the workspace&quot;, acceptEdits does not let them through, and approval prompts fire repeatedly. <code>worktree.context</code> depends on stdlib only, so there is no import cycle.</p>
 <h3 id="32-backend-the-set_working_dirs-ws-action">3.2 Backend: the <code>set_working_dirs</code> ws action<a class="header-anchor" href="#32-backend-the-set_working_dirs-ws-action">#</a></h3>
 <p>It lives in <code>openprogram/webui/ws_actions/session.py</code>, alongside the other session-config actions. The semantics are <strong>whole-list replacement</strong> — the frontend computes the additions and removals and sends the complete list. That is idempotent and removes the &quot;already added / removing something absent&quot; edge cases:</p>
 <pre><code class="language-python"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handle_set_working_dirs</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Replace the session&#39;s additional working directories wholesale. Each dir is</span>
-<span class="sd">    expanduser&#39;d and must be an existing directory. An invalid entry rejects the whole</span>
-<span class="sd">    frame (an error frame carries the reason); there are no partial writes.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Replace the session's additional working directories wholesale. Each dir is</span>
+<span class="sd">    expanduser'd and must be an existing directory. An invalid entry rejects the whole</span>
+<span class="sd">    frame (an error frame carries the reason); there are no partial writes."""</span>
     <span class="c1"># validation passes → save_session_run_config(session_id, agent_id=..., additional_working_dirs=dirs)</span>
-    <span class="c1"># → broadcast {&quot;type&quot;: &quot;working_dirs&quot;, &quot;data&quot;: {&quot;session_id&quot;, &quot;dirs&quot;}}</span>
+    <span class="c1"># → broadcast {"type": "working_dirs", "data": {"session_id", "dirs"}}</span>
 </code></pre>
 <p>Validation rule: <code>Path(d).expanduser()</code> must satisfy <code>is_dir()</code>. What is stored is the expanded absolute path string, not the realpath — the user sees the path they picked, and realpath normalization is left to the <code>check_path_safety</code> consumer, which already does it.</p>
 <h3 id="33-backend-returned-in-session_loaded-carried-on-the-first-message">3.3 Backend: returned in <code>session_loaded</code>, carried on the first message<a class="header-anchor" href="#33-backend-returned-in-session_loaded-carried-on-the-first-message">#</a></h3>

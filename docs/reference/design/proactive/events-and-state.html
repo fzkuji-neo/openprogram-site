@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/events-and-state.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/events-and-state.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -498,12 +498,12 @@ and when you're done you have the current situation.</p>
     <span class="k">return</span> <span class="n">state</span>                       <span class="c1"># done rolling = current state</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;file.changed&quot;</span><span class="p">:</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">changed_files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">])</span>
-    <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;tool.after&quot;</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;errored&quot;</span><span class="p">]:</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">tool_failure_count</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;tool&quot;</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;tool.after&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;errored&quot;</span><span class="p">]:</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">tool_failure_count</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;tool&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1"># reset on success</span>
+    <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"file.changed"</span><span class="p">:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">changed_files</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"path"</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"tool.after"</span> <span class="ow">and</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"errored"</span><span class="p">]:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">tool_failure_count</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"tool"</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"tool.after"</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"errored"</span><span class="p">]:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">tool_failure_count</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"tool"</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1"># reset on success</span>
     <span class="c1"># ... for each event you care about, update the corresponding state</span>
     <span class="k">return</span> <span class="n">state</span>
 </code></pre>
@@ -514,11 +514,11 @@ it's purely a byproduct of accumulating events.</strong> This is what the overvi
 <h3 id="42-how-policies-use-state">4.2 How Policies Use State<a class="header-anchor" href="#42-how-policies-use-state">#</a></h3>
 <p>A policy's <code>evaluate</code> receives the current event <strong>and</strong> the current state, and looks at both together:</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">StuckToolWatcher</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tool.after&quot;</span><span class="p">}</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tool.after"</span><span class="p">}</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="n">tool</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;tool&quot;</span><span class="p">]</span>
+        <span class="n">tool</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"tool"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">tool_failure_count</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>     <span class="c1"># read the accumulated state</span>
-            <span class="k">return</span> <span class="n">remind</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2"> has failed repeatedly, may be stuck&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">remind</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2"> has failed repeatedly, may be stuck"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p>A memory-dependent judgment like &quot;three failures in a row&quot; is this straightforward to write precisely because of the fold-derived state.</p>

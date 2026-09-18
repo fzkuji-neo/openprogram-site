@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/capabilities/docs-question.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/capabilities/docs-question.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -143,7 +143,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>在 Functions 面板里以 <code>run_docs_question</code> 运行，或从 Python 调用：</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.workflow.docs_question</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_docs_question</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">run_docs_question</span><span class="p">(</span><span class="s2">&quot;能让一个会话一直做到条件成立吗？&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">run_docs_question</span><span class="p">(</span><span class="s2">"能让一个会话一直做到条件成立吗？"</span><span class="p">)</span>
 </code></pre>
 <h2 id="它读什么">它读什么<a class="header-anchor" href="#它读什么">#</a></h2>
 <p>整棵文档树，此外什么都不读。这个 agent 只拿到四个工具（<code>read</code>、<code>grep</code>、<code>glob</code>、<code>list</code>），写不了、改不了、也起不了 shell，prompt 把它的工作范围钉在给定的 <code>docs/</code> 目录上。它也看不到派生它的那轮对话：问题就是它的全部交待，所以答案来自页面，而不是来自会话当时在聊什么。</p>
@@ -175,7 +175,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </table>
 <p>值得有的正是第三种。&quot;文档未覆盖&quot;是一个真答案，猜某个功能存不存在不是；prompt 明确禁止用对 agent 产品的泛泛认识去补这个缺口。</p>
 <h2 id="返回什么">返回什么<a class="header-anchor" href="#返回什么">#</a></h2>
-<pre><code class="language-python"><span class="p">{</span><span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="s2">&quot;…&quot;</span><span class="p">,</span> <span class="s2">&quot;sources&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;capabilities/goal.md&quot;</span><span class="p">],</span> <span class="s2">&quot;covered&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<pre><code class="language-python"><span class="p">{</span><span class="s2">"answer"</span><span class="p">:</span> <span class="s2">"…"</span><span class="p">,</span> <span class="s2">"sources"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"capabilities/goal.md"</span><span class="p">],</span> <span class="s2">"covered"</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 </code></pre>
 <p><code>sources</code> 是相对 <code>docs/</code> 的路径，按引用顺序去重。指向不存在页面的引用会被丢掉，所以编出来的页名不会作为出处递到你手上。<code>covered</code> 为 <code>false</code> 时，<code>sources</code> 装的是 agent 找到的最接近的相关页，而不是回答了问题的页。</p>
 <p>空问题在派 agent 之前就被拒掉；agent 的回复无法表达成这个结构时直接报错，而不是返回半个答案。</p>

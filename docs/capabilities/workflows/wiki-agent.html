@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789756792" data-alt-lang-url="/docs/capabilities/workflows/wiki-agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789757277" data-alt-lang-url="/docs/capabilities/workflows/wiki-agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,7 +152,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <li>&quot;find pages about distillation&quot;</li>
 </ul>
 <p>Run it directly from the command line:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>wiki_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">&quot;Ingest the notes above into the wiki&quot;</span>
+<pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>wiki_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"Ingest the notes above into the wiki"</span>
 </code></pre>
 <p>Function signature: <code>wiki_agent(task, vault=&quot;&quot;, purpose=&quot;&quot;, audience=&quot;&quot;, ...)</code>. It is a dispatcher: using a next-step decision (<code>decision.make</code>) it routes the task to one of five internal operations — <strong>ingest / enrich / browse / lint / search</strong> — where each branch handler is plain Python calling <code>wiki_agent_harness.Wiki</code>. <code>vault</code> (the knowledge-base root), <code>purpose</code>, and <code>audience</code> are hidden parameters that do not appear in the chat tool form; when <code>vault</code> is not given it falls back to the runtime's working directory.</p>
 <p>The harness itself stays deliberately loose: it provides only five things — the rendering layer, slot primitives, full-text search, automatic folder indexing, and the ingest pipeline. Everything else (moving / deleting / grepping / editing) the agent does with ordinary shell and file tools. A slot is a region of a page delimited by HTML comments; the agent edits one slot at a time, so repeated ingests accumulate cleanly without rewriting whole pages.</p>

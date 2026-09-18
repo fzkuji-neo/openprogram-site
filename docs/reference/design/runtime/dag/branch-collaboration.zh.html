@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/runtime/dag/branch-collaboration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/runtime/dag/branch-collaboration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -504,13 +504,13 @@ pointer（<code>predecessor=target_head</code>，<code>attach.head_id=peer tip</
 全图唯一的汇聚形状；它落在 base 分支 lane——合并后的主线延续 base。attach pointer
 节点本身在 viewport 不画，只画汇入线。</p>
 <h2 id="三发消息工具">三、发消息工具<a class="header-anchor" href="#三发消息工具">#</a></h2>
-<pre><code class="language-python"><span class="nd">@function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;send_to_branch&quot;</span><span class="p">)</span>
+<pre><code class="language-python"><span class="nd">@function</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"send_to_branch"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">send_to_branch</span><span class="p">(</span><span class="n">target_branch</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wait_reply</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;给另一个分支发一条消息。</span>
+<span class="w">    </span><span class="sd">"""给另一个分支发一条消息。</span>
 <span class="sd">    target_branch: 目标分支 head_id 或分支名</span>
 <span class="sd">    message: 内容</span>
 <span class="sd">    wait_reply: True 则同步等目标分支 LLM 回复并返回；False 只投递</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 </code></pre>
 <p>设计要点：</p>
 <ul>

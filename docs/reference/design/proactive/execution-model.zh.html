@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789756792" data-alt-lang-url="/docs/reference/design/proactive/execution-model.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789757277" data-alt-lang-url="/docs/reference/design/proactive/execution-model.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -419,7 +419,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>一条规则就是一个 Python 类，框架认这几样东西：</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">Policy</span><span class="p">:</span>
     <span class="n">on</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>          <span class="c1"># 我盯着哪几类事件</span>
-    <span class="n">lane</span><span class="p">:</span> <span class="nb">str</span>             <span class="c1"># 我是&quot;挡路的&quot;(gate) 还是&quot;旁观的&quot;(observer)</span>
+    <span class="n">lane</span><span class="p">:</span> <span class="nb">str</span>             <span class="c1"># 我是"挡路的"(gate) 还是"旁观的"(observer)</span>
     <span class="n">cooldown_s</span><span class="p">:</span> <span class="nb">float</span>     <span class="c1"># 我出手后，至少隔多久才允许再出手（防刷屏）</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Action</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -435,16 +435,16 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>在事情发生之前拦住。</strong> 只盯一类事件：<code>tool.before</code>（工具即将执行）。因为&quot;拦&quot;只有在事情
 还没发生时才有意义——工具都跑完了再拦没意义。</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">DangerousCommandGuard</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tool.before&quot;</span><span class="p">}</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;gate&quot;</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tool.before"</span><span class="p">}</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"gate"</span>
     <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;工具&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;bash&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"工具"</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"bash"</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">命令</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;命令&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s2">&quot;rm -rf&quot;</span> <span class="ow">in</span> <span class="n">命令</span> <span class="ow">or</span> <span class="s2">&quot;git push --force&quot;</span> <span class="ow">in</span> <span class="n">命令</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Gate</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;这条命令有风险：</span><span class="si">{</span><span class="n">命令</span><span class="si">}</span><span class="s2">，确认执行吗？&quot;</span><span class="p">)</span>
+        <span class="n">命令</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"命令"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"rm -rf"</span> <span class="ow">in</span> <span class="n">命令</span> <span class="ow">or</span> <span class="s2">"git push --force"</span> <span class="ow">in</span> <span class="n">命令</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Gate</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span><span class="sa">f</span><span class="s2">"这条命令有风险：</span><span class="si">{</span><span class="n">命令</span><span class="si">}</span><span class="s2">，确认执行吗？"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p>挡路规则返回的动作只有三种：<code>Gate.allow()</code>（放行）、<code>Gate.deny(理由)</code>（拦死）、
@@ -462,14 +462,14 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><strong>在事情发生之后看着，慢慢想，不耽误 agent。</strong> 盯各种事件——工具完成了、模型回复完了、
 文件改了。</p>
 <pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">StuckToolWatcher</span><span class="p">:</span>
-    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;tool.after&quot;</span><span class="p">}</span>
-    <span class="n">lane</span> <span class="o">=</span> <span class="s2">&quot;observer&quot;</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"tool.after"</span><span class="p">}</span>
+    <span class="n">lane</span> <span class="o">=</span> <span class="s2">"observer"</span>
     <span class="n">cooldown_s</span> <span class="o">=</span> <span class="mi">300</span>                 <span class="c1"># 提醒过一次，5 分钟内别再提同一个</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="n">工具</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;工具&quot;</span><span class="p">]</span>
+        <span class="n">工具</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s2">"工具"</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">该工具失败次数</span><span class="p">[</span><span class="n">工具</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Notify</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">工具</span><span class="si">}</span><span class="s2"> 连续失败了，可能卡住&quot;</span><span class="p">,</span> <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;info&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Notify</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">工具</span><span class="si">}</span><span class="s2"> 连续失败了，可能卡住"</span><span class="p">,</span> <span class="n">severity</span><span class="o">=</span><span class="s2">"info"</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
 </code></pre>
 <p>旁观规则返回的动作有：</p>
