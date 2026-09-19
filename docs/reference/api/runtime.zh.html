@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789764997" data-alt-lang-url="/docs/reference/api/runtime.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789797131" data-alt-lang-url="/docs/reference/api/runtime.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -544,7 +544,7 @@ Attempt 2: RateLimitError: 429 Too Many Requests
 Attempt 3: ConnectionError: timeout
 </code></pre>
 <h3 id="重试的边界">重试的边界<a class="header-anchor" href="#重试的边界">#</a></h3>
-<p><code>max_retries</code> 只处理 API 层面的瞬态故障（网络超时、速率限制等）。如果是函数本身的逻辑或输出格式有问题，重试无法修复，需要直接修改函数代码。</p>
+<p>瞬态传输失败、结构化输出修正，以及启用工具时的异常重复输出，共用本次调用的失败恢复额度。重复响应在同一 Agent 上下文内重新生成，保留已完成的工具结果及 Runtime 回执，不设置整体 Token 或执行时长上限。显式调用限制、取消、权限失败和恢复额度耗尽仍然有效。重新生成响应不代表可以重复外部写入；写入结果不确定时必须先检查实际记录。函数自身的逻辑错误仍需修改代码。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/API.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">API Reference</span></a><a class="pn-link pn-next" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Providers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">

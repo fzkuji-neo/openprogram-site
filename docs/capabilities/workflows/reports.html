@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789764997" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789797131" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -261,9 +261,11 @@ create a recurring schedule or send to the leader. An exact execution time and
 material source must be configured separately before enabling a scheduled run.</p>
 <h2 id="source-organization">Source organization<a class="header-anchor" href="#source-organization">#</a></h2>
 <p>The five independent report Workflow packages are grouped under <code>openprogram/programs/workflow/weekly_report/</code>: <code>personal_weekly_report</code> (Feishu), <code>personal_chat_weekly_report</code> (owner's WeChat-group copy), <code>group_weekly_report</code> (group collection), <code>tencent_weekly_report</code> (Tencent), and <code>weekly_report</code> (routing). Shared internal helpers live in <code>workflow/_reports/</code>. The coordinator is named <code>weekly_report</code>. Configured output paths are unchanged. A category directory organizes sources; it is not an additional Workflow.</p>
-<p>Personal field generation uses a read-only Agent to retrieve the requested week from memory and local notes. A JSON Schema validates complete fields or sparse edits, with prompt fallback and the existing format-repair attempt before any write. An unresolved model failure retains the original request; an uncertain remote write is not retried.</p>
+<p>Personal field generation uses a read-only Agent to retrieve the requested week from memory and local notes. A JSON Schema validates complete fields or sparse edits, with prompt fallback and the existing format-repair attempt before any write. The Feishu Workflow propagates unresolved model failures as errors. An uncertain remote write is a non-retryable failure; inspect the actual record before another attempt.</p>
 <p>Structured Agents count normal tool rounds against <code>max_iterations</code>, not the failed-request allowance. A completed tool round preserves the remaining retry allowance; format repairs and failed requests still share it. Reaching the iteration limit stops execution without replaying completed tools.</p>
-<p>Read-only memory search, grep, get and browse use the normal safe-tool policy; explicit deny/ask rules and <code>memory.read</code> authority still apply. Personal operation selection and evidence verification, plus every Tencent JSON-producing stage, declare output schemas and reuse Runtime format repair. A format failure returns model-recovery state rather than requesting missing user input. Tencent request interpretation inherits the deployment timeout.</p>
+<p>Read-only memory search, grep, get and browse use the normal safe-tool policy; explicit deny/ask rules and <code>memory.read</code> authority still apply. Personal operation selection and evidence verification, plus every Tencent JSON-producing stage, declare output schemas and reuse Runtime format repair. Personal Feishu format failures propagate as errors; Tencent retains its existing model-recovery state. Neither is treated as missing user input. Tencent request interpretation inherits the deployment timeout.</p>
+<h2 id="feishu-browser-failures">Feishu browser failures<a class="header-anchor" href="#feishu-browser-failures">#</a></h2>
+<p>Feishu inspection and writing expose only <code>web_use</code>, using its current <code>command</code> schema. They require real tool receipts before accepting an observation or reporting a write. Quoted tool calls in model text are not browser actions. These stages have no hard-coded aggregate timeout or tool-round limit; explicit Runtime deployment limits still apply. Browser access failures propagate through the coordinator instead of being returned as successful text. If a later child fails, the original exception retains earlier completed child results; the coordinator does not automatically rerun them.</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
@@ -272,6 +274,7 @@ material source must be configured separately before enabling a scheduled run.</
 <a class="" href="#continue-incomplete-work">Continue incomplete work</a>
 <a class="" href="#friday-afternoon-tencent-report">Friday afternoon Tencent report</a>
 <a class="" href="#source-organization">Source organization</a>
+<a class="" href="#feishu-browser-failures">Feishu browser failures</a>
 </div></aside>
 </div>
 
