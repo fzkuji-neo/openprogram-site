@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789797131" data-alt-lang-url="/docs/models/providers.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789804786" data-alt-lang-url="/docs/models/providers.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -196,7 +196,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><code>xai_subscription</code></td>
-<td>OpenAI Completions</td>
+<td>OpenAI Responses</td>
 <td>OAuth（SuperGrok / X Premium+）：浏览器 PKCE 登录</td>
 <td>模型与 <code>xai</code> 相同，走 <code>cli-chat-proxy.grok.com</code>（不是 <code>api.x.ai</code>）</td>
 </tr>
@@ -264,6 +264,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"gemini-cli"</span><span class="p">)</span>    <span class="c1"># 复用 Gemini CLI 登录态</span>
 </code></pre>
 <p>上表其余 provider：<code>create_runtime(provider=..., model=...)</code> 会按该模型的协议自动路由，与聊天界面走同一条路径。</p>
+<p>Grok Subscription 在代理路由请求头中保留所选模型 ID。选择 <code>grok-4.6</code> 时请求该模型，不替换成 <code>grok-build</code> 别名。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/models/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Configure models</span></a><a class="pn-link pn-next" href="/docs/models/auth.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Authentication</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
