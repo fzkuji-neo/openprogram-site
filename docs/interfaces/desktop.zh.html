@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789804786" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -166,7 +166,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>resource</code> 工具通过 <code>describe</code> 返回 provider 及其支持的操作和参数结构。先调用 <code>resource(action=&quot;describe&quot;)</code>，再按返回的结构调用。内置 <code>web</code> 和 <code>terminal</code> 保留原有资源标识和检查；现有 <code>web_use</code>、<code>terminal_use</code> 继续兼容。例如 <code>resource(provider=&quot;terminal&quot;, action=&quot;list&quot;)</code> 列出可用 shell，<code>observe</code> 返回后续操作需要的 generation、binding、input revision 和输出 cursor。</p>
 <p>只允许调用 provider 声明的操作。网页 <code>release</code> 释放控制会话而保留网页，<code>close</code> 使用已观察实例的控制绑定关闭准确的网页；终端 <code>release</code> 保留进程，<code>close</code> 请求终止进程。Terminal 需要来自对应 Desktop 窗口的有效执行，不能绕过任务 sandbox。</p>
 <p>可信 Python 集成可以通过 <code>openprogram.resource_interface.registry.register(...)</code> 注册 <code>ResourceProvider</code>，为每种操作声明 JSON Schema 和调用适配器。适配器负责自身的授权和生命周期。重复名称会被拒绝，参数在调用前验证。这是可信集成 API，不接受 Agent 或网页提供任意代码。集成可以通过已有 <code>openprogram.session_resources.resource_use(...)</code> 在 Resources 上报会话使用情况；已启用的安装应用根据操作清单自动注册 <code>application.&lt;id&gt;</code>。关联当前会话的实例显示在 Resources，并复用现有隔离应用视图。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#打开-browser">打开 Browser</a>

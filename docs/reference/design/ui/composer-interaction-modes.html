@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789804786" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789936088" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot; · OpenProgram Docs</title>
-<meta name="description" content="In one sentence # The chat input box (composer) is not just a text field but a container that switches between several shapes . Each shape is a">
+<title>Composer and user decision output · OpenProgram Docs</title>
+<meta name="description" content="The composer edits ordinary messages and user-opened function forms. Runtime questions, confirmations, forms and approvals are separate output cards in the">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Composer interaction modes — the input box as the unified catch point for \"user decisions\""}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Composer and user decision output"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.html">
-<meta property="og:title" content="Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot; · OpenProgram Docs">
-<meta property="og:description" content="In one sentence # The chat input box (composer) is not just a text field but a container that switches between several shapes . Each shape is a">
+<meta property="og:title" content="Composer and user decision output · OpenProgram Docs">
+<meta property="og:description" content="The composer edits ordinary messages and user-opened function forms. Runtime questions, confirmations, forms and approvals are separate output cards in the">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot; · OpenProgram Docs">
-<meta name="twitter:description" content="In one sentence # The chat input box (composer) is not just a text field but a container that switches between several shapes . Each shape is a">
+<meta name="twitter:title" content="Composer and user decision output · OpenProgram Docs">
+<meta name="twitter:description" content="The composer edits ordinary messages and user-opened function forms. Runtime questions, confirmations, forms and approvals are separate output cards in the">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -99,7 +99,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-transcript-follow.html" data-title-zh="OpenProgram · 聊天转录跟随" data-href-en="/docs/reference/design/ui/chat-transcript-follow.html" data-href-zh="/docs/reference/design/ui/chat-transcript-follow.zh.html">OpenProgram · Chat transcript follow</a>
-<a class="navlink active" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
+<a class="navlink active" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="输入框与用户决定输出" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer and user decision output</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
@@ -328,9 +328,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html">Agent 能力配置</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
+<a class="navlink" href="/docs/reference/design/runtime/group-weekly-report.html" data-title-zh="自主收集的小组周报" data-href-en="/docs/reference/design/runtime/group-weekly-report.html" data-href-zh="/docs/reference/design/runtime/group-weekly-report.zh.html">Autonomous group weekly report</a>
 <a class="navlink" href="/docs/reference/design/runtime/chat-search-settings.html">Chat settings and web search</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow 设计" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow Design</a>
-<a class="navlink" href="/docs/reference/design/runtime/group-weekly-report.html" data-title-zh="小组周报" data-href-en="/docs/reference/design/runtime/group-weekly-report.html" data-href-zh="/docs/reference/design/runtime/group-weekly-report.zh.html">Group weekly report</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
@@ -351,10 +351,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
-<a class="navlink" href="/docs/reference/design/runtime/system-access.html">System access</a>
+<a class="navlink" href="/docs/reference/design/runtime/system-access.html">Unified system access</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collab-architecture.html">Agent协作：工具面</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collab-comparison.html">Agent协作：八家实现对照</a>
 <a class="navlink" href="/docs/reference/design/runtime/durable-tool-results.html" data-title-zh="工具结果保存与编码 Agent 对比" data-href-en="/docs/reference/design/runtime/durable-tool-results.html" data-href-zh="/docs/reference/design/runtime/durable-tool-results.zh.html">Durable tool results and coding-agent comparison</a>
+<a class="navlink" href="/docs/reference/design/runtime/report-delivery-intent.html" data-title-zh="周报交付意图" data-href-en="/docs/reference/design/runtime/report-delivery-intent.html" data-href-zh="/docs/reference/design/runtime/report-delivery-intent.zh.html">Report delivery intent</a>
 <a class="navlink" href="/docs/reference/design/runtime/application-runtime.html">OpenProgram 应用运行方案与 Harness 调研</a>
 </div>
 <div class="nav-sec">
@@ -387,7 +388,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/docs/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/docs/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
-<a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求：暂停运行以向用户提问" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">User input requests: pausing a run to ask the user</a>
+<a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">User input requests</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Session 子系统">Runtime · Session Subsystem</div>
@@ -416,239 +417,30 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 对话与编辑器">UI · Chat and composer</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</span></nav><h1 id="composer-interaction-modes-the-input-box-as-the-unified-catch-point-for-user-decisions">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;<a class="header-anchor" href="#composer-interaction-modes-the-input-box-as-the-unified-catch-point-for-user-decisions">#</a></h1>
-<h2 id="in-one-sentence">In one sentence<a class="header-anchor" href="#in-one-sentence">#</a></h2>
-<p>The chat input box (composer) is not just a text field but a <strong>container that switches between several shapes</strong>.
-Each shape is a &quot;transformation&quot; (mode): filling in a function form is one, answering a runtime.ask question
-is another, approving a tool is another. Every interaction that <strong>requires a user decision</strong> is presented by transforming in place inside the input box,
-rather than each popping its own floating window. Each mode has its own folder and follows the same interface,
-so any new interaction either directly reuses an existing mode or derives from one.</p>
-<h2 id="why-one-catch-point">Why one catch point<a class="header-anchor" href="#why-one-catch-point">#</a></h2>
-<p>Three interactions put the turn back on the user: running an <code>@agentic_function</code>,
-answering a <code>runtime.ask</code> question, and approving a tool execution. Presented
-separately — one as an in-place form, one as a floating card, one with no UI at
-all — the user's attention is dragged to different places and each path is coded
-on its own. Presenting all three in the input box keeps the user's gaze in the
-input area and gives the frontend a single catch point for user decisions.</p>
-<p>This also aligns with the event layer: the event layer is a unified event stream, and any &quot;requires a user decision&quot; event (question.asked,
-the future approval.asked / form.asked) should land on the frontend at <strong>the same exit</strong> — the input box's
-mode container, which picks a transformation to present it. One backend registry (QuestionRegistry), one
-frontend catch point (composer), one event path.</p>
-<h2 id="fn-form-the-template-for-a-transformation">fn-form: the template for a transformation<a class="header-anchor" href="#fn-form-the-template-for-a-transformation">#</a></h2>
-<p>fn-form is the reference shape; the mode framework makes its conventions explicit
-so more modes can follow them:</p>
-<ul>
-<li><strong>Trigger state in the store</strong>: <code>session-store.ts</code>'s <code>fnFormFunction</code> (+ <code>fnFormClosing</code>),
-<code>openFnForm(fn)</code> / <code>closeFnForm()</code>. Non-empty = currently in fn-form shape.</li>
-<li><strong>Field state in a hook</strong>: <code>use-fn-form-state.ts</code> (values / workdir / error / closing),
-reseeds defaults when fn changes.</li>
-<li><strong>Visuals in module.css</strong>: <code>inputWrapper</code> gets <code>morphed</code> to change shape; <code>outgoingLayer</code>
-does the cross-fade animation when switching fn→fn.</li>
-<li><strong>Send button behavior switches with it</strong>: <code>onSendButtonClick = fnFormActive ? submitFnForm : submit</code>,
-with disabled / title also changing with the current shape.</li>
-<li><strong>Components</strong>: <code>fn-form/fn-form.tsx</code> (the shape) + <code>fn-form-fields.tsx</code> (field rendering).</li>
-</ul>
-<p><code>runtime.ask</code> follows the same conventions as a <code>question</code> mode rather than as a
-standalone floating popup.</p>
-<p>A function invocation has two frontend inputs. Selecting a registered function
-opens <code>FunctionForm</code>; entering an exact, complete expression such as
-<code>gui_agent(task=&quot;Verify the current built-in browser page title without changing it&quot;)</code> in the idle
-composer invokes the same function without opening the form. The expression is
-recognized only when the entire trimmed input is one registered
-<code>name(parameter=literal, ...)</code> call. Both inputs are normalized and schema-validated,
-then passed to the same <code>FunctionInvocation</code> dispatcher. Explanatory text that
-contains a call, and call text wrapped in inline or fenced backticks, remain
-ordinary chat input.</p>
-<h2 id="model-container-transformation-mode">Model: container + transformation (mode)<a class="header-anchor" href="#model-container-transformation-mode">#</a></h2>
-<h3 id="container-composer">Container (composer)<a class="header-anchor" href="#container-composer">#</a></h3>
-<p>At any moment the composer is in <strong>one</strong> mode:</p>
-<ul>
-<li><code>idle</code> — normal typing (default).</li>
-<li><code>fn-form</code> — filling in a function parameter form.</li>
-<li><code>question</code> — answering a runtime.ask (options / multi-select / free text).</li>
-<li><code>approval</code> — approving/rejecting a tool execution (a derivative of question: two fixed options +
-a dangerous-action summary).</li>
-<li>Future: <code>form</code> (runtime.form multi-field), <code>diff-approve</code> (approval with a diff preview)…</li>
-</ul>
-<p>Only one mode occupies the input area at a time (mutually exclusive). Mode switching goes through the container's state machine; entering/exiting
-both have in-place transformation animations (reusing <code>outgoingLayer</code> cross-fade).</p>
-<h3 id="layout-in-a-morphed-mode">Layout in a morphed mode<a class="header-anchor" href="#layout-in-a-morphed-mode">#</a></h3>
-<p>The composer keeps the three-band arrangement in every mode: env chips above,
-the wrapper box, and one detached controls row (permission / models / effort /
-context ring) below. Morphing only grows the wrapper upward — the controls row
-never moves or restyles. Inside the wrapper a morphed mode is a 48px header plus
-a body with 12px padding on every side:</p>
-<ul>
-<li><strong>fn-form</strong>: the run button (the same 24px square as the chat send button) and
-the 24px close button sit side by side at the header's right edge; the body
-ends right after the last field.</li>
-<li><strong>question / approval</strong>: the header holds only the badge and progress. The
-body's last row groups approval choices on the left and response actions on
-the right. &quot;Chat about this&quot; sits immediately before Send (or before the
-navigation buttons for multiple questions). Choices only select an answer;
-Send commits it. Narrow composers wrap inside this bottom action region
-without overlapping controls. Keyboard activation keeps each button's own
-action. There is no absolute positioning or reserved empty row.</li>
-</ul>
-<p>Buttons are rounded rectangles (6px radius) throughout — no pill or circle
-shapes. A static size-accurate mock of this layout lives in
-<a href="/docs/reference/design/ui/fn-form-compact-mock.html">fn-form-compact-mock.html</a>.</p>
-<h3 id="the-unified-interface-of-a-mode">The unified interface of a mode<a class="header-anchor" href="#the-unified-interface-of-a-mode">#</a></h3>
-<p>Each mode is a <strong>self-contained unit</strong> that exposes the same contract to the container:</p>
-<pre><code class="language-ts"><span class="kd">interface</span><span class="w"> </span><span class="nx">ComposerMode</span><span class="o">&lt;</span><span class="nx">TState</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">                       </span><span class="c1">// "fn-form" | "question" | "approval" | …</span>
-<span class="w">  </span><span class="c1">// the data this mode needs to enter (fn definition / question envelope / approval request)</span>
-<span class="w">  </span><span class="c1">// pushed into the store by the trigger source; the container reads it out and passes it to the mode.</span>
-<span class="w">  </span><span class="nx">useModeState</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">TState</span><span class="p">;</span><span class="w">      </span><span class="c1">// the local-state hook of this mode (e.g. use-fn-form-state)</span>
-<span class="w">  </span><span class="nx">Body</span><span class="o">:</span><span class="w"> </span><span class="kt">React.FC</span><span class="o">&lt;</span><span class="p">{</span><span class="w"> </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="kt">TState</span><span class="p">;</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="o">&gt;</span><span class="p">;</span><span class="w">   </span><span class="c1">// the main body rendered in the input area</span>
-<span class="w">  </span><span class="c1">// the behavior/text/availability of the primary action button (which takes over the composer's Send slot)</span>
-<span class="w">  </span><span class="nx">primaryAction</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">label</span><span class="p">;</span><span class="w"> </span><span class="nx">disabled</span><span class="p">;</span><span class="w"> </span><span class="nx">run</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">};</span>
-<span class="w">  </span><span class="c1">// the secondary action (cancel/reject), exits the mode</span>
-<span class="w">  </span><span class="nx">secondaryAction</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">label</span><span class="p">;</span><span class="w"> </span><span class="nx">run</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="ow">void</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">  </span><span class="nx">onExit</span><span class="o">?</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span><span class="w">                  </span><span class="c1">// cleanup (clear state, send an unanswered signal, etc.)</span>
-<span class="p">}</span>
-</code></pre>
-<p>The container only knows this interface; adding a mode = adding a folder that implements it, <strong>without changing the container itself</strong>.</p>
-<h3 id="file-organization">File organization<a class="header-anchor" href="#file-organization">#</a></h3>
-<pre><code>apps/web/components/chat/composer/
-  modes/
-    index.ts            # mode registry (id → ComposerMode), the container looks up against this
-    types.ts            # the ComposerMode interface
-    fn-form/            # the function parameter form
-    question/           # runtime.ask
-    approval/           # tool approval (a derivative of question)
-  index.tsx             # container: reads the current mode, looks it up, renders Body + takes over Send
-</code></pre>
-<p>Subsequent derivatives: <code>approval/</code> directly imports <code>question/</code>'s Body and wraps another layer around it (adding the dangerous summary),
-which is &quot;deriving from an existing transformation&quot;.</p>
-<h2 id="three-communication-shapes-direct-store-request-broadcast-dont-mix-them">Three communication shapes: direct store / request / broadcast (don't mix them)<a class="header-anchor" href="#three-communication-shapes-direct-store-request-broadcast-dont-mix-them">#</a></h2>
-<p>A mode is defined by how it is triggered and how the user's action is returned. These go through <strong>three
-different channels</strong>, distinguished by one rule: <strong>only consider the bus when crossing a process/network boundary; a state change in the same place
-changes the store directly; to have the backend do one thing and give a definite reply, use a request (HTTP/RPC), not a broadcast.</strong></p>
-<table>
-<thead>
-<tr>
-<th>Shape</th>
-<th>Channel</th>
-<th>Example</th>
-<th>Why</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Direct store</strong></td>
-<td>Zustand action, frontend state in the same place</td>
-<td>Click a sidebar function → <code>openFnForm(fn)</code> enters fn-form</td>
-<td>Crosses no boundary, the frontend just changes its own shape; putting it on the bus is overkill</td>
-</tr>
-<tr>
-<td><strong>Request (command)</strong></td>
-<td>HTTP POST / RPC, one round trip</td>
-<td>FunctionForm or an exact function expression → <code>POST /api/function/{name}</code>; mode reply → <code>question_reply</code> WS action</td>
-<td>&quot;I want you to do something + give me a reply&quot; (returns <code>session_id</code> after running, resolves which question). The request/response model fits best; the bus is fire-and-forget and can't get the reply back</td>
-</tr>
-<tr>
-<td><strong>Broadcast (event)</strong></td>
-<td>event bus → WS</td>
-<td>function run progress/output/<code>question.asked</code>/<code>file.changed</code></td>
-<td>The backend one-directionally emits &quot;what happened&quot;; whoever cares listens, no waiting for a reply</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Follow a function invocation end to end</strong>: either select the function (direct
-store, open FunctionForm, fill parameters) or enter an exact registered
-expression (parse and validate in the idle composer). Both paths produce the
-same <code>FunctionInvocation</code> and call the shared dispatcher (<strong>request</strong>: POST
-initiates and returns <code>session_id</code>) without calling the chat-message sender or
-creating a user chat turn. The function then runs in a subprocess; run events
-and mid-flight <code>runtime.ask</code> updates return through the event layer → WS
-(<strong>broadcast</strong>).</p>
-<p>Initiating a run is never a fire-and-forget bus event: that loses the
-<code>session_id</code>, leaving the frontend with no way to navigate to or bind the
-session. A request initiates; a broadcast reports the process.</p>
-<h2 id="how-events-route-in">How events route in<a class="header-anchor" href="#how-events-route-in">#</a></h2>
-<blockquote>
-<p>This section only covers the third row of the table above — <strong>broadcast</strong>: how &quot;requires a user decision&quot; events emitted by the backend through the event layer
-land on the composer. The <strong>reply</strong> after the user acts is the second row (request/WS action), see the table above.</p>
-</blockquote>
-<p>The backend sends &quot;requires a user decision&quot; frames through the event layer as
-<code>question.asked</code>, which approval also uses. On the frontend:</p>
-<ol>
-<li><code>use-ws.ts</code> receives <code>question.asked</code> and writes the envelope into the store's
-<code>pendingDecision</code>.</li>
-<li>The composer container subscribes to <code>pendingDecision</code>: if non-empty, it picks a mode based on <code>kind</code>
-(<code>ask</code>/<code>confirm</code> → question, <code>approval</code> → approval) and enters that shape.</li>
-<li>The user acts in the input area → the mode's primary/secondary action sends <code>question_reply</code> /
-<code>question_reject</code>; the backend collects them at <code>_resolve_question</code>.</li>
-<li>Answered elsewhere first, or stopped → the backend broadcasts <code>question.replied</code>/<code>rejected</code> → the frontend clears
-<code>pendingDecision</code> and exits the mode.</li>
-</ol>
-<p><strong>Mutual exclusion and priority</strong>: only one mode is presented at a time, under two rules —</p>
-<ul>
-<li><strong>Queue among system decisions</strong>: two &quot;the system needs a user decision&quot; events (e.g. question arrives first, then
-approval) → FIFO queue, one at a time. After the previous one is answered, the next is presented automatically. No stacking,
-no side-by-side.</li>
-<li><strong>System decision vs a mode the user actively opened</strong>: a fn-form the user opened themselves collides with a system
-decision → directly <strong>cancel</strong> the fn-form (the user opened it actively, discarding it doesn't matter), letting the system decision occupy
-the input area. No stashing, no restoring.</li>
-</ul>
-<p><code>pendingDecision</code> is therefore a FIFO queue: a non-empty head occupies the input area, a new system decision is enqueued,
-and a user-opened fn-form on screen is cleared before the head is shown. No stack, no snapshot.</p>
-<h2 id="backend-approval-merged-into-questionregistry">Backend: approval merged into QuestionRegistry<a class="header-anchor" href="#backend-approval-merged-into-questionregistry">#</a></h2>
-<p>So that approval travels the same event path to the same composer catch point, approval lives in
-<code>QuestionRegistry</code> rather than in a registry of its own (user-input-requests.md, point 6):</p>
-<ul>
-<li><code>await_user_approval</code> registers a <code>kind=&quot;approval&quot;</code> PendingQuestion
-(prompt = &quot;Allow executing {tool}?&quot;, options = [&quot;Allow&quot;, &quot;Reject&quot;], detail = parameter summary),
-and sends <code>question.asked</code> through the event layer.</li>
-<li>The async wait reuses <code>asyncio.to_thread(ev.wait, timeout)</code> (the tool execute is a coroutine,
-it can't synchronously block the loop).</li>
-<li>The boolean result is mapped from the question's three states: answered &quot;Allow&quot; → True; declined / timeout → False.</li>
-<li><code>approval_registry()</code> returns the unified QuestionRegistry; there is no separate
-<code>ApprovalRegistry</code> and no custom <code>approval_request</code> envelope.</li>
-</ul>
-<p>One registry, one event (<code>question.asked</code>), one frontend catch point.</p>
-<h2 id="presentation-decisions">Presentation decisions<a class="header-anchor" href="#presentation-decisions">#</a></h2>
-<ul>
-<li><strong>approval dangerous summary</strong>: the full command/parameters are shown, truncated
-head-and-tail when too long. No dangerous-token highlighting.</li>
-<li><strong>Reject with reason</strong>: approval's secondary action accepts a text reason, and that
-reason becomes the tool error text returned to the model.</li>
-<li><strong>Timeout</strong>: a mode waiting on the user finishes as declined on timeout, exits
-automatically, and leaves a one-line note in the input area (&quot;no response, timed out&quot;).</li>
-</ul>
-<h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
-<p>The modes framework, the question mode, the backend approval merge, the approval
-mode with rejection-by-reason, and FIFO conflict queueing with timeout reclaim are
-all implemented. fn-form is still rendered inline by the composer rather than
-through the modes registry; folding it in is a pending cleanup that does not
-change behaviour.</p>
-<h2 id="related">Related<a class="header-anchor" href="#related">#</a></h2>
-<ul>
-<li>user-input registry / runtime.ask: <a href="/docs/reference/design/runtime/operations/user-input-requests.html">../runtime/user-input-requests.md</a></li>
-<li>event layer (the unified event stream, this is its alignment landing point in the frontend):
-<a href="/docs/reference/design/proactive/event-reference.html">../proactive/event-reference.html</a></li>
-</ul>
-<h3 id="discussing-a-pending-request">Discussing a pending request<a class="header-anchor" href="#discussing-a-pending-request">#</a></h3>
-<p>Chat about this opens a feedback field in the existing decision card. Opening and cancelling do not resolve the wait. Sending binds the user's feedback and original question or tool context to the exact canonical decline. After an applied acknowledgement, the existing session queue sends that contextual discussion with tools and web search disabled. Plain Deny creates no discussion turn. Drafts and attachments remain unchanged. Submission and retry retain the same command and feedback, and conflicting approval controls remain blocked until confirmation.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-transcript-follow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · Chat transcript follow</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/composer-local-attachment-paths.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Composer local paths</span></a></div></article></main>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面 · 对话与编辑器">UI · Chat and composer</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="输入框与用户决定输出">Composer and user decision output</span></nav><h1 id="composer-and-user-decision-output">Composer and user decision output<a class="header-anchor" href="#composer-and-user-decision-output">#</a></h1>
+<p>The composer edits ordinary messages and user-opened function forms. Runtime questions, confirmations, forms and approvals are separate output cards in the conversation. A pending decision never replaces the composer, clears its draft, closes its function form, changes its send action, or takes its focus.</p>
+<h2 id="ordinary-messages-and-function-forms">Ordinary messages and function forms<a class="header-anchor" href="#ordinary-messages-and-function-forms">#</a></h2>
+<p>The composer has two modes: <code>idle</code> and <code>fn-form</code>. Selecting a registered function opens <code>FunctionForm</code>; required fields and validation remain inside that form. Its transition, close action and outgoing-form animation belong to the composer. A pending decision does not cancel a function form.</p>
+<p>A complete registered <code>name(parameter=literal, ...)</code> expression in ordinary input uses the same invocation dispatcher and schema validation as the form. Explanatory text, partial expressions and fenced code remain ordinary chat text. While execution is running, normal messages retain the configured queue or steer behavior. Empty input retains the stop action.</p>
+<h2 id="decision-output-cards">Decision output cards<a class="header-anchor" href="#decision-output-cards">#</a></h2>
+<p><code>DecisionOutputs</code> renders session-scoped <code>PendingDecision</code> requests in the message stream and split panes. Each keyed card reuses <code>QuestionMode</code> for <code>ask</code>, <code>confirm</code>, <code>ask_many</code>, <code>form</code> and <code>approval</code>. Answer fields and navigation are local to the card. New questions do not autofocus. Multiple questions remain independently addressable in stable presentation order.</p>
+<p>Text and choice questions show their own input and submit controls. Multi-question requests collect ordered answers; forms submit field objects. Approval cards retain the available scopes, operation details and explicit allow/deny actions. Asking a question does not authorize an operation.</p>
+<p>Submission immediately displays the actual answer and a sending state inside the card. Only a matching applied command confirms delivery. Unknown outcomes retain the original command identifier and payload for retry, show the available error code, and never imply success. Explicit rejections reconcile the current request before another answer. A closed request is not displayed as an accepted answer. Confirmed answers and declines remain as session UI receipts; the normal composer draft is unaffected.</p>
+<p>Receipts are in-memory presentation state, not Workflow checkpoints. Refresh reloads canonical pending questions; this change does not add historical receipt persistence. Requests remain bound to their original session, execution, generation and version even when the user changes tabs.</p>
+<h2 id="discussion-and-events">Discussion and events<a class="header-anchor" href="#discussion-and-events">#</a></h2>
+<p>An explicit discussion action retains its own feedback input. It first confirms decline of the pending request, then queues the contextual discussion in the owning conversation. An unconfirmed decline cannot send discussion or permit execution. Ordinary composer messages do not implicitly decline a question or become its answer.</p>
+<p>UI-only settings use direct store updates. A one-shot user action uses a correlated request and response. Runtime questions are broadcast events projected into the pending-decision store; command acknowledgement remains authoritative. Event arrival alone is not a receipt for the user's answer.</p>
+<p><code>question.asked</code> and reconnect snapshots supply canonical targets. <code>useWaitAnswer</code> submits execution commands and owns acknowledgement state; <code>QuestionMode</code> owns answer fields; <code>DecisionOutputs</code> owns output placement. Backend live Workflow questions continue in the original process. Existing predeclared Agent waits retain their continuation contract.</p>
+<h2 id="acceptance">Acceptance<a class="header-anchor" href="#acceptance">#</a></h2>
+<p>Verify a pending question alongside a populated composer: the question is outside the composer, the draft and focus remain, and normal Send remains ordinary message submission. Click the card's submit button and verify immediate answer feedback, matching acknowledgement, retained receipt, unchanged composer draft, session isolation, retry identity and native App behavior.</p>
+<p>See <a href="/docs/reference/design/runtime/operations/user-input-requests.html">user input requests</a> and <a href="/docs/reference/design/runtime/execution/execution-control.html#decision-output">execution control</a>.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-transcript-follow.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">OpenProgram · Chat transcript follow</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/composer-local-attachment-paths.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Composer local paths</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#in-one-sentence">In one sentence</a>
-<a class="" href="#why-one-catch-point">Why one catch point</a>
-<a class="" href="#fn-form-the-template-for-a-transformation">fn-form: the template for a transformation</a>
-<a class="" href="#model-container-transformation-mode">Model: container + transformation (mode)</a>
-<a class="lvl-3" href="#container-composer">Container (composer)</a>
-<a class="lvl-3" href="#layout-in-a-morphed-mode">Layout in a morphed mode</a>
-<a class="lvl-3" href="#the-unified-interface-of-a-mode">The unified interface of a mode</a>
-<a class="lvl-3" href="#file-organization">File organization</a>
-<a class="" href="#three-communication-shapes-direct-store-request-broadcast-dont-mix-them">Three communication shapes: direct store / request / broadcast (don't mix them)</a>
-<a class="" href="#how-events-route-in">How events route in</a>
-<a class="" href="#backend-approval-merged-into-questionregistry">Backend: approval merged into QuestionRegistry</a>
-<a class="" href="#presentation-decisions">Presentation decisions</a>
-<a class="" href="#appendix-implementation-status">Appendix: Implementation Status</a>
-<a class="" href="#related">Related</a>
-<a class="lvl-3" href="#discussing-a-pending-request">Discussing a pending request</a>
+<a class="" href="#ordinary-messages-and-function-forms">Ordinary messages and function forms</a>
+<a class="" href="#decision-output-cards">Decision output cards</a>
+<a class="" href="#discussion-and-events">Discussion and events</a>
+<a class="" href="#acceptance">Acceptance</a>
 </div></aside>
 </div>
 

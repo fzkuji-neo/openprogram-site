@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789804786" data-alt-lang-url="/docs/capabilities/mcp.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789936088" data-alt-lang-url="/docs/capabilities/mcp.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -218,7 +218,7 @@ openprogram<span class="w"> </span>mcp<span class="w"> </span>serve
 <h3 id="oauth-sign-in-happens-once">OAuth sign-in happens once<a class="header-anchor" href="#oauth-sign-in-happens-once">#</a></h3>
 <p>The first time an OAuth server connects, OpenProgram opens the consent page in your browser and captures the redirect on a localhost callback. Everything the flow produced — access and refresh tokens, the dynamic client registration, and the discovered authorization endpoints — is persisted to <code>~/.openprogram/mcp_tokens/&lt;server&gt;.json</code> (mode <code>0600</code>). Every later connection, including after a worker restart, reuses the stored token; when it has expired, the refresh token renews it silently in the background. The browser only reappears when the refresh token itself is rejected (revoked or expired server-side) — the management UI then shows the server as needing re-authentication. To switch accounts or start over, <code>POST /api/mcp/servers/{name}/auth/clear</code> wipes the stored state and restarts the server.</p>
 <p>Beyond tools, MCP's other two primitives — resources and prompts — are also exposed to the model through built-in meta tools (see <code>mcp_meta</code> in <a href="/docs/capabilities/tools.html">Built-in tools</a>).</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/plugins.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Plugins</span></a><a class="pn-link pn-next" href="/docs/capabilities/tools.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Built-in tools</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/plugins.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Plugins</span></a><a class="pn-link pn-next" href="/docs/capabilities/tools.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Built-in tools</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#quick-start">Quick start</a>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789804786" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>准备每周报告 · OpenProgram Docs</title>
-<meta name="description" content="weekly_report 是 Agent 路由入口：理解完整请求，选择飞书个人、群聊个人、小组、腾讯中的一项或多项，再将原话逐字传给对应 Workflow。不会按关键词或冒号拆分要求，不强制只生成草稿，也不设置共同周次或共同检查点。未提飞书时，「写个人周报 / 本周进展」走群聊三段短稿，不走飞书表单。 入口 用途">
+<meta name="description" content="群聊个人周报和飞书个人周报草稿默认直接返回完整 Markdown 正文，不依赖本地文件写入成功。明确指定 Markdown 输出路径时仍按文件交付，旧的文件交付恢复请求保持兼容。返回正文不会对外发送或提交。 weekly_report 是 Agent">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/reports.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/reports.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/reports.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/reports.zh.html">
 <meta property="og:title" content="准备每周报告 · OpenProgram Docs">
-<meta property="og:description" content="weekly_report 是 Agent 路由入口：理解完整请求，选择飞书个人、群聊个人、小组、腾讯中的一项或多项，再将原话逐字传给对应 Workflow。不会按关键词或冒号拆分要求，不强制只生成草稿，也不设置共同周次或共同检查点。未提飞书时，「写个人周报 / 本周进展」走群聊三段短稿，不走飞书表单。 入口 用途">
+<meta property="og:description" content="群聊个人周报和飞书个人周报草稿默认直接返回完整 Markdown 正文，不依赖本地文件写入成功。明确指定 Markdown 输出路径时仍按文件交付，旧的文件交付恢复请求保持兼容。返回正文不会对外发送或提交。 weekly_report 是 Agent">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="准备每周报告 · OpenProgram Docs">
-<meta name="twitter:description" content="weekly_report 是 Agent 路由入口：理解完整请求，选择飞书个人、群聊个人、小组、腾讯中的一项或多项，再将原话逐字传给对应 Workflow。不会按关键词或冒号拆分要求，不强制只生成草稿，也不设置共同周次或共同检查点。未提飞书时，「写个人周报 / 本周进展」走群聊三段短稿，不走飞书表单。 入口 用途">
+<meta name="twitter:description" content="群聊个人周报和飞书个人周报草稿默认直接返回完整 Markdown 正文，不依赖本地文件写入成功。明确指定 Markdown 输出路径时仍按文件交付，旧的文件交付恢复请求保持兼容。返回正文不会对外发送或提交。 weekly_report 是 Agent">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -139,6 +139,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="准备每周报告">Prepare weekly reports</span></nav><h1 id="准备每周报告">准备每周报告<a class="header-anchor" href="#准备每周报告">#</a></h1>
+<p>群聊个人周报和飞书个人周报草稿默认直接返回完整 Markdown 正文，不依赖本地文件写入成功。明确指定 Markdown 输出路径时仍按文件交付，旧的文件交付恢复请求保持兼容。返回正文不会对外发送或提交。</p>
 <p><code>weekly_report</code> 是 Agent 路由入口：理解完整请求，选择飞书个人、群聊个人、小组、腾讯中的一项或多项，再将原话逐字传给对应 Workflow。不会按关键词或冒号拆分要求，不强制只生成草稿，也不设置共同周次或共同检查点。未提飞书时，「写个人周报 / 本周进展」走群聊三段短稿，不走飞书表单。</p>
 <table>
 <thead>
@@ -171,19 +172,20 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tbody>
 </table>
 <h2 id="使用">使用<a class="header-anchor" href="#使用">#</a></h2>
-<p>直接输入“写个人周报”“个人和腾讯都做，小组不用”或“三个都做”。Agent 结合完整语义、否定和可用上下文选择；仍不明确才询问。单项结果原样返回，多项结果加类型标签。</p>
+<p>直接输入“写个人周报”“个人和腾讯都做，小组不用”或“三个都做”。Agent 结合完整语义、否定和可用上下文选择；未指定受众时默认生成小组汇总草稿，不通过提问中止路由。单项结果原样返回，多项结果加类型标签。</p>
 <p>显式 <code>requests</code> JSON 仍可直接指定子 Workflow，参数不改写。各子 Workflow 管理自己的进度与恢复；总入口不再恢复旧的共同检查点，请使用对应子入口的恢复参数。</p>
 <h2 id="材料与输出">材料与输出<a class="header-anchor" href="#材料与输出">#</a></h2>
 <p>腾讯入口语义理解周次与用户提供的进展，保留完整原话到后续模型上下文；提供的材料必须来自原文。未提供材料时查找已有报告和有日期的记忆，排除其他周次和不可靠记录。目标为约100字，通常80–120字，只报告本周实际进展。微信只读取、整理和生成本地稿件，由用户发送。</p>
 <p>五个独立包位于 <code>openprogram/programs/workflow/weekly_report/</code>。在 Abilities 展开同名文件夹即可选择各入口。调用图显示总入口到路由 Agent 和四个子 Workflow 的可能调用关系；不代表每次全部执行。</p>
-<p>路由、小组请求解析和个人周报的模型调用继承 Runtime 超时配置（<code>OPENPROGRAM_EXEC_TIMEOUT_S</code>），不再单独限制为 90 秒。小组请求对未验证原生 schema 能力的提供商允许使用提示词兼容模式，并保留 schema 校验和 Runtime 已有的有限格式修正重试；格式修正耗尽后返回 <code>WAITING_MODEL</code> 和原始请求供恢复，不再误报为缺少用户输入。外部记录写入结果不确定时不自动重复执行。</p>
-<p>自然语言的小组请求会先由只读 Agent 从记忆和本地组会记录查找缺失的源群名称和成员顺序，再进入现有收集步骤。显式用户范围优先；资料不足或群与名单冲突时请求澄清。这个解释步骤不提供写文件、发消息、操作微信或递归调用周报的工具。结构化请求仍直接使用所给参数。</p>
+<p>路由、小组请求解析和个人周报的模型调用继承 Runtime 超时配置（<code>OPENPROGRAM_EXEC_TIMEOUT_S</code>），不再单独限制为 90 秒。小组请求对未验证原生 schema 能力的提供商允许使用提示词兼容模式，并保留 schema 校验和 Runtime 已有的有限格式修正重试；未恢复的模型异常保留真实失败类型，不再误报为缺少用户输入。外部记录写入结果不确定时不自动重复执行。</p>
+<p>小组汇报可以只输入“做小组汇报”。流程主动从记忆、相关本地资料及已确定的微信群查找群、名单、当周材料和作者证据，不再要求用户补字段。原始正文保留；未指定周次时使用当前 ISO 周并标注这一假设。作者未核实则明确标注，资料不足则生成带来源限制的部分草稿，不编造进展。</p>
+<p>默认 <code>source=auto</code>；显式 <code>source=supplied</code> 只使用输入材料。微信读取验证群身份并保留来源证据，历史覆盖始终不完整；微信访问失败时继续查询本地资料。流程不发送消息、不修改系统权限，也不因信息缺失调用 ask_user。</p>
 <p>个人字段生成使用只读 Agent 检索指定周次的记忆和本地记录。JSON Schema 校验完整字段或局部修改，使用 prompt fallback 和现有的一次格式修正，随后才允许写入。个人飞书周报将未恢复的模型失败原样抛出。远程写入结果不确定时会抛出不可自动重试的失败，必须先检查实际记录。</p>
 <p>结构化 Agent 的正常工具轮次由 <code>max_iterations</code> 限制，不消耗失败请求的重试预算。完成工具轮次后保留剩余重试额度；格式修正与失败请求仍共用该额度。达到轮次上限会停止执行，不重新执行已完成的工具。</p>
 <p>记忆 search、grep、get、browse 使用正常只读安全工具策略，显式 deny/ask 规则与 <code>memory.read</code> 权限仍生效。个人操作选择、来源核验，以及腾讯各 JSON 输出步骤均声明 schema，复用 Runtime 的格式修正。个人飞书周报的格式失败原样抛出；腾讯周报保留现有的模型恢复状态，两者都不当作用户缺少输入。腾讯请求解释继承部署超时。</p>
 <h2 id="飞书网页操作失败">飞书网页操作失败<a class="header-anchor" href="#飞书网页操作失败">#</a></h2>
 <p>飞书检查和写入阶段只提供 <code>web_use</code>，使用当前的 <code>command</code> 参数协议。接受页面观察或报告写入前必须有真实工具回执，模型正文中的工具调用文本不算网页操作。这两个阶段不设置固定的总超时或工具轮次上限，显式 Runtime 部署限制仍然生效。网页访问失败通过总入口传递，不再作为成功文本返回。后续子 Workflow 失败时，原始异常保留此前已完成子任务的结果，总入口不会自动重跑这些任务。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#使用">使用</a>

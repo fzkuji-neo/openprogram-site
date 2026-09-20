@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789804786" data-alt-lang-url="/docs/capabilities/applications.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/capabilities/applications.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -182,7 +182,7 @@ openprogram<span class="w"> </span>apps<span class="w"> </span>list
 <p>已启用应用自动出现在 <code>resource(action=&quot;describe&quot;)</code> 中，名称为 <code>application.&lt;id&gt;</code>。安装、禁用、更新和卸载无需重启 worker 即生效。项目级应用的 <code>open</code> 接受 <code>project_id</code>，并将实例关联调用会话。<code>observe</code> 返回实例数据与最近执行；<code>act</code> 接受清单中 Agent 可见的操作及稳定的 <code>request_key</code>。使用 open 返回的 <code>instance_id</code> 与 <code>digest</code>，更新应用后旧 digest 会被拒绝。</p>
 <p><code>status</code>、<code>cancel</code>、<code>answer</code> 只处理属于该实例的执行。声明 <code>storage.app</code> 后，<code>save</code> 要求预期的数据版本。<code>release</code> 只移除会话关联，保留实例、数据和正在执行的操作；隐藏视图也不停止操作。Resources 和顶部标签复用同一实例及现有 sandbox 应用 frame，无需另外编写前端适配器。</p>
 <p>通过 <a href="/docs/capabilities/framework-control.zh.html">framework 工具</a> 调用 <code>POST /api/applications/scaffold</code>，传入 <code>path</code>、<code>app_id</code>、<code>title</code> 可生成可运行的示例包。父目录必须存在，目标目录不能已存在。包中分别放置 <code>backend/operations.py</code>、<code>ui/index.html</code> 和 <code>application.json</code>，界面与 Agent 都调用声明的 read/save 操作。审查源码后，通过 <code>/api/applications/install</code> 传入源路径及 <code>trust: true</code> 安装。增加功能时同步扩展后端和操作清单，不要仅在前端事件中实现业务修改。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Overview</span></a><a class="pn-link pn-next" href="/docs/capabilities/framework-control.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Operate OpenProgram through backend tools</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Overview</span></a><a class="pn-link pn-next" href="/docs/capabilities/framework-control.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Operate OpenProgram through backend tools</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#安装与打开">安装与打开</a>

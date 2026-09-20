@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789804786" data-alt-lang-url="/docs/capabilities/workflows/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/capabilities/workflows/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -194,9 +194,9 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 <p>它先读取配置的飞书表单，核对姓名和年份、周次。没有记录时新建提交一次；已有可编辑记录时，从提交历史打开并保存。部分修改保留未指定的字段。明确要求草稿或只读检查时不会提交。检查结果不明确、登录失败或记录无法唯一确认时停止；达到提交次数上限不等于已有记录不能编辑。</p>
 <p>只有观察到新的成功提示并核对保存内容后才报告完成。写入结果不明确时直接说明，不自动重试。浏览器原有授权要求保持不变。流程使用有次数与时间限制的浏览器步骤，不使用 <code>goal()</code> 循环，也不编造进展、指标或论文名称。</p>
 <h3 id="组长周报草稿">组长周报草稿<a class="header-anchor" href="#组长周报草稿">#</a></h3>
-<p><code>group_weekly_report(task)</code> 根据你提供的材料生成本地草稿，不读取或发送微信消息。JSON 输入包含 <code>mode</code>（<code>inspect</code>、<code>summary</code> 或 <code>reminder</code>）、<code>week</code>（<code>YYYY-Www</code>）、<code>group</code>、按顺序排列的 <code>members</code> 和 <code>materials</code>。每条材料包含 <code>id</code>、<code>member</code>、<code>week</code> 和 <code>text</code>；可用 <code>kind: &quot;claim&quot;</code> 区分成员自述与已提供的周报材料。自然语言由模型解析，缺少范围时返回待补充信息。</p>
-<p>结构化输入的核对由代码完成，不调用模型。汇总按成员限制模型上下文，核验来源引用并保留不确定项。本地文件保存到 <code>reports/group-weekly/&lt;week&gt;/&lt;unique-run&gt;/</code>（或 <code>output_dir</code>）。未找到材料不等于未提交。请核对草稿后自行发送。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Write, test, and publish a Workflow</span></a></div></article></main>
+<p><code>group_weekly_report(task)</code> 主动从记忆、相关本地文件和微信查找范围、材料与作者证据，生成未发送草稿。缺字段不再提问，未核实作者与不可用来源写入限制。显式 <code>source: &quot;supplied&quot;</code> 只使用所给材料。来源选项见<a href="/docs/capabilities/workflows/reports.zh.html">每周报告</a>。</p>
+<p>完整且显式只用输入材料的结构化核对由代码完成，不调用模型。汇总按成员限制模型上下文，核验来源引用并保留不确定项。本地文件保存到 <code>reports/group-weekly/&lt;week&gt;/&lt;unique-run&gt;/</code>（或 <code>output_dir</code>）。未找到材料不等于未提交。请核对草稿后自行发送。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Next-step decision</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Write, test, and publish a Workflow</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#是什么">是什么</a>

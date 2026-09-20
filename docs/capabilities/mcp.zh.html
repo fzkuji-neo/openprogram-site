@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789804786" data-alt-lang-url="/docs/capabilities/mcp.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/capabilities/mcp.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -216,7 +216,7 @@ openprogram<span class="w"> </span>mcp<span class="w"> </span>serve
 <h3 id="oauth-只需授权一次">OAuth 只需授权一次<a class="header-anchor" href="#oauth-只需授权一次">#</a></h3>
 <p>OAuth server 首次连接时，OpenProgram 会在浏览器打开授权页，并用 localhost 回调接住跳转。整个流程产出的状态——access / refresh token、动态客户端注册信息、发现到的授权端点——都会持久化到 <code>~/.openprogram/mcp_tokens/&lt;server&gt;.json</code>（权限 <code>0600</code>）。之后的每次连接（包括 worker 重启后）都复用存储的 token；token 过期时用 refresh token 在后台静默续期。只有 refresh token 本身被拒绝（服务端吊销或过期）时才会重新弹出浏览器，管理界面会把该 server 标记为需要重新认证。要换账号或重头来过，<code>POST /api/mcp/servers/{name}/auth/clear</code> 会清空存储状态并重启该 server。</p>
 <p>除了工具，MCP 的另外两类原语——resources 和 prompts——也通过一组内置 meta 工具暴露给模型（见<a href="/docs/capabilities/tools.html">内置工具</a>的 <code>mcp_meta</code>）。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/plugins.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Plugins</span></a><a class="pn-link pn-next" href="/docs/capabilities/tools.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Built-in tools</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/plugins.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Plugins</span></a><a class="pn-link pn-next" href="/docs/capabilities/tools.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Built-in tools</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#快速上手">快速上手</a>

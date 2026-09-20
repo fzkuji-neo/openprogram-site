@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789804786" data-alt-lang-url="/docs/reference/design/runtime/operations/user-input-requests.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789936088" data-alt-lang-url="/docs/reference/design/runtime/operations/user-input-requests.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>User input requests: pausing a run to ask the user · OpenProgram Docs</title>
-<meta name="description" content="This document describes how a running function pauses to ask the user a question and resumes with the answer: the API surface, the pending-question registry,">
+<title>User input requests · OpenProgram Docs</title>
+<meta name="description" content="Running Python Workflows can call ask_user(question) or runtime.ask(...) to display a question and wait for its answer in the same process. This does not save">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/operations/user-input-requests.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/operations/user-input-requests.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/operations/user-input-requests.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/operations/user-input-requests.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"User input requests: pausing a run to ask the user"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"User input requests"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/operations/user-input-requests.html">
-<meta property="og:title" content="User input requests: pausing a run to ask the user · OpenProgram Docs">
-<meta property="og:description" content="This document describes how a running function pauses to ask the user a question and resumes with the answer: the API surface, the pending-question registry,">
+<meta property="og:title" content="User input requests · OpenProgram Docs">
+<meta property="og:description" content="Running Python Workflows can call ask_user(question) or runtime.ask(...) to display a question and wait for its answer in the same process. This does not save">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,8 +23,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="User input requests: pausing a run to ask the user · OpenProgram Docs">
-<meta name="twitter:description" content="This document describes how a running function pauses to ask the user a question and resumes with the answer: the API surface, the pending-question registry,">
+<meta name="twitter:title" content="User input requests · OpenProgram Docs">
+<meta name="twitter:description" content="Running Python Workflows can call ask_user(question) or runtime.ask(...) to display a question and wait for its answer in the same process. This does not save">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -99,7 +99,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html">聊天附件：双向流转与预览</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html">聊天轮次视觉规范 — 执行时间线 + 文件修改 + 消息导航</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-transcript-follow.html" data-title-zh="OpenProgram · 聊天转录跟随" data-href-en="/docs/reference/design/ui/chat-transcript-follow.html" data-href-zh="/docs/reference/design/ui/chat-transcript-follow.zh.html">OpenProgram · Chat transcript follow</a>
-<a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="Composer interaction modes — 输入框作为&quot;用户决定&quot;的统一承接点" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction modes — the input box as the unified catch point for &quot;user decisions&quot;</a>
+<a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="输入框与用户决定输出" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer and user decision output</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html">Composer local paths</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html">OpenProgram · Composer 控制栏响应式设计</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html">OpenProgram · Composer Tool Profile 菜单</a>
@@ -328,9 +328,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html">Agent 能力配置</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html">Agent 运行配额与任务生命周期治理</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent 配置框架</a>
+<a class="navlink" href="/docs/reference/design/runtime/group-weekly-report.html" data-title-zh="自主收集的小组周报" data-href-en="/docs/reference/design/runtime/group-weekly-report.html" data-href-zh="/docs/reference/design/runtime/group-weekly-report.zh.html">Autonomous group weekly report</a>
 <a class="navlink" href="/docs/reference/design/runtime/chat-search-settings.html">Chat settings and web search</a>
 <a class="navlink" href="/docs/reference/design/runtime/goal.html" data-title-zh="Goal Workflow 设计" data-href-en="/docs/reference/design/runtime/goal.html" data-href-zh="/docs/reference/design/runtime/goal.zh.html">Goal Workflow Design</a>
-<a class="navlink" href="/docs/reference/design/runtime/group-weekly-report.html" data-title-zh="小组周报" data-href-en="/docs/reference/design/runtime/group-weekly-report.html" data-href-zh="/docs/reference/design/runtime/group-weekly-report.zh.html">Group weekly report</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html">OpenProgram Agent 执行统一与 Self Programming Workflow 重构计划</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html">OpenProgram Agentic Function、Workflow 与 Skills 职责设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html">OpenProgram Programs 目标代码结构</a>
@@ -351,10 +351,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/permission-model.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/permission-model.html" data-href-zh="/docs/reference/design/runtime/permission-model.zh.html">Execution authority, permission, and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collaboration.html" data-title-zh="Agent 协作：一个分支间通信原语" data-href-en="/docs/reference/design/runtime/agent-collaboration.html" data-href-zh="/docs/reference/design/runtime/agent-collaboration.zh.html">Agent collaboration: one cross-branch communication primitive</a>
 <a class="navlink" href="/docs/reference/design/runtime/sandbox.html" data-title-zh="执行身份、权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox.html" data-href-zh="/docs/reference/design/runtime/sandbox.zh.html">Execution authority, permission, and sandbox</a>
-<a class="navlink" href="/docs/reference/design/runtime/system-access.html">System access</a>
+<a class="navlink" href="/docs/reference/design/runtime/system-access.html">Unified system access</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collab-architecture.html">Agent协作：工具面</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-collab-comparison.html">Agent协作：八家实现对照</a>
 <a class="navlink" href="/docs/reference/design/runtime/durable-tool-results.html" data-title-zh="工具结果保存与编码 Agent 对比" data-href-en="/docs/reference/design/runtime/durable-tool-results.html" data-href-zh="/docs/reference/design/runtime/durable-tool-results.zh.html">Durable tool results and coding-agent comparison</a>
+<a class="navlink" href="/docs/reference/design/runtime/report-delivery-intent.html" data-title-zh="周报交付意图" data-href-en="/docs/reference/design/runtime/report-delivery-intent.html" data-href-zh="/docs/reference/design/runtime/report-delivery-intent.zh.html">Report delivery intent</a>
 <a class="navlink" href="/docs/reference/design/runtime/application-runtime.html">OpenProgram 应用运行方案与 Harness 调研</a>
 </div>
 <div class="nav-sec">
@@ -387,7 +388,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="DAG 边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">DAG Edge Field Naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/streaming-resume.html" data-title-zh="运行中状态的持久化 / 重连恢复" data-href-en="/docs/reference/design/runtime/operations/streaming-resume.html" data-href-zh="/docs/reference/design/runtime/operations/streaming-resume.zh.html">Persisting In-Flight State / Reconnect Recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="统一 parent_id 与 called_by — 设计方案" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Unifying parent_id and called_by — Design</a>
-<a class="navlink active" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求：暂停运行以向用户提问" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">User input requests: pausing a run to ask the user</a>
+<a class="navlink active" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="用户输入请求" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">User input requests</a>
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · Session 子系统">Runtime · Session Subsystem</div>
@@ -416,52 +417,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/testing/test-system.html">OpenProgram 测试系统</a>
 </div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Operations">Runtime · Operations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="用户输入请求：暂停运行以向用户提问">User input requests: pausing a run to ask the user</span></nav><h1 id="user-input-requests-pausing-a-run-to-ask-the-user">User input requests: pausing a run to ask the user<a class="header-anchor" href="#user-input-requests-pausing-a-run-to-ask-the-user">#</a></h1>
-<blockquote>
-<p>This document describes how a running function pauses to ask the user a
-question and resumes with the answer: the API surface, the pending-question
-registry, the transport that carries a question out of a subprocess, and how
-the answer travels back.
-Companion: <a href="/docs/reference/design/cli/tui-upgrade.html">../cli/tui-upgrade.md</a> (TUI surface).</p>
-</blockquote>
-<h2 id="problem">Problem<a class="header-anchor" href="#problem">#</a></h2>
-<p>A function (especially an <code>@agentic_function</code>) sometimes needs the user
-mid-run: confirm a destructive step, pick between alternatives, supply a
-missing value. That requires pausing execution, surfacing the question in
-web/TUI/channels, and resuming with the answer.</p>
-<h2 id="pre-existing-mechanisms">Pre-existing mechanisms<a class="header-anchor" href="#pre-existing-mechanisms">#</a></h2>
-<p>Three related mechanisms exist in the codebase, none of them alive end-to-end
-on the main chat path:</p>
-<table>
-<thead>
-<tr>
-<th>Mechanism</th>
-<th>State</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ask_user</code> / <code>set_ask_user</code> / <code>FollowUp</code> (<code>openprogram/programs/workflow/ask_user/</code>)</td>
-<td>Primitive complete, DAG awaiting-node bookkeeping complete; but no handler registered in the worker, and the agentic subprocess bridge is one-way — returns <code>None</code> in practice</td>
-</tr>
-<tr>
-<td>webui follow-up round-trip (<code>webui/server.py:234-270</code>, WS <code>follow_up_answer</code> action, web <code>handleFollowUpQuestion</code>)</td>
-<td>All three segments exist; the initiator <code>_web_follow_up</code> has no caller left — dead code. The web UI side is legacy DOM injection into <code>#runtime_pending</code> (only exists while a runtime block streams). TUI types the envelope but never handles it</td>
-</tr>
-<tr>
-<td>Approval gate (<code>openprogram/agent/permissions/approval.py</code>, wired in dispatcher)</td>
-<td>Wait machinery complete and live, but <code>resolve()</code> is only called from tests; no web/TUI UI; default <code>bypass</code> masks it; sub-agents force bypass to avoid 300s hangs</td>
-</tr>
-</tbody>
-</table>
-<p>The skeleton — blocking queue, WS action, stop-sentinel unblocking, DAG
-awaiting nodes — is therefore already available. What this design adds is the
-registry shape (per-request, not a global handler slot), the subprocess answer
-channel, real frontend UI, and explicit timeout semantics.</p>
-<p>The binding constraint is that <code>@agentic_function</code> bodies run in a <strong>spawned
-subprocess</strong> (<code>agent/process_runner.py</code>) whose mp.Queue is child→parent only.
-Any design must add a parent→child answer queue; no amount of worker-side
-wiring avoids this.</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运行时 · Operations">Runtime · Operations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="用户输入请求">User input requests</span></nav><h1 id="user-input-requests">User input requests<a class="header-anchor" href="#user-input-requests">#</a></h1>
+<p>Running Python Workflows can call <code>ask_user(question)</code> or <code>runtime.ask(...)</code> to display a question and wait for its answer in the same process. This does not save or resume the Workflow call stack. Restarting the worker interrupts this execution; it must not replay prior work. Refreshing a browser preserves the pending question while its owner remains active.</p>
 <h2 id="reference-designs-what-we-take">Reference designs (what we take)<a class="header-anchor" href="#reference-designs-what-we-take">#</a></h2>
 <ul>
 <li><strong>opencode</strong>: tool calls <code>ctx.ask(...)</code> → server-side Deferred + pending
@@ -481,131 +438,35 @@ tool returns &quot;pending&quot; immediately and the result is re-injected later
 <li><strong>MCP elicitation</strong>: the three-outcome protocol — accept / decline /
 cancel — and flat-object schema constraints for form-style asks.</li>
 </ul>
-<p>All four implement &quot;execution point blocks on a primitive, UI resolves it&quot;
-— no generator/coroutine acrobatics. Ours blocks a thread (functions
-already run in threads/subprocesses).</p>
-<h2 id="api">API<a class="header-anchor" href="#api">#</a></h2>
-<p>On <code>runtime</code>, next to <code>runtime.exec</code> / <code>decision</code>:</p>
-<pre><code class="language-python"><span class="c1"># Inside any @agentic_function / @function body</span>
-<span class="n">answer</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">ask</span><span class="p">(</span>
-    <span class="s2">"Which library for date formatting?"</span><span class="p">,</span>
-    <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">"dayjs"</span><span class="p">,</span> <span class="s2">"date-fns"</span><span class="p">,</span> <span class="s2">"luxon"</span><span class="p">],</span>  <span class="c1"># optional; None = free text</span>
-    <span class="n">multi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>                <span class="c1"># True -&gt; returns list[str]</span>
-    <span class="n">allow_custom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>          <span class="c1"># free text allowed besides options</span>
-    <span class="n">timeout</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span>               <span class="c1"># seconds, default 30 min</span>
-    <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>               <span class="c1"># returned on timeout; no default -&gt; AskTimeout</span>
-<span class="p">)</span>
-<span class="c1"># -&gt; str (or list[str]); user pressing Decline raises UserDeclined</span>
-
-<span class="n">ok</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="s2">"Archive all 87 emails?"</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="n">preview</span><span class="p">,</span>
-                     <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># -&gt; bool, never raises on timeout</span>
-
-<span class="n">runtime</span><span class="o">.</span><span class="n">can_ask</span><span class="p">()</span>  <span class="c1"># -&gt; bool; False in headless runs so authors can branch</span>
+<h2 id="api-and-outcomes">API and outcomes<a class="header-anchor" href="#api-and-outcomes">#</a></h2>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.programs.workflow.ask_user</span><span class="w"> </span><span class="kn">import</span> <span class="n">ask_user</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">ask_user</span><span class="p">(</span><span class="s2">"Who wrote this report?"</span><span class="p">)</span>
 </code></pre>
-<ul>
-<li><code>ask_user(question)</code> is a thin alias of <code>runtime.ask(question)</code>. With no
-global handler installed it falls back to <code>runtime.ask</code>, and
-UserDeclined/AskTimeout collapse to <code>None</code> to preserve the older semantics;
-the CLI's <code>set_ask_user</code> path is unaffected.</li>
-<li>The <code>clarify</code> built-in tool (LLM-callable) works through the same path.</li>
-<li>Three explicit outcomes: answered / declined / timeout. There is no silent
-<code>None</code> return after 300 s.</li>
-<li><code>runtime.form(...)</code> (MCP-elicitation-style flat schema) is deferred.</li>
-</ul>
-<h2 id="mechanism">Mechanism<a class="header-anchor" href="#mechanism">#</a></h2>
-<ol>
-<li><strong>Registry</strong> (worker process): <code>PendingQuestion {id, session_id, kind, prompt, options, multi, allow_custom, created_at, expires_at}</code> + a
-per-request <code>threading.Event</code>. This replaces the global <code>set_ask_user</code>
-handler slot, which two concurrent sessions could overwrite for each
-other. Resolve is an atomic claim-once; <code>handle_stop</code> puts the cancel
-sentinel exactly like the existing follow-up queues.</li>
-<li><strong>Protocol</strong>: WS broadcast <code>question.asked / question.replied / question.rejected</code>; REST <code>GET /api/questions?session_id=</code> + <code>POST /api/questions/{id}/reply</code> / <code>.../reject</code> for reconnect recovery
-(<code>webui/routes/questions.py</code>). <code>handle_load_session</code> replays
-still-pending <code>question.asked</code> frames on (re)connect. This reuses the
-existing <code>_broadcast_chat_response</code> plumbing, whose post-stop silence is
-the behavior we want.</li>
-<li><strong>Subprocess bridge</strong>: which channel a question travels on is a
-<code>QuestionTransport</code>, shaped like a Python logging Handler (<code>publish</code>
-corresponds to <code>Handler.emit</code>): <code>EventLayerTransport</code> (default — event
-layer to frontend card and bus, used by the worker) and <code>QueueTransport</code>
-(back to the parent process over mp.Queue, used by the subprocess). The
-runtime holds its transport explicitly (<code>runtime._question_transport</code>)
-rather than through a module-level global switch.
-<code>run_agentic_in_subprocess</code> adds a parent→child <code>answer_queue</code>;
-<code>_child_entry</code> installs <code>QueueTransport</code> on the subprocess runtime
-(questions travel up over <code>event_queue</code> tagged <code>__op_question__</code>) and
-starts an answer-pump thread that takes answers off <code>answer_queue</code> and
-resolves the subprocess-local registry. In the parent, <code>_drain</code>
-intercepts that envelope, and <code>_bridge_question_to_parent</code> registers the
-same qid in the parent registry, emits the frontend card, and starts a
-waiter; a WS reply resolves the parent registry through the existing
-<code>_resolve_question</code>, and the waiter pushes the answer back onto
-<code>answer_queue</code>. When the subprocess exits or is stopped, the parent
-closes out any remaining pending question as declined and retracts the
-card (claim-once, so a duplicate resolve is harmless).</li>
-<li><strong>Persistence</strong>: persist the request snapshot, not the execution stack.
-The DAG already writes <code>status=&quot;awaiting&quot;</code> user-role nodes; on worker
-restart, leftover pendings are marked expired and DAG nodes
-<code>unanswered</code>. No durable-execution resume (all four references
-deliberately skip it).</li>
-<li><strong>Frontends</strong>: web gets a React question card in the message stream
-(replacing the legacy DOM injection) and the composer doubles as the
-answer box while a question is pending; TUI renders the question in the
-input slot (tui-upgrade.md P2). First answer wins across surfaces;
-<code>question.replied</code> retracts the UI elsewhere.</li>
-<li><strong>Approval merge</strong>: <code>permissions/approval.py</code> moves onto the same registry as
-<code>kind=&quot;approval&quot;</code>, giving the otherwise unreachable <code>ask</code> permission mode
-a real UI, with opencode's reply shape (allow once / always / reject with
-feedback that becomes the tool error text).</li>
-<li><strong>Channels</strong>: buttons-as-text-commands (<code>/answer &lt;id&gt; &lt;choice&gt;</code>); for
-channel-initiated runs prefer the non-blocking <code>FollowUp</code> shape (reply
-ends the turn, user's next message resumes the function) instead of
-holding a thread for 30 minutes.</li>
-</ol>
-<h2 id="open-questions">Open questions<a class="header-anchor" href="#open-questions">#</a></h2>
-<ul>
-<li>Timeout default: 30 min (openclaw) vs shorter for web-first usage.</li>
-<li>Whether <code>decision.make</code> should eventually route through the same
-registry when the decision target is the human rather than the model
-(out of scope here, noted for the function-calling unification doc).</li>
-</ul>
-<h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
-<p>Implemented: the registry, <code>runtime.ask</code> / <code>confirm</code> / <code>can_ask</code>, the three
-explicit outcomes (answered / UserDeclined / AskTimeout), the WS
-question_reply/reject protocol, the web question card, and stop releasing
-pending questions via cancel_session — in <code>agent/questions.py</code>,
-<code>agentic_programming/runtime.py</code>, <code>webui/ws_actions/session.py</code>,
-<code>webui/ws_actions/runtime.py</code>, and <code>apps/web/components/ui/question-prompt.tsx</code>.</p>
-<p>Reconnect recovery is implemented. A question card is driven only by a live
-<code>question.asked</code> frame, so after a refresh or a dropped connection that frame
-is gone; <code>handle_load_session</code> replays every still-pending question of the
-session as the same <code>question.asked</code> frame, so the frontend redraws with no
-changes of its own. REST <code>GET /api/questions</code> + <code>POST /api/questions/{id}/reply|reject</code> (<code>webui/routes/questions.py</code>) give the same
-registry an API-side equivalent, with reply/reject funneling through the same
-<code>_resolve_question</code> as WS.</p>
-<p>The subprocess bridge is implemented, so <code>@agentic_function</code> bodies can ask:
-<code>QuestionTransport</code> (EventLayerTransport / QueueTransport) plus the
-parent↔child bridge in <code>process_runner</code> (questions up over <code>event_queue</code>,
-answers back over <code>answer_queue</code>) — in <code>agent/questions.py</code> (the three
-transport classes + <code>emit_question_asked</code>), <code>agentic_programming/runtime.py</code>
-(<code>set_question_transport</code>, <code>_ask_raw</code> going through
-<code>self._question_transport</code>), and <code>agent/process_runner.py</code> (<code>answer_queue</code>,
-answer-pump, <code>_bridge_question_to_parent</code>, <code>_decline_bridged_question</code>).
-Covered by <code>tests/component/agent/turns/test_questions_subprocess_bridge.py</code> (8 unit tests)
-plus a real spawned-subprocess end-to-end check.</p>
-<p>Not yet landed: the TUI surface (question/approval prompt in the input slot,
-tracked in tui-upgrade.md), and the approval merge, channels, and
-<code>runtime.form</code> described above.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Unifying parent_id and called_by — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session Subsystem</span></a></div></article></main>
+<p><code>runtime.ask(prompt, options=None, multi=False, allow_custom=True, timeout=300.0, default=None)</code> returns an answer, raises <code>UserDeclined</code>, or raises <code>AskTimeout</code> when no timeout default is supplied. <code>runtime.confirm</code> and <code>runtime.form</code> share the question transport. Cancellation raises the execution cancellation exception.</p>
+<p><code>ask_user</code> retains its global CLI handler and TTY fallback. In a runtime with a question transport it calls <code>runtime.ask</code>; an explicit decline or timeout maps to <code>None</code> for compatibility. Unexpected runtime, persistence and transport errors propagate. Headless calls without a handler or usable runtime still return <code>None</code>.</p>
+<h2 id="live-workflow-ownership">Live Workflow ownership<a class="header-anchor" href="#live-workflow-ownership">#</a></h2>
+<p>The subprocess runner binds execution ID, attempt ID, generation and producer identity for the lifetime of the call. A runtime without this binding cannot create a live question. Creation and answer transactions verify that the execution is running, the attempt remains the current active owner and its lease is valid. Live questions cannot grant tool permissions.</p>
+<p>The canonical wait store retains only the question, policy and eventual answer. Live waits have no checkpoint. Answer commands do not create another attempt. The original function receives the answer through its existing call stack. No model or completed tool is replayed.</p>
+<p>A child publishes <code>question.asked</code> through <code>QueueTransport</code>. Its parent projects the stored request into the frontend event and relays the canonical answer notification. The registry is only a local wake notifier; SQLite is the answer authority. Duplicate answers and replies from another execution are rejected by the existing command protocol.</p>
+<h2 id="browser-and-process-lifecycle">Browser and process lifecycle<a class="header-anchor" href="#browser-and-process-lifecycle">#</a></h2>
+<p>The existing question card displays the prompt. Session loading replays open questions after refresh. The question endpoints and execution answer command use the same record and authorization checks.</p>
+<p>Stopping an execution cancels its open questions. Child exit closes only that producer's live questions. Owner-loss reconciliation cancels abandoned live questions; stale replies cannot continue an ended call. A worker restart does not restore a Python Workflow stack. Durable Agent questions remain available through their separate checkpoint contract.</p>
+<h2 id="declared-agent-questions">Declared Agent questions<a class="header-anchor" href="#declared-agent-questions">#</a></h2>
+<p>Agent tool interactions with a declared pre-wait still use the checkpoint transaction: pause the execution, end the prior attempt and continue from that checkpoint after an answer. A preapproved wait takes precedence over the live binding and must exactly match the requested presentation. Live Workflow support does not weaken this validation or change permission approvals.</p>
+<h2 id="verification">Verification<a class="header-anchor" href="#verification">#</a></h2>
+<p>Tests exercise public <code>ask_user</code> with the real Runtime, canonical wait commands, same-call continuation, cancellation, invalid owner/session, transport failure and producer cleanup. Native acceptance requires a question in the installed App, browser refresh and an answer that lets the Workflow finish. A returned <code>WAITING_USER</code> object is not evidence that the UI interaction worked.</p>
+<h2 id="scope">Scope<a class="header-anchor" href="#scope">#</a></h2>
+<p>Workflow restart recovery is outside this contract. A live question retains its request and answer, not the Workflow execution state.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Unifying parent_id and called_by — Design</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/README.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Session Subsystem</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
-<a class="" href="#problem">Problem</a>
-<a class="" href="#pre-existing-mechanisms">Pre-existing mechanisms</a>
 <a class="" href="#reference-designs-what-we-take">Reference designs (what we take)</a>
-<a class="" href="#api">API</a>
-<a class="" href="#mechanism">Mechanism</a>
-<a class="" href="#open-questions">Open questions</a>
-<a class="" href="#appendix-implementation-status">Appendix: Implementation Status</a>
+<a class="" href="#api-and-outcomes">API and outcomes</a>
+<a class="" href="#live-workflow-ownership">Live Workflow ownership</a>
+<a class="" href="#browser-and-process-lifecycle">Browser and process lifecycle</a>
+<a class="" href="#declared-agent-questions">Declared Agent questions</a>
+<a class="" href="#verification">Verification</a>
+<a class="" href="#scope">Scope</a>
 </div></aside>
 </div>
 

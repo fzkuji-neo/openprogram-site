@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789804786" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789936088" data-alt-lang-url="/docs/capabilities/workflows/reports.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prepare weekly reports · OpenProgram Docs</title>
-<meta name="description" content="The report suite consists of four independently versioned Workflow packages and one coordinating weekly_report package. They must be installed in the Programs">
+<meta name="description" content="Personal-chat and Feishu draft requests return the full Markdown body by default. They do not need a successful local file write. An explicitly requested">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/reports.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/workflows/reports.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/workflows/reports.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/reports.html">
 <meta property="og:title" content="Prepare weekly reports · OpenProgram Docs">
-<meta property="og:description" content="The report suite consists of four independently versioned Workflow packages and one coordinating weekly_report package. They must be installed in the Programs">
+<meta property="og:description" content="Personal-chat and Feishu draft requests return the full Markdown body by default. They do not need a successful local file write. An explicitly requested">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Prepare weekly reports · OpenProgram Docs">
-<meta name="twitter:description" content="The report suite consists of four independently versioned Workflow packages and one coordinating weekly_report package. They must be installed in the Programs">
+<meta name="twitter:description" content="Personal-chat and Feishu draft requests return the full Markdown body by default. They do not need a successful local file write. An explicitly requested">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -139,11 +139,12 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="准备每周报告">Prepare weekly reports</span></nav><h1 id="prepare-weekly-reports">Prepare weekly reports<a class="header-anchor" href="#prepare-weekly-reports">#</a></h1>
+<p>Personal-chat and Feishu draft requests return the full Markdown body by default. They do not need a successful local file write. An explicitly requested Markdown output path retains file delivery; existing file-delivery resume requests remain supported. Returning text does not submit or send anything externally.</p>
 <p>The report suite consists of four independently versioned Workflow packages and
 one coordinating <code>weekly_report</code> package. They must be installed in the Programs catalog;
 this source checkout alone does not install them. The suite supports independent execution and composition through the <code>weekly_report</code> entry.
 Native WeChat collection depends on accessible search and conversation controls;
-unavailable controls return a recoverable state instead of a completed report.</p>
+the group Workflow records unavailable controls and continues with local evidence, producing an explicitly partial draft.</p>
 <table>
 <thead>
 <tr>
@@ -215,27 +216,9 @@ produce a success draft.</p>
 matching ISO weeks and unique source IDs. Insufficient evidence returns a request
 for input or review instead of inventing progress. Model-assisted semantic checks
 can detect unsupported claims but are not a guarantee of factual correctness.</p>
-<p>For a natural-language group request, a read-only agent first looks for missing
-source-group identity and ordered members in memory and saved local meeting
-records. It preserves explicit user scope and asks for clarification when sources
-do not establish one group and roster. This step cannot send messages, write
-files, operate WeChat, or call another report.</p>
-<p>For a structured group request, provide <code>source</code> (<code>wechat</code> or explicitly <code>supplied</code>), <code>group</code>,
-<code>week</code>, and the ordered <code>members</code> array. Supplied material additionally identifies
-its <code>member</code>. WeChat collection requires an accessible, verified group interface;
-versions without accessible message rows can use bounded window OCR. Captured
-pages and their original OCR rows are saved as local source evidence. Unknown
-authors, uncertain dates, clipped messages, and low-confidence boundaries remain
-unverified. If native search focus cannot be proved, open the requested group
-and resume; the Workflow still performs collection and summarization. A window
-that does not permit capture returns <code>WINDOW_CAPTURE_UNAVAILABLE</code>. No screen or
-WeChat settings are changed.
-Each child retains its own interaction and recovery behavior. Group request
-parsing uses schema-validated model output, permits prompt fallback for providers
-without verified native schema support, and uses the Runtime's existing bounded
-repair retry. Exhausted model-format failures return <code>WAITING_MODEL</code> with the
-original request for resumption, rather than claiming that user input is missing.
-Routing, group request parsing, and personal report model calls inherit the
+<p>For a group report, a request such as <code>Prepare the group report</code> is enough to start discovery. The Workflow retrieves missing group identity, roster, current materials and author evidence from memory, relevant local records and the identified WeChat group. It preserves supplied report bodies and does not ask for missing fields. With no reporting period specified, it uses the current ISO week and records that assumption. Unresolved authors remain visibly unverified; unavailable or insufficient evidence produces a partial draft with source diagnostics, never invented progress.</p>
+<p>The default source is <code>auto</code>. Explicit <code>source: &quot;supplied&quot;</code> restricts the run to supplied materials. Native collection verifies the group and retains source evidence; historical coverage remains partial. It cannot send messages or change system permissions. If WeChat access fails, relevant local sources remain available. Model and provider failures retain their actual execution errors rather than being classified as missing user input.</p>
+<p>Routing, group request parsing, and personal report model calls inherit the
 Runtime timeout (<code>OPENPROGRAM_EXEC_TIMEOUT_S</code>); they impose no separate 90-second
 limit. External record updates are not automatically repeated after an uncertain
 failure.</p>
@@ -244,7 +227,7 @@ two, three, or all four destinations according to meaning and negation, then cod
 passes the entire original request unchanged to each selected Workflow. It does
 not split on punctuation, extract materials, force drafts, or assign a common
 week. A generic personal progress draft without Feishu language is
-<code>personal_chat</code>, not the Feishu form. Unclear destinations require clarification.
+<code>personal_chat</code>, not the Feishu form. An unspecified audience defaults to the unsent group discovery draft; routing does not ask for clarification.
 Single results are returned verbatim; multiple results are labeled by audience.</p>
 <h2 id="continue-incomplete-work">Continue incomplete work<a class="header-anchor" href="#continue-incomplete-work">#</a></h2>
 <p>The router owns no shared checkpoint. Continue through the relevant child using
@@ -266,7 +249,7 @@ material source must be configured separately before enabling a scheduled run.</
 <p>Read-only memory search, grep, get and browse use the normal safe-tool policy; explicit deny/ask rules and <code>memory.read</code> authority still apply. Personal operation selection and evidence verification, plus every Tencent JSON-producing stage, declare output schemas and reuse Runtime format repair. Personal Feishu format failures propagate as errors; Tencent retains its existing model-recovery state. Neither is treated as missing user input. Tencent request interpretation inherits the deployment timeout.</p>
 <h2 id="feishu-browser-failures">Feishu browser failures<a class="header-anchor" href="#feishu-browser-failures">#</a></h2>
 <p>Feishu inspection and writing expose only <code>web_use</code>, using its current <code>command</code> schema. They require real tool receipts before accepting an observation or reporting a write. Quoted tool calls in model text are not browser actions. These stages have no hard-coded aggregate timeout or tool-round limit; explicit Runtime deployment limits still apply. Browser access failures propagate through the coordinator instead of being returned as successful text. If a later child fails, the original exception retains earlier completed child results; the coordinator does not automatically rerun them.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#prepare-a-tencent-report-from-existing-records">Prepare a Tencent report from existing records</a>
