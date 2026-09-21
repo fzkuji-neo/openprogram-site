@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790010519" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -185,7 +185,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>记忆 search、grep、get、browse 使用正常只读安全工具策略，显式 deny/ask 规则与 <code>memory.read</code> 权限仍生效。个人操作选择、来源核验，以及腾讯各 JSON 输出步骤均声明 schema，复用 Runtime 的格式修正。个人飞书周报的格式失败原样抛出；腾讯周报保留现有的模型恢复状态，两者都不当作用户缺少输入。腾讯请求解释继承部署超时。</p>
 <h2 id="飞书网页操作失败">飞书网页操作失败<a class="header-anchor" href="#飞书网页操作失败">#</a></h2>
 <p>飞书检查和写入阶段只提供 <code>web_use</code>，使用当前的 <code>command</code> 参数协议。接受页面观察或报告写入前必须有真实工具回执，模型正文中的工具调用文本不算网页操作。这两个阶段不设置固定的总超时或工具轮次上限，显式 Runtime 部署限制仍然生效。网页访问失败通过总入口传递，不再作为成功文本返回。后续子 Workflow 失败时，原始异常保留此前已完成子任务的结果，总入口不会自动重跑这些任务。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Write, test, and publish a Workflow</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#使用">使用</a>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789936088" data-alt-lang-url="/docs/interfaces/web.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790010519" data-alt-lang-url="/docs/interfaces/web.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Web UI · OpenProgram Docs</title>
-<meta name="description" content="Each tab keeps its own Back and Forward history, beginning with its default launcher. Navigation normally restores pages inside the selected tab; switching">
+<meta name="description" content="Open the conversation’s ⋯ menu and choose Auto rename to generate a name from its content using the configured default model. Rename still lets you type a">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/web.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/web.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/web.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/web.html">
 <meta property="og:title" content="Web UI · OpenProgram Docs">
-<meta property="og:description" content="Each tab keeps its own Back and Forward history, beginning with its default launcher. Navigation normally restores pages inside the selected tab; switching">
+<meta property="og:description" content="Open the conversation’s ⋯ menu and choose Auto rename to generate a name from its content using the configured default model. Rename still lets you type a">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Web UI · OpenProgram Docs">
-<meta name="twitter:description" content="Each tab keeps its own Back and Forward history, beginning with its default launcher. Navigation normally restores pages inside the selected tab; switching">
+<meta name="twitter:description" content="Open the conversation’s ⋯ menu and choose Auto rename to generate a name from its content using the configured default model. Rename still lets you type a">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <script>
@@ -79,6 +79,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Web UI</span></nav><h1 id="web-ui">Web UI<a class="header-anchor" href="#web-ui">#</a></h1>
+<p>Open the conversation’s ⋯ menu and choose <strong>Auto rename</strong> to generate a name from its content using the configured default model. <strong>Rename</strong> still lets you type a name. The current name remains visible while generation runs; failures keep it unchanged. An explicitly chosen name is protected from background automatic naming. This action is also available in the chat pane’s session menu. It does not send a chat message or run tools.</p>
 <p>Each tab keeps its own Back and Forward history, beginning with its default launcher. Navigation normally restores pages inside the selected tab; switching tabs adds no history. Non-conversation destinations can be opened independently from another launcher. Choosing a new destination after Back replaces only that tab’s forward history. History is saved with the tab. Browser controls handle navigation between webpage URLs.</p>
 <p>The floating webpage preview in the desktop App displays the same live page. Click, scroll and type directly in it; drag its title bar to move it, or its edges to resize it. Content continues updating during dragging. Open page moves the same page to a full tab; hiding the preview keeps the page available in Resources. In a regular browser, the preview embeds a separate page in a sandboxed iframe. Websites may block embedding, and this iframe does not share the desktop Page state; use Open page when needed.</p>
 <p>Opening a conversation already displayed in this window selects its existing tab, including when opening from a launcher or another conversation. Otherwise a session tab or launcher is reused. Back and Forward also select an existing conversation tab when their destination is already open, preserving the source history. Conversation IDs determine uniqueness; identical titles do not. Reloading older duplicate tabs retains the active instance, or the first instance if none is active, with its history and group; other duplicate slots are removed. Draft input and background title updates survive navigation and reload; deleted sessions are removed from every history.</p>
@@ -195,7 +196,7 @@ picker remains a cancellation and does not trigger the manual dialog.</p>
 <p>The path uses larger text, and its right-hand copy button copies the full absolute path. Refresh keeps the selected path, expanded folders, and loaded page range. File rows show readable sizes, including empty files; hover over a size for its exact byte count.</p>
 <p>The sidebar shows only projects with non-archived conversations. Empty projects remain available in the project selector and project management.</p>
 <p>Conversation history is stored under the OpenProgram state directory, grouped by a stable project id, not inside the working folder. When a folder is renamed or a volume reconnects, OpenProgram updates the location from native directory identity where the platform supports it. Copies and a different folder at the same path do not inherit the original conversations. If the working folder is missing, history stays readable and <strong>Locate folder</strong> remains available; new tasks in that project wait until the folder is valid again.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop App and built-in browser</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Terminal TUI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop App and built-in browser</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Terminal TUI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="lvl-3" href="#file-operations">File operations</a>

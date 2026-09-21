@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790010519" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -144,7 +144,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>Docker 与 SSH 命令保留在代码执行／Activity 流程中，执行命令不等于创建软件资源。GUI Harness 记录配置的桌面或 VM 关联；其他集成必须登记实际软件或环境对象及其身份，不能用命令、镜像名或进程代替。点击环境资源可查看目标和状态。</p>
 <p>其他集成可以在可信运行时会话内使用 <code>openprogram.session_resources.resource_use(kind, title, target)</code> 上报完整的软件或环境对象。上下文自动记录真实会话，退出后释放使用记录。系统不会从任意 shell 命令文本推断资源；资源 URL 会去掉凭据、查询参数与片段。</p>
 <h2 id="重启后继续运行中的会话">重启后继续运行中的会话<a class="header-anchor" href="#重启后继续运行中的会话">#</a></h2>
-<p>worker 在配置的自动继续期限内重启后（默认两小时），原来正在运行的会话会使用正常执行时已经记录的输入和结果，在原会话中自动继续，不需要单独保存，也不增加重启提示。手动暂停、取消和已完成的任务保持停止。已经确认完成的工具操作不会重复执行；外部操作的结果仍不明确时，需要先核对结果。界面重新连接时保留已有聊天内容。</p>
+<p>worker 重启后，可恢复的运行中会话会使用正常执行时已经记录的输入和结果，在原会话中自动继续。新建的恢复意图默认没有时间限制，不需要单独保存，也不增加重启提示。手动暂停、取消和已完成的任务保持停止。已经确认完成的工具操作不会重复执行；外部操作的结果仍不明确时，需要先核对结果。界面重新连接时保留已有聊天内容。</p>
 <p>会话显示正常消息和工具结果，包括你要求执行的软件更新结果。聊天中不另设软件更新历史、更新操作按钮或更新恢复提示，打开会话也不会启动软件更新历史轮询。</p>
 <h2 id="重启与保留的浏览器页面">重启与保留的浏览器页面<a class="header-anchor" href="#重启与保留的浏览器页面">#</a></h2>
 <p>Desktop App 或 worker 进程重启后，你尚未关闭的网页会在后台自动恢复。应用保留同一保留 tab、会话与分支分组，以及最后确认的地址和标题。它在该保留 tab 后创建新的活页面；上一进程的句柄不再有效。不会为同一保留 tab 再开一份副本，不会重新打开你已关闭的网页，也不会显示你已隐藏的预览。紧凑画中画、纵向 Files / Activity / Resources 侧栏以及分组资源行保持原样。文案跟随 App 语言设置。</p>
@@ -156,8 +156,8 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>会话历史先加载最近一页。向上或向下滚动时，都会自动读取附近的消息，保持当前阅读位置和正在输出的新内容，无需点击加载按钮；请求失败后会自动重试。远处的历史页会从内存缓存移除，返回附近时重新读取。重新打开会话时，如果原来阅读的消息仍在当前分支中，会恢复到该消息的位置。“跳到最新”会直接读取最近一页。DAG 数据在打开对应视图时加载，普通 Chat 不计算绘图坐标。Markdown 渲染缓存设有容量上限，避免浏览过的长内容持续累积，不改变已保存的历史或模型上下文。</p>
 <p>主会话和分屏各自提供“跳到最新”：只要已加载窗口后还有新消息，按钮就会保留。跳转失败后可以重试。在消息区域滚动、点击或按键会取消尚未完成的跳转或阅读位置恢复，迟到的响应不会替换你正在阅读的窗口。关闭面板时会保存最后的阅读位置。重新连接后会继续自动加载历史，无需等待之前的重试延迟。</p>
 <h2 id="重启后继续执行">重启后继续执行<a class="header-anchor" href="#重启后继续执行">#</a></h2>
-<p>关闭会话标签页或 App 窗口后，由 worker 管理的任务继续运行。如果 worker 本身停止，可恢复的 Agent 任务会使用模型调用和工具执行完成时保存的 checkpoint。重启后，因关闭而暂停、或从安全 checkpoint 恢复的中断任务，在两小时内自动继续。期限持久化保存，再次重启不会延长期限。超时后任务保持暂停，可以手动继续。</p>
-<p><code>execution.auto_resume_window_seconds</code> 默认 <code>7200</code>，设置为 <code>0</code> 可禁用自动恢复。明确停止或取消、手动暂停、尚未回答的审批不会自动继续。外部操作结果无法确认时，需要先核对结果。恢复保留原任务身份、权限和资源准入要求，并要求运行契约兼容。恢复对象是持久化 checkpoint，不包括任意进程内存或外部应用尚未保存的状态。</p>
+<p>关闭会话标签页或 App 窗口后，由 worker 管理的任务继续运行。如果 worker 本身停止，可恢复的 Agent 任务会使用模型调用和工具执行完成时保存的 checkpoint。重启后，因关闭而暂停、或从安全 checkpoint 恢复的中断任务自动继续，默认没有时间限制。用户显式配置的期限持久化保存，再次重启不会延长期限；超过该期限后保持暂停，可以手动继续。升级前已保存的有限期限仍然保留。</p>
+<p><code>execution.auto_resume_window_seconds</code> 默认 <code>-1</code>（不限时间），设置为 <code>0</code> 可禁用自动恢复，正整数表示显式期限秒数。明确停止或取消、手动暂停、尚未回答的审批不会自动继续。外部操作结果无法确认时，需要先核对结果。恢复保留原任务身份、权限和资源准入要求，并要求运行契约兼容。恢复对象是持久化 checkpoint，不包括任意进程内存或外部应用尚未保存的状态。</p>
 <p>自更新后的继续执行、运行契约变化后的重新规划和原会话唤醒也使用此设置，从已结束更新最后记录的活动时刻计算。持续运行的更新不会被这一恢复计时器停止。</p>
 <h3 id="共享-terminal-环境">共享 Terminal 环境<a class="header-anchor" href="#共享-terminal-环境">#</a></h3>
 <p>持久 Terminal 环境关联到会话后，与网页一起显示在 Resources 列表中。点击终端可在会话旁打开交互视图；用户和 Agent 操作的是同一个 shell，工作目录、环境变量与输出保持一致。隐藏视图和切换会话不会终止进程。“终止终端”需要确认；请求已接收不代表进程已经退出。“共享终端”允许本机其他会话发现它；改为私有会撤销当前 Agent 绑定。</p>
@@ -166,7 +166,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p><code>resource</code> 工具通过 <code>describe</code> 返回 provider 及其支持的操作和参数结构。先调用 <code>resource(action=&quot;describe&quot;)</code>，再按返回的结构调用。内置 <code>web</code> 和 <code>terminal</code> 保留原有资源标识和检查；现有 <code>web_use</code>、<code>terminal_use</code> 继续兼容。例如 <code>resource(provider=&quot;terminal&quot;, action=&quot;list&quot;)</code> 列出可用 shell，<code>observe</code> 返回后续操作需要的 generation、binding、input revision 和输出 cursor。</p>
 <p>只允许调用 provider 声明的操作。网页 <code>release</code> 释放控制会话而保留网页，<code>close</code> 使用已观察实例的控制绑定关闭准确的网页；终端 <code>release</code> 保留进程，<code>close</code> 请求终止进程。Terminal 需要来自对应 Desktop 窗口的有效执行，不能绕过任务 sandbox。</p>
 <p>可信 Python 集成可以通过 <code>openprogram.resource_interface.registry.register(...)</code> 注册 <code>ResourceProvider</code>，为每种操作声明 JSON Schema 和调用适配器。适配器负责自身的授权和生命周期。重复名称会被拒绝，参数在调用前验证。这是可信集成 API，不接受 Agent 或网页提供任意代码。集成可以通过已有 <code>openprogram.session_resources.resource_use(...)</code> 在 Resources 上报会话使用情况；已启用的安装应用根据操作清单自动注册 <code>application.&lt;id&gt;</code>。关联当前会话的实例显示在 Resources，并复用现有隔离应用视图。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Web UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#打开-browser">打开 Browser</a>

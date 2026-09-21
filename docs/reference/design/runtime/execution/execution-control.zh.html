@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/reference/design/runtime/execution/execution-control.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790010519" data-alt-lang-url="/docs/reference/design/runtime/execution/execution-control.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
-<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">Agent Goal 功能实现对比与 OpenProgram 设计参考</a>
+<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">OpenProgram：全框架重启恢复与 Goal 设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
@@ -109,6 +109,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/browser-control-surfaces.html" data-title-zh="网页任务控制" data-href-en="/docs/reference/design/ui/browser-control-surfaces.html" data-href-zh="/docs/reference/design/ui/browser-control-surfaces.zh.html">Browser task control</a>
 <a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · Queue and steering</a>
+<a class="navlink" href="/docs/reference/design/ui/session-auto-rename.html">Session auto rename</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/ui/turn-occupancy.html" data-title-zh="轮次占用 — 停止、队列与 session 槽位" data-href-en="/docs/reference/design/ui/turn-occupancy.html" data-href-zh="/docs/reference/design/ui/turn-occupancy.zh.html">Turn occupancy — stop, queue, and the session slot</a>
 <a class="navlink" href="/docs/reference/design/ui/websocket-command-lifecycle.html">WebSocket 命令与交互等待生命周期</a>
@@ -426,7 +427,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p class="summary-rule"><strong>Activity 按会话分支统计。</strong>在同一分支继续发消息，不会多出一条 History。</p>
 
 <section id="resumed-turn-identity"><p>恢复时只处理仍对应当前执行检查点的已结束等待。旧问题的答案不能恢复、取消或结束后续的新等待；重复恢复不会重复执行。回归覆盖第一个等待已回答、第二个等待未回答或已回答两种情况。本恢复修正已通过规格与质量审查，受控测试覆盖连续等待及重复启动恢复。</p><h2>恢复同一轮运行</h2><p>恢复 Agent 时重新绑定原会话、轮次、回复、运行环境和工具配置，并在完成、暂停或错误时释放绑定。浏览器页面凭据仍属于原来的调用方，不接受其他调用方的凭据。浏览器拒绝作为明确的工具错误返回，保留原原因。达到配置的迭代上限时记录为未成功完成，保留此前文字和操作记录。</p><p>只有权威执行更新确认消息属于当前会话和当前执行时，才在该助手消息旁显示等待审批；审批操作仍在原输入区域进行。重连或恢复待回答问题时请求现有执行快照，依据快照中的消息归属恢复状态，并兼容旧事件格式。缺少归属证据时，不将其他运行的审批显示在该消息上。</p><p>验收覆盖暂停后恢复、使用新取得的页面凭据观察原页面、异常时释放绑定、拒绝其他调用方凭据、迭代上限，以及审批在消息和会话之间的隔离。实现状态：规格与质量审查通过。受控回归验证恢复后的页面凭据归属、明确的浏览器错误、绑定释放、迭代耗尽时的失败状态，以及审批提示的消息归属。默认 App 实机验收作为独立发布检查。</p></section>
-<section id="restart-window"><h2>重启恢复期限</h2><p>关闭视图不停止后台任务。worker 关闭时先停止调度并请求协作暂停；新实例按持久化的中断时刻计算恢复期限，默认 7200 秒，execution.auto_resume_window_seconds 为 0 时禁用。普通可恢复 Agent 在模型和工具完成处保存 checkpoint；无未确认效果的失去所有权任务恢复为暂停，通过原有 continue 命令继续。过期、用户暂停、取消、审批等待及不兼容契约保持可核对状态。期限和恢复命令身份保存在 canonical execution events 中，不另设数据库或调度器。</p><p>恢复时保存新 attempt 使用的 checkpoint 身份；在新效果产生前再次中断仍可使用该 checkpoint。关闭请求遇到 checkpoint 版本竞争时，仅对同一 attempt 最多尝试三次，保留原期限。Job 在准入时保存自身稳定的用户消息与回复 ID，恢复继续校验同一消息关系。暂停释放资源时，使用 Job waiter 保存的 attempt 和资源租约身份，不从已清除的 execution ownership 中读取。</p><p>启动时先核对失去所有权的任务，由初始化后的 runner 统一执行有期限的恢复策略。仅模型请求中断或尚未激活的会话可从不可变输入继续，期限从原活动时刻计算。未知外部工具结果保持待核对状态，不虚构未执行回执。没有重启意图的旧暂停记录需要手动继续。</p><p>自更新后的任务继续使用同一时限设置，从已结束更新的最后持久化活动时刻计算。固定期限和过期状态保存在现有更新目录中，继续执行、契约变化后的重新规划和原会话唤醒均受此约束。仍在持续执行的更新不会仅因超过恢复时限而停止。</p></section>
+<section id="restart-window"><h2>重启恢复期限</h2><p>关闭视图不停止后台任务。worker 关闭时先停止调度并请求协作暂停；新实例按持久化的中断时刻计算恢复期限，execution.auto_resume_window_seconds 默认 -1（不限时间），0 时禁用，正整数设置显式期限；无限期限保存为 null，升级前已保存的有限期限保持不变。普通可恢复 Agent 在模型和工具完成处保存 checkpoint；无未确认效果的失去所有权任务恢复为暂停，通过原有 continue 命令继续。过期、用户暂停、取消、审批等待及不兼容契约保持可核对状态。期限和恢复命令身份保存在 canonical execution events 中，不另设数据库或调度器。</p><p>恢复时保存新 attempt 使用的 checkpoint 身份；在新效果产生前再次中断仍可使用该 checkpoint。关闭请求遇到 checkpoint 版本竞争时，仅对同一 attempt 最多尝试三次，保留原期限。Job 在准入时保存自身稳定的用户消息与回复 ID，恢复继续校验同一消息关系。暂停释放资源时，使用 Job waiter 保存的 attempt 和资源租约身份，不从已清除的 execution ownership 中读取。</p><p>启动时先核对失去所有权的任务，由初始化后的 runner 统一执行有期限的恢复策略。仅模型请求中断或尚未激活的会话可从不可变输入继续，期限从原活动时刻计算。未知外部工具结果保持待核对状态，不虚构未执行回执。没有重启意图的旧暂停记录需要手动继续。</p><p>自更新后的任务继续使用同一时限设置，从已结束更新的最后持久化活动时刻计算。固定期限和过期状态保存在现有更新目录中，继续执行、契约变化后的重新规划和原会话唤醒均受此约束。仍在持续执行的更新不会仅因超过恢复时限而停止。</p></section>
 <section id="reading-guide">
 <span id="identity"></span>
 
@@ -726,7 +727,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <section id="function-version-resume"><h2>函数版本与断点继续</h2><p>先由用户设置代码变化时继续原版本或切换最新版本，全局默认继续原版本，单个执行可覆盖。判断当前函数及相关依赖是否改变，不以仓库其他文件变化代替。策略调整通过带版本校验的执行命令保存。</p><p>手动调用和聊天中的函数调用共用恢复机制，但保留不同结果去向：前者更新原函数记录，后者将结果返回原工具调用位置，再继续聊天。函数与外层聊天分别保存代码版本和恢复身份；结果已保存但未交付时，只补交结果。</p><p>持久化保存原代码及依赖身份、输入、已完成步骤与结果、下一安全位置、中间状态及未确认操作。原版本必须实际可加载。切换新版本时保留旧结果来源，核对步骤对应关系及状态兼容性；需要转换时显式处理，无法兼容时暂停。原代码缺失、依赖不可用、状态不可序列化或执行边界不受支持时，不能擅自从头运行。</p><p>已完成操作不重复执行；正在执行且结果未知的步骤先核对。嵌套调用保留父子关系，并行分支分别保存进度，重复恢复和再次中断不得重复已接受的操作。两小时自动恢复期限、用户取消、手动暂停、审批、权限和资源准入继续生效。选择新版本后不兼容时，不自动改回旧版本。</p><p>实现使用同步 step、嵌套 workflow 和命名 parallel 边界，从已保存结果重建局部 JSON 状态。执行事件、状态对象、检查点和外部操作记录共同保存进度，不另建调度器或数据库。Continue 命令保存版本策略；新版本通过已有进度检查并执行剩余工作后，成为后续重启所保留的版本。Python 辅助函数源码递归保存；辅助函数内部导入及非标准库模块、类对象依赖会在外部步骤前被拒绝。原生调用栈、异步编排和活动句柄不属于该恢复约定。</p><h3>实现状态</h3><p>验收要求包括独立规格与质量审查、手动与聊天恢复的受控检查，以及完整发布检查。该约定仅适用于显式声明的同步可恢复函数；现有 Agent 重启恢复不等同于任意 Python 函数已支持这些能力。</p></section><section id="workflow-questions"><h2>Workflow 提问</h2><p>运行中的 Python Workflow 在原进程中等待回答。执行器绑定精确 execution、attempt、generation 和进程实例，使用现有问题存储与问题卡片，不保存 Workflow 检查点。回答后原调用继续，刷新浏览器后可重新显示待答问题。</p><p>只有有效运行中的执行者可以创建与接收回答。取消、进程退出或执行者失效会取消问题；重启 worker 不重放 Workflow。预声明 Agent 问题保留原有持久化恢复行为。意外的提问错误必须传播，不能变成用户未回答。</p><p>验收包含实际显示问题、回答后原调用继续、刷新、归属隔离、重复回答和取消。</p></section>
 
 <section id="decision-output"><h2>对话输出中的用户决定</h2><p>提问、确认、表单和权限批准作为当前会话中的独立输出卡片显示。每张卡片拥有自己的回答字段、提交按钮和送达状态。普通输入框保留草稿、附件、函数表单、焦点及正常发送或排队语义。新问题不占用输入框，不转移焦点。</p><p>点击提交后立即显示实际提交的回答与提交中状态。命令确认成功后显示回答回执；送达未知时保留同一命令及答案供重试。拒绝或过期不能显示为批准。并发问题按标识分别显示，并绑定原会话与执行，分屏同样适用。现有批准范围和讨论行为保持一致。</p><p>复用问题事件与执行命令。会话内回执不是 Workflow 检查点；刷新恢复待回答问题，本次不新增历史回执持久化。回答后原进程继续，不新增执行栈保存或重启续跑。验收覆盖输入框隔离、即时反馈、首次回答成功、未确认重试不重复执行以及原生界面。</p><h3>实现状态</h3><p>输出卡片复用问题渲染器与规范命令回执。验证范围包括输入框隔离、回答反馈、会话归属、重试标识与原生验收。</p></section>
-</div><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agent-action-lifecycle.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Unified agent action lifecycle</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Automatic Branch Naming — Design</span></a></div></article></main>
+</div><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agent-action-lifecycle.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Unified agent action lifecycle</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Automatic Branch Naming — Design</span></a></div></article></main>
   <aside class="toc"></aside>
 </div>
 

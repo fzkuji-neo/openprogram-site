@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789936088" data-alt-lang-url="/docs/reference/api/runtime.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790010519" data-alt-lang-url="/docs/reference/api/runtime.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -549,7 +549,7 @@ Attempt 3: ConnectionError: timeout
 </code></pre>
 <h3 id="the-boundaries-of-retrying">The boundaries of retrying<a class="header-anchor" href="#the-boundaries-of-retrying">#</a></h3>
 <p>Transient transport failures, structured-output repairs, and repetitive tool-enabled responses share the invocation's failure-recovery allowance. A repetitive response is discarded and regenerated in the same Agent context, preserving completed tool results and their Runtime receipts. This recovery does not impose an aggregate token or duration limit. Explicit caller limits, cancellation, permission failures, and exhausted recovery remain authoritative. Repeating a response is not permission to repeat an external write; an uncertain write outcome requires inspection before another attempt. Function logic errors still require a code fix.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/API.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">API Reference</span></a><a class="pn-link pn-next" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Providers</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/API.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">API Reference</span></a><a class="pn-link pn-next" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Providers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#class-runtime">Class: Runtime</a>

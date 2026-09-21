@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/reference/api/agentic-function.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790010519" data-alt-lang-url="/docs/reference/api/agentic-function.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -352,7 +352,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>此功能在显式步骤处恢复，不保存任意 Python 调用栈。步骤外的外部调用和状态修改、异步编排、生成器、活动句柄及非 JSON 结果不支持此恢复约定。外部操作已经开始、但结果尚未保存时进程退出，必须先核对操作结果。函数运行界面显示是否声明可恢复步骤，普通函数中断后需要重新运行。</p>
 <p>步骤之间不得依赖可变的 Python 全局变量、闭包或默认参数。需要持续保存的状态应通过步骤的 JSON 输入和结果传递，进程内变量修改不能作为恢复依据。</p>
 <p>步骤依赖需要在模块级导入；辅助函数内部导入、动态导入 API 和动态生成代码会在执行步骤前被拒绝。Python 辅助函数源码递归保存。模块和类对象目前仅支持固定的标准库身份，第三方及用户包对象会被拒绝，因为只保存包初始化文件无法确定完整实现。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Providers</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">CLI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#用法">用法</a>

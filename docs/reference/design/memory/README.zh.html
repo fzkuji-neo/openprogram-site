@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/reference/design/memory/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790010519" data-alt-lang-url="/docs/reference/design/memory/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
-<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">Agent Goal 功能实现对比与 OpenProgram 设计参考</a>
+<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">OpenProgram：全框架重启恢复与 Goal 设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
@@ -109,6 +109,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/browser-control-surfaces.html" data-title-zh="网页任务控制" data-href-en="/docs/reference/design/ui/browser-control-surfaces.html" data-href-zh="/docs/reference/design/ui/browser-control-surfaces.zh.html">Browser task control</a>
 <a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · Queue and steering</a>
+<a class="navlink" href="/docs/reference/design/ui/session-auto-rename.html">Session auto rename</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/ui/turn-occupancy.html" data-title-zh="轮次占用 — 停止、队列与 session 槽位" data-href-en="/docs/reference/design/ui/turn-occupancy.html" data-href-zh="/docs/reference/design/ui/turn-occupancy.zh.html">Turn occupancy — stop, queue, and the session slot</a>
 <a class="navlink" href="/docs/reference/design/ui/websocket-command-lifecycle.html">WebSocket 命令与交互等待生命周期</a>
@@ -513,7 +514,7 @@ commit 到实体记忆，也没有 Graph 视图。阅读代码或维护文档时
 <p>已提交实现保存append-only Source证据、由模型写入的Topic block，以及Runtime确定性生成的Core、Timeline、Recent和Relations视图。每条Source都带Runtime确定的authority provenance：SessionDB writer和通用<code>memory_update</code>事务都从持久化的轮次authority构造，不接受调用方payload里的身份字段；缺少完整authority时创建Source直接失败。自动writer读取SessionDB分支，把成功处理状态记在来源节点上，默认使用聊天agent的provider和模型，<code>memory.writer.model</code>只覆盖writer模型；所有修改通过暂存事务安装。</p>
 <p>记忆工具、CLI和Web UI已经注册。已提交基线包含writer状态、一次性trusted Source backfill、<code>memory.backend=none</code>边界以及从SessionDB到watcher状态的组合集成测试。真实writer验收已处理2条符合写入条件的消息，此后历史backfill已在正式工作区执行完毕：154个frame中有137个被引用，共232次引用出现。</p>
 <p>Topic block新增的Source引用必须解析到<code>trusted</code> frame，并且必须属于本次事务自己归档的证据，因此任何工具路径都无法引用<code>pending</code> Source或把无关Source挂到新段落上。写入失败归入一个封闭的<code>MemoryWriteFailureCode</code>枚举，状态文件、CLI、工具、API和Web UI共用同一契约；idle watcher在跨进程锁下逐条持久化终态结果；未配对群聊归档有明确的频率与存储上限。按请求方档位过滤读取已部分实现：<code>memory.read</code>独立成capability，读取路径接收调用方解析好的档位，pending证据支撑的block不进入召回与Core；按档位删改block正文仍见<a href="/docs/reference/design/memory/authority-handoff.html"><code>authority-handoff.md</code></a>设计。越权请求hold队列、分支语义provenance、跨会话spawn关系、实体Git层、Graph视图和事件通知writer仍作为独立设计延期。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/mcp-server.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">MCP 服务端：现状、九家对标与最小能力集</span></a><a class="pn-link pn-next" href="/docs/reference/design/memory/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Memory subsystem</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/mcp-server.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">MCP 服务端：现状、九家对标与最小能力集</span></a><a class="pn-link pn-next" href="/docs/reference/design/memory/overview.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Memory subsystem</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#定义">定义</a>

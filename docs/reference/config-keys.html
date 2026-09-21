@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1789936088">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790010519">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -160,9 +160,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </tr>
 <tr>
 <td><code>execution.auto_resume_window_seconds</code></td>
-<td><code>7200</code></td>
+<td><code>-1</code></td>
 <td>live</td>
-<td>Automatically continue restart-owned checkpoints within this interval after interruption. Default: two hours. Zero disables automatic restart. Existing deadlines never extend; user pauses, cancellation and unconfirmed external operations require explicit recovery.</td>
+<td>Automatically continue restart-owned checkpoints after interruption. Default: -1 (no time limit). Zero disables automatic restart; positive values set a deadline in seconds. Existing deadlines never extend; user pauses, cancellation and unconfirmed external operations require explicit recovery.</td>
 </tr>
 </tbody>
 </table>

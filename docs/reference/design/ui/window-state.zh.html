@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1789936088" data-alt-lang-url="/docs/reference/design/ui/window-state.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790010519" data-alt-lang-url="/docs/reference/design/ui/window-state.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,7 +71,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </div>
 <div class="nav-sec">
 <div class="nav-sec-title" data-title-zh="运行时 · 操作">Runtime · Operations</div>
-<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">Agent Goal 功能实现对比与 OpenProgram 设计参考</a>
+<a class="navlink" href="/docs/reference/design/runtime/goal-framework-implementation-comparison.html">OpenProgram：全框架重启恢复与 Goal 设计</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html">文件修改、Review 与历史恢复</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html">Web 运行时可靠性与性能设计</a>
 </div>
@@ -109,6 +109,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <a class="navlink" href="/docs/reference/design/ui/browser-control-surfaces.html" data-title-zh="网页任务控制" data-href-en="/docs/reference/design/ui/browser-control-surfaces.html" data-href-zh="/docs/reference/design/ui/browser-control-surfaces.zh.html">Browser task control</a>
 <a class="navlink" href="/docs/reference/design/ui/head-bugs.html">OpenProgram · HEAD 缺陷清单</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html">OpenProgram · Queue and steering</a>
+<a class="navlink" href="/docs/reference/design/ui/session-auto-rename.html">Session auto rename</a>
 <a class="navlink" href="/docs/reference/design/ui/slash-and-compact.html">斜杠命令与上下文压缩</a>
 <a class="navlink" href="/docs/reference/design/ui/turn-occupancy.html" data-title-zh="轮次占用 — 停止、队列与 session 槽位" data-href-en="/docs/reference/design/ui/turn-occupancy.html" data-href-zh="/docs/reference/design/ui/turn-occupancy.zh.html">Turn occupancy — stop, queue, and the session slot</a>
 <a class="navlink" href="/docs/reference/design/ui/websocket-command-lifecycle.html">WebSocket 命令与交互等待生命周期</a>
@@ -546,7 +547,7 @@ debounce 300ms，避免拖动中狂写。chrome 事件和关闭立即落盘。</
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <p>已实现：schema v2、旧文件迁移、先恢复普通尺寸再套 chrome、铺满工作区按最大化处理、显示器回退、主窗口 debounce 持久化、撕下窗口一次性尺寸、标题栏缩放内缩，以及 <code>apps/desktop/scripts/check-window-state.js</code> 测试。</p>
 <p>桌面窗口底色跟随已解析的 Web 主题（<code>theme-chrome.js</code>），规则写在 <a href="/docs/reference/design/ui/unification-work.html">unification-work.md</a>。窗口几何持久化不保存、不恢复背景色。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-21</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/unification-work.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">UI Unification Work</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/session-tab-identity.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Conversation tab identity</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/unification-work.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">UI Unification Work</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/session-tab-identity.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Conversation tab identity</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <div class="toc-list">
 <a class="" href="#为什么贴边的普通窗口拖不动">为什么贴边的普通窗口拖不动</a>
