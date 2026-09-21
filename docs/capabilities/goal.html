@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790010519" data-alt-lang-url="/docs/capabilities/goal.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790014595" data-alt-lang-url="/docs/capabilities/goal.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -147,6 +147,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>The badge displays <strong>Verifying</strong> while a distinct ordinary chat turn assesses the original objective and each todo requirement. Only trusted built-in inspection tools are available, under normal permissions. Shell commands, writes and Goal mutation tools are not verification tools. If tests or external queries are needed, the verifier returns missing evidence to the working agent, whose normal permissions and budgets still apply.</p>
 <p>The verifier must provide a per-requirement assessment and recorded evidence references. Successful reads record file fingerprints; saved conversation evidence and the verifier's own result are versioned by digest. The runtime rechecks requirements, user controls, todo state, unfinished executions, unknown effects and referenced evidence before saving achieved. Pause, edit, cancellation, new user instructions or changed evidence prevent stale success. Missing evidence returns to ordinary work; a failed execution remains recoverable. Semantic verification is an independent model judgment, not a guarantee of perfect results. Completion describes the verification time and does not silently start ongoing monitoring.</p>
 <h2 id="control-execution">Control execution<a class="header-anchor" href="#control-execution">#</a></h2>
+<p>Verification turns show a concise status in chat. Expand Verification details to inspect each requirement, its assessment and evidence references; the original report is available in a nested disclosure. Streaming report text is not displayed as a normal reply. Only a result accepted by the runtime is shown as completed; pending, interrupted or unconfirmed checks do not establish completion. Saved verifier turns use the same presentation after reload, without rewriting their original evidence. Ordinary JSON replies are unaffected.</p>
 <p>The Goal details retain the objective, status, usage and progress after page reload. When there are no todos, the badge and details omit todo progress without a placeholder; the Goal status remains visible. Use the existing chat input to add instructions, following its normal queue or steering mode.</p>
 <ul>
 <li><code>/goal</code>: read the current state.</li>
