@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790014595" data-alt-lang-url="/docs/interfaces/web.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/interfaces/web.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Web UI · OpenProgram Docs</title>
-<meta name="description" content="在会话的 ⋯ 菜单中选择 自动命名（Auto rename） ，即可让配置的默认模型根据会话内容生成名称。 重命名（Rename） 仍可手动输入名称。生成期间显示原名称；生成失败时保留原名称并显示提示。用户明确选择的名称不会被后台自动命名覆盖。聊天区域的会话菜单也提供同一入口。该操作不会发送聊天消息或调用工具。">
+<title>网页界面 · OpenProgram Docs</title>
+<meta name="description" content="网页小窗固定使用 1920 × 1080 CSS 像素的页面视口。调整小窗大小只改变显示比例，未使用的区域留白，网页布局和 Agent 操作坐标保持不变。打开为完整标签页后恢复正常窗口尺寸和原有页面缩放。">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/web.zh.html">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/web.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/web.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/interfaces/web.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Web UI"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"网页界面"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/web.zh.html">
-<meta property="og:title" content="Web UI · OpenProgram Docs">
-<meta property="og:description" content="在会话的 ⋯ 菜单中选择 自动命名（Auto rename） ，即可让配置的默认模型根据会话内容生成名称。 重命名（Rename） 仍可手动输入名称。生成期间显示原名称；生成失败时保留原名称并显示提示。用户明确选择的名称不会被后台自动命名覆盖。聊天区域的会话菜单也提供同一入口。该操作不会发送聊天消息或调用工具。">
+<meta property="og:title" content="网页界面 · OpenProgram Docs">
+<meta property="og:description" content="网页小窗固定使用 1920 × 1080 CSS 像素的页面视口。调整小窗大小只改变显示比例，未使用的区域留白，网页布局和 Agent 操作坐标保持不变。打开为完整标签页后恢复正常窗口尺寸和原有页面缩放。">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -23,20 +23,16 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Web UI · OpenProgram Docs">
-<meta name="twitter:description" content="在会话的 ⋯ 菜单中选择 自动命名（Auto rename） ，即可让配置的默认模型根据会话内容生成名称。 重命名（Rename） 仍可手动输入名称。生成期间显示原名称；生成失败时保留原名称并显示提示。用户明确选择的名称不会被后台自动命名覆盖。聊天区域的会话菜单也提供同一入口。该操作不会发送聊天消息或调用工具。">
+<meta name="twitter:title" content="网页界面 · OpenProgram Docs">
+<meta name="twitter:description" content="网页小窗固定使用 1920 × 1080 CSS 像素的页面视口。调整小窗大小只改变显示比例，未使用的区域留白，网页布局和 Agent 操作坐标保持不变。打开为完整标签页后恢复正常窗口尺寸和原有页面缩放。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
-<script>
-(function(){try{var t=localStorage.getItem('op-docs-theme');
-if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
-document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
-</script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
+<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+<script src="/docs/assets/theme.js?v=5efdcab3"></script>
 
 </head>
 <body>
@@ -56,32 +52,35 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
       <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
     </div>
   </div>
-  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+  <div class="theme-wrap">
+    <button class="icon" id="theme-toggle" aria-label="Theme" aria-haspopup="menu" aria-controls="theme-menu" aria-expanded="false"><svg class="ic-system" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M8 11.5V14M5.5 14h5"/></svg><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+    <div class="theme-menu" id="theme-menu" role="menu" aria-labelledby="theme-toggle">
+      <button class="theme-opt" data-theme-choice="system" role="menuitemradio" aria-checked="true"><span>Follow system</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="theme-opt" data-theme-choice="light" role="menuitemradio" aria-checked="false"><span>Light</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="theme-opt" data-theme-choice="dark" role="menuitemradio" aria-checked="false"><span>Dark</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink active" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink active" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
-  <nav class="sidebar">
+  <nav class="sidebar" aria-label="Documentation">
     <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
-           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
-    <div class="nav-tree"><div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a>
-</div>
-<div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="界面">Surfaces</div>
-<a class="navlink" href="/docs/interfaces/desktop.html" data-title-zh="桌面 App 与内置浏览器" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html">Desktop App and built-in browser</a>
-<a class="navlink active" href="/docs/interfaces/web.html" data-title-zh="Web UI" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html">Web UI</a>
-<a class="navlink" href="/docs/interfaces/tui.html" data-title-zh="终端 TUI" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html">Terminal TUI</a>
-<a class="navlink" href="/docs/interfaces/cli.html" data-title-zh="CLI" data-href-en="/docs/interfaces/cli.html" data-href-zh="/docs/interfaces/cli.zh.html">CLI</a>
-<a class="navlink" href="/docs/interfaces/acp.html" data-title-zh="编辑器（ACP）" data-href-en="/docs/interfaces/acp.html" data-href-zh="/docs/interfaces/acp.zh.html">Editor (ACP)</a>
-</div></div>
+           aria-label="Filter docs" placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec"><div class="nav-sec-title" data-title-zh="概览">Overview</div><a class="navlink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a></div>
+<div class="nav-sec"><div class="nav-sec-title" data-title-zh="界面">Surfaces</div><a class="navlink" href="/docs/interfaces/desktop.html" data-title-zh="桌面应用" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html">Desktop App</a>
+<a class="navlink active" href="/docs/interfaces/web.html" data-title-zh="网页界面" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html">Web UI</a>
+<a class="navlink" href="/docs/interfaces/tui.html" data-title-zh="终端界面" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html">Terminal UI</a>
+<a class="navlink" href="/docs/interfaces/cli.html" data-title-zh="命令行" data-href-en="/docs/interfaces/cli.html" data-href-zh="/docs/interfaces/cli.zh.html">CLI</a>
+<a class="navlink" href="/docs/interfaces/acp.html" data-title-zh="编辑器集成" data-href-en="/docs/interfaces/acp.html" data-href-zh="/docs/interfaces/acp.zh.html">Editor integration</a></div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current">Web UI</span></nav><h1 id="web-ui">Web UI<a class="header-anchor" href="#web-ui">#</a></h1>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="网页界面">Web UI</span></nav><div id="web-ui"></div>
+<h1 id="网页界面">网页界面<a class="header-anchor" href="#网页界面">#</a></h1>
+<p>网页小窗固定使用 1920 × 1080 CSS 像素的页面视口。调整小窗大小只改变显示比例，未使用的区域留白，网页布局和 Agent 操作坐标保持不变。打开为完整标签页后恢复正常窗口尺寸和原有页面缩放。 小窗隐藏页面最外层的滚动条轨道，仍可使用滚轮和键盘滚动；打开完整标签页后恢复原有滚动条。移动小窗位置不会重新设置网页缩放。</p>
 <p>在会话的 ⋯ 菜单中选择 <strong>自动命名（Auto rename）</strong>，即可让配置的默认模型根据会话内容生成名称。<strong>重命名（Rename）</strong> 仍可手动输入名称。生成期间显示原名称；生成失败时保留原名称并显示提示。用户明确选择的名称不会被后台自动命名覆盖。聊天区域的会话菜单也提供同一入口。该操作不会发送聊天消息或调用工具。</p>
 <p>每个标签独立保存后退和前进历史，默认入口页是该标签的初始页面。后退和前进通常恢复当前标签中的页面，切换标签不增加历史。非会话页面可以从不同入口页分别打开。后退后选择新目的地，只替换当前标签的前进记录。历史随标签保存；网页内部的 URL 导航由浏览器控件处理。</p>
-<p>桌面 App 的网页悬浮预览显示同一个实时页面，可以直接点击、滚动和输入。拖动标题栏移动窗口，拖动边缘调整大小；拖动过程中页面继续更新。点击打开页面将同一页面显示为完整标签，隐藏预览会将页面保留在 Resources 中。普通浏览器使用独立的 sandboxed iframe 嵌入页面，网站可能禁止嵌入，且它不共享桌面 Page 的状态；需要时使用打开页面。</p>
+<p>桌面 App 的网页悬浮预览显示同一个实时页面，可以直接点击、滚动和输入。拖动标题栏移动窗口，拖动边缘调整大小；按住鼠标期间，当前画面随窗口移动或缩放；松开后恢复页面实时显示和交互。点击打开页面将同一页面显示为完整标签，隐藏预览会将页面保留在 Resources 中。普通浏览器使用独立的 sandboxed iframe 嵌入页面，网站可能禁止嵌入，且它不共享桌面 Page 的状态；需要时使用打开页面。</p>
 <p>打开当前窗口已经显示的会话时，直接选中已有标签，从入口页或另一会话打开时也如此。目标尚未打开时，复用当前会话标签或入口页。后退和前进的目标会话若已打开，也会选中已有标签，并保留来源标签的历史。唯一性按会话 ID 判断，同名会话不会合并。重新加载旧的重复标签时，保留当前激活的一份；没有激活项则保留第一份，并保留它的历史和分组，移除其他重复标签。草稿输入和后台更新的标题在导航和重新加载后保留，已删除会话会从全部历史中移除。</p>
 <p>在 Files 或文件标签页中，后退和前进会依次返回当前项目中浏览过的文件夹与文件。返回 Files 时恢复文件夹展开状态和滚动位置；后退后打开新位置会替换原有前进记录。文件位置属于当前标签保存的页面历史，与文档版本 History 分开。目录列表快照失效时，重新读取已加载范围期间保留已有文件行。</p>
 <p>PDF 文件支持连续阅读、页码跳转、缩略图、文档目录、适合宽度或页面的缩放、正文选字、搜索高亮和下载原文件。复制选中文字时默认清除排版换行，保留段落分隔和正常连字符；关闭该选项可保留原换行。项目中的文件支持高亮和文字批注，并通过文档保存与 History 写入标准 PDF 批注。附件与历史版本保持只读。PDF 解码器随程序本地安装，兼容 App 内置运行时；打开 PDF 不会将文件上传至外部查看器。预览文件大小上限为 64 MiB。</p>
@@ -94,7 +93,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>启动：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>web
 </code></pre>
-<p>浏览器打开 <code>http://localhost:18100</code>。页面是由本地 FastAPI worker 直接提供的静态导出——<code>/api</code>、<code>/ws</code> 和 UI 都在同一个端口（默认 18100）。数据全部来自 worker，会话与终端 TUI、CLI 单发共用，见<a href="/docs/interfaces/README.html">界面总览</a>。改端口用 <code>openprogram ports --port</code>。</p>
+<p>浏览器打开 <code>http://localhost:18100</code>。页面是由本地 FastAPI worker 直接提供的静态导出——<code>/api</code>、<code>/ws</code> 和 UI 都在同一个端口（默认 18100）。数据全部来自 worker，会话与终端 TUI、CLI 单发共用，见<a href="/docs/interfaces/README.zh.html">界面总览</a>。改端口用 <code>openprogram ports --port</code>。</p>
 <p><img src="../images/chat_hero.png" alt="聊天页" /></p>
 <h3 id="文件操作">文件操作<a class="header-anchor" href="#文件操作">#</a></h3>
 <p>复制和剪切会记录来源项目，只能在来源项目内粘贴。切回来源项目后可继续粘贴。刷新文件列表会重新执行当前文件搜索。</p>
@@ -106,7 +105,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <p>消息写入连接后，文字立即显示在对话中，本次提交的输入框文字随即清空。服务端确认接收前，消息保留待确认状态；确认后更新同一条消息。随后显示回复占位，text、thinking、工具调用等块通过 WebSocket 按到达顺序增量渲染。多个 agent 写入同一会话时，每条回复消息都带有产出它的 agent 的头像和名字。</p>
 <h3 id="运行期间发送消息">运行期间发送消息<a class="header-anchor" href="#运行期间发送消息">#</a></h3>
 <p><strong>Queue</strong> 按顺序保存消息，前一轮完成后再开始下一轮。<strong>Steer</strong> 和队列消息的“追加到当前轮”在正在运行的 Agent 到达下一个安全点时补充指令，不取消正在执行的工具，也不修改其模型、工具或权限设置。停止执行仍是输入框中的独立操作。</p>
-<p>无法追加到当前轮时，消息保留在队列。如果无法确认投递结果，消息行继续显示，重试使用同一条命令以避免重复投递，不会自动作为新一轮再次发送。补充指令最多支持 4,096 个字符，更长的消息保留排队。未发送队列存放在当前窗口内存中，重新加载页面会丢失。附件保留在输入框中，不进入文字队列。</p>
+<p>无法追加到当前轮时，消息保留在队列。如果无法确认投递结果，消息行继续显示，重试使用同一条命令以避免重复投递，不会自动作为新一轮再次发送。补充指令最多支持 4,096 个字符，更长的消息保留排队。未发送队列存放在当前窗口内存中，重新加载页面会丢失。带附件的消息也可以排队，等待正常轮次发送，不能通过纯文字补充接口注入。排队消息集中显示在输入框上方，保留紧凑气泡，并可收起为数量。点击附件卡片即可预览。编辑排队消息时可以修改文字、添加文件和移除附件；保存保留原队列位置，取消保留原内容。编辑期间暂停该条消息发送。移除只撤回选中的排队消息。正在投递或等待确认的消息不可编辑或移除。本地文档附件使用与项目文件相同的只读预览。</p>
 <h3 id="停止与重新连接">停止与重新连接<a class="header-anchor" href="#停止与重新连接">#</a></h3>
 <p>点击输入框中的 <strong>Cancel execution</strong> 停止当前执行。刷新或重新打开会话时，会恢复正在执行的任务及其停止控制，包括审批等待后恢复的执行。没有新输出不代表执行已经结束；系统不会仅因一段时间没有输出就移除运行状态。已经结束的执行不会因为残留的线程注册继续显示为运行中。</p>
 <p>回复生成期间，思考、已有正文和工具步骤会持续保存，刷新后可以恢复。回复失败时，已有过程与错误提示同时保留；手动停止也会保留已经收到的过程。</p>
@@ -136,6 +135,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 </ul>
 <h3 id="回滚">回滚<a class="header-anchor" href="#回滚">#</a></h3>
 <p>每条消息的操作菜单里有 &quot;Rewind to here&quot;：把会话真正回退到该消息处，被撤销的用户输入会预填回输入框，可修改后重发。输入框斜杠命令 <code>/rewind</code> 是同一功能。</p>
+<p>网页小窗铺满紧凑标题栏下方的区域，外轮廓采用 10px 圆角，不保留外框或左右、底部留白。拖动标题栏可移动小窗，拖动边缘或扩大的角部区域可调整大小。只有鼠标悬停的角显示弧形提示；移动或缩放时，其他角仍不显示提示。</p>
 <h2 id="其他页面">其他页面<a class="header-anchor" href="#其他页面">#</a></h2>
 <table>
 <thead>
@@ -179,7 +179,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 </tr>
 </tbody>
 </table>
-<p><code>/settings</code> 直接打开会跳到 <code>/settings/general</code>。模型凭据仍在 <code>/settings/providers</code>，见<a href="/docs/models/README.html">配置模型</a>。</p>
+<p><code>/settings</code> 直接打开会跳到 <code>/settings/general</code>。模型凭据仍在 <code>/settings/providers</code>，见<a href="/docs/models/README.zh.html">配置模型</a>。</p>
 <h3 id="会话运行记录">会话运行记录<a class="header-anchor" href="#会话运行记录">#</a></h3>
 <p>“运行记录”合并原来的 Running 和 Debugger。只有当前标签、可见页面路径和聊天状态指向同一会话时，才显示该会话的记录；新标签页、尚未发送的草稿及非会话页面显示空提示，不残留上一个会话的数据。从 Abilities 打开 Program 会进入草稿标签，仅打开参数表单不会产生执行历史。Activity 按会话分支计数，不按消息或执行次数计数。同一分支连续发送消息始终保留一个条目；真正分叉后才分别显示。选择分支可查看各轮执行、调用的子 Agent 及托管后台程序。程序列在启动它的执行下。子 Agent 可以使用独立执行会话；列表只纳入明确关联的执行及其后代，不会混入目标会话的其他任务。</p>
 <p>“需要处理”显示暂停任务和待确认结果。“正在进行”显示运行任务，以及仍有程序运行的已结束 Agent。“历史记录”默认折叠，按已结束的会话分支计数。点击分支可查看各轮执行，再查看所属子 Agent、程序和执行详情。分支行显示分支名或编号及请求摘要，执行时间保留在详情中；较长的请求摘要可在详情中展开。程序名称显示可识别的脚本文件、Python 模块或包脚本，并保留所属执行内的编号。内联代码标记为代码片段；无法可靠识别的命令保留可执行文件名。程序详情始终保留完整原始命令。Agent 结束不会删除所属程序。刷新页面或重启本地 worker 后，托管程序的记录和输出仍保留。历史上从未记录的程序无法追溯恢复或推测归属。 已结束且仅缺失模型响应回执的执行归入历史，标注“已结束 · 响应记录不完整”，不要求用户确认；执行者已结束但取消命令仍未完成时也适用。若没有活动子执行，这类历史记录不再显示取消按钮。真实问题、审批、结果未知的工具操作和活动子任务仍然保留。</p>
@@ -195,24 +195,63 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 <p>路径使用较大字号，最右侧按钮复制完整绝对路径。刷新保留选中路径、展开目录和已加载分页范围。普通文件行显示可读大小（包括空文件），悬停大小可查看准确字节数。</p>
 <p>侧边栏只显示有未归档对话的项目。空项目仍可在项目选择器和项目管理界面找到。</p>
 <p>对话历史存放在 OpenProgram 状态目录中，按稳定的项目 ID 分组，不写进工作文件夹。文件夹被重命名或磁盘重新挂上时，若平台能核对原生目录身份，就会更新位置。复制品、以及占用原路径的另一个文件夹，都不会自动继承原来的对话。工作文件夹缺失时仍可阅读历史，并保留“定位文件夹”；该项目的新任务要等到目录再次有效才会启动。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Desktop App and built-in browser</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Terminal TUI</span></a></div></article></main>
+<p>按下顶部标签只高亮，未拖动时松开才切换页面；拖动期间保留当前页面。拖出标签栏后松开可使用现有新窗口分离功能，“新窗口”提示显示在标签栏内，避免被原生网页遮挡。要把已打开的网页加入会话，先保持该会话显示，再把网页标签拖到 <strong>Resources</strong> 入口或其展开内容区，松开即绑定原页面。顶部标签和原有关联保留，绑定失败不会改变页面。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="桌面应用">Desktop App</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="终端界面">Terminal UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
+<ul class="toc-list">
+<li>
 <a class="lvl-3" href="#文件操作">文件操作</a>
-<a class="" href="#聊天页chats">聊天页（/chat、/s/&lt;session-id&gt;）</a>
+</li>
+<li>
+<details class="toc-disclosure" open=""><summary>
+<a class="lvl-2" href="#聊天页chats">聊天页（/chat、/s/&lt;session-id&gt;）</a>
+</summary>
+<ul class="toc-list">
+<li>
 <a class="lvl-3" href="#消息流式">消息流式</a>
+</li>
+<li>
 <a class="lvl-3" href="#运行期间发送消息">运行期间发送消息</a>
+</li>
+<li>
 <a class="lvl-3" href="#停止与重新连接">停止与重新连接</a>
+</li>
+<li>
 <a class="lvl-3" href="#thinking-折叠">thinking 折叠</a>
+</li>
+<li>
 <a class="lvl-3" href="#函数调用时间线">函数调用时间线</a>
+</li>
+<li>
 <a class="lvl-3" href="#附件">附件</a>
+</li>
+<li>
 <a class="lvl-3" href="#无头或远程-linux-上的项目目录">无头或远程 Linux 上的项目目录</a>
+</li>
+<li>
 <a class="lvl-3" href="#会话分支与-dag-视图">会话分支与 DAG 视图</a>
+</li>
+<li>
 <a class="lvl-3" href="#回滚">回滚</a>
-<a class="" href="#其他页面">其他页面</a>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<details class="toc-disclosure" open=""><summary>
+<a class="lvl-2" href="#其他页面">其他页面</a>
+</summary>
+<ul class="toc-list">
+<li>
 <a class="lvl-3" href="#会话运行记录">会话运行记录</a>
-<a class="" href="#管理项目文件">管理项目文件</a>
-</div></aside>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<a class="lvl-2" href="#管理项目文件">管理项目文件</a>
+</li>
+</ul></aside>
 </div>
 
 <div class="search-overlay">
@@ -222,6 +261,6 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=c382c0c8"></script>
+<script src="/docs/assets/site.js?v=5efdcab3"></script>
 </body>
 </html>

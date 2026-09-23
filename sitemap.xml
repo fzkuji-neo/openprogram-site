@@ -17,6 +17,7 @@
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/philosophy.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/philosophy.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/self-programming-ai-agents.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/agentic-function.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.html</loc></url>
@@ -68,6 +69,7 @@
   <url><loc>https://openprogram.io/docs/capabilities/workflows/wiki-agent.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/wiki-agent.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/comparisons/ai-agent-frameworks.html</loc></url>
+  <url><loc>https://openprogram.io/docs/comparisons/ai-agent-frameworks.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/comparisons/related-projects.html</loc></url>
   <url><loc>https://openprogram.io/docs/comparisons/related-projects.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/</loc></url>
@@ -120,56 +122,95 @@
   <url><loc>https://openprogram.io/docs/reference/claude-code-compaction.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/claude-code-compaction.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/README.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/acp.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/acp.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/agents.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/agents.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/apps.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/apps.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/backup.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/backup.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/browser.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/browser.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/channels.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/channels.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/chat.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/chat.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/completion.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/completion.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/config.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/config.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/cron-worker.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/cron-worker.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/diagnostics.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/diagnostics.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/doctor.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/doctor.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/execution.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/execution.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/jobs.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/jobs.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/logs.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/logs.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/mcp.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/mcp.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/memory.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/memory.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/plugins.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/plugins.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/ports.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/ports.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/programs.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/programs.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/providers.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/providers.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/recordings.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/recordings.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/rescue.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/rescue.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/restart.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/restart.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/scheduler-worker.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/scheduler-worker.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/secrets.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/secrets.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/self-update.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/self-update.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/sessions.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/sessions.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/setup.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/setup.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/skills.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/skills.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/status.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/status.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/stop.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/stop.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/subagent.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/subagent.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/trash.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/trash.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/tui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/tui.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/update.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/update.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/upgrade.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/upgrade.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/web.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/web.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/worker.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/worker.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/workflows.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/workflows.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/config-keys.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/config-keys.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/config.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/config.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/README.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/TODO-doc-code-gaps.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/TODO-doc-code-gaps.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/TODO-improvements.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/channels/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/channels/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/channels/audit.html</loc></url>
@@ -197,28 +238,41 @@
   <url><loc>https://openprogram.io/docs/reference/design/cli/tui-upgrade.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/cli/tui-upgrade.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/community-discoverability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/community-discoverability.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/README.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/context/compaction-diagram.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/context/compaction-diagram.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/compaction.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/compaction.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/comparison.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/comparison.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/composition.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/composition.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/context/context-compaction.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/context/context-statistics.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/memory-introspection.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/context/memory-introspection.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/occupancy-status.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/context/occupancy-status.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/context/overview.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/context/statistics.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/context/statistics.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/automatic-updates.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/distribution/automatic-updates.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/developer-id.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/distribution/developer-id.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/implementation-plan.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/distribution/implementation-plan.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/installation-packaging.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/distribution/installation-packaging.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/windows-support.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/distribution/windows-support.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/docs-site.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/docs-site.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/documentation-gaps.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/documentation-gaps.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/engineering-backlog.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/engineering-backlog.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/error-handling.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/error-handling.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/extension-gating/README.html</loc></url>
@@ -230,71 +284,91 @@
   <url><loc>https://openprogram.io/docs/reference/design/extension-gating/reference-comparison.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/extension-gating/reference-comparison.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/feature-matrix.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/feature-matrix.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/framework-comparison.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/framework-comparison.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/framework-overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/framework-overview.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/agentic-program.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/function/agentic-program.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/calling/code-call.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/calling/code-call.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/calling-unification.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/function/calling-unification.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/implementation-status.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/implementation-status.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/editor-integration.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/editor-integration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/extension-management.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/extension-management.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/harness-standard.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/harness-standard.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/mcp-integration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/mcp-integration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/mcp-server.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/mcp-server.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/skills-and-plugins.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/skills-and-plugins.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use-implementation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use-implementation.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use-technical-spec.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use-technical-spec.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/web-use.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/README.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/adoption.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/adoption.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/architecture.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/architecture.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/authority-handoff.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/authority-handoff.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/authority-landscape.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/entity-memory.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/entity-memory.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/git-as-entity-memory.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/git-as-entity-memory.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/memory-adoption.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/memory-architecture.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/memory-comparison.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/memory-editor.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/memory/memory-settings-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/authority-landscape.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/comparison.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/comparison.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/editor.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/editor.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/entity-memory-proposal.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/entity-memory-proposal.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/overview.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/settings-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/settings-ui.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/speaker-identity.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/speaker-identity.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/virtual-memory.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/virtual-memory.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/written-marker.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/written-marker.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/memory/written-marker.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/plans/2026-07-08-credential-connection-unification.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/plans/2026-08-12-mcp-server.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/memory/written-marker.zh.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/cache-control-passthrough.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/cache-control-passthrough.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/plans/credential-connection-unification.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/plans/credential-connection-unification.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/plans/mcp-server-implementation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/plans/mcp-server-implementation.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/proactive-implementation.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/plans/proactive-implementation.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/_research_archive/evaluation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/proactive/_research_archive/evaluation.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/_research_archive/replay.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/proactive/_research_archive/replay.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/_research_archive/threat-model.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.viz.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/proactive/commitments-and-heartbeat.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/proactive/_research_archive/threat-model.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/event-layer.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/event-layer.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/event-layer.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/proactive/event-layer.zh.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/event-reference.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/proactive/event-reference.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/events-and-state.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/events-and-state.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/execution-model.html</loc></url>
@@ -302,14 +376,13 @@
   <url><loc>https://openprogram.io/docs/reference/design/proactive/framework-evolution.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/framework-evolution.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/framework-evolution.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/proactive/framework-evolution.zh.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/invariants.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/invariants.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/overview.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/policies-mvp.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/proactive/policies-mvp.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/providers/PROBLEM-models-and-bailian.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/providers/PROBLEM-models-and-bailian.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/api-key-resolution-unification.html</loc></url>
@@ -319,6 +392,7 @@
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/credential-connection-unification.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/credential-connection-unification.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/credential-file-hardening.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/auth/credential-file-hardening.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/credential-status-redesign.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/credential-status-redesign.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/credential-validation-unification.html</loc></url>
@@ -327,10 +401,14 @@
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/unified-account-management.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/unified-auth-storage.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/auth/unified-auth-storage.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/bailian-model-catalog.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/bailian-model-catalog.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/custom-openai-compatible-provider.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/providers/error-and-timeout-mechanism.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/custom-openai-compatible-provider.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/json-schema-structured-output.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/json-schema-structured-output.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/metadata-load-diagnostics.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/metadata-load-diagnostics.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/models/fast-tier.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/models/fast-tier.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/models/overview.html</loc></url>
@@ -338,10 +416,13 @@
   <url><loc>https://openprogram.io/docs/reference/design/providers/models/thinking-effort.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/models/thinking-effort.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/network-proxy.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/network-proxy.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/record-replay.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/record-replay.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/record-replay.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/record-replay.zh.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/reliability/error-and-timeout-mechanism.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/reliability/error-and-timeout-mechanism.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/reliability/error-retry.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/reliability/error-retry.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/reliability/error-taxonomy-propagation.html</loc></url>
@@ -351,33 +432,51 @@
   <url><loc>https://openprogram.io/docs/reference/design/providers/request-build.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/request-build.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/providers/responses-reasoning-replay.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/providers/responses-reasoning-replay.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/repository-structure-implementation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/repository-structure-implementation.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/repository-structure.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/research/execution-trace-model-selection.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/research/execution-trace-model-selection.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/repository-structure.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/additional-working-directories.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/additional-working-directories.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-capability-configuration-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-capability-configuration-ui.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collab-architecture.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collab-architecture.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collab-comparison.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collab-comparison.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-configuration-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-configuration-ui.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-core-configuration-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-core-configuration-ui.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-resource-governance.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-resource-governance.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-tool-configuration-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-tool-configuration-ui.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agentic-llm-streaming.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/agentic-llm-streaming.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/application-runtime.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/application-runtime.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/chat-search-settings.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/chat-search-settings.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/controllability-and-three-surface-sync.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/branch-collaboration.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/dag-layout-spec.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/dag-live.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/external-program-run-node.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/external-program-run-node.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/layout.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/layout.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/live-layout.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/live-layout.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/overview.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/overview.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/persistence-observability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/persistence-observability.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/rendering.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/rendering.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/durable-tool-results.html</loc></url>
@@ -391,50 +490,59 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agentic-self-recursion.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agentic-self-recursion.zh.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-job-lifecycle.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/control.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/control.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/execution-control.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/execution-control.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/goal-framework-implementation-comparison.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/goal.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/goal-and-recovery.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/goal-and-recovery.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/group-weekly-report.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/group-weekly-report.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/llm-and-agent.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/llm-and-agent.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/nested-llm-node-content.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/nested-llm-node-content.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/branch-naming.zh.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/chat-progress-recovery.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/chat-progress-recovery.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/edge-field-rename.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/edge-field-rename.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/file-management.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/file-management.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/streaming-resume.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/streaming-resume.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/unify-parent-called-by.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/user-input-requests.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/operations/user-input-requests.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/overview.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/overview.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/permission-model.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/permission-model.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/p3-three-surface-sync.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/p3-three-surface-sync.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/programs-architecture.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/programs-architecture.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/report-delivery-intent.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/report-delivery-intent.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/report-suite.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/report-suite.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-authoring.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-authoring.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-model.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-model.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-ui.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-ui.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/comparison.html</loc></url>
@@ -443,100 +551,152 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/context.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/distill.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/distill.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/session/index-consistency.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/session/merged-head-atomicity.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/name.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/name.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/operations.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/operations.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/session/storage-consistency.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/session/storage-consistency.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/storage.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/session/storage.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/session/store-lock-scope.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/ssrf-protection.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/ssrf-protection.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/structured-generation-recovery.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/structured-generation-recovery.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/system-access.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/system-access.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/web-frontend-spawn.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/web-frontend-spawn.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/web-runtime-reliability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/web-runtime-reliability.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/weekly-report.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/weekly-report.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow-control-primitives.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/scheduler/scheduler-memory.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow-control-primitives.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/scheduler/memory-integration.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/scheduler/memory-integration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/security/dependency-security.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/security/dependency-security.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/site-discoverability-performance.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/site-discoverability-performance.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/site-indexnow-discovery.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/site-indexnow-discovery.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/site-indexnow-implementation.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/site-indexnow-implementation.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/testing/test-system.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/testing/test-system.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/testing/windows-ci.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/testing/windows-ci.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/app-icon.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/app-icon.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/attachment-handling.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/attachment-handling.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/avatar-randomization.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/avatar-randomization.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/browser-control-surfaces.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/browser-control-surfaces.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/browser-extensions.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/browser-extensions.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/built-in-browser.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/built-in-browser.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/center-tabs-and-split-layout.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/center-tabs-and-split-layout.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-attachments.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/chat-attachments.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-transcript-follow.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-transcript-follow.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/chat-turn-visual-spec.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/chat-turn-visual-spec.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-fast-control.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-fast-control.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-interaction-modes.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-interaction-prototype.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-interaction-prototype.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-local-attachment-paths.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-local-attachment-paths.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-responsive-controls.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-responsive-controls.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-tool-profile-menu.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/composer-tool-profile-menu.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/file-type-icons.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/ui/fn-form-compact-mock.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/file-type-icons.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/ui/head-bugs.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/indicator-dots.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/indicator-dots.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/integrated-terminal.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/integrated-terminal.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/interaction-feedback.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/interaction-feedback.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/invariants.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/invariants.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/ui/layout-density-mock.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/layout-density-prototype.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/layout-density-prototype.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/programs-explorer-template.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/programs-explorer-template.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/programs-source-categories.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/programs-source-categories.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-location.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-location.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-order.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/project-order.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace-prototype.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace-prototype.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/project-workspace.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.zh.viz.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/resource-panel-preview-plan.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/resource-panel-preview-plan.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-files.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-files.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-typography.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-typography.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/send-queue-reliability.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/send-queue-reliability.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/session-auto-rename.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/session-auto-rename.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/session-resources.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/session-resources.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/session-status.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/session-status.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/session-tab-identity.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/session-tab-identity.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/settings-collapsible-columns.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-mock.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/settings-collapsible-columns.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-prototype.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/sidebar-hierarchy-prototype.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/sidebars-resizing.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/sidebars-resizing.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/slash-and-compact.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/slash-and-compact.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/theme-system.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/theme-system.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/turn-occupancy.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/turn-occupancy.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/unification-work.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/unification-work.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-styles.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-styles.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-tab-home-button.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/web-tab-home-button.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/web-tab-native-bounds.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/web-tab-native-bounds.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/websocket-command-lifecycle.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/websocket-command-lifecycle.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/window-lifecycle.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/window-lifecycle.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/window-state.html</loc></url>
@@ -548,6 +708,7 @@
   <url><loc>https://openprogram.io/docs/reference/output-styles.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/output-styles.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/provider-registry.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/provider-registry.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/session-export.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/session-export.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/server/README.html</loc></url>

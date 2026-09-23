@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790014595" data-alt-lang-url="/docs/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790196881" data-alt-lang-url="/docs/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Overview · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS, Linux, and Windows CLI releases Getting">
+<meta name="description" content="OpenProgram: Self-Programming AI Agent Framework Use this documentation to install OpenProgram, work with agents, configure services, or extend the framework.">
 <link rel="canonical" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/README.zh.html">
@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/">
 <meta property="og:title" content="Overview · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS, Linux, and Windows CLI releases Getting">
+<meta property="og:description" content="OpenProgram: Self-Programming AI Agent Framework Use this documentation to install OpenProgram, work with agents, configure services, or extend the framework.">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,19 +24,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Overview · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram: Self-Programming AI Agent Framework Agents create and refine their own workflows · Any LLM · macOS, Linux, and Windows CLI releases Getting">
+<meta name="twitter:description" content="OpenProgram: Self-Programming AI Agent Framework Use this documentation to install OpenProgram, work with agents, configure services, or extend the framework.">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
-<script>
-(function(){try{var t=localStorage.getItem('op-docs-theme');
-if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
-document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
-</script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
+<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+<script src="/docs/assets/theme.js?v=5efdcab3"></script>
 
 </head>
 <body>
@@ -56,182 +52,131 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
       <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
     </div>
   </div>
-  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+  <div class="theme-wrap">
+    <button class="icon" id="theme-toggle" aria-label="Theme" aria-haspopup="menu" aria-controls="theme-menu" aria-expanded="false"><svg class="ic-system" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M8 11.5V14M5.5 14h5"/></svg><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+    <div class="theme-menu" id="theme-menu" role="menu" aria-labelledby="theme-toggle">
+      <button class="theme-opt" data-theme-choice="system" role="menuitemradio" aria-checked="true"><span>Follow system</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="theme-opt" data-theme-choice="light" role="menuitemradio" aria-checked="false"><span>Light</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="theme-opt" data-theme-choice="dark" role="menuitemradio" aria-checked="false"><span>Dark</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
 </header>
-<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
-  <nav class="sidebar">
+  <nav class="sidebar" aria-label="Documentation">
     <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
-           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
-    <div class="nav-tree"><div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink active" href="/docs/README.html" data-title-zh="Readme.Zh" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Overview</a>
-<a class="navlink" href="/docs/start/features.html" data-title-zh="功能详解" data-href-en="/docs/start/features.html" data-href-zh="/docs/start/features.zh.html">Features</a>
-</div>
-<div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="第一步">First steps</div>
-<a class="navlink" href="/docs/start/GETTING_STARTED.html" data-title-zh="快速上手" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html">Getting Started</a>
-<a class="navlink" href="/docs/start/daily-use.html" data-title-zh="日常操作" data-href-en="/docs/start/daily-use.html" data-href-zh="/docs/start/daily-use.zh.html">Daily Use</a>
-<a class="navlink" href="/docs/start/faq.html" data-title-zh="常见问题" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html">FAQ</a>
-</div></div>
+           aria-label="Filter docs" placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec"><div class="nav-sec-title" data-title-zh="概览">Overview</div><a class="navlink active" href="/docs/README.html" data-title-zh="概览" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Overview</a>
+<a class="navlink" href="/docs/start/features.html" data-title-zh="功能" data-href-en="/docs/start/features.html" data-href-zh="/docs/start/features.zh.html">Features</a></div>
+<div class="nav-sec"><div class="nav-sec-title" data-title-zh="第一步">First steps</div><a class="navlink" href="/docs/start/GETTING_STARTED.html" data-title-zh="快速上手" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html">Getting started</a>
+<a class="navlink" href="/docs/start/daily-use.html" data-title-zh="日常操作" data-href-en="/docs/start/daily-use.html" data-href-zh="/docs/start/daily-use.zh.html">Daily use</a>
+<a class="navlink" href="/docs/start/faq.html" data-title-zh="常见问题" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html">FAQ</a></div></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="开始使用">Get started</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Readme.Zh">Overview</span></nav><p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="images/logo-lockup.gif">
-    <source media="(prefers-color-scheme: light)" srcset="images/logo-lockup-light.gif">
-    <img src="images/logo-lockup.gif" alt="OpenProgram" width="440">
-  </picture>
-</p>
-<p align="center">
-  <b>OpenProgram: Self-Programming AI Agent Framework</b><br/>
-  Agents create and refine their own workflows · Any LLM · macOS, Linux, and Windows CLI releases
-</p>
-<p align="center">
-  <a href="https://arxiv.org/abs/2606.15874"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2606.15874-b31b1b?style=flat-square"></a>
-  <a href="https://github.com/fzkuji-neo/OpenProgram"><img alt="Version" src="https://img.shields.io/badge/version-0.9.8-blue?style=flat-square"></a>
-  <a href="https://github.com/fzkuji-neo/OpenProgram/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-AGPL--3.0-green?style=flat-square"></a>
-  <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/python-3.11%2B-blue?style=flat-square"></a>
-  <img alt="Platforms" src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey?style=flat-square">
-  <a href="https://github.com/fzkuji-neo/OpenProgram/actions/workflows/ci.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/fzkuji-neo/OpenProgram/ci.yml?branch=main&style=flat-square&label=build"></a>
-</p>
-<p align="center">
-  <a href="/docs/start/GETTING_STARTED.html">Getting Started</a> &middot;
-  <a href="/docs/install/install.html">Install</a> &middot;
-  <a href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html">Self-Programming Agents</a> &middot;
-  <a href="/docs/comparisons/ai-agent-frameworks.html">Framework Comparison</a> &middot;
-  <a href="/docs/reference/API.html">API Reference</a> &middot;
-  <a href="/docs/capabilities/agentic-programming/philosophy.html">Philosophy</a> &middot;
-  <a href="/docs/README.zh.html">Chinese</a>
-</p>
-<hr />
-<blockquote>
-<p><em>&quot;The more constraints one imposes, the more one frees oneself.&quot;</em>
-— <strong>Igor Stravinsky</strong>, <em>Poetics of Music</em></p>
-</blockquote>
-<p><strong>We propose <em>Agentic Programming</em>.</strong> An LLM is flexible; code is deterministic. Let the model run everything and you get chaos — unpredictable execution, context explosion, no output guarantees; hard-code everything and you lose the intelligence. A <strong>harness</strong> balances the two, interleaved moment to moment — <strong>Python for the flow you want fixed, the LLM for the judgement you can't script.</strong> (<a href="/docs/capabilities/agentic-programming/philosophy.html">the full rationale →</a>)</p>
-<p><strong>Contents</strong></p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="开始使用">Get started</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="概览">Overview</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="概览">Overview</span></nav><h1 id="overview">Overview<a class="header-anchor" href="#overview">#</a></h1>
+<!-- Compatibility anchors for existing incoming links. -->
+<p><a id="1-dag-context-for-native-multi-agent-systems"></a>
+<a id="2-agentic-workflow-for-trustworthy-self-evolving-agents"></a>
+<a id="3-event-infrastructure-for-proactive-agents"></a></p>
+<p><a id="install"></a>
+<a id="quick-start"></a>
+<a id="news"></a>
+<a id="why-openprogram"></a>
+<a id="1-dag-context--for-native-multi-agent-systems"></a>
+<a id="2-agentic-workflow--for-trustworthy--self-evolving-agents"></a>
+<a id="3-event-infrastructure--for-proactive-agents"></a>
+<a id="also-in-the-product"></a>
+<a id="citation"></a>
+<a id="license"></a></p>
+<p><b>OpenProgram: Self-Programming AI Agent Framework</b></p>
+<p>Use this documentation to install OpenProgram, work with agents, configure services, or extend the framework. Choose a task below; each page has a Chinese counterpart in the language menu.</p>
+<p><a href="/docs/README.html">English</a> · <a href="/docs/README.zh.html">Chinese</a> · <a href="https://github.com/fzkuji-neo/OpenProgram/blob/main/README.md">Project introduction</a> · <a href="https://github.com/fzkuji-neo/OpenProgram/releases">Releases</a></p>
+<h2 id="first-steps">First steps<a class="header-anchor" href="#first-steps">#</a></h2>
+<ol>
+<li><a href="/docs/install/install.html">Install</a> the desktop app or CLI for your platform.</li>
+<li><a href="/docs/start/GETTING_STARTED.html">Get started</a> with provider setup and a first conversation.</li>
+<li>Learn <a href="/docs/start/daily-use.html">daily operations</a> or consult <a href="/docs/start/faq.html">troubleshooting</a>.</li>
+</ol>
+<h2 id="documentation-sections">Documentation sections<a class="header-anchor" href="#documentation-sections">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What you can find</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/docs/start/GETTING_STARTED.html">Get started</a></td>
+<td>First conversation, daily use and common questions.</td>
+</tr>
+<tr>
+<td><a href="/docs/install/install.html">Install</a></td>
+<td>Platform requirements, updates and removal.</td>
+</tr>
+<tr>
+<td><a href="/docs/capabilities/README.html">Capabilities</a></td>
+<td>Tools, memory, goals, applications and reusable workflows.</td>
+</tr>
+<tr>
+<td><a href="/docs/interfaces/README.html">Interfaces</a></td>
+<td>Desktop, browser and terminal interfaces.</td>
+</tr>
+<tr>
+<td><a href="/docs/models/README.html">Models</a></td>
+<td>Providers, accounts, model selection and configuration.</td>
+</tr>
+<tr>
+<td><a href="/docs/integrations/claude-code.html">Integrations</a></td>
+<td>External clients and chat channels.</td>
+</tr>
+<tr>
+<td><a href="/docs/server/README.html">Server &amp; Ops</a></td>
+<td>Remote access, deployment and service operations.</td>
+</tr>
+<tr>
+<td><a href="/docs/reference/README.html">Reference</a></td>
+<td>Python APIs, CLI arguments, configuration keys and provider facts.</td>
+</tr>
+<tr>
+<td><a href="/docs/reference/design/README.html">Design</a></td>
+<td>Current subsystem designs, constraints and implementation status.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-tasks">Common tasks<a class="header-anchor" href="#common-tasks">#</a></h2>
 <ul>
-<li><a href="#install">Install</a></li>
-<li><a href="#quick-start">Quick start</a></li>
-<li><a href="#news">News</a></li>
-<li><a href="#why-openprogram">Why OpenProgram?</a>
-<ul>
-<li><a href="#1-dag-context--for-native-multi-agent-systems">1. DAG Context — for native multi-agent systems</a></li>
-<li><a href="#2-agentic-workflow--for-trustworthy--self-evolving-agents">2. Agentic Workflow — for trustworthy &amp; self-evolving agents</a></li>
-<li><a href="#3-event-infrastructure--for-proactive-agents">3. Event Infrastructure — for proactive agents</a></li>
+<li><a href="/docs/capabilities/installing-harnesses.html">Install programs</a> for desktop automation and research.</li>
+<li><a href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html">Write functions</a> or <a href="/docs/capabilities/workflows/authoring.html">author workflows</a>.</li>
+<li><a href="/docs/models/README.html">Configure models</a> and <a href="/docs/integrations/channels.html">connect channels</a>.</li>
+<li><a href="/docs/capabilities/memory.html">Use memory</a> and <a href="/docs/capabilities/goal.html">manage goals</a>.</li>
+<li>Look up <a href="/docs/reference/cli/README.html">global CLI flags</a>, <a href="/docs/reference/config-keys.html">configuration keys</a> or <a href="/docs/reference/provider-registry.html">provider settings</a>.</li>
 </ul>
-</li>
-<li><a href="#also-in-the-product">Also in the product</a></li>
-<li><a href="/docs/comparisons/related-projects.html">Related projects</a></li>
-<li><a href="/docs/comparisons/related-projects.html#acknowledgements">Acknowledgements</a></li>
-<li><a href="/docs/comparisons/related-projects.html#contributing">Contributing</a></li>
-<li><a href="#citation">Citation</a></li>
-<li><a href="#license">License</a></li>
-</ul>
-<h2 id="install">Install<a class="header-anchor" href="#install">#</a></h2>
-<pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
-</code></pre>
-<p>Windows x86_64 CLI/server:</p>
-<pre><code class="language-powershell"><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">openprogram</span><span class="p">.</span><span class="n">io</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
-</code></pre>
-<p>Desktop: macOS releases use the signed and notarized DMG; Windows uses a signed <code>win-x64.exe</code> when that artifact is attached to the <a href="https://github.com/fzkuji-neo/OpenProgram/releases">GitHub Release</a>. Linux and Windows without that EXE use the complete CLI/server runtime and Web UI.</p>
-<p>Platform matrix, PATH, <code>openprogram doctor</code>, and source-checkout install: <strong><a href="/docs/install/install.html">Installation</a></strong>.</p>
-<h2 id="quick-start">Quick start<a class="header-anchor" href="#quick-start">#</a></h2>
-<p>The first <code>openprogram</code> run opens a provider setup wizard, then the terminal chat. Re-run the wizard with <code>openprogram setup</code>.</p>
-<pre><code class="language-bash">openprogram
-</code></pre>
-<p>Open the Web UI at http://localhost:18100:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>web
-</code></pre>
-<p>Confirm with one printed reply:</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>--print<span class="w"> </span><span class="s2">"Introduce yourself in one sentence"</span>
-</code></pre>
-<p>GUI Agent, Research Agent, and Wiki Agent ship with every supported release. Third-party Programs use <code>openprogram programs install &lt;owner&gt;/&lt;repo&gt;</code>. Details: <a href="/docs/start/GETTING_STARTED.html">Getting Started</a>.</p>
-<h2 id="news">News<a class="header-anchor" href="#news">#</a></h2>
-<ul>
-<li><strong>2026-08-17</strong> — Built-in browser: multiple panes, bookmarks, History, and Agent control of visible pages.</li>
-<li><strong>2026-07-21</strong> — Multi-agent: <code>spawn</code> sub-agents, message across sessions, file-touching branches in git worktrees.</li>
-<li><strong>2026-06-22</strong> — 📄 <strong>Paper accepted</strong> at the KDD 2026 Workshop on Agentic Software Engineering (<a href="https://arxiv.org/abs/2606.15874">arXiv:2606.15874</a>).</li>
-<li><strong>2026-06-07</strong> — Installable harnesses and multi-account providers with automatic key rotation.</li>
-<li><strong>2026-05-28</strong> — The Web UI design system.</li>
-<li><strong>2026-04-04</strong> — Built-in Anthropic / OpenAI / Gemini providers.</li>
-<li><strong>2026-04-03</strong> — 🌱 First release: <code>@agentic_function</code> and the execution DAG.</li>
-</ul>
-<h2 id="why-openprogram">Why OpenProgram?<a class="header-anchor" href="#why-openprogram">#</a></h2>
-<p>OpenProgram supports macOS and Linux installations, native Windows x86_64 CLI/server, multiple providers, a full terminal UI, and a Web interface (Desktop App or <code>openprogram web</code> → http://localhost:18100). The Windows Desktop distribution path produces a signed per-user installer and embeds the same complete runtime; Windows sandbox execution remains separate. The Windows release includes the Ink TUI and falls back to the Python Rich interface only when the terminal cannot provide raw input. Mobile devices can use the browser client against a supported remote host. The harness itself provides <strong>three mechanisms for building agent programs.</strong></p>
-<h3 id="1-dag-context-for-native-multi-agent-systems">1. DAG Context — for native multi-agent systems<a class="header-anchor" href="#1-dag-context-for-native-multi-agent-systems">#</a></h3>
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="images/highlights/01-dag-context.png">
-    <source media="(prefers-color-scheme: light)" srcset="images/highlights/01-dag-context-light.png">
-    <img src="images/highlights/01-dag-context.png" alt="DAG Context — every user, LLM, and function call is one node on a single flat DAG; each @agentic_function declares in one line what context it reads and exposes, so fork, spawn, cross-session messaging, and worktree isolation all follow" width="900">
-  </picture>
-</p>
-<p>Every user turn, LLM call, and function call is <strong>one node on a single flat DAG</strong>. Two edges give it meaning: <code>caller</code> (who invoked whom) and <code>reads</code> (whose output fed this prompt) — so context is assembled from the graph, not hand-stitched. Each <code>@agentic_function</code> is <strong>programmable context in one line</strong>: <code>expose</code> controls what a call reveals to its parent, and <code>render_range</code> controls how much history a call pulls in (<code>{&quot;callers&quot;: 0}</code> gives a throwaway, self-isolated scratch context that's reclaimed when it returns — no unbounded prompt growth).</p>
-<p>Because context is an <strong>addressable node rather than a per-agent buffer</strong>, multi-agent stops being a bolt-on: fork a branch, <code>spawn</code> a clean sub-agent, <code>send_message</code> across sessions, or run a file-touching branch in an isolated <code>git worktree</code> — each is just &quot;select a different node set as context&quot; on the same DAG.</p>
-<h3 id="2-agentic-workflow-for-trustworthy-self-evolving-agents">2. Agentic Workflow — for trustworthy &amp; self-evolving agents<a class="header-anchor" href="#2-agentic-workflow-for-trustworthy-self-evolving-agents">#</a></h3>
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="images/highlights/02-agentic-workflow.png">
-    <source media="(prefers-color-scheme: light)" srcset="images/highlights/02-agentic-workflow-light.png">
-    <img src="images/highlights/02-agentic-workflow.png" alt="Agentic Workflow — Python drives the flow and code gates enforce the critical steps; a failed validation makes the model re-decide so it cannot skip checks; the agent writes and hot-loads its own @agentic_functions" width="900">
-  </picture>
-</p>
-<p><strong>Python drives the flow; the LLM reasons only when asked.</strong> Critical steps become <strong>code gates</strong> — the model's choice is parsed and validated by code, and a failed check makes it <em>re-decide</em> instead of quietly moving on, so validation can't be skipped. Every call is a retryable, observable DAG node. That's what makes execution <em>trustworthy</em>: the guarantees live in code, not in the model's goodwill.</p>
-<p><em>Self-evolving</em> is a mechanism, not a black box: the agent writes and fixes its own <code>@agentic_function</code>s with <strong>ordinary file-edit tools</strong>, a file watcher hot-loads them, and the new tool is live on the next turn — no dedicated <code>create()</code> / <code>fix()</code> machinery.</p>
-<h3 id="3-event-infrastructure-for-proactive-agents">3. Event Infrastructure — for proactive agents<a class="header-anchor" href="#3-event-infrastructure-for-proactive-agents">#</a></h3>
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="images/highlights/03-event-infrastructure.png">
-    <source media="(prefers-color-scheme: light)" srcset="images/highlights/03-event-infrastructure-light.png">
-    <img src="images/highlights/03-event-infrastructure.png" alt="Event Infrastructure — a unified process-wide event bus that the agent loop, auth, context, channels, and memory all emit onto; anything can subscribe by event type, and a proactive policy layer builds on top" width="900">
-  </picture>
-</p>
-<p>One <strong>process-wide event bus</strong> is the substrate under everything: the agent loop, auth, context, channels, and memory all emit onto it, and any component can subscribe by event type (every event is a uniform <code>Event(type, payload, ts)</code> envelope with <code>id</code> / <code>origin</code> / <code>metadata</code>). This is deliberately a <strong>foundation</strong> — a proactive policy layer that watches the stream and acts is the bus's first intended consumer. The plumbing is in place; the proactivity is yours to build on it.</p>
-<h2 id="also-in-the-product">Also in the product<a class="header-anchor" href="#also-in-the-product">#</a></h2>
-<p>The three mechanisms above are the thesis. Below are other designs that are not the usual shape — shipped items are checked.</p>
-<ul class="contains-task-list">
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked="checked"  type="checkbox"> 🧠 <strong>Scriptorium.</strong> Markdown under <code>~/.openprogram/memory/</code>, every paragraph cited, written in background batches — there is no &quot;save this&quot; tool. <a href="https://github.com/Fzkuji/Scriptorium">Details</a></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked="checked"  type="checkbox"> ♾️ <strong>Infinite Context.</strong> Occupancy drives <code>/compact</code> and automatic compact; tool results inside a single turn can compact without another command; original records stay in the session. <a href="/docs/interfaces/tui.html">Details</a></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked="checked"  type="checkbox"> 🌿 <strong>Conversation stored as git.</strong> History is a repo, not a list: branch, attach, and merge from the sidebar. <a href="/docs/start/features.html#conversation-as-a-git-dag">Details</a></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox" checked="checked"  type="checkbox"> 🎯 <strong>Goals in ordinary chat.</strong> Persistent goals with bound todo plans live in the same conversation, not a separate Goal mode.</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 👁️ <strong>Proactive policies.</strong> The event bus is live; a layer that watches it and acts on its own is the next piece of that design.</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 🖥️ <strong>Agent terminal.</strong> A host-owned PTY for the agent is underway — not yet a chat tool.</li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 🔄 <strong>Self-update.</strong> The agent patching and replacing its own runtime in conversation — with owner approval, verification, and recovery — is still a goal. <a href="/docs/install/upgrade.html#recovering-a-conversational-self-update">Details</a></li>
-</ul>
-<h2 id="citation">Citation<a class="header-anchor" href="#citation">#</a></h2>
-<p>Using OpenProgram in your work, or building on the code? Please cite our paper — and under the AGPL, any derivative you <strong>distribute or run as a network service</strong> must itself be open-sourced under the AGPL, with attribution preserved (see <a href="#license">License</a>).</p>
-<blockquote>
-<p><em>LLM-as-Code: Agentic Programming for Agent Harness</em> — accepted at the <strong>KDD 2026 Workshop on Agentic Software Engineering (AgenticSE)</strong>. <a href="https://arxiv.org/abs/2606.15874">arXiv:2606.15874</a></p>
-</blockquote>
-<pre><code class="language-bibtex"><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">qi2026llmascode</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w">     </span><span class="p">=</span><span class="w"> </span><span class="s">{LLM-as-Code: Agentic Programming for Agent Harness}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Qi, Junjia and Fu, Zichuan and Gao, Jingtong and Zhang, Wenlin and Yan, Hanyu and Wu, Xian and Zhao, Xiangyu}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">booktitle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{KDD 2026 Workshop on Agentic Software Engineering (AgenticSE)}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="w">      </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">eprint</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{2606.15874}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">archivePrefix</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{arXiv}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">url</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{https://arxiv.org/abs/2606.15874}</span><span class="p">,</span>
-<span class="p">}</span>
-</code></pre>
-<h2 id="license">License<a class="header-anchor" href="#license">#</a></h2>
-<p><a href="https://github.com/fzkuji-neo/OpenProgram/blob/main/LICENSE">AGPL-3.0</a> © 2026 Fzkuji. Free to use, study, modify, and share — but any derivative you distribute <strong>or run as a network service</strong> must also be released under the AGPL, with attribution preserved.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Features</span></a></div></article></main>
+<h2 id="reading-conventions">Reading conventions<a class="header-anchor" href="#reading-conventions">#</a></h2>
+<p>Navigation names are short topic labels. A page's full heading and introduction provide any additional scope. English and Chinese pages share the same topic and command identifiers. Generated references are rebuilt from the current parser, configuration schema and provider manifests.</p>
+<p>Design pages explain engineering decisions and are maintained alongside code. Planned behavior is identified in their implementation-status sections. For procedures and supported commands, use the product guides and generated reference pages.</p>
+<h2 id="project-information">Project information<a class="header-anchor" href="#project-information">#</a></h2>
+<p>See <a href="/docs/comparisons/related-projects.html">related projects</a>, <a href="/docs/comparisons/ai-agent-frameworks.html">framework comparison</a>, <a href="/docs/capabilities/agentic-programming/philosophy.html">programming principles</a>, and the <a href="https://github.com/fzkuji-neo/OpenProgram/blob/main/README.md">repository README</a> for project background, examples, news, citation and license information.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-next" href="/docs/start/features.html" data-href-en="/docs/start/features.html" data-href-zh="/docs/start/features.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="功能">Features</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#install">Install</a>
-<a class="" href="#quick-start">Quick start</a>
-<a class="" href="#news">News</a>
-<a class="" href="#why-openprogram">Why OpenProgram?</a>
-<a class="lvl-3" href="#1-dag-context-for-native-multi-agent-systems">1. DAG Context — for native multi-agent systems</a>
-<a class="lvl-3" href="#2-agentic-workflow-for-trustworthy-self-evolving-agents">2. Agentic Workflow — for trustworthy &amp; self-evolving agents</a>
-<a class="lvl-3" href="#3-event-infrastructure-for-proactive-agents">3. Event Infrastructure — for proactive agents</a>
-<a class="" href="#also-in-the-product">Also in the product</a>
-<a class="" href="#citation">Citation</a>
-<a class="" href="#license">License</a>
-</div></aside>
+<ul class="toc-list">
+<li>
+<a class="lvl-2" href="#first-steps">First steps</a>
+</li>
+<li>
+<a class="lvl-2" href="#documentation-sections">Documentation sections</a>
+</li>
+<li>
+<a class="lvl-2" href="#common-tasks">Common tasks</a>
+</li>
+<li>
+<a class="lvl-2" href="#reading-conventions">Reading conventions</a>
+</li>
+<li>
+<a class="lvl-2" href="#project-information">Project information</a>
+</li>
+</ul></aside>
 </div>
 
 <div class="search-overlay">
@@ -241,6 +186,6 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=c382c0c8"></script>
+<script src="/docs/assets/site.js?v=5efdcab3"></script>
 </body>
 </html>

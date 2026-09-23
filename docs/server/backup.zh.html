@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790014595" data-alt-lang-url="/docs/server/backup.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/server/backup.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,16 +27,12 @@
 <meta name="twitter:description" content="openprogram backup 把 profile 状态目录（记忆工作区、会话、配置、频道绑定） 打包成一个 tar.gz ，之后可以恢复回来。 它解决的问题是：OpenProgram 关于你的一切都存在同一个隐藏目录里。 一次失败的迁移、一次对记忆工作区的实验、或者一条打错的 rm ，">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
-<script>
-(function(){try{var t=localStorage.getItem('op-docs-theme');
-if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
-document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
-</script>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=c382c0c8">
+<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
+<script src="/docs/assets/theme.js?v=5efdcab3"></script>
 
 </head>
 <body>
@@ -56,26 +52,27 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
       <button class="lang-opt" data-lang="zh" role="menuitem"><span>简体中文</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
     </div>
   </div>
-  <button class="icon" id="theme-toggle" aria-label="Toggle theme"><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+  <div class="theme-wrap">
+    <button class="icon" id="theme-toggle" aria-label="Theme" aria-haspopup="menu" aria-controls="theme-menu" aria-expanded="false"><svg class="ic-system" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M8 11.5V14M5.5 14h5"/></svg><svg class="ic-moon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.5 9.5A6 6 0 1 1 6.5 2.5a5 5 0 0 0 7 7z"/></svg><svg class="ic-sun" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3"/></svg></button>
+    <div class="theme-menu" id="theme-menu" role="menu" aria-labelledby="theme-toggle">
+      <button class="theme-opt" data-theme-choice="system" role="menuitemradio" aria-checked="true"><span>Follow system</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="theme-opt" data-theme-choice="light" role="menuitemradio" aria-checked="false"><span>Light</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+      <button class="theme-opt" data-theme-choice="dark" role="menuitemradio" aria-checked="false"><span>Dark</span><svg class="check" width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 5"/></svg></button>
+    </div>
+  </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成">Integrations</a><a class="tablink active" href="/docs/server/README.html" data-title-zh="服务与运维">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink active" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
-  <nav class="sidebar">
+  <nav class="sidebar" aria-label="Documentation">
     <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
-           placeholder="Filter docs…" autocomplete="off" spellcheck="false">
-    <div class="nav-tree"><div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="概览">Overview</div>
-<a class="navlink" href="/docs/server/README.html" data-title-zh="概览" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Overview</a>
-</div>
-<div class="nav-sec">
-<div class="nav-sec-title" data-title-zh="运维">Operations</div>
-<a class="navlink" href="/docs/server/configuration.html" data-title-zh="配置" data-href-en="/docs/server/configuration.html" data-href-zh="/docs/server/configuration.zh.html">Configuration</a>
-<a class="navlink" href="/docs/server/upgrading.html" data-title-zh="升级" data-href-en="/docs/server/upgrading.html" data-href-zh="/docs/server/upgrading.zh.html">Upgrading</a>
+           aria-label="Filter docs" placeholder="Filter docs…" autocomplete="off" spellcheck="false">
+    <div class="nav-tree"><div class="nav-sec"><div class="nav-sec-title" data-title-zh="概览">Overview</div><a class="navlink" href="/docs/server/README.html" data-title-zh="概览" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Overview</a></div>
+<div class="nav-sec"><div class="nav-sec-title" data-title-zh="运维">Operations</div><a class="navlink" href="/docs/server/configuration.html" data-title-zh="服务端配置" data-href-en="/docs/server/configuration.html" data-href-zh="/docs/server/configuration.zh.html">Server configuration</a>
+<a class="navlink" href="/docs/server/upgrading.html" data-title-zh="源码升级" data-href-en="/docs/server/upgrading.html" data-href-zh="/docs/server/upgrading.zh.html">Source upgrades</a>
 <a class="navlink active" href="/docs/server/backup.html" data-title-zh="备份与恢复" data-href-en="/docs/server/backup.html" data-href-zh="/docs/server/backup.zh.html">Backup and restore</a>
-<a class="navlink" href="/docs/server/troubleshooting.html" data-title-zh="故障排查" data-href-en="/docs/server/troubleshooting.html" data-href-zh="/docs/server/troubleshooting.zh.html">Troubleshooting</a>
-</div></div>
+<a class="navlink" href="/docs/server/troubleshooting.html" data-title-zh="故障排查" data-href-en="/docs/server/troubleshooting.html" data-href-zh="/docs/server/troubleshooting.zh.html">Troubleshooting</a></div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="服务与运维">Server &amp; Ops</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="运维">Operations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="备份与恢复">Backup and restore</span></nav><h1 id="备份与恢复">备份与恢复<a class="header-anchor" href="#备份与恢复">#</a></h1>
 <p><code>openprogram backup</code> 把 profile 状态目录（记忆工作区、会话、配置、频道绑定）
@@ -210,20 +207,33 @@ Python 不提供这些 <code>dir_fd</code> 操作，因此 fallback 会在每次
 </code></pre>
 <p>保留最新的 5 份，删掉其余的，并打印释放了多少空间。
 <code>--keep</code> 默认为 5，小于 1 的值会被拒绝。</p>
-<h2 id="profile">Profile<a class="header-anchor" href="#profile">#</a></h2>
+<div id="profile"></div>
+<h2 id="配置档案">配置档案<a class="header-anchor" href="#配置档案">#</a></h2>
 <p>每个子命令只作用于当前 profile。在 <code>--profile alpha</code> 下，
 备份从 <code>~/.openprogram-alpha/backups/</code> 读写，
 恢复也绝不会跨到另一个 profile 的状态里。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-22</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/upgrading.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">Upgrading</span></a><a class="pn-link pn-next" href="/docs/server/troubleshooting.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">Troubleshooting</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/upgrading.html" data-href-en="/docs/server/upgrading.html" data-href-zh="/docs/server/upgrading.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="源码升级">Source upgrades</span></a><a class="pn-link pn-next" href="/docs/server/troubleshooting.html" data-href-en="/docs/server/troubleshooting.html" data-href-zh="/docs/server/troubleshooting.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="故障排查">Troubleshooting</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<div class="toc-list">
-<a class="" href="#快速参考">快速参考</a>
-<a class="" href="#备份范围">备份范围</a>
-<a class="" href="#凭据">凭据</a>
-<a class="" href="#恢复">恢复</a>
-<a class="" href="#清理">清理</a>
-<a class="" href="#profile">Profile</a>
-</div></aside>
+<ul class="toc-list">
+<li>
+<a class="lvl-2" href="#快速参考">快速参考</a>
+</li>
+<li>
+<a class="lvl-2" href="#备份范围">备份范围</a>
+</li>
+<li>
+<a class="lvl-2" href="#凭据">凭据</a>
+</li>
+<li>
+<a class="lvl-2" href="#恢复">恢复</a>
+</li>
+<li>
+<a class="lvl-2" href="#清理">清理</a>
+</li>
+<li>
+<a class="lvl-2" href="#配置档案">配置档案</a>
+</li>
+</ul></aside>
 </div>
 
 <div class="search-overlay">
@@ -233,6 +243,6 @@ Python 不提供这些 <code>dir_fd</code> 操作，因此 fallback 会在每次
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=c382c0c8"></script>
+<script src="/docs/assets/site.js?v=5efdcab3"></script>
 </body>
 </html>
