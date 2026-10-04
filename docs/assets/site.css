@@ -206,6 +206,9 @@ main.content {
 }
 article { width: 100%; max-width: var(--maxw); }
 
+.layout.no-toc main.content { margin-right: 0; }
+.layout.no-toc aside.toc { display: none; }
+
 /* right toc */
 aside.toc {
   position: fixed; top: 96px; right: 0; width: var(--toc-w);
@@ -384,6 +387,7 @@ article:has(.viz-frame) { max-width: none; }
 }
 .fs-toggle:hover { opacity: 1; color: var(--tx); border-color: var(--acc); }
 .fs-toggle .ic-collapse { display: none; }
+.layout.no-toc .fs-toggle { right: 14px; }
 
 html[data-fs="1"] .fs-toggle { top: 12px; right: 14px; z-index: 160; opacity: 1; box-shadow: var(--shadow); }
 html[data-fs="1"] .fs-toggle .ic-expand { display: none; }

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790196881" data-alt-lang-url="/docs/server/configuration.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/server/configuration.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Server configuration · OpenProgram Docs</title>
 <meta name="description" content="All of OpenProgram&#x27;s state lives in a single directory, ~/.openprogram/ . This page covers what is in it, how openprogram config reads and writes settings, and">
 <link rel="canonical" href="https://openprogram.io/docs/server/configuration.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/server/configuration.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/server/configuration.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/server/configuration.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/server/configuration.html">
@@ -29,10 +31,10 @@
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink active" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink active" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -196,6 +198,18 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </tbody>
 </table>
 <p><code>config list</code> also shows read-only <code>providers.&lt;name&gt;</code> status rows — they cannot be changed with <code>config set</code>; configure them with <code>openprogram providers login</code> or the Providers page in the Web UI.</p>
+<h2 id="prevent-idle-system-sleep">Prevent idle system sleep<a class="header-anchor" href="#prevent-idle-system-sleep">#</a></h2>
+<p>On macOS, optionally keep the system awake while an agent execution is active:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>execution.prevent_idle_sleep<span class="w"> </span><span class="nb">true</span>
+</code></pre>
+<p>The default is <code>false</code>. Each execution reads the setting when its agent loop starts
+and holds its own native power assertion until that loop finishes, fails or is
+cancelled. Approval waits inside the loop also retain the assertion. Changing the
+setting does not affect executions already running. Display sleep and explicit
+user-initiated sleep remain available; no permanent system power settings change.
+Unsupported platforms or assertion failures log a warning and continue the task
+without sleep prevention. This does not cover independent background services or
+commands after the agent loop has ended.</p>
 <h2 id="port-shortcut">Port shortcut<a class="header-anchor" href="#port-shortcut">#</a></h2>
 <p><code>openprogram ports</code> is the dedicated writer for the port preference:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>ports<span class="w">                    </span><span class="c1"># view</span>
@@ -227,22 +241,25 @@ your own domain, add that origin so its pages are accepted too:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>web.allowed_origins<span class="w"> </span><span class="s1">'["https://agent.example.com"]'</span>
 </code></pre>
 <h2 id="network-proxy">Network proxy<a class="header-anchor" href="#network-proxy">#</a></h2>
-<p>All LLM provider traffic resolves its proxy the same way, in this order:</p>
+<p>Managed provider requests and model connectivity checks use ordinary proxies
+for exact HTTPS services in the audited provider API and OAuth inventory:</p>
 <ol>
-<li><strong><code>OPENPROGRAM_PROXY_URL</code></strong> — explicit override. When set, every provider
-request goes through it. Accepts <code>http://</code>, <code>https://</code>, or <code>socks5://</code>
-URLs. <code>NO_PROXY</code> bypasses still apply.</li>
-<li><strong>Standard environment variables</strong> — <code>http_proxy</code> / <code>HTTP_PROXY</code>,
-<code>https_proxy</code> / <code>HTTPS_PROXY</code>, <code>all_proxy</code> / <code>ALL_PROXY</code>, with
-<code>no_proxy</code> / <code>NO_PROXY</code> as the bypass list (hostnames, domain suffixes,
-or <code>*</code>). On macOS and Windows, the operating system's proxy settings are
-used when none of these variables are set — the same fallback Python's
-standard library applies.</li>
+<li><strong><code>OPENPROGRAM_PROXY_URL</code></strong> overrides the ordinary proxy route. It accepts
+<code>http://</code>, <code>https://</code>, and <code>socks5://</code> URLs. <code>NO_PROXY</code> bypasses still apply.</li>
+<li><strong>Standard environment variables</strong> use HTTPX's resolution:
+<code>http_proxy</code> / <code>HTTP_PROXY</code>, <code>https_proxy</code> / <code>HTTPS_PROXY</code>,
+<code>all_proxy</code> / <code>ALL_PROXY</code>, and <code>no_proxy</code> / <code>NO_PROXY</code>. Python also uses
+macOS and Windows system proxy settings when applicable.</li>
 </ol>
-<p>SOCKS proxies are supported out of the box (<code>httpx[socks]</code> is a hard
-dependency). CLI-backed providers (Claude Code, Codex CLI, Gemini CLI) run
-as subprocesses that inherit your shell environment, so the external CLI
-applies its own proxy handling.</p>
+<p>The client validates the target first and checks the proxy socket address.
+TLS still verifies the service hostname. Proxy authentication stays on the
+proxy connection, and a failed proxy request does not fall back to direct access.
+An explicit <code>security.outbound_url.policy_proxy</code> takes precedence and requires
+an owner assertion that it enforces target policy.</p>
+<p>Custom service origins and requests to user-supplied URLs do not implicitly
+inherit ordinary proxies. They retain direct address checks or use an explicit
+enforcing policy proxy. CLI providers inherit the worker process environment;
+the external CLI handles its own routing. SOCKS support is included.</p>
 <p><code>openprogram rescue</code> reports the resolved proxy configuration and flags a
 SOCKS proxy whose support package is missing.</p>
 <h2 id="multiple-instances---profile">Multiple instances: --profile<a class="header-anchor" href="#multiple-instances---profile">#</a></h2>
@@ -251,7 +268,7 @@ SOCKS proxy whose support package is missing.</p>
 <span class="nv">OPENPROGRAM_PROFILE</span><span class="o">=</span>dev<span class="w"> </span>openprogram<span class="w"> </span>status
 </code></pre>
 <p>Combined with different <code>OPENPROGRAM_WEB_PORT</code> values, several services can run at once. For installation, see <a href="/docs/install/profiles.html">Profiles</a>.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/README.html" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/server/upgrading.html" data-href-en="/docs/server/upgrading.html" data-href-zh="/docs/server/upgrading.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="源码升级">Source upgrades</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/server/README.html" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/server/upgrading.html" data-href-en="/docs/server/upgrading.html" data-href-zh="/docs/server/upgrading.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="源码升级">Source upgrades</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -259,6 +276,9 @@ SOCKS proxy whose support package is missing.</p>
 </li>
 <li>
 <a class="lvl-2" href="#openprogram-config">openprogram config</a>
+</li>
+<li>
+<a class="lvl-2" href="#prevent-idle-system-sleep">Prevent idle system sleep</a>
 </li>
 <li>
 <a class="lvl-2" href="#port-shortcut">Port shortcut</a>
@@ -282,6 +302,6 @@ SOCKS proxy whose support package is missing.</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

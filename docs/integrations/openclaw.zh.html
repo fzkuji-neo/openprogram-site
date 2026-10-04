@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/integrations/openclaw.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/integrations/openclaw.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OpenClaw · OpenProgram Docs</title>
 <meta name="description" content="这是什么？ # 本指南介绍如何在 OpenClaw 中使用 Agentic Programming — 作为 skill、工具库或 MCP tool provider。 Agentic Programming 和 OpenClaw 解决不同的问题： OpenClaw 编排 agent、管理会话、路由消息">
 <link rel="canonical" href="https://openprogram.io/docs/integrations/openclaw.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/integrations/openclaw.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/integrations/openclaw.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/integrations/openclaw.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/integrations/openclaw.html">
@@ -29,10 +31,10 @@
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,14 +63,14 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink active" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink active" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
   <nav class="sidebar" aria-label="Documentation">
     <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
            aria-label="Filter docs" placeholder="Filter docs…" autocomplete="off" spellcheck="false">
-    <div class="nav-tree"><div class="nav-sec"><div class="nav-sec-title" data-title-zh="集成">Integrations</div><a class="navlink" href="/docs/integrations/claude-code.html" data-title-zh="Claude Code" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Claude Code</a>
+    <div class="nav-tree"><div class="nav-sec"><div class="nav-sec-title" data-title-zh="集成">Integrations</div><a class="navlink" href="/docs/integrations/anthropic.html" data-title-zh="Anthropic API" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Anthropic API</a>
 <a class="navlink active" href="/docs/integrations/openclaw.html" data-title-zh="OpenClaw" data-href-en="/docs/integrations/openclaw.html" data-href-zh="/docs/integrations/openclaw.zh.html">OpenClaw</a>
 <a class="navlink" href="/docs/integrations/channels.html" data-title-zh="聊天渠道" data-href-en="/docs/integrations/channels.html" data-href-zh="/docs/integrations/channels.zh.html">Chat channels</a></div></div>
   </nav>
@@ -112,41 +114,53 @@ uv<span class="w"> </span>sync<span class="w"> </span>--locked
 <span class="c1"># 把源码 checkout 加入脚本 path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">"~/.openclaw/workspace/OpenProgram"</span><span class="p">))</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'decompose'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="s1">'assess'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="s1">'plan'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">decompose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""把复杂任务拆解成可执行的步骤。"""</span>
+        <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
+            <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"把这个任务拆解成 3-5 个具体、可执行的步骤：</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">编号，要具体。"</span><span class="p">},</span>
+        <span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">assess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""评估一个步骤的难度和时间。"""</span>
+        <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
+            <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"对这个步骤给出：难度（简单/中等/困难）和时间估计。</span><span class="se">\n</span><span class="s2">格式：[难度] ~X小时</span><span class="se">\n\n</span><span class="s2">步骤：</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
+        <span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""为任务创建详细计划。"""</span>
+        <span class="n">steps_text</span> <span class="o">=</span> <span class="n">decompose</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">steps_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
+        <span class="n">assessments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">assess</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+            <span class="n">assessments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="se">\n</span><span class="s2">   → </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assessments</span><span class="p">)</span>
+
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">decompose</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">decompose</span>
+<span class="n">assess</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">assess</span>
+<span class="n">plan</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">plan</span>
+
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">)</span>
 
 
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">decompose</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""把复杂任务拆解成可执行的步骤。"""</span>
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"把这个任务拆解成 3-5 个具体、可执行的步骤：</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">编号，要具体。"</span><span class="p">},</span>
-    <span class="p">])</span>
 
 
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">assess</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""评估一个步骤的难度和时间。"""</span>
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"对这个步骤给出：难度（简单/中等/困难）和时间估计。</span><span class="se">\n</span><span class="s2">格式：[难度] ~X小时</span><span class="se">\n\n</span><span class="s2">步骤：</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
-    <span class="p">])</span>
 
 
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">plan</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""为任务创建详细计划。"""</span>
-    <span class="n">steps_text</span> <span class="o">=</span> <span class="n">decompose</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">steps_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
-    <span class="n">assessments</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="n">assess</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="n">assessments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="se">\n</span><span class="s2">   → </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assessments</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
@@ -178,35 +192,46 @@ Python 不包含 OpenProgram 的依赖。</p>
 <pre><code class="language-python"><span class="sd">"""</span>
 <span class="sd">OpenClaw agent 调用的代码审查脚本。</span>
 <span class="sd">"""</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'review_code'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="s1">'suggest_tests'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="s1">'code_analysis'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">review_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""审查代码的 bug、风格问题和改进建议。"""</span>
+        <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
+            <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"审查这段 </span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2"> 代码。列出：</span><span class="se">\n</span><span class="s2">1. Bug（如果有）</span><span class="se">\n</span><span class="s2">2. 风格问题</span><span class="se">\n</span><span class="s2">3. 改进建议</span><span class="se">\n\n</span><span class="s2">```</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span><span class="p">},</span>
+        <span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">suggest_tests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""为代码建议测试用例。"""</span>
+        <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
+            <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"为这段代码建议 3 个测试用例。每个给出：测试名称、输入、期望输出。</span><span class="se">\n\n</span><span class="s2">```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span><span class="p">},</span>
+        <span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">code_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""完整代码分析：审查 + 测试建议。"""</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="n">review_code</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+        <span class="n">tests</span> <span class="o">=</span> <span class="n">suggest_tests</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"## 代码审查</span><span class="se">\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">## 建议测试</span><span class="se">\n</span><span class="si">{</span><span class="n">tests</span><span class="si">}</span><span class="s2">"</span>
+
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">review_code</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">review_code</span>
+<span class="n">suggest_tests</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">suggest_tests</span>
+<span class="n">code_analysis</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">code_analysis</span>
+
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">)</span>
 
 
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">review_code</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""审查代码的 bug、风格问题和改进建议。"""</span>
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"审查这段 </span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2"> 代码。列出：</span><span class="se">\n</span><span class="s2">1. Bug（如果有）</span><span class="se">\n</span><span class="s2">2. 风格问题</span><span class="se">\n</span><span class="s2">3. 改进建议</span><span class="se">\n\n</span><span class="s2">```</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span><span class="p">},</span>
-    <span class="p">])</span>
 
 
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">suggest_tests</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""为代码建议测试用例。"""</span>
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"为这段代码建议 3 个测试用例。每个给出：测试名称、输入、期望输出。</span><span class="se">\n\n</span><span class="s2">```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span><span class="p">},</span>
-    <span class="p">])</span>
 
-
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">code_analysis</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""完整代码分析：审查 + 测试建议。"""</span>
-    <span class="n">review</span> <span class="o">=</span> <span class="n">review_code</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="n">tests</span> <span class="o">=</span> <span class="n">suggest_tests</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">"## 代码审查</span><span class="se">\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">## 建议测试</span><span class="se">\n</span><span class="si">{</span><span class="n">tests</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 <h2 id="用法-3mcp-tool-封装">用法 3：MCP Tool 封装<a class="header-anchor" href="#用法-3mcp-tool-封装">#</a></h2>
 <p>把 agentic function 封装为 OpenClaw 可以调用的 MCP tool：</p>
@@ -217,26 +242,34 @@ Python 不包含 OpenProgram 的依赖。</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"haiku"</span><span class="p">)</span>
-
-
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">summarize_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">"bullet_points"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""按指定风格总结文本。"""</span>
-    <span class="n">style_instructions</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"bullet_points"</span><span class="p">:</span> <span class="s2">"用 3-5 个要点总结。"</span><span class="p">,</span>
-        <span class="s2">"one_paragraph"</span><span class="p">:</span> <span class="s2">"用一段话总结。"</span><span class="p">,</span>
-        <span class="s2">"eli5"</span><span class="p">:</span> <span class="s2">"用 5 岁小孩能听懂的话解释。"</span><span class="p">,</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'summarize_text'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
-    <span class="n">instruction</span> <span class="o">=</span> <span class="n">style_instructions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="n">style_instructions</span><span class="p">[</span><span class="s2">"bullet_points"</span><span class="p">])</span>
 
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">instruction</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">文本：</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
-    <span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">summarize_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">"bullet_points"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""按指定风格总结文本。"""</span>
+        <span class="n">style_instructions</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"bullet_points"</span><span class="p">:</span> <span class="s2">"用 3-5 个要点总结。"</span><span class="p">,</span>
+            <span class="s2">"one_paragraph"</span><span class="p">:</span> <span class="s2">"用一段话总结。"</span><span class="p">,</span>
+            <span class="s2">"eli5"</span><span class="p">:</span> <span class="s2">"用 5 岁小孩能听懂的话解释。"</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">instruction</span> <span class="o">=</span> <span class="n">style_instructions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="n">style_instructions</span><span class="p">[</span><span class="s2">"bullet_points"</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
+            <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">instruction</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">文本：</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
+        <span class="p">])</span>
+
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">summarize_text</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">summarize_text</span>
+
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">)</span>
+
+
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
@@ -278,13 +311,11 @@ Python 不包含 OpenProgram 的依赖。</p>
 </tbody>
 </table>
 <h2 id="建议">建议<a class="header-anchor" href="#建议">#</a></h2>
-<ol>
-<li><strong>用 <code>claude-code</code> provider 快速上手</strong> — 不需要额外 API key，登录过 Claude Code 就行，直接用订阅额度。详见 <a href="/docs/integrations/claude-code.zh.html">Claude Code 集成</a>。</li>
-<li><strong>按计费方式选 provider</strong> — <code>create_runtime(provider=&quot;claude-code&quot;)</code> 走 Claude 订阅，<code>create_runtime(provider=&quot;anthropic&quot;)</code> 走 Anthropic API key 计费。</li>
+<ol start="3">
 <li><strong>回看执行 trace</strong> — 每次函数调用都记录在 session DAG 里，用 Web UI 或 <code>openprogram sessions list</code> 找到会话后回看。</li>
-<li><strong>保持函数小而精</strong> — 每个 <code>@agentic_function</code> 只做一件事，用 Python 组合它们。</li>
+<li><strong>保持函数小而精</strong> — 每个 <code>Agent</code> method 只做一件事，用 Python 组合它们。</li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/claude-code.html" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Claude Code">Claude Code</span></a><a class="pn-link pn-next" href="/docs/integrations/channels.html" data-href-en="/docs/integrations/channels.html" data-href-zh="/docs/integrations/channels.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="聊天渠道">Chat channels</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/anthropic.html" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Anthropic API">Anthropic API</span></a><a class="pn-link pn-next" href="/docs/integrations/channels.html" data-href-en="/docs/integrations/channels.html" data-href-zh="/docs/integrations/channels.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="聊天渠道">Chat channels</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -318,6 +349,6 @@ Python 不包含 OpenProgram 的依赖。</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

@@ -329,6 +329,7 @@
       .tree-toolbar { transition-duration: 0.01ms; }
     }
   </style>
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="stylesheet" href="/docs/assets/raw-readability.css">
 <script defer src="/docs/assets/raw-readability.js"></script>
 </head>
@@ -617,7 +618,7 @@
       createIcons({ attrs: { "stroke-width": 1.7 } });
     });
   </script>
-</body>
+<section style="padding:24px;max-width:960px;margin:auto"><h2>Incremental loading</h2><p>The explorer retains loaded directories, selection, expanded folders and call graphs across navigation. Visible folders and the selected graph revalidate in the background every five seconds and on focus or manual refresh. Unchanged responses carry only a revision acknowledgement. Failures retain usable content and permit retry.</p><p>The server records file and directory metadata dependencies while building each response. Revalidation checks these dependencies and registry/catalog identity; unchanged entries reuse cached responses. Changed source files invalidate parsed modules by file identity, size, nanosecond modification and change times. New or removed entries invalidate their parent directories. Existing containment checks and source limits remain authoritative. Caches are bounded process memory; no additional filesystem watcher or persistent user-data cache is introduced.</p><p>Acceptance: warm navigation renders immediately; no unchanged source reads or parses; edits, additions and deletions update affected views; refresh preserves selection and expansion. Implementation status: source and rendered-page acceptance checks pass. Performance measurements, independent reviews and installed-App acceptance are maintained in the task evidence.</p></section></body>
 </html>
 
 <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'&&window.parent!==window)parent.postMessage('op-docs-esc','*');});</script>

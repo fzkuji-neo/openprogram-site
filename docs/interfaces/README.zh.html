@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/interfaces/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/interfaces/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>界面 · OpenProgram Docs</title>
 <meta name="description" content="OpenProgram 有四种用户界面：macOS Desktop App、外部浏览器中的 Web UI、终端 TUI 和命令行单发。本页说明它们的关系，帮助用户选择入口。 四个客户端，一个服务 # 四种界面共用同一个本地后台服务（代码里叫 worker）：一个常驻进程，在单个端口（默认 18100）上承载">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/README.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/interfaces/README.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/README.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/README.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/interfaces/README.html">
@@ -29,10 +31,10 @@
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink active" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink active" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -120,7 +122,7 @@
 </table>
 <h2 id="隔离的工作区">隔离的工作区<a class="header-anchor" href="#隔离的工作区">#</a></h2>
 <p><code>--profile &lt;name&gt;</code>（或环境变量 <code>OPENPROGRAM_PROFILE</code>）把整个状态目录从 <code>~/.openprogram/</code> 换到 <code>~/.openprogram-&lt;name&gt;/</code>——配置、会话、日志、凭据全部隔离，每个 profile 有自己的 worker。用于并行跑互不干扰的多套环境。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-en="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-zh="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="自编程智能体">Self-programming agents</span></a><a class="pn-link pn-next" href="/docs/interfaces/desktop.html" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="桌面应用">Desktop App</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-en="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-zh="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="自编程智能体">Self-programming agents</span></a><a class="pn-link pn-next" href="/docs/interfaces/desktop.html" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="桌面应用">Desktop App</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -142,6 +144,6 @@
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

@@ -58,6 +58,7 @@
   @media(max-width:900px) { .flow { grid-template-columns:1fr 1fr } .flow .node::after { display:none } }
   @media(max-width:720px) { .g2,.g3 { grid-template-columns:1fr } .wrap { padding:26px 17px 64px } }
 </style>
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="stylesheet" href="/docs/assets/raw-readability.css">
 <script defer src="/docs/assets/raw-readability.js"></script>
 </head>
@@ -73,6 +74,7 @@
   </div>
 
   <h2>1. Scope, goals and boundaries</h2>
+  <p>Function-tool arguments use the canonical tool schema for local validation. Strict provider export represents optional fields as required nullable fields; shared argument normalization restores those added nulls to omitted object properties before canonical validation. Required fields and originally nullable values retain their semantics. Only nulls accepted by the actual strict property schema are eligible, so enum, conditional and combinator constraints remain enforced. Normalization copies inputs, preserves array positions and applies the same optional-default semantics to non-strict callers. It does not modify function signatures or weaken canonical schemas.</p>
   <div class="grid g3">
     <section class="card"><h4>Unified semantics</h4><p>Python Runtime, Agent, CLI and WebSocket/API share one schema, negotiation result, validator and error classification.</p></section>
     <section class="card"><h4>Streaming compatibility</h4><p>Preserve incremental provider text/tool events while explicitly representing candidate attempts, discard, retry and final structured results.</p></section>

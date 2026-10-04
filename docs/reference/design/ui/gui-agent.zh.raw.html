@@ -37,6 +37,7 @@
 @media(prefers-reduced-motion:reduce){.tv-live{transition:none}}
 
 </style>
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="stylesheet" href="/docs/assets/raw-readability.css">
 <script defer src="/docs/assets/raw-readability.js"></script>
 </head>
@@ -70,6 +71,13 @@
 <header>
 <span class="eyebrow">OPENPROGRAM / 计算机操作</span>
 <h1>GUI Agent：完整电脑操作设计</h1>
+<p id="program-page-scope">agentic Program 子进程只继承已接纳的父级执行本来获准的浏览器能力。现有父级 surface context，包括禁用访问的状态，原样保留，不替换。没有显式 context 时，只有普通注册 <code>web_use</code> 权限策略已经通过 <code>SURFACE_GRANT</code> 允许该父级调用，父级才可以从真正注册的 OpenProgram Page inventory 捕获 scope。任务文本、Program 名称、原始 owner 来源引用或新选择的 provider 都不能创建授权。捕获失败保留拒绝；不构造虚假 Page binding 或交互权限。为 Program 捕获同一可用 inventory 会产生有界的 renderer 请求成本；即使 Program 不调用浏览器工具，父级临时 binding 也通过已有 finalizer 释放。</p>
+<p>已验证的 Page 快照同时填入子进程 <code>TurnRequest.surface_context</code> 与每次派生的内层请求，与已经绑定的执行 context 一致。在子进程操作边界，已有的经认证 owner permission snapshot 解析当前 mode 与 rules，不修改原始已接纳 request。父级会话已有的 plan 标记进一步将快照限制为 plan mode。Page 捕获与子进程 mode/rules 传输使用同一份有效快照，因此现有 Page context 不能丢弃当前 owner 策略或父级 plan 限制。内层 request 继承该快照；没有 mode snapshot 的旧调用方保留审批模式。Runtime authority 仍为非交互；显式 deny/ask 规则、未知效果审批和目标所有权继续优先于 surface grant。父级 IPC broker 保留已有的精确窗口与 binding allowlist、新鲜 revision 和取消清理。禁用 context、没有注册 App、捕获失败和其他 binding 仍被拒绝。无模型的自有注册 Program 验证真正 spawn 的子进程及内层注册 <code>web_use</code> 权限检查；这些检查不使用用户浏览器或 provider。 unit 委托 fixture 显式注册生产 <code>web_use</code> descriptor，提供隔离的 owner authority 与受控 desktop 可用性，并断言真实 policy 决策。缺少注册、desktop 不可用或捕获失败，都不能创建 fallback context。unit 捕获回调只证明传递与清理；真实 spawn 的注册工具检查另行证明 Page 读回。</p>
+<p id="native-control-feedback">macOS 窗口反馈使用不激活应用、不接收鼠标事件的紫色提示和动作标记。精确窗口校验与应用排他控制成功后启动 helper。目标矩形减去遮挡窗口区域后作为图层 mask，局部重叠不会隐藏整层提示。标记使用成功动作执行前的控件边界，以目标窗口内的相对坐标保存。能力反馈保留这份显示信息及原窗口身份，在后续同一窗口步骤开始前恢复；它不是输入权限或成功回执。正常步骤结束后短暂显示明确结束的反馈，失败、取消或身份丢失时关闭。helper 失败记录诊断，不虚构动作成功或切换前台操作。源码生命周期修复不能证明安装版原生显示已经验收；遵循用户不测试的要求，功能执行仍未验证。</p>
+<p id="desktop-access-scope">macOS 窗口适配器从宿主能力注册表中映射到 <code>gui_agent:desktop</code> 的条目确定必需权限。可用性与适配器的 <code>system_access</code> 诊断仅包含这些必需条目：屏幕录制与 Accessibility。无关的日历、提醒事项、麦克风、相机、按目标应用检查的 Automation 和按路径检查的文件访问仍在完整系统报告中显示，并保留各自操作的检查；它们不能阻止窗口截屏或 AX 控制。缺少必需条目，或必需条目状态不是 <code>granted</code>，都会在原生初始化前拒绝窗口操作。窗口动作前重复相同检查，因此撤销授权仍立即生效。缺少注册表 API 的旧宿主保留原有非提示 Quartz/AX 检查。状态读取不请求权限，也不产生前台输入回退。</p>
+<p>窗口清单在将能力可用性返回持久化 GUI 步骤前，把 macOS 原生应用名称、bundle identifier 和窗口标题转换为普通 Python 字符串。窗口身份也在将原生 NSDate 启动时间发布到能力结果 target 或 next-feedback window target 前，转换为精确的 Python 字符串类型。NSDate 的第一次字符串转换仍可能返回桥接字符串子类；再次转换这个字符串表示，保留日期文本并移除桥接子类型。缺失值仍为 null，窗口与进程身份仍为整数，文本内容保持不变。缺失启动日期仍拒绝目标，重启和上一目标身份比较保留原有含义。持久化 JSON 校验继续严格执行，原生桥接对象不能进入已保存步骤结果。该转换不捕获窗口、不请求权限、不改变焦点，也不重放结果未知的操作。</p>
+<p>共享报告兼容测试的假输入提供两个桌面必需 id，包括仅控制权限被拒绝时已授权的屏幕录制条目。原有报告、拒绝理由和隐私断言保持不变。独立的公开适配器回归测试有意省略各必需条目或提供未知状态，并要求在原生初始化前拒绝操作。</p>
+<p>这个按桌面操作限定的适配器报告也提供给已安装 bridge 的持久化能力规划器与桌面系统权限等待。默认浏览器任务仍不依赖桌面权限；可恢复的桌面授权缺失仍在选定桌面效果前进入等待。桌面权限修复交付时，只把 <code>scripts/release/product-runtime.json</code> 的 GUI commit 更新到经独立审查的 Harness 版本；官方刷新归档该确切 commit，并拒绝源码与 pin 不一致。其他程序 pin、依赖、权限和 runtime 能力保持既有值。本地经审查的 commit 与成功本地归档不证明远端仓库或 CI 已包含它。产品 runtime 安装固定 Harness archive，而所属 catalog 在新 loader 命名空间中可以解析其他源码。公开 bridge 源码 metadata 不证明 worker 已缓存的 Harness 模块身份。验收分别记录自有注册入口的精确源码、已安装原生就绪状态与可视桌面执行。</p>
 <p>从公开接口、当前源码与测试，确定完整输入、持续代码执行、状态恢复及应用验收。</p>
 <div class="status-line">
 <span>目标设计 · 尚非完整实现</span>
@@ -105,6 +113,7 @@
 </select>
 </div>
 <section id="scope">
+<h2>嵌套工具的模型选择</h2><p>前台轮次为 GUI 和 Workflow 内部模型调用绑定与聊天循环相同的 provider 和 model。优先级为请求 override、会话选择、冻结或当前 agent profile。冻结 profile 请求只读取会话选择。解析后的选择保存在请求中，并与当前工作目录一起传入工具子进程。选定 Runtime 初始化失败时，该错误保留在轮次中，内部模型调用抛出原始错误，不改用其他 provider 或继承外层 Runtime；不调用模型的工具仍可执行。轮次释放时恢复此前 Runtime 上下文。独立检测出的全局 provider 不代表当前聊天选择。</p><p>组件验收通过 TurnBindings.bind 覆盖 override、会话、冻结 profile 和 profile 默认选择，并验证上下文恢复。已安装 GUI 和周报执行另需确认认证可用及真实工具调用；组件测试不能证明实际执行成功。</p>
 <span id="overview">
 </span>
 <h2 tabindex="-1">目标与完成标准</h2>
@@ -477,7 +486,9 @@ receipt = {
 </section>
 <section id="browser">
 <h2 tabindex="-1">浏览器：复用归属并补齐操作</h2>
+<p>可编辑字段观察保留四层诊断祖先，并可在 <code>field_context.label_binding</code> 中提供十二层祖先以内最近语义容器的简明标签证据。完整扫描最多 120 个后代，必须发现恰好一个可见可编辑控件和一个可见、不可编辑的叶节点 label；有歧义、扫描不完整或位于可编辑值中的标签不绑定。证据记录来源、规范化的完整标签、深度、计数及独立的 redacted/truncated 标记，原生和 ARIA 标签保持不变；密码控件不提供绑定。完整秘密掩码先于现有字符串截断和 32768 字节上下文总预算。预算裁剪可移除无关诊断祖先而保留完整绑定；绑定标签被掩码或截断时不能使用。结构证据本身不授予写入权限。 原生 ref 操作在内部保留公开截断前完整规范化的原生标签身份和完整简明绑定，并在输入前比较新读取的语义证据。绑定改变、消失、新增或变得有歧义时，该观察失效；无关诊断布局文本和 class 不作为操作身份。</p>
 <p>复用 <code>WebUseSessionRegistry</code>、Page token、worker 持有的 WebContentsView/CDP、帧检查和清理。绑定准确的提交 Page 或创建自己拥有的后台 Page，不选择当前活动标签代替；可选 MCP 后端继续作为执行适配器。</p>
+<p>发现 Page 不代表所选 MCP 后端能够启动。已知 MCP 启动失败返回 <code>computer_use_backend_unavailable</code>、<code>availability=unavailable</code>、实际选中的 backend 和已关闭的会话标识，不输出上游原始诊断，也不自动选择其他后端。观察失败时释放 Page 租约和捕获的绑定，删除临时绑定 marker，并在线程停止后关闭自有 MCP event loop。取消、权限失败和未知缺陷保留原有错误语义。</p>
 <p>提供限定的 role/name、label、text、test-ID、相对 Locator 和 frame 进入，复用 Playwright 可操作性检查和有界等待。每动作重新定位；歧义、语义或归属变化返回 stale-target。数字 ref 只在当前观察有效。</p>
 <p>补齐拖拽、多击、修饰键、横向滚动、文件选择/下载、iframe 和弹窗。弹窗按 opener 和准确身份绑定，重新校验目标权限，文件只经授权路径传输；先监听下载/弹窗再触发，避免丢事件。</p>
 <p>UI 脚本不暴露原始 <code>page.evaluate</code>、任意 CDP send、cookies、profile 目录或浏览器启动。可信代码可为有界观察读取 DOM。通用 shell/文件/代码工具仍经正常权限提供，显式开发调试能力同样受策略约束；UI SDK 不能成为无限制浏览器控制入口。</p> <a class="ref" href="#S3">[S3]</a> <a class="ref" href="#S7">[S7]</a> <a class="ref" href="#R5">[R5]</a>
@@ -559,6 +570,19 @@ receipt = {
 <span id="lifecycle">
 </span>
 <h2 tabindex="-1">失败、取消与重启恢复</h2>
+<h3 id="selected-desktop-access">在已选择能力边界检查桌面权限</h3>
+<p>仅传 task 的 <code>gui_agent</code> 入口允许规划与已授权浏览器操作，不预先要求本地桌面权限。显式桌面执行保留副作用前权限检查。默认能力发现区分可恢复的 OS 授权缺失与不可用的原生依赖：只有选中本地桌面操作后才请求所需授权。浏览器与 VM 操作继续遵守各自的目标准入和授权边界。</p>
+<p>可信宿主编排适配器通过现有 durable function 记录，将每个规划决定和能力结果保留为 JSON。可恢复参数只包含任务与配置，实时 Runtime 由宿主 ContextVar 绑定。固定且有版本的 GUI-operation API 将保留的编排连接到 pinned Harness 的规划器、执行器与总结函数；快照准入仅识别这些操作，不放开任意动态 import、不透明宿主对象或生成代码。公共 <code>resume_state</code>、历史或游标参数不能替换持久执行状态。</p>
+<ol>
+<li>在选择外部操作前提交本轮规划决定。</li>
+<li>选择 <code>computer_use</code> 后，在登记或派发其副作用之前重新检查桌面授权。可恢复的授权缺失产生 typed function suspension，携带保留的调用身份与已选能力；依赖不可用仍终结执行。</li>
+<li>子进程通过 IPC 报告暂停。父进程重新检查执行主机，在自己当前拥有的 attempt 中打开现有 <code>system_access</code> 等待。子进程或模型的报告不能证明授权已成立。</li>
+<li>forced 调用在等待 checkpoint 中保留函数游标。Agent 工具调用先保留函数游标与现有 provider/tool continuation，再打开等待。两个提交之间发生崩溃时，恢复已暂停函数并重新建立必要的等待。</li>
+<li>真实授权后恢复同一任务，取回已提交的规划与浏览器 step 结果，重新检查权限，再首次派发待执行桌面操作。取消、授权撤销、旧 generation 或未确定副作用均阻止派发。</li>
+<li>父进程在准入时已确认授权，则保存静默 resolved wait，在释放 Runtime 和 handle 后仅恢复其确切 attempt/checkpoint。释放后的恢复不会检查、解决或恢复其他 open wait；显式权限等待保留 worker 原有的统一核对流程。</li>
+</ol>
+<p>权限检查独立于 desktop step，并先于该 step：<code>step()</code> 在调用操作前将副作用标为已派发，在 desktop step 内等待会产生未确定副作用并阻止安全恢复。子进程也不能直接打开父进程拥有的等待，因为打开等待会结束当前 attempt。默认 forced 调用同时捕获浏览器能力可用的已授权 Page 上下文与已选原生能力上下文。</p>
+
 <div class="table-wrap">
 <table>
 <thead>
@@ -1227,6 +1251,8 @@ render();
 </tr>
 </thead>
 <tbody>
+<tr><td>仅传 task 的 GUI 按已选桌面能力请求授权</td><td>公共 bridge 通过固定 durable function API 保留规划决策和能力结果。选择桌面能力后，在登记副作用前暂停并创建 canonical system-access wait；已授权的浏览器操作不要求桌面权限。live Runtime 只通过 host binding 传入，不写入保存的参数。</td><td>源码已有受控 forced 子进程和 Agent checkpoint 测试，覆盖同任务续跑、worker 替换、取消、实时撤销授权、截止时间失效、旧所有权和未确认副作用。完整稳定性测试、独立复核及已安装默认 App 的权限验收仍待完成。这些检查不证明原生桌面或 VM 兼容性。</td></tr>
+
 <tr>
 <td>现有 GUI/浏览器边界</td>
 <td>156 个 OpenProgram 局部测试通过：能力循环、不可行结果、VM 协议、Page runtime、浏览器 Agent。</td>
@@ -1288,7 +1314,7 @@ function updateMatrix(){let n=0;for(const row of rows){const show=filter.value==
 filter.addEventListener('change',updateMatrix);updateMatrix();
 document.getElementById('section-select').addEventListener('change',e=>{const section=document.getElementById(e.target.value);if(section){history.replaceState(null,'','#'+section.id);section.scrollIntoView();section.querySelector('h2').focus({preventScroll:true});}});
 </script>
-</body>
+<p>不调用模型的 agentic Program 可以在未选择模型时执行。无法解析的选择作为终止模型配置错误传递到子进程，仅在 Program 调用 Runtime.exec 或 async_exec 时抛出。子进程不会通过自动检测其他 provider 替代该选择。强制调用工具同样要求明确的 provider 和 model 才能构造可用 Runtime；缺失或不完整的选择保留不可重试的模型配置错误，不影响不调用模型的工具执行。会话 GraphStore 独立保持绑定。</p></body>
 </html>
 
 <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'&&window.parent!==window)parent.postMessage('op-docs-esc','*');});</script>

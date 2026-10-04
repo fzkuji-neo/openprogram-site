@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/start/daily-use.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/start/daily-use.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>日常操作 · OpenProgram Docs</title>
 <meta name="description" content="这页覆盖装好之后每天会用到的操作：终端与 web 两个入口、会话的续用与管理、web 界面里的分支与回退。 两个入口，同一份会话 # openprogram — 终端聊天界面（TUI）。 openprogram web — 浏览器界面，http://localhost:18100。 会话数据统一存在">
 <link rel="canonical" href="https://openprogram.io/docs/start/daily-use.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/start/daily-use.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/start/daily-use.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/start/daily-use.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/start/daily-use.html">
@@ -29,10 +31,10 @@
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -112,7 +114,7 @@ openprogram<span class="w"> </span>sessions<span class="w"> </span>aliases<span 
 </ul>
 <p>编辑或重试之后同一位置会有多个版本，用消息旁的上一个 / 下一个版本箭头切换。顶栏的 branch 菜单用于查看和切换当前会话的分支。</p>
 <p>右侧栏是本次会话的 DAG 视图：每个节点是一条用户消息、一次 LLM 调用或一次函数调用，视图随聊天滚动，点击节点会把对话滚动到对应的消息。涉及文件的分支底层运行在独立的 git worktree 中，不同分支上的并发操作不会争抢同一份源码树。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a><a class="pn-link pn-next" href="/docs/start/faq.html" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="常见问题">FAQ</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a><a class="pn-link pn-next" href="/docs/start/faq.html" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="常见问题">FAQ</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -137,6 +139,6 @@ openprogram<span class="w"> </span>sessions<span class="w"> </span>aliases<span 
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

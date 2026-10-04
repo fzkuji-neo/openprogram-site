@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>智能体通信 · OpenProgram Docs</title>
-<meta name="description" content="Agent 协作：一个分支间通信原语 # 整套 agent 协作收敛成 一个原语：分支间通信 。一个 agent 能派生别的 agent、能给 别的分支/别的 session 发消息。这些表面上不同 的操作， 底层是同一件事 ：往某条分支投递内容 → 触发那条分支跑一轮 → 结果自动回送">
+<meta name="description" content="Agent 协作：分支、执行与消息 # 本文定义协作契约，当前实现差距集中列在 §7。保存 Agent 的配置契约见 Agent 配置 ，准入、资源计量和取消限制见 资源治理 。AgentSpec 是可复用配置，运行分支是对话状态，同一分支可以执行多个 Job。创建分支不等于创建一份新的保存 AgentSpec。">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html">
 <meta property="og:title" content="智能体通信 · OpenProgram Docs">
-<meta property="og:description" content="Agent 协作：一个分支间通信原语 # 整套 agent 协作收敛成 一个原语：分支间通信 。一个 agent 能派生别的 agent、能给 别的分支/别的 session 发消息。这些表面上不同 的操作， 底层是同一件事 ：往某条分支投递内容 → 触发那条分支跑一轮 → 结果自动回送">
+<meta property="og:description" content="Agent 协作：分支、执行与消息 # 本文定义协作契约，当前实现差距集中列在 §7。保存 Agent 的配置契约见 Agent 配置 ，准入、资源计量和取消限制见 资源治理 。AgentSpec 是可复用配置，运行分支是对话状态，同一分支可以执行多个 Job。创建分支不等于创建一份新的保存 AgentSpec。">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="智能体通信 · OpenProgram Docs">
-<meta name="twitter:description" content="Agent 协作：一个分支间通信原语 # 整套 agent 协作收敛成 一个原语：分支间通信 。一个 agent 能派生别的 agent、能给 别的分支/别的 session 发消息。这些表面上不同 的操作， 底层是同一件事 ：往某条分支投递内容 → 触发那条分支跑一轮 → 结果自动回送">
+<meta name="twitter:description" content="Agent 协作：分支、执行与消息 # 本文定义协作契约，当前实现差距集中列在 §7。保存 Agent 的配置契约见 Agent 配置 ，准入、资源计量和取消限制见 资源治理 。AgentSpec 是可复用配置，运行分支是对话状态，同一分支可以执行多个 Job。创建分支不等于创建一份新的保存 AgentSpec。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -74,8 +76,9 @@
 <a class="navlink" href="/docs/reference/design/implementation-status.html" data-title-zh="实现索引" data-href-en="/docs/reference/design/implementation-status.html" data-href-zh="/docs/reference/design/implementation-status.zh.html">Implementation index</a>
 <a class="navlink" href="/docs/reference/design/framework-comparison.html" data-title-zh="框架对比" data-href-en="/docs/reference/design/framework-comparison.html" data-href-zh="/docs/reference/design/framework-comparison.zh.html">Framework comparison</a>
 <a class="navlink" href="/docs/reference/design/feature-matrix.html" data-title-zh="功能矩阵" data-href-en="/docs/reference/design/feature-matrix.html" data-href-zh="/docs/reference/design/feature-matrix.zh.html">Feature matrix</a></details>
-<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">81</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">12</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">83</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<a class="navlink" href="/docs/reference/design/runtime/codex-capability-adoption.html" data-title-zh="Codex 功能核对" data-href-en="/docs/reference/design/runtime/codex-capability-adoption.html" data-href-zh="/docs/reference/design/runtime/codex-capability-adoption.zh.html">Codex capability audit</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="调用流程" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Call flow</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/control.html" data-title-zh="执行控制" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html">Execution control</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-title-zh="操作生命周期" data-href-en="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html">Action lifecycle</a>
@@ -119,10 +122,11 @@
 <a class="navlink" href="/docs/reference/design/runtime/operations/chat-progress-recovery.html" data-title-zh="进度恢复" data-href-en="/docs/reference/design/runtime/operations/chat-progress-recovery.html" data-href-zh="/docs/reference/design/runtime/operations/chat-progress-recovery.zh.html">Progress recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html" data-title-zh="网页可靠性" data-href-en="/docs/reference/design/runtime/web-runtime-reliability.html" data-href-zh="/docs/reference/design/runtime/web-runtime-reliability.zh.html">Web reliability</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-frontend-spawn.html" data-title-zh="前端进程" data-href-en="/docs/reference/design/runtime/web-frontend-spawn.html" data-href-zh="/docs/reference/design/runtime/web-frontend-spawn.zh.html">Frontend processes</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="配置与操作">Configuration and operations</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html" data-title-zh="智能体设置" data-href-en="/docs/reference/design/runtime/agent-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent settings</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="配置与操作">Configuration and operations</span><span class="nav-count">9</span></summary><a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html" data-title-zh="智能体设置" data-href-en="/docs/reference/design/runtime/agent-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-core-configuration-ui.html" data-title-zh="基础设置" data-href-en="/docs/reference/design/runtime/agent-core-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-core-configuration-ui.zh.html">Core settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-tool-configuration-ui.html" data-title-zh="工具设置" data-href-en="/docs/reference/design/runtime/agent-tool-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-tool-configuration-ui.zh.html">Tool settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html" data-title-zh="能力设置" data-href-en="/docs/reference/design/runtime/agent-capability-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-capability-configuration-ui.zh.html">Capability settings</a>
+<a class="navlink" href="/docs/reference/design/runtime/agent-configuration-plan.html" data-title-zh="Agent 实施计划" data-href-en="/docs/reference/design/runtime/agent-configuration-plan.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-plan.zh.html">Agent implementation plan</a>
 <a class="navlink" href="/docs/reference/design/runtime/chat-search-settings.html" data-title-zh="聊天搜索" data-href-en="/docs/reference/design/runtime/chat-search-settings.html" data-href-zh="/docs/reference/design/runtime/chat-search-settings.zh.html">Chat search</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具集" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Toolsets</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="输入请求" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">Input requests</a>
@@ -182,18 +186,20 @@
 <a class="navlink" href="/docs/reference/design/memory/written-marker.viz.html" data-title-zh="写入游标图解" data-href-en="/docs/reference/design/memory/written-marker.viz.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.viz.html">Write cursor diagram</a>
 <a class="navlink" href="/docs/reference/design/memory/written-marker.html" data-title-zh="写入游标" data-href-en="/docs/reference/design/memory/written-marker.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.html">Write cursor</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">59</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">61</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">15</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/app-icon.html" data-title-zh="应用图标" data-href-en="/docs/reference/design/ui/app-icon.html" data-href-zh="/docs/reference/design/ui/app-icon.zh.html">App icon</a>
 <a class="navlink" href="/docs/reference/design/ui/invariants.html" data-title-zh="界面不变量" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html">UI invariants</a>
 <a class="navlink" href="/docs/reference/design/ui/surface-system.html" data-title-zh="界面层次" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">UI surfaces</a>
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="状态存储" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">State stores</a>
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html" data-title-zh="主题" data-href-en="/docs/reference/design/ui/theme-system.html" data-href-zh="/docs/reference/design/ui/theme-system.zh.html">Themes</a>
 <a class="navlink" href="/docs/reference/design/ui/window-state.html" data-title-zh="窗口状态" data-href-en="/docs/reference/design/ui/window-state.html" data-href-zh="/docs/reference/design/ui/window-state.zh.html">Window state</a>
+<a class="navlink" href="/docs/reference/design/ui/center-canvas-layout.html" data-title-zh="中间画布：任意分屏布局 — 交互原型与规划" data-href-en="/docs/reference/design/ui/center-canvas-layout.html" data-href-zh="/docs/reference/design/ui/center-canvas-layout.zh.html">Center canvas layout</a>
 <a class="navlink" href="/docs/reference/design/ui/session-tab-identity.html" data-title-zh="标签身份" data-href-en="/docs/reference/design/ui/session-tab-identity.html" data-href-zh="/docs/reference/design/ui/session-tab-identity.zh.html">Tab identity</a>
 <a class="navlink" href="/docs/reference/design/ui/window-lifecycle.html" data-title-zh="窗口生命周期" data-href-en="/docs/reference/design/ui/window-lifecycle.html" data-href-zh="/docs/reference/design/ui/window-lifecycle.zh.html">Window lifecycle</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html" data-title-zh="交互反馈" data-href-en="/docs/reference/design/ui/interaction-feedback.html" data-href-zh="/docs/reference/design/ui/interaction-feedback.zh.html">Interaction feedback</a>
+<a class="navlink" href="/docs/reference/design/ui/page-loading-performance.html" data-title-zh="页面加载性能" data-href-en="/docs/reference/design/ui/page-loading-performance.html" data-href-zh="/docs/reference/design/ui/page-loading-performance.zh.html">Page loading performance</a>
 <a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="状态指示" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Status indicators</a>
 <a class="navlink" href="/docs/reference/design/ui/session-status.html" data-title-zh="会话状态" data-href-en="/docs/reference/design/ui/session-status.html" data-href-zh="/docs/reference/design/ui/session-status.zh.html">Session status</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="对话与编辑器">Chat and composer</span><span class="nav-count">16</span></summary><a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment options</a>
@@ -255,8 +261,7 @@
 <a class="navlink" href="/docs/reference/design/providers/metadata-load-diagnostics.html" data-title-zh="元数据诊断" data-href-en="/docs/reference/design/providers/metadata-load-diagnostics.html" data-href-zh="/docs/reference/design/providers/metadata-load-diagnostics.zh.html">Metadata diagnostics</a>
 <a class="navlink" href="/docs/reference/design/providers/bailian-model-catalog.html" data-title-zh="百炼模型目录" data-href-en="/docs/reference/design/providers/bailian-model-catalog.html" data-href-zh="/docs/reference/design/providers/bailian-model-catalog.zh.html">Bailian catalog</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="用量统计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage metering</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="账号与认证">Authentication</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">Credential resolution</a>
-<a class="navlink" href="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-title-zh="Claude 订阅" data-href-en="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-href-zh="/docs/reference/design/providers/auth/claude-code-direct-oauth.zh.html">Claude subscription</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="账号与认证">Authentication</span><span class="nav-count">7</span></summary><a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">Credential resolution</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-connection-unification.html" data-title-zh="凭据连接" data-href-en="/docs/reference/design/providers/auth/credential-connection-unification.html" data-href-zh="/docs/reference/design/providers/auth/credential-connection-unification.zh.html">Credential connections</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-file-hardening.html" data-title-zh="文件凭据" data-href-en="/docs/reference/design/providers/auth/credential-file-hardening.html" data-href-zh="/docs/reference/design/providers/auth/credential-file-hardening.zh.html">File credentials</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-status-redesign.html" data-title-zh="凭据状态" data-href-en="/docs/reference/design/providers/auth/credential-status-redesign.html" data-href-zh="/docs/reference/design/providers/auth/credential-status-redesign.zh.html">Credential status</a>
@@ -270,7 +275,8 @@
 <a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replay</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.viz.html" data-title-zh="回放图解" data-href-en="/docs/reference/design/providers/record-replay.viz.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.viz.html">Replay diagram</a>
 <a class="navlink" href="/docs/reference/design/providers/responses-reasoning-replay.html" data-title-zh="推理记录回放" data-href-en="/docs/reference/design/providers/responses-reasoning-replay.html" data-href-zh="/docs/reference/design/providers/responses-reasoning-replay.zh.html">Reasoning replay</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">12</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<a class="navlink" href="/docs/reference/design/integrations/nooa.html" data-title-zh="直接调用、Agent 类与自动 DAG 上下文" data-href-en="/docs/reference/design/integrations/nooa.html" data-href-zh="/docs/reference/design/integrations/nooa.zh.html">Direct calls, Agent classes and automatic DAG context</a>
 <a class="navlink" href="/docs/reference/design/integrations/editor-integration.html" data-title-zh="编辑器集成" data-href-en="/docs/reference/design/integrations/editor-integration.html" data-href-zh="/docs/reference/design/integrations/editor-integration.zh.html">Editor integration</a>
 <a class="navlink" href="/docs/reference/design/integrations/extension-management.html" data-title-zh="扩展管理" data-href-en="/docs/reference/design/integrations/extension-management.html" data-href-zh="/docs/reference/design/integrations/extension-management.zh.html">Extension management</a>
 <a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="运行环境规范" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness standard</a>
@@ -286,7 +292,7 @@
 <a class="navlink" href="/docs/reference/design/channels/audit.html" data-title-zh="需求约束" data-href-en="/docs/reference/design/channels/audit.html" data-href-zh="/docs/reference/design/channels/audit.zh.html">Requirements</a>
 <a class="navlink" href="/docs/reference/design/channels/design.html" data-title-zh="架构" data-href-en="/docs/reference/design/channels/design.html" data-href-zh="/docs/reference/design/channels/design.zh.html">Architecture</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">15</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">16</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与权限">Security and permissions</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/system-access.html" data-title-zh="系统访问" data-href-en="/docs/reference/design/runtime/system-access.html" data-href-zh="/docs/reference/design/runtime/system-access.zh.html">System access</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html" data-title-zh="SSRF 防护" data-href-en="/docs/reference/design/runtime/ssrf-protection.html" data-href-zh="/docs/reference/design/runtime/ssrf-protection.zh.html">SSRF protection</a>
@@ -298,8 +304,9 @@
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="测试与错误处理">Testing and errors</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/testing/test-system.html" data-title-zh="测试系统" data-href-en="/docs/reference/design/testing/test-system.html" data-href-zh="/docs/reference/design/testing/test-system.zh.html">Test system</a>
 <a class="navlink" href="/docs/reference/design/testing/windows-ci.html" data-title-zh="Windows CI" data-href-en="/docs/reference/design/testing/windows-ci.html" data-href-zh="/docs/reference/design/testing/windows-ci.zh.html">Windows CI</a>
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="错误处理" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error handling</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="文档与网站">Documentation and website</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档站" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation site</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="文档与网站">Documentation and website</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档站" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation site</a>
 <a class="navlink" href="/docs/reference/design/site-discoverability-performance.html" data-title-zh="站点检索" data-href-en="/docs/reference/design/site-discoverability-performance.html" data-href-zh="/docs/reference/design/site-discoverability-performance.zh.html">Site discovery</a>
+<a class="navlink" href="/docs/reference/design/site-agent-readable-docs.html" data-title-zh="Agent 文档" data-href-en="/docs/reference/design/site-agent-readable-docs.html" data-href-zh="/docs/reference/design/site-agent-readable-docs.zh.html">Agent-readable docs</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
@@ -326,277 +333,164 @@
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="研究材料">Research</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/proactive/_research_archive/evaluation.html" data-title-zh="评估" data-href-en="/docs/reference/design/proactive/_research_archive/evaluation.html" data-href-zh="/docs/reference/design/proactive/_research_archive/evaluation.zh.html">Evaluation</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
+</details>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">6</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
+<a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a></details>
 </details></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="DAG 与协作">DAG and collaboration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="智能体通信">Agent communication</span></nav><h1 id="agent-协作一个分支间通信原语">Agent 协作：一个分支间通信原语<a class="header-anchor" href="#agent-协作一个分支间通信原语">#</a></h1>
-<p>整套 agent 协作收敛成<strong>一个原语：分支间通信</strong>。一个 agent 能派生别的 agent、能给
-别的分支/别的 session 发消息。这些表面上不同
-的操作，<strong>底层是同一件事</strong>：往某条分支投递内容 → 触发那条分支跑一轮 → 结果自动回送
-发起方。全部做成工具调用，全部建在已有的事件层上。</p>
-<blockquote>
-<p>§1 是整个工具面的词汇总纲，先读它。</p>
-</blockquote>
-<hr />
-<h2 id="0-核心只有一个原语">0. 核心：只有一个原语<a class="header-anchor" href="#0-核心只有一个原语">#</a></h2>
-<p>整套协作只有一个原语：</p>
-<blockquote>
-<p><strong>分支间通信</strong> = 往一条分支（同 session 另一分支 / 跨 session / 当场新建的 /
-已存在的）<strong>投递内容</strong> → <strong>触发</strong>那条分支跑一轮（模型读到投来的内容）→ 结果
-<strong>自动回送</strong>发起方（追加一条新消息 + 触发发起方跑一轮，发起方醒来读到、继续）。</p>
-</blockquote>
-<p>所有协作操作都是这个原语的<strong>参数化</strong>：</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="DAG 与协作">DAG and collaboration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="智能体通信">Agent communication</span></nav><h1 id="agent-协作分支执行与消息">Agent 协作：分支、执行与消息<a class="header-anchor" href="#agent-协作分支执行与消息">#</a></h1>
+<p>本文定义协作契约，当前实现差距集中列在 §7。保存 Agent 的配置契约见 <a href="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent 配置</a>，准入、资源计量和取消限制见<a href="/docs/reference/design/runtime/agent-resource-governance.zh.html">资源治理</a>。AgentSpec 是可复用配置，运行分支是对话状态，同一分支可以执行多个 Job。创建分支不等于创建一份新的保存 AgentSpec。</p>
+<h2 id="0-共享投递机制分别管理生命周期">0. 共享投递机制，分别管理生命周期<a class="header-anchor" href="#0-共享投递机制分别管理生命周期">#</a></h2>
+<p>协作复用分支寻址、轮次派发和现有事件层。不同操作分别决定是否创建分支，以及立即提交执行还是先进入收件箱，不增加另一套执行引擎。</p>
 <table>
 <thead>
 <tr>
 <th>操作</th>
-<th>是通信的哪种用法</th>
-<th>工具</th>
+<th>分支变化</th>
+<th>执行变化</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>派生子 agent</strong></td>
-<td><strong>新建</strong>一条分支 + 投消息 + 自动回</td>
-<td><code>agent</code></td>
+<td><code>agent(prompt=..., start_from=...)</code></td>
+<td>一次调用创建分支并执行 prompt</td>
+<td>两种都准入 Job；前台等待并返回结果，后台立即返回 <code>execution_id</code></td>
 </tr>
 <tr>
-<td><strong>给已有 agent 派活</strong></td>
-<td>往<strong>已存在</strong>分支投<strong>受管任务</strong> + 自动回</td>
-<td><code>agent(to=…)</code></td>
+<td><code>agent(prompt=..., to=...)</code></td>
+<td>继续已有分支</td>
+<td>先准入受管 Job，再执行或排队，返回 <code>execution_id</code></td>
 </tr>
 <tr>
-<td><strong>发消息给某 agent</strong></td>
-<td>往<strong>已存在</strong>分支投消息 + 自动回</td>
-<td><code>send_message</code></td>
+<td><code>send_message(message=..., to=...)</code></td>
+<td>继续已有分支</td>
+<td>投递消息；实际异步轮次仍创建 Job。只有收件箱回执不代表执行已获准入</td>
 </tr>
 </tbody>
 </table>
-<p>投来的内容一定被目标模型读取并使用。数量任意（派生能派 N 个、发消息
-也能群发），不是区分维度。两种用法共用一条投递→触发→回送的路径。</p>
-<p><code>attach</code> 不是操作，是通信结果在 DAG 上的&quot;回流连线&quot;画法（标记结果从哪条分支回来）。</p>
-<hr />
-<h2 id="1-四个域一词一义">1. 四个域，一词一义<a class="header-anchor" href="#1-四个域一词一义">#</a></h2>
-<p>协作分四个域。每个域有一个名词、一套工具，域之间不重叠：同一个词在哪里
-出现都是同一个意思。</p>
+<p>目标完成契约是将非空结果回送发起方，不要求收件方再显式调用 <code>send_message</code>。收件方可以不额外发送消息，“回复可选”指的是这条额外消息。标准完成路径是否接入自动回送仍须按 §7 验证。投递成功不能保证目标模型遵从内容或一定生成回复。</p>
+<p><code>attach</code> 是指向新建分支的存储引用与 DAG 展示关系，不是消息或独立执行。</p>
+<h2 id="1-四类对象与操作分工">1. 四类对象与操作分工<a class="header-anchor" href="#1-四类对象与操作分工">#</a></h2>
+<p>四域区分对象，不要求一次操作只能涉及一类对象。<code>agent</code> 可以在同一次调用中创建分支并提交执行；查询或取消该执行属于执行控制，不需要为了分类再新增创建任务工具。</p>
 <table>
 <thead>
 <tr>
 <th>域</th>
-<th>名词</th>
-<th>工具</th>
-<th>是什么</th>
+<th>对象</th>
+<th>公开入口</th>
+<th>职责</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>计划</td>
-<td><strong>todo</strong></td>
+<td><code>todo</code></td>
 <td><code>todo_create</code> / <code>todo_update</code> / <code>todo_list</code></td>
-<td>手写的计划清单：条目、状态、负责人、依赖。只记录打算做什么，有条目不代表有东西在跑</td>
+<td>记录计划，清单条目不启动执行</td>
 </tr>
 <tr>
 <td>执行</td>
-<td><strong>task</strong></td>
-<td><code>job_output</code> / <code>job_stop</code> / <code>list_jobs</code></td>
-<td>派出去正在跑的任务：job_id、状态、结果</td>
+<td><code>Job</code> / canonical execution</td>
+<td><code>list_jobs</code>、<code>job_output</code>；控制动作 <code>execution.cancel</code></td>
+<td>查询或控制已接受的执行，包括排队和终态</td>
 </tr>
 <tr>
-<td>实体</td>
-<td><strong>agent</strong></td>
-<td><code>agent</code> / <code>list_agents</code> / <code>archive_agent</code></td>
-<td>执行任务的实体：新建一个、给已有的派任务（<code>to=</code>）、列出所有 agent、把干完的归档</td>
+<td>对话</td>
+<td>运行中的 Agent 分支</td>
+<td><code>agent</code>、<code>list_agents</code>、<code>archive_agent</code></td>
+<td>创建、继续、寻址、归档分支，不操作保存 Agent 的配置注册表</td>
 </tr>
 <tr>
-<td>通讯</td>
-<td><strong>message</strong></td>
-<td><code>send_message</code> / <code>read_conversation</code></td>
-<td>发消息和读历史：投一条消息，读任何分支的全文</td>
+<td>通信</td>
+<td>message</td>
+<td><code>send_message</code>、<code>read_conversation</code></td>
+<td>投递内容或读取授权历史；触发的轮次仍有独立执行计量</td>
 </tr>
 </tbody>
 </table>
-<p>在 todo 清单上写&quot;跑一遍 parser 基准&quot;不会启动任何东西。<code>agent(…)</code> 才启动东西，
-拿回来的是一个 job_id。清单说的是打算做什么，<code>list_jobs</code> 说的是什么正在跑。</p>
-<p>一个 agent 的对话就是一条<strong>分支</strong>：session 内的 <code>(session_id, head_id)</code> 对。
-同 session 两个 head 是一次会话的两条分支，两个 session 是两次会话。agent 的
-地址永远是分支：<code>&quot;SID:HEAD&quot;</code>，或者分支名。</p>
-<h3 id="只有派活方能操作任务">只有派活方能操作任务<a class="header-anchor" href="#只有派活方能操作任务">#</a></h3>
-<p>派出去的任务上有三件事，三件都只有派活方能做：</p>
-<table>
-<thead>
-<tr>
-<th>能做什么</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>结果必回</td>
-<td>任务结束时回复自动落进派活方的对话，不管派活方是在等还是已经去做别的</td>
-</tr>
-<tr>
-<td>可取消</td>
-<td><code>job_stop</code> 取消任务；还在排队的直接撤回，一轮都不跑</td>
-</tr>
-<tr>
-<td>级联取消</td>
-<td>停掉一个任务，它派出去的所有任务跟着停，一路到底</td>
-</tr>
-</tbody>
-</table>
-<p><code>read_conversation</code> 能读到任何 job_id，所以归属要查而不是默认：
-<code>job_output</code> 和 <code>job_stop</code> 拒绝别的 session 派出的任务（§5.10）。没有 session
-上下文的调用（用户、UI）不受这条限制。</p>
-<p><code>send_message</code> 这三件事都不带，所以任何 agent 都能发。它只投递一条消息，收件方
-回不回都行，不产生 job_id、不能取消、不会级联。发消息不会打断已经在跑的任务。</p>
-<h3 id="agent-的两种模式"><code>agent</code> 的两种模式<a class="header-anchor" href="#agent-的两种模式">#</a></h3>
+<p>后台 Agent 调用返回 <code>execution_id</code>。当前 runner 中 <code>execution_id == Job.id</code>，<code>job_output(job_id=...)</code> 参数及其 <code>details.job_id</code> 字段仍保留这个名称，这是同一身份，不是两份独立任务。公开工具名是 <code>list_jobs</code> 和 <code>job_output</code>，不是 <code>list_tasks</code> 或 <code>task_output</code>。当前目录不注册 <code>job_stop</code>、<code>task_stop</code> 工具。UI/API 取消使用现有 <code>execution.command</code>，包含 <code>action=&quot;execution.cancel&quot;</code>、<code>command_id</code>、<code>execution_id</code>、<code>expected_version</code> 与空 <code>payload</code>，仍须通过认证和动作授权，见<a href="/docs/reference/design/runtime/execution/control.zh.html">执行控制</a>。</p>
+<p>分支地址是 <code>&quot;SID:HEAD&quot;</code> 或无歧义分支名；保存的 <code>agent_id</code> 选择配置，不是分支地址。“任务”可以作为工作内容的自然语言称呼，公开标识符和工具名以以上实际 schema 为准。</p>
+<h3 id="agent-模式与一步-fork"><code>agent</code> 模式与一步 fork<a class="header-anchor" href="#agent-模式与一步-fork">#</a></h3>
 <table>
 <thead>
 <tr>
 <th>调用</th>
-<th>发生什么</th>
+<th>行为</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>agent(prompt=…)</code></td>
-<td>新建一个 agent 并跑它。阻塞等回复；<code>run_in_background=true</code> 则返回 job_id</td>
+<td><code>agent(prompt=...)</code></td>
+<td>创建新分支并执行；默认前台返回结果，要求后台时返回执行 ID</td>
 </tr>
 <tr>
-<td><code>agent(prompt=…, to=&quot;reviewer&quot;)</code></td>
-<td>不创建任何东西。prompt 作为受管任务派给已存在的 <code>reviewer</code>，作为它的下一轮跑，排在它手上这一轮后面，一次一轮。永远返回 job_id</td>
+<td><code>agent(prompt=..., start_from=&quot;SID:MSG&quot;, description=&quot;review&quot;)</code></td>
+<td>从精确历史节点 fork，设置标签，并立即执行 prompt</td>
+</tr>
+<tr>
+<td><code>agent(prompt=..., to=&quot;review&quot;)</code></td>
+<td>向已有分支提交下一次执行，不创建分支或保存配置</td>
 </tr>
 </tbody>
 </table>
-<p>两种都产生 task，只有第一种产生 agent。<code>to</code> 与 <code>start_from</code> 互斥：目标自带
-历史，没有 fork 点可选。</p>
-<p>一次完整的委派就是这四个词：</p>
-<pre><code>todo_create(&quot;跑一遍 parser 基准&quot;)              → 板上 todo #1
-todo_update(&quot;1&quot;, status=&quot;in_progress&quot;)
-agent(&quot;跑一遍 parser 基准&quot;, &quot;bench&quot;,
-      run_in_background=true)                  → job_id=t_7f2
-list_jobs()                                   → t_7f2 running（bench）
-send_message(&quot;进展如何？&quot;, to=&quot;bench&quot;)          → agent 回话，不产生任务
-job_output(&quot;t_7f2&quot;)                           → 结果到了就拿到
-todo_update(&quot;1&quot;, status=&quot;completed&quot;)
-archive_agent(to=&quot;bench&quot;)                      → 从 agent 列表归档
+<p>提供 <code>to</code> 时，禁止 <code>start_from=&quot;inherit&quot;</code> 或 <code>start_from=&quot;SID:MSG&quot;</code>。API 默认的 <code>&quot;clean&quot;</code> 在此模式仅是占位值，不清空目标历史。<code>description</code> 为新分支命名，<code>to</code> 始终指认已有分支。创建并执行只需一次调用：</p>
+<pre><code class="language-python"><span class="n">agent</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s2">"审查这个节点的结果"</span><span class="p">,</span>
+      <span class="n">start_from</span><span class="o">=</span><span class="s2">"SID:MSG"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"review"</span><span class="p">,</span>
+      <span class="n">run_in_background</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre>
-<h3 id="与-claude-code-同名的部分">与 Claude Code 同名的部分<a class="header-anchor" href="#与-claude-code-同名的部分">#</a></h3>
-<p><code>agent</code>、<code>list_agents</code>、<code>send_message</code>、<code>job_output</code>、<code>job_stop</code> 与
-Claude Code 同名同义，这是刻意的：认识那批名字的模型就已经认识这批工具。</p>
-<p>有一个名字刻意不同。Claude Code 的 <code>TaskList</code> 是 todo 规划清单，不是正在运行的
-任务清单。这里的规划清单改用 <code>todo_*</code> 前缀，撞不上，<code>list_jobs</code> 也就保住了字面
-意思：正在跑的任务。</p>
-<p>三个工具在 Claude Code 里没有对应：<code>list_jobs</code>（那边没有让模型查询后台任务的
-工具）、<code>archive_agent</code>（把 agent 从 agent 列表里归档，§2.6）、<code>read_conversation</code>
-（把别的 agent 的历史读成可读文本，而不是直接读原始会话文件）。</p>
-<hr />
-<h2 id="2-原语的工具形态">2. 原语的工具形态<a class="header-anchor" href="#2-原语的工具形态">#</a></h2>
-<p>把原语包成 agent 能调的工具。分工对齐 Claude Code：<strong><code>agent</code> 新建 agent、
-<code>send_message</code> 发消息、<code>list_agents</code> 列出 agent</strong>。</p>
+<p><code>job_output</code> 检查当前 session/job 关系（§5.10）；取消使用 canonical execution 授权，不能仅凭工具别名或知道 ID 就获得控制权。<code>send_message</code> 不表达 <code>agent(to=...)</code> 的明确工作委派，但它触发的执行同样遵守准入、取消与资源计量。</p>
+<h3 id="参考实现与命名">参考实现与命名<a class="header-anchor" href="#参考实现与命名">#</a></h3>
+<p>其他框架的对照保留在 <a href="/docs/reference/design/runtime/agent-collab-comparison.zh.html">Agent 协作对比</a>。这些资料用于说明设计参考，不保证其他产品具有相同工具名或语义。本仓库注册工具及 canonical execution 接口决定本文使用的公开名称。</p>
+<h2 id="2-工具与分支寻址">2. 工具与分支寻址<a class="header-anchor" href="#2-工具与分支寻址">#</a></h2>
+<p>以下接口复用现有分支、Job 与执行控制，完成回送等目标行为须按 §7 验收。</p>
 <h3 id="21-工具">2.1 工具<a class="header-anchor" href="#21-工具">#</a></h3>
-<p><strong><code>agent</code> — 派生新 agent（唯一会创建分支的工具）：</strong></p>
-<pre><code>agent(
-    prompt: str,                        # 给被派生 agent 的指令
-    description: str = &quot;&quot;,              # 简短 label，成为分支名
-    agent_id: str = &quot;&quot;,                 # agent 档案；默认用本会话的
-    start_from: str = &quot;clean&quot;,          # &quot;clean&quot; / &quot;inherit&quot; / &quot;SID:MSG_ID&quot;
-    run_in_background: bool = false,    # false=阻塞等回复；true=返回 job_id
-    to: str = &quot;&quot;,                       # 改为给已有 agent 派活
-    archive_when_done: bool = false,    # 派生的 agent 终态即归档（§2.6）
-) -&gt; str
-</code></pre>
-<p><code>start_from</code> 决定新分支从哪起：<code>&quot;clean&quot;</code>（默认）新根、只见 prompt；
-<code>&quot;inherit&quot;</code> 从当前轮 fork、带全链；<code>&quot;SID:MSG_ID&quot;</code> 从那个节点（任意
-session）fork、继承到该节点为止的链。<code>run_in_background=true</code> 返回 <code>job_id</code>，配套
-<code>job_output(job_id)</code>（阻塞取结果）和 <code>job_stop(job_id)</code>（取消）管理
-异步形态。</p>
-<p><code>&quot;SID:MSG_ID&quot;</code> 是精确 fork 地址。在接收任务前必须同时确认 session 和
-message 存在；这个 message 不会被改为分支当前 tip。已归档分支仍可作为
-fork 来源，因为该操作只读历史并创建新分支，不是向已归档分支投递任务。</p>
-<p>地址指向另一个 session 时，必须分开两种 session 角色。session S 的节点 A
-从 <code>&quot;T:M&quot;</code> 启动时，新分支和 canonical Job 在目标 session T 执行，M 是精确
-predecessor。Job 记录 <code>parent_session_id=T</code>、<code>parent_msg_id=M</code>、
-<code>caller_session_id=S</code>、<code>caller_msg_id=A</code>。attach 卡片存在源 session S 的 A
-旁边，但卡片中的 <code>attach.session_id</code> 是 T，终态 <code>head_id</code> 是目标分支的
-tip。创建或终态化卡片不移动 S 的 HEAD；派生轮使用 <code>advance_head=false</code>，
-也不替换 T 当前选中的 HEAD。异步完成后，第 2.5 节的普通回送 turn 可以再
-推进 S 的 HEAD。</p>
-<p><strong><code>to=</code> — 给已有 agent 派受管任务。</strong> 传了 <code>to</code> 就不新建分支：prompt 作为
-一件正式任务派给指认的已有分支。寻址与 send_message 完全一致
-（<code>&quot;SID:HEAD&quot;</code> 归位到分支当前末端；分支名先精确匹配、再唯一前缀；歧义列出
-候选）。派活与发消息的区别在任务追踪：</p>
-<ul>
-<li>创建 <strong>Task 记录</strong>（runner 侧的任务条目）：派活方立即拿到 <code>job_id</code>，
-<code>job_output</code> 可等，<code>job_stop</code> 可撤回或取消，<code>list_jobs</code> 可见。</li>
-<li>投递复用消息机制：目标空闲，任务作为它分支上的下一轮立刻跑；目标忙，任务
-排进它的收件箱（§5.4）。Task 记录以 <code>pending</code> 预建，排队期间 id 就存在，
-drain 时跑的是同一个 task。投出的这一轮带任务来源头
-（<code>[task from SID:HEAD] This is a tracked task …</code>），目标知道这轮的回复
-就是任务结果，会自动回给派活方。</li>
-<li>终态后结果回流：往派活方会话投一条followup通知，回复正文内联在通知里。
-派活不创建分支，所以没有attach指针：attach记录的是&quot;这次调用创造了它指向的
-那条分支&quot;，派给一个已经存在的agent不成立。</li>
-<li><code>to</code> 与 <code>start_from</code> 互斥（目标分支自带历史，再选 fork 点自相矛盾，直接
-报错）。<code>to</code> 必然异步，<code>run_in_background</code> 被忽略。派给自己当前分支被
-拒绝（直接继续做）。派活花的是消息预算，不是派生预算（§5.1），因为它不创建
-agent。</li>
-</ul>
-<p><strong><code>send_message</code> — 和已存在的 agent 通信：</strong></p>
-<pre><code>send_message(
-    message: str,                       # 投给目标的内容/指令
-    to: str,                            # 见下方 to 取值
-    agent_id: str = &quot;main&quot;,             # 目标用哪个 agent
-) -&gt; str
-</code></pre>
-<p><strong><code>to</code> 取值，每个取值都指认一条已存在的分支：</strong></p>
+<p>现有 <code>agent</code> 接受 <code>prompt</code>、可选 <code>description</code>、<code>agent_id</code>、<code>start_from=&quot;clean&quot;</code>、<code>run_in_background=False</code>、<code>to=&quot;&quot;</code> 和 <code>archive_when_done=False</code>。<code>agent_id</code> 选择保存配置，解析契约由配置文档定义。前台创建调用 <code>run_agent_turn</code>，通过 <code>spawn_job(wait=True)</code> 持久化 Job 并等待结果。后台创建和已有分支派发同样准入 Job。前台工具返回最终文本，不返回后台形式的即时 execution-ID 回执；返回形式不改变资源准入。</p>
+<p><code>start_from</code> 分别选择新根（clean）、调用方历史（inherit）或精确 predecessor <code>SID:MSG</code>。执行前应检查存在性及历史读取授权；§7 区分已实现的存在性检查与目标共享可见性策略。已归档历史可以作为 fork 来源，因为 fork 创建新分支，不向已归档分支投递。</p>
+<p>session S 的节点 A 使用 <code>start_from=&quot;T:M&quot;</code> 时，新分支在 T 执行。后台 Job 记录 <code>parent_session_id=T</code>、<code>parent_msg_id=M</code>、<code>caller_session_id=S</code>、<code>caller_msg_id=A</code>。attach 引用本身存储在 S 的 A 旁，其载荷 <code>attach.session_id=T</code> 和终态 <code>attach.head_id</code> 指认目标结果。</p>
 <table>
 <thead>
 <tr>
-<th>to</th>
-<th>含义</th>
+<th>渲染或读取操作</th>
+<th>使用的身份</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>&quot;sid:head&quot;</code></td>
-<td>往一条已存在分支投 message。节点指认的是分支，不是 fork 点：投递永远落在该分支的当前末端，旧 head（分支后来又跑过 turn）仍是有效地址，不会从历史节点岔出新分支。节点若是多条分支的公共祖先则报歧义，错误里列出候选（名字 + <code>sid:当前末端</code>）。归位只作用于活分支：被合并吸收的那条分支，它的 head 解析到自己（§2.6）。要从指定节点 fork 用 <code>agent(start_from=&quot;sid:msg_id&quot;)</code>。</td>
+<td>定位引用卡片及发起节点</td>
+<td>存储消息或 WS 外层的源 <code>session_id</code>，以及 pointer ID/caller 元数据</td>
 </tr>
 <tr>
-<td><code>&quot;&lt;分支名&gt;&quot;</code></td>
-<td>按名投递。不是 <code>SID:HEAD</code> 语法时按名字解析：精确匹配优先，唯一前缀次之；多个命中返回错误并列出候选（名字 + <code>sid:head</code>），零命中提示用 <code>list_agents</code>。<code>list_agents</code> 输出里标出每条分支的名字，模型可以直接按名寻址。</td>
+<td>读取所引用结果</td>
+<td><code>extra.attach.session_id</code> 与 <code>extra.attach.head_id</code>，不能在源 DAG 中查目标节点</td>
+</tr>
+<tr>
+<td>绘制同 session 分支关系</td>
+<td>仅源与目标 session 相同时使用本地 DAG 连线</td>
+</tr>
+<tr>
+<td>展示跨 session 引用</td>
+<td>使用 external attach card，保留目标 session/head 引用及源卡片位置</td>
 </tr>
 </tbody>
 </table>
-<p>已删除的 spawn 寻址（<code>to=&quot;new&quot;</code> / <code>&quot;new:sid:msg_id&quot;</code>）直接报错，并指向
-<code>agent</code> 工具。</p>
-<p>每次投递（直投或 §5.4 的排队消费）都会加一个发件人回执头：
-<code>[message from SID:HEAD] To reply, use send_message(to=&quot;SID:HEAD&quot;). Replying is optional …</code>。收件方由此知道谁发的、怎么回、以及不回也是正当的。agent
-工具的派生投的是裸 prompt：被派生的 agent 没有需要回信的发送方。</p>
-<p>一种用法：</p>
-<ul>
-<li><strong>发消息给已有分支/session</strong>：<code>to=&quot;sid:head&quot;</code> → 往那条分支投 message，触发它
-跑一轮，答完自动回送。跨 session 同一路径（to 是任意 session）。</li>
-</ul>
-<p>两个工具驱动同一个原语：派生就是同一条投递→触发→回送流程，只是目标分支
-是当场新建的。</p>
-<p><strong>一条流程，谁发起都一样：</strong></p>
-<ol>
-<li>定目标分支：<code>agent</code> 当场新建（<code>start_from</code> 定起点）；<code>send_message</code> 把
-<code>to</code> 解析到已存在分支的当前末端。</li>
-<li>发件人回执头加上消息，一起投过去。</li>
-<li>目标跑一轮，模型读到投来的全部内容。</li>
-<li>回复自己回来。发送瞬间就返回了，发起方全程不阻塞；目标答完，答案追加到
-发起方的对话里，发起方跑一轮读到它。</li>
-</ol>
+<p>UI 已区分本地 attach 关系和跨 session 卡片。当前完整 AttachCard 打开 T 但未明确选中 H，execution strip 能选择 (T,H)；目标要求一致的精确 head 跳转，此差异列在 §7。创建或终态化 attach 都不移动 S、T 的选中 HEAD，之后获授权的 follow-up 是独立轮次。源身份属于存储消息/事件外层，不在目标载荷再维护一份可独立修改的字段。投影时验证两端身份，不一致时报错，不能任选其一。见 <a href="/docs/reference/design/runtime/dag/rendering.zh.html">DAG attach 渲染</a>。</p>
+<p><code>agent(to=...)</code> 为已有分支准入一个 Job，目标忙则排队。地址解析到当前 tip，名字歧义时返回候选。它不创建新 attach。<code>to</code> 与 <code>archive_when_done=True</code> 不能同时使用，只有创建分支的调用才能声明完成归档策略。</p>
+<p><code>send_message(message, to, agent_id=&quot;main&quot;)</code> 复用已有目标解析。直接异步投递会创建 Job，返回的 <code>delivery_id</code> 指认该执行；目标忙时先创建收件箱条目，此时投递回执与稍后执行 ID 分开。它不创建新分支。旧 <code>to=&quot;new&quot;</code> 形式无效，创建使用 <code>agent(start_from=..., prompt=...)</code>。投递与准入限制见 §5.1–5.2。</p>
+<p>显式消息包含发件地址和可选额外 <code>send_message</code> 回复说明。目标自动完成回送与是否额外发消息分别定义，当前接入状态见 §7。目标不存在时不能静默新建。</p>
 <h3 id="22-引用别的分支">2.2 引用别的分支<a class="header-anchor" href="#22-引用别的分支">#</a></h3>
 <p>message 就是纯文本，跟用户消息一样。要让目标参考别的分支，发送方直接写进
 <code>message</code>：结论已经通过回送回到发送方手里，直接引用；或者点名分支
 （<code>SID:HEAD</code> 或分支名），目标自己用 <code>read_conversation</code> 去读。读多少由目标
-模型自己决定，context 天然有界，不需要专门的聚合参数。</p>
-<h3 id="23-list_agents-看见对方通信的前提">2.3 <code>list_agents</code> — 看见对方（通信的前提）<a class="header-anchor" href="#23-list_agents-看见对方通信的前提">#</a></h3>
+模型自己决定，但仍遵守 §5.6 的输出限制和 §5.9 的读取授权；不增加专门的聚合参数。</p>
+<h3 id="23-list_agents-发现可寻址分支">2.3 <code>list_agents</code> — 发现可寻址分支<a class="header-anchor" href="#23-list_agents-发现可寻址分支">#</a></h3>
 <pre><code>list_agents(scope=&quot;session&quot;, limit=20, agent_id?, source?) -&gt; str   # db.list_sessions + db.list_branches
 </code></pre>
-<p><code>scope</code> 决定看哪一片：<code>&quot;session&quot;</code>（默认）列当前 session 的分支，也就是在这里
+<p><code>scope</code> 决定查询范围：<code>&quot;session&quot;</code>（默认）列当前 session 的分支，也就是在这里
 派生出来的 agent；<code>&quot;all&quot;</code> 放宽到所有 session，最近活跃优先，不带预览；
 <code>&quot;archived&quot;</code> 列当前 session 已归档的分支（§2.6），前两种视图会把它们藏起来。</p>
 <p>agent 的对话就存在 session DAG 的分支里，所以&quot;能跟谁说话&quot;=&quot;有哪些
@@ -619,19 +513,20 @@ Stage 1 的临时名。规则见 <a href="/docs/reference/design/runtime/operati
 了命名的分级、锁、触发点；本节只强调：<strong>agent 工具派生的分支和用户手动
 fork 的分支，走同一套命名（都要 Stage 1 占位名 + Stage 2 自动改名），不能漏。</strong></li>
 </ul>
-<h3 id="25-回送节点落在哪发起方当前尾部串行成链">2.5 回送节点落在哪：发起方当前尾部，串行成链<a class="header-anchor" href="#25-回送节点落在哪发起方当前尾部串行成链">#</a></h3>
+<h3 id="25-回送位置发起方当前-head串行处理">2.5 回送位置：发起方当前 HEAD，串行处理<a class="header-anchor" href="#25-回送位置发起方当前-head串行处理">#</a></h3>
+<p>本节描述目标完成语义及已有 helper 行为，不代表标准完成路径已接入，见 §7。</p>
 <p>异步回送时，<code>_dispatch_followup</code> 把目标分支的回复作为一个
-<strong>synthetic user-role turn</strong> 喂回投递 session。**关键规则：回送的 <code>TurnRequest</code>
+<strong>synthetic user-role turn</strong> 提交到投递 session。**关键规则：回送的 <code>TurnRequest</code>
 不设 <code>branch_from</code>（INHERIT_PARENT），dispatcher 解析为投递 session 当前的
-HEAD 并推进它。**每个投递 session 有一把回送串行锁
-（<code>JobRunner._followup_lock</code>），并发完成被串行化：N 个子任务跑完形成一条串行链
+HEAD 并推进它。**每个投递 session 使用独立的回送串行锁
+（<code>JobRunner._followup_lock</code>），并发完成被串行化：N 个子任务完成形成一条串行链
 <code>… → notice₁ → answer₁ → notice₂ → answer₂</code>，每条回送读到的 HEAD 已包含上一条的回答。</p>
-<p>为什么不把回送钉在发起节点（<code>caller_msg_id</code>）上：同一轮 fork 出 N 个并行子任务时，
-每条回送都会作为同一节点的 sibling 落下，触发派生的那一条用户消息会在 N 条并行分支
-上被回答 N 次。锚在 HEAD 让 N 次完成始终走同一条会话主线。</p>
-<p>这样锚定不丢回流出处：派生时写下的 <strong>attach 指针</strong>仍然挂
-<code>predecessor = caller_msg_id</code>，DAG 上照样能看出每条子分支从哪一轮 fork 出去、
-每个结果从哪条分支回流。子分支本身是并列的独立一支，<strong>不并回主线</strong>。</p>
+<p>回送不以发起节点（<code>caller_msg_id</code>）为 predecessor：同一轮 fork 出 N 个并行子任务时，
+否则每条回送都会成为同一节点的 sibling，触发派生的那一条用户消息会在 N 条并行分支
+上被回答 N 次。使用当前 HEAD 让 N 次完成沿同一条会话分支串行处理。</p>
+<p>来源关联仍由派生时写入的 <strong>attach 指针</strong>记录，其
+<code>predecessor = caller_msg_id</code>。DAG 保留每条子分支的发起轮次与每个结果的来源分支。
+子分支保持独立，<strong>不合并到发起方分支</strong>。</p>
 <p>跨会话派生时，指针仍位于发起方 session，但引用目标
 <code>(session_id, head_id)</code>。终态化从目标 session 读目标分支及其 ContextCommit，
 然后更新发起方 session 里的卡片。源侧发起节点标记 <code>spawn_out</code>；目标侧第一个
@@ -640,91 +535,46 @@ HEAD 并推进它。**每个投递 session 有一把回送串行锁
 因为源 session 里有真实 attach 指针，它的异步 followup 通过 attach 展开获取结果，
 不再内联一份重复回复。<code>send_message</code> 与 <code>agent(to=...)</code> 不创建分支和 attach
 指针，因此它们的回复仍内联，也不会得到任何 spawn 标记。</p>
-<h3 id="26-归档把一个-agent-从-agent-列表里移出">2.6 归档：把一个 agent 从 agent 列表里移出<a class="header-anchor" href="#26-归档把一个-agent-从-agent-列表里移出">#</a></h3>
-<p>分支在 session DAG 里永久存在，fork、回放、<code>read_conversation</code> 都依赖这一点，
-所以没有归档标记时 <code>list_agents</code> 会攒下历史上派生过的每一个 agent，模型还会
-继续去找那些任务早就做完的 worker。归档就是这个标记：分支 meta 条目上的
-<code>archived: true</code>，和分支名同一个 <code>branches</code> 条目，用 <code>set_branch_meta</code> 写、
-<code>get_branch_meta</code> 读。和名字共用一个条目是安全的：每个写入方都在索引锁里按字段
-合并，Stage-2 自动命名（branch-naming.md）只写 <code>name</code> 和它自己的计数器，冲不掉
-归档标记；何况已归档的分支根本不进自动命名，活干完的 agent 不需要新名字。</p>
-<p><strong>归档后分支不再接收新的投递，它的历史照常保留。</strong></p>
+<h3 id="26-归档全局分支状态">2.6 归档：全局分支状态<a class="header-anchor" href="#26-归档全局分支状态">#</a></h3>
+<p>归档将 <code>archived: true</code> 写入目标分支元数据，作用于同一本地状态目录，不是“归档者→目标”的可见关系。A 归档 B 后，C 之后调用 <code>list_agents(scope=&quot;session&quot;/&quot;all&quot;)</code> 同样不再列出 B。<code>scope=&quot;archived&quot;</code> 明确查看已归档分支记录。历史仍保留，归档不等于删除数据或回收存储空间。</p>
+<p>“单向”仅指状态转换：当前工具没有反归档操作，不表示“只对调用方隐藏”。复用归档历史使用 <code>agent(start_from=&quot;SID:MSG&quot;, prompt=...)</code> 创建生命周期独立的新分支。闲置但从未归档的分支仍可出现在列表中；由明确手动操作或完成策略决定归档状态，不按查看者分别过滤。</p>
 <table>
 <thead>
 <tr>
 <th>对已归档分支的操作</th>
-<th>行为</th>
+<th>契约</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>list_agents</code>（<code>scope=&quot;session&quot;</code> / <code>&quot;all&quot;</code>）</td>
-<td>不列</td>
+<td>普通 <code>list_agents</code> 视图</td>
+<td>同一存储内对所有调用方隐藏</td>
 </tr>
 <tr>
-<td><code>list_agents(scope=&quot;archived&quot;)</code></td>
-<td>列出每一条已归档分支，包括已被合并吸收的</td>
+<td><code>scope=&quot;archived&quot;</code></td>
+<td>在归档视图显示，也包括已被合并的归档分支记录</td>
 </tr>
 <tr>
-<td><code>send_message(to=…)</code></td>
-<td>报错：<code>agent SID:HEAD is archived</code></td>
+<td>新 <code>send_message</code> / <code>agent(to=...)</code></td>
+<td>由共享已有目标解析器拒绝</td>
 </tr>
 <tr>
-<td><code>agent(to=…)</code></td>
-<td>同样报错，同一句话</td>
+<td>已在执行的 Job</td>
+<td>继续运行，归档不执行取消</td>
 </tr>
 <tr>
-<td><code>read_conversation</code></td>
-<td>照读</td>
-</tr>
-<tr>
-<td><code>agent(start_from=&quot;SID:MSG_ID&quot;)</code></td>
-<td>照 fork</td>
+<td><code>read_conversation</code> / 历史 fork</td>
+<td>仍须满足历史可见范围；归档本身不授予读取权限</td>
 </tr>
 </tbody>
 </table>
-<p>拒收只写在一处：两条投递路径共用的寻址 <code>resolve_existing_target</code>（§2.1）在把
-地址归位到分支当前末端之后立刻查这个标记，于是每条投递都自带这道守卫，谁也
-绕不过去。<code>archive_agent</code> 用同一个寻址加 <code>allow_archived=True</code> 来指认已归档
-分支。</p>
-<p>**归档和合并正交。**合并把一条分支吸收进另一条，被吸收的head从<code>list_branches</code>
-里消失，因为它的内容已经能从吸收它的那条分支读到。这讲的是内容存在哪里，而且它
-自动发生：后台派生一旦成功完成，task runner就吸收掉它的分支。归档讲的是分支上
-那个agent已经收工，永远是一次显式动作。两者互不蕴含，于是分开存、分开读
-（<code>merged_heads</code>在session meta上，<code>archived</code>在分支条目上）：</p>
+<p>合并与归档分别存储：已合并分支可以不在活跃 tip 列表中，但不一定带归档标记。归档视图读取分支记录；归档 merged head 时必须指向它自己的分支，而非吸收它的分支。</p>
+<p>两个入口最终设置同一个归档状态：</p>
 <ul>
-<li><code>list_agents(scope=&quot;archived&quot;)</code>读的是分支条目上的归档标记
-（<code>store.list_archived_branches</code>），不是从活分支末端列表里筛，所以每一条已归档
-分支都会列出，不管有没有被合并吸收。<code>archive_when_done</code>在成功派生上看得见效果，
-靠的就是这一点：成功恰好就是合并先发生的那种情况。</li>
-<li>默认scope和<code>scope=&quot;all&quot;</code>列的是活分支末端，所以被合并的分支不进这两个视图，
-归不归档都一样。这是合并本来的行为，归档不改它。</li>
-<li>被合并分支的head仍然指认它自己那条分支。<code>resolve_existing_target</code>只把地址归位
-到活分支的当前末端；已退休分支的head不归位到别处，解析到它自己
-（<code>store.merged_heads</code>）。没有这条规则，<code>archive_agent(to=&quot;SID:MERGED_HEAD&quot;)</code>
-会解析到吸收了这个节点的那条活分支，归档错的那一条，还报成功。</li>
+<li><code>archive_agent(to, reason=&quot;&quot;)</code> 归档已有分支，重复手动调用幂等。当前实现允许具备该工具能力的本地 session 归档其他分支，没有 creator-only 检查；这是共享本地信任范围，不构成多用户隔离。目标生命周期操作应复用与其他分支操作一致的作用域授权。</li>
+<li><code>agent(archive_when_done=True)</code> 仅为该次调用新建的分支声明终态归档策略，与 <code>to</code> 同传报错。同步路径已经写标记；异步 helper 存在，但标准完成路径的接入必须通过 §7 验收后才可声称已实现。</li>
 </ul>
-<p>两种归档方式：</p>
-<ul>
-<li><strong><code>agent(archive_when_done=true)</code></strong>：派生时就声明这个 agent 是一次性 worker。
-分支在任务终态（<code>completed</code> / <code>errored</code> / <code>cancelled</code>）被打上标记，时点在
-结果回流之后；同步派生形态则在结果拿到手后打标。这次写入是 best-effort：
-meta 写失败只记日志，结果照常返回。只对派生生效，和 <code>to=</code> 同时传会报错，
-因为派活指向的是本次调用没有创建的 agent。</li>
-<li><strong><code>archive_agent(to, reason=&quot;&quot;)</code></strong>：事后归档。<code>to</code> 收 <code>send_message</code> 那套
-地址（<code>&quot;SID:HEAD&quot;</code> 或分支名）。对已归档分支再归档是一句幂等提示，不是错误。</li>
-</ul>
-<p><strong>任何 session 都能归档任何 agent。</strong> 归档不像 <code>job_stop</code>（§5.10）那样设门，
-因为它做的事和 <code>job_stop</code> 不是一回事：它不中断任何在跑的工作，也不删任何数据。
-分支上已经在跑的任务照跑到完，<code>read_conversation</code> 照读，
-<code>agent(start_from=&quot;SID:MSG_ID&quot;)</code> 照 fork。变的只有两件事：这个分支从 <code>list_agents</code>
-里消失，并且不再接收 <code>send_message</code> 和 <code>agent(to=)</code>。谁都看得出一个 agent 的活
-干完了，那谁都可以说出来。</p>
-<p><strong>归档是单向的，没有反归档。</strong> 这个标记的含义是&quot;这段对话结束了&quot;，而结束的对话若
-还有值得复用的记忆，做法是用 <code>agent(start_from=&quot;SID:MSG_ID&quot;)</code> fork 出一条新分支，
-它有自己的名字和自己的生命周期，复用记忆本来就需要这样一条新分支。反归档工具只会
-是同一件事的第二种写法。</p>
-<hr />
+<p>手动归档先发生时，不取消正在执行的 Job，终态处理也不能重新开放分支。目标共享归档操作保留首次 <code>archived_at</code> 和明确手动原因；自动请求只能补未设置字段，不能覆盖。当前自动/同步写入可能刷新时间戳，因此元数据幂等仍需实现。自动归档保存失败应单独报告，不把已成功的执行结果改成失败。已接受但尚未启动的投递在启动前重查归档状态；拒绝时为 Job/回执记录明确原因，不能静默丢弃。</p>
 <h2 id="3-协作进行时是什么样">3. 协作进行时是什么样<a class="header-anchor" href="#3-协作进行时是什么样">#</a></h2>
 <p>协作跑在框架统一的事件层上，所以过程是实时可见的，不是事后才知道。由此有三
 个效果，用户和 agent 需要知道的就是这三条：</p>
@@ -739,192 +589,116 @@ session 的界面上；回复回来时出现在发送方的界面上。两边都
 </ul>
 <p>事件层本身（总线、事件模型、注册表、否决协议）写在
 <a href="/docs/reference/design/proactive/event-layer.zh.html">proactive/event-layer</a>。</p>
-<hr />
-<h2 id="4-端到端两个-agent-互相看见-通信">4. 端到端：两个 agent 互相看见 + 通信<a class="header-anchor" href="#4-端到端两个-agent-互相看见-通信">#</a></h2>
-<p>A、B 同时在跑（同 session 不同分支，或不同 session）：</p>
+<h2 id="4-端到端目标流程">4. 端到端目标流程<a class="header-anchor" href="#4-端到端目标流程">#</a></h2>
 <ol>
-<li><strong>看见</strong>：A 调 <code>list_agents</code> → 看到 B 的 session 和它的活跃分支
-<code>(B_session, B_head)</code>。</li>
-<li><strong>发</strong>：A 调 <code>send_message(&quot;...&quot;, to=&quot;B_session:B_head&quot;)</code> → 瞬间返回，
-A 继续。</li>
-<li><strong>B 收到</strong>：消息进 B 分支（B 那边一个 △&quot;收到 A 的消息&quot;），B 跑一轮答它（△）。
-两边前端经 ws.frame 实时看到。</li>
-<li><strong>回送 A</strong>：B 答完，<code>_dispatch_followup</code> 自动把回复追加到 A 末尾（△）+ 触发 A
-跑一轮，A 醒来读到、可继续。</li>
-<li><strong>可循环</strong>：A 再 <code>send_message</code> 给 B……两条分支各自不阻塞、不串行。</li>
+<li>从 <code>list_agents</code> 或明确地址解析可见且获授权的已有目标。</li>
+<li>提交 <code>send_message</code> 或 <code>agent(to=...)</code>，分别确认收件箱接收和 Job 准入；准入拒绝返回原因，不声称已启动。</li>
+<li>目标在自身配置的上下文、资源限制与执行授权下运行。忙目标遵守共享串行/排队策略，发送方无需阻塞。</li>
+<li>对已准入的受管执行，先提交终态结果与 attach 状态，再按完成策略向发起方至多提交一次幂等非空 follow-up；失败或空输出不能产生无界回送循环。</li>
+<li>委派额度耗尽后，仍可授权读取 <code>job_output</code>/执行资源；新派发重新检查拓扑、资源、归档与授权限制。</li>
 </ol>
-<p>派生（<code>agent</code> 工具）是同一流程的另一种参数化，不另列。</p>
-<hr />
+<p>自动回送接入是必须通过公开入口验收的项目，直接调用 helper 的测试不能证明该行为已完成。</p>
 <h2 id="5-健壮性与安全">5. 健壮性与安全<a class="header-anchor" href="#5-健壮性与安全">#</a></h2>
 <p>通信会创建分支、触发别的分支跑、跨 session 写，这些副作用必须有边界。</p>
-<h3 id="51-每条链有三个预算">5.1 每条链有三个预算<a class="header-anchor" href="#51-每条链有三个预算">#</a></h3>
-<p>允许递归协作（被派生的agent还能再往下派消息做多层分解），三个预算保证它有限。
-<strong>链</strong>指一次用户轮次产生的全部调用。其中两个预算跟着链走，各有各的计数器；
-第三个数的是一轮之内的兄弟数量。</p>
+<h3 id="51-拓扑限制与精确超限行为">5.1 拓扑限制与精确超限行为<a class="header-anchor" href="#51-拓扑限制与精确超限行为">#</a></h3>
+<p>深度、消息计数和扇出限制协作拓扑，不等于 token 预算、session 累计准入或权限。<a href="/docs/reference/design/runtime/agent-resource-governance.zh.html">资源治理</a> 单独定义 live/queued/累计数量及 token/cost/runtime/idle 限制。</p>
 <table>
 <thead>
 <tr>
-<th>预算</th>
-<th>配置项</th>
-<th>默认</th>
-<th>计数器</th>
-<th>什么动作花它</th>
+<th>限制</th>
+<th>当前设置 / 默认值</th>
+<th>范围与计数</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>派生深度</strong></td>
-<td><code>agent.max_spawn_depth</code></td>
-<td>1</td>
-<td><code>depth._chain_generations</code></td>
-<td>只有创建agent才花：不带<code>to=</code>的<code>agent</code>。新agent往下走一代</td>
+<td>派生深度</td>
+<td><code>agent.max_spawn_depth=1</code></td>
+<td>一条执行关系路径上的代数，仅新建分支增加</td>
 </tr>
 <tr>
-<td><strong>消息数</strong></td>
-<td><code>agent.max_messages</code></td>
-<td>8</td>
-<td><code>depth._chain_messages</code></td>
-<td>每一跳都花：派生、<code>send_message</code> 投递、<code>agent(to=…)</code> 派活、结果回送</td>
+<td>消息</td>
+<td><code>agent.max_messages=8</code></td>
+<td>一条执行关系路径上的消息深度；投递把发送方计数 +1 传给目标，不累加发送方同轮的兄弟调用</td>
 </tr>
 <tr>
-<td><strong>扇出</strong></td>
-<td><code>agent.max_spawn_fanout</code></td>
-<td>8</td>
-<td><code>agent._fanout_used</code>，按（会话，轮次）计</td>
-<td>创建agent，按轮次计而不是按链计</td>
+<td>扇出</td>
+<td><code>agent.max_spawn_fanout=8</code></td>
+<td>调用方 <code>(session, turn)</code> 内新建分支数量，已有分支派发与消息不消耗</td>
 </tr>
 </tbody>
 </table>
-<p><strong>任一项设成 0 就是取消该上限</strong>：既不累积也不拒绝。</p>
-<p><strong>读结果花的是消息，不花代数。<strong>把已完成agent的回复带回来的那一轮是</strong>派发方</strong>
-自己的轮次，所以它跑在派发方的代数上（<code>Task.caller_chain_generations</code>，由
-<code>JobRunner._dispatch_followup</code>重新绑定），消息数则往前走一格。多agent最常见
-的形态因此保持通畅：派一批活出去，看回来的结果，再派下一批。两个预算共用一个
-计数器就会把这条路堵死：协调者的followup轮次继承worker的计数1，那条链里后续
-每次调用<code>agent</code>都会被拒。真正让这种链停下来的是消息计数：每一波都花消息，
-第8条把它停住。</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>agent.max_spawn_depth<span class="w"> </span><span class="m">2</span><span class="w">   </span><span class="c1"># 允许 worker 再开一代</span>
-openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>agent.max_messages<span class="w"> </span><span class="m">0</span><span class="w">      </span><span class="c1"># agent 之间随便聊</span>
-openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>agent.max_spawn_fanout<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="c1"># 一轮铺得更宽</span>
-</code></pre>
-<p><strong>预算耗尽时的表现</strong>：超额的那次调用被拒绝，理由回给模型，其它工具照常可用。
-<strong>消息预算</strong>耗尽后，<code>agent</code>、<code>job_output</code>、<code>job_stop</code>直接从工具清单里消失：
-任何一种派发都要交出一条消息，消息用完这三个工具就什么也做不成，而工具摆在清单里
-模型就会去调用。代数预算不摘工具，因为代数用完还能把活派给已存在的agent。扇出
-预算也不摘：工具清单在轮次开始时冻结，这个数要到轮次里才花掉，所以它只能拒绝。</p>
-<p>默认值（派生深度1、消息8、扇出8）下的典型行为：</p>
-<ul>
-<li>主 agent 派 worker。worker 再想派生会被告知自己动手做。</li>
-<li>同一个 worker 仍然有 <code>agent(to=…)</code> 和 <code>send_message</code>：能把任务交给<strong>已存在</strong>的
-agent，能回复给它发消息的 agent。对它关掉的只是&quot;再开一代&quot;。</li>
-<li>主agent派出一波worker，读回结果，再派下一波。读结果花消息不花代数，所以
-不论派多少波，worker始终只在第一代上。</li>
-<li>A和B来回对话在这条链的第8条消息后停下，不论此刻轮到谁。回送这一跳重新绑定
-已完成task的计数而不是加一，所以一个来回花1，8条够走八个来回。</li>
-<li>一轮里第9次调用<code>agent</code>被拒绝，并被指回它已经有的那8个。下一轮的扇出预算
-重新开始，所以这条上限拦的是失控的那一轮，不是整个会话的配额。</li>
-</ul>
-<p><code>agent.max_spawn_depth: 2</code>时worker可以再开一代，第三代被拒。三项都是<code>0</code>时
-什么都不拒，防失控就只剩并发上限和每轮迭代上限（§5.2）以及用户按停止。</p>
-<p><strong>自发拒绝</strong>不受三个预算影响，永远生效：to指向发起分支自己是直接环，立即拒绝。</p>
-<p>**这几个数是怎么定的。**每个默认值都对着
-<code>agent-collab-comparison.html</code> §05那八个参考实现校准过，理由写在各自常量旁边
-（<code>agent.MAX_SPAWN_DEPTH</code>、<code>agent.MAX_SPAWN_FANOUT</code>、<code>depth.MAX_MESSAGES</code>）。</p>
-<ul>
-<li><strong>派生深度1</strong>是openclaw、codex-cli V1、hermes-agent、opencode共同的选择。
-Claude Code的3不能照搬：它泄露的源码树里根本没有深度计数器，<code>Agent</code>工具在
-每个子agent的工具池里都被摘掉，除非<code>USER_TYPE=ant</code>，所以外部用户在那边的实际
-深度就是1；它的异步工具白名单里也没有<code>Agent</code>，所以后台子agent无论计数器写几
-都不能再派生。深度3只作用于同步嵌套，那条路上父的工具调用会一直阻塞到孩子跑完。
-我们的无人值守路径是<code>run_in_background=True</code>，在那条路上Claude Code用的正是1。</li>
-<li><strong>消息8</strong>锚在openclaw上，八家里只有它数同一样东西：它的agent之间来回循环
-默认5次交替回复，最多20次。8落在两者之间，一个还要为派生和派活买单的计数器
-就该落在这个位置。</li>
-<li><strong>扇出8</strong>补的是此前没人数的那种失控。派生把计数交给孩子、自己那份不动，所以在这
-条预算之前，一轮可以一直调<code>agent</code>，直到50次迭代上限把它停下。八家里只有openclaw
-有真正的扇出上限（每个父最多5个活着的孩子，可配1到20）；hermes的3和pi-mono
-的8校验的是一次调用里那个批量参数的长度，不能照搬，因为<code>agent</code>一次只创建一个孩子。
-8是我们四个worker的两倍宽度，一轮可以把池子填满，后面再排一波。</li>
-</ul>
-<p>**看过但没有采用的两条防护。**openclaw给父发给子的消息加了2秒限速，
-hermes给每个被委派的子任务600秒超时。</p>
-<ul>
-<li>2秒限速守的是openclaw的steer通道：那条路会中止孩子正在跑的那一轮、清空它的
-队列、再重启一遍，所以两次steer挨太近会在中止过程中互相中止。它那条不中断的
-send通道完全没有限速。我们的<code>send_message</code>属于不中断的那种：目标忙就排队
-（§5.4），消息作为它自己的一轮被消费，没有可以打断的东西。</li>
-<li>hermes的600秒是调用方一侧的<code>Future.result(timeout=…)</code>，不是杀。到点它只是
-设一个协作式中断标志然后放弃那个线程，孩子如果卡在阻塞I/O上会继续跑。这两半我们
-都有，而且更强：<code>job_output(timeout=)</code>就是同样的调用方等待（默认30秒，上限
-600秒），<code>job_stop</code>除了协作式取消还会杀掉活动运行时，30秒后强制把实体置终态。
-我们和hermes都没有的是一个没人盯着也会到点触发的死线。要加就是在<code>JobRunner</code>
-提交时挂一个定时的<code>cancel_job</code>，而让它很少用得上的那条边界是下面每轮50次迭代的上限。</li>
-</ul>
-<p><strong>两个计数怎么传下去</strong>。两个计数各存在一个 ContextVar 里
-（<code>send_message…depth._chain_messages</code>、<code>._chain_generations</code>）。一条链要跨三个
-线程边界，每个边界都得显式把它们交接过去，因为 Python 新起的线程里 ContextVar
-全是默认值：</p>
+<p>拓扑设置为 <code>0</code> 表示不执行对应限制检查，传递的上下文计数仍可存在。资源 schema 使用不同语义：<code>null</code> 表示未设置/继承，明确数值必须为正。不能将拓扑的 <code>0=不限</code> 套用到资源字段。</p>
+<p>follow-up helper 原样绑定已完成 Job 的 <code>chain_messages</code>，并恢复 <code>caller_chain_generations</code>，读取结果不额外加一次消息或代数。因此消息上限不是统计所有分支通信的共享累计额度。兄弟调用及累计工作量分别受扇出与 session 准入限制。该 helper 的标准完成路径接入仍须按 §7 验收。</p>
 <table>
 <thead>
 <tr>
-<th>跨越</th>
-<th>计数怎么到达</th>
+<th>达到上限后的操作</th>
+<th>要求的行为</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>dispatcher → 工具体</td>
-<td><code>functions/_runtime.py</code> 里的 <code>copy_context()</code> 把两个都带进执行器线程</td>
+<td>新建分支时消息、深度或扇出已耗尽</td>
+<td>拒绝这次创建并返回原因；被拒绝请求不创建分支或 Job</td>
 </tr>
 <tr>
-<td>发送方 → task worker</td>
-<td>两个都写在 Task 实体上（<code>chain_messages</code> 恒为发送方 + 1；<code>chain_generations</code> 派生时 + 1、派活时不动），由 <code>JobRunner._run_one</code> 重新绑定</td>
+<td>消息耗尽后 <code>agent(to=B)</code> / <code>send_message(to=B)</code></td>
+<td>即使不创建分支也拒绝这次投递；仅深度/扇出耗尽不阻止它们</td>
 </tr>
 <tr>
-<td>task → 回送 followup</td>
-<td><code>JobRunner._dispatch_followup</code> 在自己的线程里绑定这个已完成 task 的 <code>chain_messages</code> 和它的 <code>caller_chain_generations</code></td>
+<td>已存在 Job、调用方当前轮次、非委派本地工具</td>
+<td>不因达到拓扑上限就自动取消</td>
+</tr>
+<tr>
+<td><code>job_output</code>、执行快照、<code>execution.cancel</code></td>
+<td>在各自授权范围内继续可用；查询和停止不消耗委派额度</td>
 </tr>
 </tbody>
 </table>
-<p>回送这一跳正是两个预算分道的地方，两个方向都要紧。消息从孩子那边接着往下走：
-followup轮次正是A读到B回复、写下一条消息的地方，followup若从0开始，A每一轮
-都拿到全新预算，8条上限永远走不到。代数则退回派发方的计数：followup不创建
-任何agent，继承孩子的计数会让一个刚读完worker回复的agent在这条链里再也创建
-不出新agent。</p>
-<p>同一个线程还把 <code>_current_job_id</code> 绑成这个已完成 task 的 <code>parent_job_id</code>，
-于是 A 在读回复时派出的 task 落在级联取消要走的同一条谱系上（§5.3）。</p>
-<p>这些工具读的 session id（<code>run_control._current_session_id</code>）由 <code>TurnBindings</code>
-在一轮的时长内与 turn id 一并绑定，因此进入 <code>process_user_turn</code> 的每条路径上它
-都在，而不只是调用方碰巧先绑过的那几条。绑定只在无人绑定时补上：某个入口若把这个
-id 持有在比一轮更宽的作用域里（webui 执行线程、task runner worker、channel
-adapter），它继续持有，于是一个跑别的 session 的嵌套轮次不会把 cancel hook 或
-<code>runtime.ask</code> 指向一个没注册 turn token 的 session。</p>
-<h3 id="52-并发上限-排队">5.2 并发上限 + 排队<a class="header-anchor" href="#52-并发上限-排队">#</a></h3>
-<ul>
-<li>派生走<code>JobRunner</code>线程池，上限<code>OPENPROGRAM_JOB_WORKERS</code>（默认4）。一次派八
-个：超出上限的<strong>排队</strong>，槽位空出再跑，不会过载。这是个全局池，它限制的是同时在跑
-多少，不是一轮能造出多少工作，后者归扇出预算管（§5.1）。</li>
-<li>聊天轮次，包括派生出来的那些，没有内层工具调用硬上限（Codex 循环到助手文本为止；DeepSeek 的 ReactLoopAgent 没有 maxSteps）。调用方给的<code>max_iterations</code>仍可停掉嵌套的<code>runtime.exec</code>（默认 20）。连续两次相同失败工具会被跳过。用户可以取消这一轮。</li>
-</ul>
-<h3 id="53-取消传播级联">5.3 取消传播（级联）<a class="header-anchor" href="#53-取消传播级联">#</a></h3>
-<ul>
-<li>取消一个 task 时，<strong>它派出的所有子 task 也被取消</strong>。任何在运行中 task 内部
-发起的派生都会在 Task 实体上记下链条（<code>parent_job_id</code>，由 runner 的
-当前 task ContextVar 默认填入）。<code>JobRunner.cancel_job</code> 沿这条链对持久化
-实体做广度优先遍历（visited 集合防环，即使出现畸形环也能终止）：
-pending/queued 的后代直接翻成 cancelled、不再被拾取；running 的后代走与根
-相同的单 task 取消路径：session cancel event + <code>kill_active_runtime</code> +
-30 秒强制取消看门狗。不留僵尸线程/子进程。</li>
-<li><strong>后代先于根被取消</strong>。取消根会让它的 worker 退出，空出来的线程池槽位立刻启动
-下一个排队的 future，那正是级联还没走到的后代，于是它为用户已经叫停的工作跑
-完了一整轮。先走链条，捡起这个后代的 worker 看到的实体已经是 <code>cancelled</code>，
-直接返回，不会调 <code>run_agent_turn</code>。只改顺序：<code>cancel_job</code> 仍然返回根更新后的
-实体，task id 解析不到 session 时仍然返回 <code>None</code>。</li>
-<li>session 级取消（用户对某 session 按 Stop）额外清空该 session 的
-send_message 收件箱（<code>inbox.clear</code>）：排队消息是还没开始的新工作，用户停掉
-一个 session 就是要它的全部工作都停。每条被丢的消息在其发送方 session 落一条
-系统提示，让发送方知道消息未被投递。</li>
-</ul>
+<p>当前 <code>agent</code>/<code>send_message</code> 检查新投递限制。消息耗尽后 <code>job_output</code> 仍可用，并保留原有会话和祖先任务所有权检查。读取结果不增加消息计数、不创建投递。当前没有注册 <code>job_stop</code> 工具；UI/API 取消使用现有 <code>execution.cancel</code> 命令。</p>
+<p>派生在三项中同时消耗消息深度、代数及调用方轮次扇出；已有分支派发只消耗消息深度，但仍须为新执行通过 §5.2 准入。后续独立用户轮次有新的拓扑上下文，已接受 Job 仍计入 session 累计资源数量。向自身当前分支投递另行拒绝。</p>
+<p>默认值的参考对照保留在<a href="/docs/reference/design/runtime/agent-collab-comparison.zh.html">协作对比</a>，当前限制以源码和上述 schema 为准，不依据与其他产品的推定等价关系。</p>
+<h3 id="52-livequeued-与累计执行资源">5.2 live、queued 与累计执行资源<a class="header-anchor" href="#52-livequeued-与累计执行资源">#</a></h3>
+<p>资源检查在 §5.1 之外同时生效，不是对那三个计数器改名。</p>
+<table>
+<thead>
+<tr>
+<th>资源限制</th>
+<th>计量对象</th>
+<th>到达限制时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max_live_per_session</code> 与 <code>OPENPROGRAM_JOB_WORKERS</code></td>
+<td>目标 session 活跃执行 / 全局 worker 容量</td>
+<td>已准入 Job 无执行容量时保持 queued</td>
+</tr>
+<tr>
+<td><code>max_queued_per_session</code></td>
+<td>已接受但等待执行容量的 Job</td>
+<td>队列满拒绝准入，<code>quota.queue_full</code> 通常可重试，不虚构 Job</td>
+</tr>
+<tr>
+<td><code>max_jobs_per_session</code></td>
+<td>目标 session 成功准入 Job 的累计数，包含后来终态的 Job</td>
+<td><code>quota.jobs_exhausted</code> 拒绝；终态完成不归还累计数</td>
+</tr>
+<tr>
+<td>token / cost / runtime / idle</td>
+<td>执行及继承的预算范围</td>
+<td>按资源治理执行预留、取消与计量</td>
+</tr>
+</tbody>
+</table>
+<p>当前 governor 将 session 计数归属到 <code>Job.parent_session_id</code>，也就是实际执行所在 session。S→T 跨 session 调用记在 T；<code>caller_session_id=S</code> 表示调用来源，不会把准入账目静默改到 S。调用方轮次扇出和父预算范围仍是独立约束。因此 <code>max_jobs_per_session</code> 不是深度或扇出预算的别名。</p>
+<p>后台创建、<code>agent(to=...)</code> 和 <code>send_message</code> 触发的实际异步轮次都会进入 Job 准入。目标忙的 <code>agent(to=...)</code> 在等待收件箱前已有准入 Job；普通消息则可能先只有回执，提交轮次时才准入。不能把回执展示成已接受执行，已有排队 Job 启动时也不能重复消耗累计准入数。</p>
+<p>前台新建分支同样通过 <code>run_agent_turn</code> → <code>spawn_job(wait=True)</code> 准入 Job，因此计入 Job 资源限制。普通主聊天及其他直接 runtime 入口需要分别核对，不能仅凭“前台”一词判断是否计量。</p>
+<p>拓扑限制设为零不关闭资源治理或取消。“一次派 30 个全部排队”不是通用保证，扇出、队列或累计限制都可能在进入容量队列前拒绝请求。</p>
+<h3 id="53-取消传播">5.3 取消传播<a class="header-anchor" href="#53-取消传播">#</a></h3>
+<p>复用 canonical execution 取消路径与 <code>parent_job_id</code> 执行关系。取消父执行须阻止尚未启动的后代，向活跃后代发出取消，并在确认实际退出前保持 stopping。撤回排队工作不能发出停止整个 session 的请求而中断其他执行。终态 Job 仍可查询，累计准入数不归还。</p>
+<p>界面区分取消已请求与停止已确认。资源释放、worker 丢失、不可抢占操作及恢复以<a href="/docs/reference/design/runtime/agent-resource-governance.zh.html">资源治理</a>为准；固定 watchdog 超时不能证明线程或子进程已经退出。session 级 Stop 比取消指定执行范围更大，撤回的收件箱投递必须留下明确结果。</p>
 <h3 id="54-发给正在跑的分支竞态">5.4 发给&quot;正在跑&quot;的分支（竞态）<a class="header-anchor" href="#54-发给正在跑的分支竞态">#</a></h3>
 <p>A 给 B 发消息时 B 可能正跑一轮。**不打断、不丢弃，排队。**忙判定是
 <code>run_control.is_turn_running(target)</code>：每个并发 turn 入口（webui chat、task
@@ -939,7 +713,7 @@ runner worker）都在 finally 里成对注册/注销 cancel token，token 在�
 处理&quot;。</li>
 <li><strong>消费</strong>：dispatcher 在 turn 收尾时清空收件箱（<code>_process_turn_once</code> →
 <code>_drain_send_message_inbox</code>，成功和 error 两个 return 点都挂），每条经正常
-路径投出一轮异步 turn（<code>run_agent_turn_async</code> → auto-followup 回流发送方），
+异步执行路径提交轮次；完成通知依照目标契约和 §7 状态处理，
 从目标当前 head 继续。先投递后删除：两步之间崩溃可能重复投递（可接受），
 反过来会丢消息（不可接受）。排队这一跳和直投一样花消息预算（§5.1）。</li>
 <li><strong>上限</strong>：每个目标最多积压50条，满了丢最旧并在被丢消息的发送方session落一条
@@ -953,46 +727,26 @@ runner worker）都在 finally 里成对注册/注销 cancel token，token 在�
 <p>B 空闲则立即投递（原有行为）。</p>
 <h3 id="55-失败回送">5.5 失败回送<a class="header-anchor" href="#55-失败回送">#</a></h3>
 <p>子/目标分支失败（崩溃 / 超时 / 模型报错）：<strong>也回送</strong>，回送内容带 <code>is_error</code> + 原因
-（&quot;B 失败了：&lt;原因&gt;&quot;），发起方模型读到后自行决定重发/换路/放弃。<strong>不内置重试/熔断</strong>：
-父是模型，由它判断比固定策略好。</p>
-<h3 id="56-结果截断">5.6 结果截断<a class="header-anchor" href="#56-结果截断">#</a></h3>
-<p>回送内容超过 <code>max_result_chars</code>（复用 <code>@function</code> 的 30k 默认）就<strong>截断头尾 + 存完整
-文件</strong>，回送里给文件路径。巨量中间结果不撑爆发起方 context、不阻塞主流程。</p>
-<h3 id="57-子分支的身份-最小权限">5.7 子分支的身份 / 最小权限<a class="header-anchor" href="#57-子分支的身份-最小权限">#</a></h3>
-<ul>
-<li><code>agent_id</code> 指定子分支用哪个 agent（不同 agent = 不同 system + 工具集 + 模型）。</li>
-<li>model 支持 <code>inherit</code>（继承发起方模型），也可显式指定更弱的。</li>
-<li><strong>默认子分支权限不高于发起方</strong>（最小权限）；危险工具（删文件等）仍走 §5.8 拦截，
-<code>permission_mode=bypass</code> 关不掉拦截点。</li>
-<li>子分支<strong>只看到投递消息及其后的响应</strong>，不继承发起方完整历史（省 context + 隔离）。</li>
-</ul>
+（&quot;B 失败了：&lt;原因&gt;&quot;），发起方模型读到后自行决定重发/换路/放弃。不据此自动重派任务；新派发仍须满足授权与剩余限制，provider 传输重试沿用自身独立策略。</p>
+<h3 id="56-结果截断与全文存储">5.6 结果截断与全文存储<a class="header-anchor" href="#56-结果截断与全文存储">#</a></h3>
+<p>当前通用字符串/<code>ToolReturn</code> 规范化器默认上限为 30,000 字符，可按上下文容量进一步降低，保留头尾摘要，并可将 UTF-8 全文写入 <code>&lt;state_dir&gt;/tool_results/&lt;sanitized-call-id&gt;.txt</code>。默认 profile 对应 <code>~/.openprogram/tool_results/...</code>，它是状态目录文件，不是系统临时文件。只有写入成功才返回路径，写失败不能虚构路径。</p>
+<p>这还不是所有 Job 结果的统一保证：<code>job_output</code> 返回 <code>AgentToolResult</code>，共享规范化器直接传递而不截断；follow-up helper 也可能内联完整 <code>result_text</code>。从检查的 helper 无法确认自动 TTL/清理策略，也没有目标 session 文件 ACL。</p>
+<p>目标结果契约让 <code>job_output</code> 与内联 follow-up 使用同一受限摘要，完整 canonical 结果仍保存在执行/session 存储。全文 artifact 记录执行 ID、所属 session/project、媒体类型、字节数与内容散列；读取使用与结果相同的可见范围检查。不展示路径不等于限制了通用文件系统访问。artifact 保留期跟随所属执行配置，归档本身不删除它。在资源与保留策略接入之前，只报告现有路径和未确认生命周期，不声称会自动过期或已隔离。测试覆盖结构化结果限长、落盘失败、授权后重读及保留文件清理。</p>
+<h3 id="57-配置上下文与授权">5.7 配置、上下文与授权<a class="header-anchor" href="#57-配置上下文与授权">#</a></h3>
+<p><code>agent_id</code> 选择保存的执行配置，与分支身份分别表达。保存/临时配置覆盖和模型选择由 <a href="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent 配置</a>定义，更换配置不能扩大调用方强制授权。clean 不继承对话消息，inherit 与精确 SID:MSG 只提供经过授权的选中历史；三种方式都不删除系统策略，也不建立文件系统隔离。调用方明确选择历史时，不能再一概声称子分支只看到 prompt。</p>
 <h3 id="58-值守拦截-校验">5.8 值守拦截 + 校验<a class="header-anchor" href="#58-值守拦截-校验">#</a></h3>
 <ul>
 <li>值守策略拒绝副作用时，<code>send_message</code> 在投递前被拦下等确认（§3）。子分支走同
 一个拦截点，<code>permission_mode=bypass</code> 关不掉它。</li>
 <li><code>to</code> 指向不存在的东西就报错，不会静默新建。常规权限门控照常叠加在上面。</li>
 </ul>
-<h3 id="59-分支可见性">5.9 分支可见性<a class="header-anchor" href="#59-分支可见性">#</a></h3>
-<p>分支标记 <strong>内部（子派生）vs 用户可见</strong>：内部分支只能被 <code>send_message</code> 触发，不进
-UI 的会话选择列表（但 DAG 照画、能被 list_agents 列出供 agent 寻址）。</p>
-<h3 id="510-任务归属job_output-job_stop">5.10 任务归属（job_output / job_stop）<a class="header-anchor" href="#510-任务归属job_output-job_stop">#</a></h3>
-<p><code>read_conversation</code> 能读任意分支，任何 agent 都能拿到任意 job_id。
-不设门槛的话，任何 agent 都能等待或取消别人派出的任务。所以 <code>job_output</code> 和
-<code>job_stop</code> 执行前核对归属：当前 session 必须是该 task 的派活方
-（<code>caller_session_id</code>，同 session spawn 则是 <code>parent_session_id</code>），或在
-任务链祖先上（当前 task 经 <code>parent_job_id</code> 是它的祖先，或当前 session
-派发过它的某个祖先，与级联取消走的是同一条链）。都不是则拒绝：
-<code>[job_stop error] task {id} was not dispatched by this session</code>。无
-session 上下文的调用（用户、UI）不受这条限制。</p>
-<p><code>job_stop</code> 对 <code>to=</code> 派出的任务按状态分三种：</p>
-<ul>
-<li><strong>排队中</strong>（目标当时忙，任务在它收件箱里）→ 从收件箱撤回，记录翻
-<code>cancelled</code>。不发 session 级取消：目标正在跑的是别人的轮，撤回不能
-终止它。</li>
-<li><strong>在跑</strong> → 取消目标分支上的那一轮（task 取消事件 + session 取消桥 +
-runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。</li>
-<li><strong>已终态</strong> → 幂等 no-op。</li>
-</ul>
+<h3 id="59-历史可见范围与归档授权">5.9 历史可见范围与归档授权<a class="header-anchor" href="#59-历史可见范围与归档授权">#</a></h3>
+<p>目标共享可见性策略覆盖 <code>read_conversation</code>、<code>start_from</code> 的来源历史、指定上下文、attach 展开及结果 artifact 读取。加载内容前核对调用主体和 project/session 范围。分支地址、保存 <code>agent_id</code> 或拥有工具本身不构成目标访问授权；拒绝目标后不能通过降级读取泄漏预览、标题或存在性。归档需相应生命周期权限，并改变全局保存的分支状态（§2.6）。</p>
+<p>当前 <code>read_conversation</code> 解析 session/head 后读取本地分支，没有目标级 owner/project ACL。工具能力检查因此只是较宽的本地信任范围，不代表逐 Agent 隐私隔离。历史读取和归档工具接入共享授权之前，不能声称不同 Agent 或用户的数据已隔离。“内部”分支标记仅控制 UI 展示，不是授权边界，也不禁止 <code>agent(to=...)</code> 寻址其他条件满足的分支。</p>
+<h3 id="510-结果归属与执行控制">5.10 结果归属与执行控制<a class="header-anchor" href="#510-结果归属与执行控制">#</a></h3>
+<p>当前 <code>job_output</code> 使用 <code>_ownership.check_job_ownership</code>：session 属于 Job 的执行 session（<code>parent_session_id</code>）、caller session 或祖先关系时允许读取。helper 最多检查 64 层祖先并防止循环；没有当前 session 上下文时不返回拒绝，这个 helper 本身不负责用户或 API 身份认证。</p>
+<p>Canonical execution 读/控制有独立的已有授权边界：检查 owner 权限、目标 project/session、动作授权和所需 capability，控制要求 <code>runtime.control</code>。<code>execution.cancel</code> 使用当前执行版本与 command ID，不是 <code>job_stop</code> 别名。知道 execution ID 不获得控制权。§5.9 的历史策略复用这套授权框架，不假定能读本地分支就拥有执行控制权。</p>
+<p>取消规则由<a href="/docs/reference/design/runtime/execution/control.zh.html">执行控制</a>与<a href="/docs/reference/design/runtime/agent-resource-governance.zh.html">资源治理</a>定义。排队取消阻止该执行启动，不停止同目标上无关的轮次；运行取消进入 stopping，确认退出后才释放资源；终态取消幂等。不能保证任意 Python 线程立即消失，也不能把取消请求被接受当成已停止证明。</p>
 <h3 id="511-明确不做及理由">5.11 明确不做（及理由）<a class="header-anchor" href="#511-明确不做及理由">#</a></h3>
 <ul>
 <li><strong>parentID 额外字段</strong>：<code>(session_id, head_id)</code> + caller/predecessor 已构成树，DAG
@@ -1002,78 +756,143 @@ runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。
 <li><strong>内置聚合函数</strong>（投票 / 全部成功等）：综合就是在 <code>message</code> 里点名分支、让目标
 模型自己读完综合（§2.2），模型综合比预设聚合灵活，不做固定聚合算子。</li>
 </ul>
-<hr />
-<h2 id="6-可以核对的行为">6. 可以核对的行为<a class="header-anchor" href="#6-可以核对的行为">#</a></h2>
-<p>下面每一条都能独立看到：在 web 界面里，或者在 session 事件日志里。</p>
+<h2 id="6-公开入口验收">6. 公开入口验收<a class="header-anchor" href="#6-公开入口验收">#</a></h2>
+<p>下列是必须观察到的行为，不表示所有场景已经验证通过。</p>
 <table>
 <thead>
 <tr>
-<th>行为</th>
-<th>表现</th>
+<th>场景</th>
+<th>可观察结果</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>派生（<code>agent</code> 工具）</td>
-<td>agent 调一次，新建分支跑一轮，结果自动回到发起方；派生过程在事件日志里可见</td>
+<td>C1 名称与身份</td>
+<td>注册工具为 <code>list_jobs</code>/<code>job_output</code>；前后台均准入 Job；取消使用带版本的 execution command</td>
 </tr>
 <tr>
-<td>列举</td>
-<td><code>list_agents</code> 列出真实的多 session 及各自的分支</td>
+<td>C2 fork 并执行</td>
+<td>一次 <code>agent(start_from=&quot;T:M&quot;, prompt=..., description=...)</code> 在 M 创建分支并执行 prompt；to 不创建缺失目标</td>
 </tr>
 <tr>
-<td>归档（§2.6）</td>
-<td>已归档 agent 从 <code>list_agents</code> 消失、在 <code>scope=&quot;archived&quot;</code> 里出现；<code>send_message</code> 与 <code>agent(to=)</code> 拒收，<code>read_conversation</code> 与 <code>agent(start_from=…)</code> 照常；任何 session 都能归档任何 agent，且标记单向；成功完成、已被合并吸收的派生同样出现在 <code>scope=&quot;archived&quot;</code> 里，它的 head 也仍然指认它自己那条分支</td>
+<td>C3 全局归档</td>
+<td>A 归档 B 后，C 普通列表也隐藏 B；归档视图保留记录，新投递拒绝；保留历史不代表获得读取权限</td>
 </tr>
 <tr>
-<td>发给同 session 已有分支</td>
-<td>A 发给同 session 的 B 分支，A 不阻塞，B 跑一轮，回复自动回 A</td>
+<td>C4 完成归档</td>
+<td>手动先发生、终态先发生及重试均保留首次时间戳/手动原因；归档不取消活跃工作；异步公开完成路径实际执行归档策略</td>
 </tr>
 <tr>
-<td>跨 session</td>
-<td>向另一个 session 投递时两边实时更新。<code>send_message</code> / <code>agent(to=...)</code> 仍是纯消息投递。<code>agent(start_from=&quot;T:M&quot;)</code> 在 T 创建分支和 canonical Job，卡片留在发起 session，源与目标 DAG 节点分别标记 <code>spawn_out</code> / <code>spawn_remote</code>，不移动任一选中 HEAD</td>
+<td>C5 拓扑耗尽</td>
+<td>消息耗尽拒绝 agent(to=B)，不取消已接受工作；深度/扇出耗尽仅拒绝新建分支；授权查询和取消保持可用</td>
 </tr>
 <tr>
-<td>健壮性（§5）</td>
-<td>A↔B 互发到消息预算用完自动停，预算为 0 时不停；一次派 30 个是排队不是过载；取消父→子全停；给正忙的 B 发消息先排队、等它这轮结束再投；子失败父会被告知；超大结果截断并给出文件路径</td>
+<td>C6 资源交互</td>
+<td>跨 session 在目标侧计准入；queue-full 与累计满错误不同；排队 Job 不重复计数；同步 Agent 同样受准入约束</td>
 </tr>
 <tr>
-<td>安全（§5.7-5.9）</td>
-<td>deny 策略下投递被拦下等确认；不存在的 to 报错；子分支权限不高于父、不进 UI 选择列表</td>
+<td>C7 attach 位置</td>
+<td>卡片留在 S，结果按 (T,H) 读取；完整 AttachCard 与 execution strip 都选中精确目标 head，不在 S 查 H</td>
 </tr>
 <tr>
-<td>前端</td>
-<td>web 界面里选分支发消息，DAG 出现通信节点，hover 显示回流连线</td>
+<td>C8 历史隐私</td>
+<td>拒绝 read_conversation、历史 fork、指定上下文和 attach 展开时不泄漏目标内容/元数据；获准场景正常工作</td>
+</tr>
+<tr>
+<td>C9 全文结果</td>
+<td>结构化 Job 结果和内联 follow-up 都限长，全文仅经授权重读；写失败不返回假路径；保留策略只清理有权处理的自有 artifact</td>
+</tr>
+<tr>
+<td>C10 完成通知</td>
+<td>从公开异步 Agent/消息入口到 canonical 完成后，预期 follow-up 仅触发一次；空结果、重试、失败、取消不产生无界后续轮次</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-en="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-zh="/docs/reference/design/runtime/nested-llm-node-content.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="LLM 节点内容">LLM node content</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/agent-collab-architecture.html" data-href-en="/docs/reference/design/runtime/agent-collab-architecture.html" data-href-zh="/docs/reference/design/runtime/agent-collab-architecture.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="协作工具">Collaboration tools</span></a></div></article></main>
+<h2 id="7-实现状态与依据">7. 实现状态与依据<a class="header-anchor" href="#7-实现状态与依据">#</a></h2>
+<p>本次文档修订只进行源码检查和文档验证。helper 测试或函数定义不能证明公开入口已接入。以下运行变更仍属于实施计划，资源验证由关联资源设计负责。</p>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>源码现状</th>
+<th>剩余验收</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>命名 / 前台准入</td>
+<td>注册 list_jobs、job_output；同步 run_agent_turn 与异步 wrapper 都调用 Job 准入</td>
+<td>工具、UI、文档 schema 保持一致，不恢复已删除 stop 别名</td>
+</tr>
+<tr>
+<td>fork / 全局归档</td>
+<td>已有一步历史 fork 与全局归档字段</td>
+<td>手动/自动写入保留首次元数据，验证排队投递重查</td>
+</tr>
+<tr>
+<td>异步回送与自动归档</td>
+<td>helper 已定义；检查的 canonical 与借用 claim 完成路径更新 attach/唤醒等待者，但不调用这些 helper</td>
+<td>接入幂等完成行为并走公开入口验收；同步工具本地归档已经调用</td>
+</tr>
+<tr>
+<td>消息耗尽</td>
+<td>新委派受限，job_output 也被相同 gate 隐藏</td>
+<td>耗尽委派额度仍保留授权结果读取/控制</td>
+</tr>
+<tr>
+<td>历史可见范围</td>
+<td>read_conversation 读取本地存储，没有目标级 owner/project ACL</td>
+<td>接入共享可见性并验证所有消费历史入口</td>
+</tr>
+<tr>
+<td>跨 session attach</td>
+<td>数据/UI 已区分源位置与目标查找；完整卡片跳转未明确选择 H</td>
+<td>与 execution strip 对齐精确 head 跳转并验证两种入口</td>
+</tr>
+<tr>
+<td>结果截断</td>
+<td>通用字符串 wrapper 落盘；结构化 Job 输出与内联 follow-up 未统一限长</td>
+<td>接入统一截断、授权 artifact 和明确保留策略</td>
+</tr>
+</tbody>
+</table>
+<p>源码依据：</p>
+<ul>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/agents/agent/agent/agent.py">Agent tool</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/sub_agent_run.py">Synchronous and asynchronous admission</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/agents/send_message/archive_agent/archive_agent.py">Archive</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/agents/send_message/send_message/send_message.py">Message delivery</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/agents/agent/job_output/job_output.py">Job output</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/knowledge/read_conversation.py">History read</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/execution/authorization.py">Execution authorization</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/job/runner/progress.py">Completion helpers</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/job/runner/dispatch.py">Canonical completion</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/job/runner/borrowed.py">Borrowed-claim completion</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/_execution_common.py">Result persistence</a></li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-en="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-zh="/docs/reference/design/runtime/nested-llm-node-content.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="LLM 节点内容">LLM node content</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/agent-collab-architecture.html" data-href-en="/docs/reference/design/runtime/agent-collab-architecture.html" data-href-zh="/docs/reference/design/runtime/agent-collab-architecture.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="协作工具">Collaboration tools</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
-<a class="lvl-2" href="#0-核心只有一个原语">0. 核心：只有一个原语</a>
+<a class="lvl-2" href="#0-共享投递机制分别管理生命周期">0. 共享投递机制，分别管理生命周期</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
-<a class="lvl-2" href="#1-四个域一词一义">1. 四个域，一词一义</a>
+<a class="lvl-2" href="#1-四类对象与操作分工">1. 四类对象与操作分工</a>
 </summary>
 <ul class="toc-list">
 <li>
-<a class="lvl-3" href="#只有派活方能操作任务">只有派活方能操作任务</a>
+<a class="lvl-3" href="#agent-模式与一步-fork">agent 模式与一步 fork</a>
 </li>
 <li>
-<a class="lvl-3" href="#agent-的两种模式">agent 的两种模式</a>
-</li>
-<li>
-<a class="lvl-3" href="#与-claude-code-同名的部分">与 Claude Code 同名的部分</a>
+<a class="lvl-3" href="#参考实现与命名">参考实现与命名</a>
 </li>
 </ul>
 </details>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
-<a class="lvl-2" href="#2-原语的工具形态">2. 原语的工具形态</a>
+<a class="lvl-2" href="#2-工具与分支寻址">2. 工具与分支寻址</a>
 </summary>
 <ul class="toc-list">
 <li>
@@ -1083,16 +902,16 @@ runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。
 <a class="lvl-3" href="#22-引用别的分支">2.2 引用别的分支</a>
 </li>
 <li>
-<a class="lvl-3" href="#23-list_agents-看见对方通信的前提">2.3 list_agents — 看见对方（通信的前提）</a>
+<a class="lvl-3" href="#23-list_agents-发现可寻址分支">2.3 list_agents — 发现可寻址分支</a>
 </li>
 <li>
 <a class="lvl-3" href="#24-新建分支要有名字">2.4 新建分支要有名字</a>
 </li>
 <li>
-<a class="lvl-3" href="#25-回送节点落在哪发起方当前尾部串行成链">2.5 回送节点落在哪：发起方当前尾部，串行成链</a>
+<a class="lvl-3" href="#25-回送位置发起方当前-head串行处理">2.5 回送位置：发起方当前 HEAD，串行处理</a>
 </li>
 <li>
-<a class="lvl-3" href="#26-归档把一个-agent-从-agent-列表里移出">2.6 归档：把一个 agent 从 agent 列表里移出</a>
+<a class="lvl-3" href="#26-归档全局分支状态">2.6 归档：全局分支状态</a>
 </li>
 </ul>
 </details>
@@ -1101,7 +920,7 @@ runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。
 <a class="lvl-2" href="#3-协作进行时是什么样">3. 协作进行时是什么样</a>
 </li>
 <li>
-<a class="lvl-2" href="#4-端到端两个-agent-互相看见-通信">4. 端到端：两个 agent 互相看见 + 通信</a>
+<a class="lvl-2" href="#4-端到端目标流程">4. 端到端目标流程</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
@@ -1109,13 +928,13 @@ runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。
 </summary>
 <ul class="toc-list">
 <li>
-<a class="lvl-3" href="#51-每条链有三个预算">5.1 每条链有三个预算</a>
+<a class="lvl-3" href="#51-拓扑限制与精确超限行为">5.1 拓扑限制与精确超限行为</a>
 </li>
 <li>
-<a class="lvl-3" href="#52-并发上限-排队">5.2 并发上限 + 排队</a>
+<a class="lvl-3" href="#52-livequeued-与累计执行资源">5.2 live、queued 与累计执行资源</a>
 </li>
 <li>
-<a class="lvl-3" href="#53-取消传播级联">5.3 取消传播（级联）</a>
+<a class="lvl-3" href="#53-取消传播">5.3 取消传播</a>
 </li>
 <li>
 <a class="lvl-3" href="#54-发给正在跑的分支竞态">5.4 发给"正在跑"的分支（竞态）</a>
@@ -1124,19 +943,19 @@ runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。
 <a class="lvl-3" href="#55-失败回送">5.5 失败回送</a>
 </li>
 <li>
-<a class="lvl-3" href="#56-结果截断">5.6 结果截断</a>
+<a class="lvl-3" href="#56-结果截断与全文存储">5.6 结果截断与全文存储</a>
 </li>
 <li>
-<a class="lvl-3" href="#57-子分支的身份-最小权限">5.7 子分支的身份 / 最小权限</a>
+<a class="lvl-3" href="#57-配置上下文与授权">5.7 配置、上下文与授权</a>
 </li>
 <li>
 <a class="lvl-3" href="#58-值守拦截-校验">5.8 值守拦截 + 校验</a>
 </li>
 <li>
-<a class="lvl-3" href="#59-分支可见性">5.9 分支可见性</a>
+<a class="lvl-3" href="#59-历史可见范围与归档授权">5.9 历史可见范围与归档授权</a>
 </li>
 <li>
-<a class="lvl-3" href="#510-任务归属job_output-job_stop">5.10 任务归属（job_output / job_stop）</a>
+<a class="lvl-3" href="#510-结果归属与执行控制">5.10 结果归属与执行控制</a>
 </li>
 <li>
 <a class="lvl-3" href="#511-明确不做及理由">5.11 明确不做（及理由）</a>
@@ -1145,7 +964,10 @@ runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。
 </details>
 </li>
 <li>
-<a class="lvl-2" href="#6-可以核对的行为">6. 可以核对的行为</a>
+<a class="lvl-2" href="#6-公开入口验收">6. 公开入口验收</a>
+</li>
+<li>
+<a class="lvl-2" href="#7-实现状态与依据">7. 实现状态与依据</a>
 </li>
 </ul></aside>
 </div>
@@ -1157,6 +979,6 @@ runtime 终止 + 30 秒看门狗），不终止目标 agent 或它的 session。
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

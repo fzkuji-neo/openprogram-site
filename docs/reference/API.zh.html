@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/reference/API.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/reference/API.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>API 参考 · OpenProgram Docs</title>
-<meta name="description" content="Source: openprogram/ 核心组件 # 组件 源文件 说明 agentic_function agentic_programming/function.py 装饰器。把普通函数变成 Agentic Function,每次调用记录为 session DAG 的一个节点 Runtime">
+<meta name="description" content="Source: openprogram/ 核心组件 # 组件 源文件 说明 Agent 、 Context 、 agent 、 agent_async agentic_programming/ 、 context/model.py 直接调用、配置化 Agent 方法与自动执行上下文 Runtime">
 <link rel="canonical" href="https://openprogram.io/docs/reference/API.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/API.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/API.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/API.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/API.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/API.zh.html">
 <meta property="og:title" content="API 参考 · OpenProgram Docs">
-<meta property="og:description" content="Source: openprogram/ 核心组件 # 组件 源文件 说明 agentic_function agentic_programming/function.py 装饰器。把普通函数变成 Agentic Function,每次调用记录为 session DAG 的一个节点 Runtime">
+<meta property="og:description" content="Source: openprogram/ 核心组件 # 组件 源文件 说明 Agent 、 Context 、 agent 、 agent_async agentic_programming/ 、 context/model.py 直接调用、配置化 Agent 方法与自动执行上下文 Runtime">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="API 参考 · OpenProgram Docs">
-<meta name="twitter:description" content="Source: openprogram/ 核心组件 # 组件 源文件 说明 agentic_function agentic_programming/function.py 装饰器。把普通函数变成 Agentic Function,每次调用记录为 session DAG 的一个节点 Runtime">
+<meta name="twitter:description" content="Source: openprogram/ 核心组件 # 组件 源文件 说明 Agent 、 Context 、 agent 、 agent_async agentic_programming/ 、 context/model.py 直接调用、配置化 Agent 方法与自动执行上下文 Runtime">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -72,7 +74,7 @@
 <div class="nav-sec"><div class="nav-sec-title">API</div><a class="navlink active" href="/docs/reference/API.html" data-title-zh="API 参考" data-href-en="/docs/reference/API.html" data-href-zh="/docs/reference/API.zh.html">API reference</a>
 <a class="navlink" href="/docs/reference/api/runtime.html" data-title-zh="运行时 API" data-href-en="/docs/reference/api/runtime.html" data-href-zh="/docs/reference/api/runtime.zh.html">Runtime API</a>
 <a class="navlink" href="/docs/reference/api/providers.html" data-title-zh="模型服务 API" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html">Provider API</a>
-<a class="navlink" href="/docs/reference/api/agentic-function.html" data-title-zh="函数 API" data-href-en="/docs/reference/api/agentic-function.html" data-href-zh="/docs/reference/api/agentic-function.zh.html">Function API</a></div>
+<a class="navlink" href="/docs/reference/api/agent.html" data-title-zh="函数 API" data-href-en="/docs/reference/api/agent.html" data-href-zh="/docs/reference/api/agent.zh.html">Function API</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div><a class="navlink" href="/docs/reference/cli.html" data-title-zh="CLI 参考" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html">CLI reference</a>
 <a class="navlink" href="/docs/reference/config.html" data-title-zh="配置项参考" data-href-en="/docs/reference/config.html" data-href-zh="/docs/reference/config.zh.html">Configuration reference</a>
 <a class="navlink" href="/docs/reference/diagnostics.html" data-title-zh="诊断" data-href-en="/docs/reference/diagnostics.html" data-href-zh="/docs/reference/diagnostics.zh.html">Diagnostics</a>
@@ -101,6 +103,7 @@
 <a class="navlink" href="/docs/reference/cli/logs.html" data-title-zh="日志" data-href-en="/docs/reference/cli/logs.html" data-href-zh="/docs/reference/cli/logs.zh.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html" data-title-zh="MCP 服务器" data-href-en="/docs/reference/cli/mcp.html" data-href-zh="/docs/reference/cli/mcp.zh.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html" data-title-zh="记忆" data-href-en="/docs/reference/cli/memory.html" data-href-zh="/docs/reference/cli/memory.zh.html">memory</a>
+<a class="navlink" href="/docs/reference/cli/permissions.html" data-title-zh="CLI：权限规则" data-href-en="/docs/reference/cli/permissions.html" data-href-zh="/docs/reference/cli/permissions.zh.html">permissions</a>
 <a class="navlink" href="/docs/reference/cli/plugins.html" data-title-zh="插件" data-href-en="/docs/reference/cli/plugins.html" data-href-zh="/docs/reference/cli/plugins.zh.html">plugins</a>
 <a class="navlink" href="/docs/reference/cli/ports.html" data-title-zh="端口" data-href-en="/docs/reference/cli/ports.html" data-href-zh="/docs/reference/cli/ports.zh.html">ports</a>
 <a class="navlink" href="/docs/reference/cli/programs.html" data-title-zh="程序" data-href-en="/docs/reference/cli/programs.html" data-href-zh="/docs/reference/cli/programs.zh.html">programs</a>
@@ -141,9 +144,9 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="/docs/reference/api/agentic-function.zh.html"><code>agentic_function</code></a></td>
-<td><code>agentic_programming/function.py</code></td>
-<td>装饰器。把普通函数变成 Agentic Function,每次调用记录为 session DAG 的一个节点</td>
+<td><a href="/docs/reference/api/agent.zh.html"><code>Agent</code>、<code>Context</code>、<code>agent</code>、<code>agent_async</code></a></td>
+<td><code>agentic_programming/</code>、<code>context/model.py</code></td>
+<td>直接调用、配置化 Agent 方法与自动执行上下文</td>
 </tr>
 <tr>
 <td><a href="/docs/reference/api/runtime.zh.html"><code>Runtime</code></a></td>
@@ -159,32 +162,26 @@
 </table>
 <p>会话上下文是一张扁平 DAG(节点 = 用户消息 / LLM 调用 / 函数调用),架构见 <a href="https://github.com/fzkuji-neo/OpenProgram/blob/main/openprogram/context/README.md"><code>openprogram/context/README.md</code></a>。</p>
 <h2 id="编写函数">编写函数<a class="header-anchor" href="#编写函数">#</a></h2>
-<p>没有 <code>create()</code> / <code>fix()</code> 这类 meta 函数——编写、修改、校验 <code>@agentic_function</code> 直接用普通文件编辑工具完成。<a href="/docs/reference/api/agentic-function.zh.html">Agentic function API</a> 定义装饰器和编写合同。</p>
+<p>没有 <code>create()</code> / <code>fix()</code> 这类 meta 函数——编写、修改、校验 Agent 方法或普通 Program 函数 直接用普通文件编辑工具完成。<a href="/docs/reference/api/agent.zh.html">Agent 与 Context API</a> 定义普通方法、自动上下文和方法功能。</p>
 <h2 id="导入">导入<a class="header-anchor" href="#导入">#</a></h2>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span><span class="p">,</span> <span class="n">Runtime</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">decision</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">Context</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">agent_async</span><span class="p">,</span> <span class="n">Runtime</span><span class="p">,</span> <span class="n">Session</span><span class="p">,</span> <span class="n">decision</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
 </code></pre>
-<p><code>agentic_function</code>、<code>Runtime</code>、<code>Session</code> 和 <code>decision</code> 都从 <code>openprogram</code>
+<p><code>Agent</code>、<code>Context</code>、<code>agent</code>、<code>agent_async</code>、<code>Runtime</code>、<code>Session</code> 和 <code>decision</code> 都从 <code>openprogram</code>
 顶层导出。<code>create_runtime</code> 这类 provider helper 仍需从完整路径导入。</p>
 <h2 id="快速示例">快速示例<a class="header-anchor" href="#快速示例">#</a></h2>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.providers.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_runtime</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
 
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">observe</span><span class="p">(</span><span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Report the UI element on screen that matches a task."""</span>
-    <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
-        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">"Find the UI element for: </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">. Reply with its label only."</span>
-        <span class="p">)},</span>
-    <span class="p">])</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Observer</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">rt</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">observe</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="s2">"login button"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">rt</span><span class="p">))</span>
-<span class="n">rt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">observe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Identify the requested UI element."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Find the UI element for: </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">. Reply with its label only."</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Observer</span><span class="p">()</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="s2">"login button"</span><span class="p">))</span>
 </code></pre>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/README.html" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/reference/api/runtime.html" data-href-en="/docs/reference/api/runtime.html" data-href-zh="/docs/reference/api/runtime.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="运行时 API">Runtime API</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/README.html" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/reference/api/runtime.html" data-href-en="/docs/reference/api/runtime.html" data-href-zh="/docs/reference/api/runtime.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="运行时 API">Runtime API</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -209,6 +206,6 @@
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

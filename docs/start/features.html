@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790196881" data-alt-lang-url="/docs/start/features.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/start/features.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Features · OpenProgram Docs</title>
 <meta name="description" content="The README&#x27;s Detailed features table points here for the longer story behind each one. The Agentic Programming philosophy note covers the why ; this page">
 <link rel="canonical" href="https://openprogram.io/docs/start/features.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/start/features.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/start/features.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/start/features.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/start/features.html">
@@ -29,10 +31,10 @@
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -81,7 +83,7 @@ points here for the longer story behind each one. The
 note covers the <em>why</em>; this page covers the <em>how it shows up
 in everyday use</em>.</p>
 <h2 id="automatic-context">Automatic Context<a class="header-anchor" href="#automatic-context">#</a></h2>
-<p>Every <code>@agentic_function</code> call is recorded as a node in the
+<p>Every <code>Agent</code> method call is recorded as a node in the
 session's flat conversation DAG — the same DAG that holds user
 messages and LLM calls. Nested calls thread automatically:</p>
 <pre><code>login_flow ✓ 8.8s
@@ -94,8 +96,17 @@ messages and LLM calls. Nested calls thread automatically:</p>
 you write functions, the runtime threads the DAG.</p>
 <p>Two decorator knobs control what a call contributes to later
 LLM calls:</p>
-<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">expose</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">render_range</span><span class="o">=</span><span class="p">{</span><span class="s2">"callers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">navigate</span><span class="p">(</span><span class="n">target</span><span class="p">):</span> <span class="o">...</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'navigate'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'expose'</span><span class="p">:</span> <span class="s1">'full'</span><span class="p">,</span> <span class="s1">'render_range'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'callers'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}},</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">navigate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span> <span class="o">...</span>
+
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">navigate</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">navigate</span>
 </code></pre>
 <p><code>expose</code> sets how much of the call's internals later calls see —
 <code>io</code> (default: input/output only), <code>llm</code> (only its LLM exchanges),
@@ -104,9 +115,9 @@ LLM calls:</p>
 the function itself sees (<code>0</code> walls it off completely);
 <code>{&quot;subcalls&quot;: N}</code> bounds its own in-frame history in long loops.</p>
 <h2 id="functions-that-author-functions">Functions that author functions<a class="header-anchor" href="#functions-that-author-functions">#</a></h2>
-<p>Writing, fixing and scaffolding <code>@agentic_function</code>s is itself
+<p>Writing, fixing and scaffolding <code>Agent</code> methods is itself
 agent work — done with ordinary file-editing tools following
-the <a href="/docs/reference/api/agentic-function.html">agentic function API</a>.
+the <a href="/docs/reference/api/agent.html">agentic function API</a>.
 There are no dedicated <code>create()</code> / <code>fix()</code> framework calls:
 they only ever wrapped one LLM call plus a file write, which an
 agent does directly.</p>
@@ -218,9 +229,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 <p>The same panel lives in the <strong>web</strong> (Settings → Providers) and the <strong>TUI</strong>
 (<code>/login &lt;provider&gt;</code>): list / add / activate / rename / remove. <code>/login</code> in the
 terminal completes the whole sign-in there — OAuth, device-code, import-from-CLI,
-or an API-key paste — instead of bouncing you to the browser. Claude-subscription
-accounts (<code>claude-code</code>) sit behind the exact same panel — just one instance of
-the generic surface.</p>
+or an API-key paste.</p>
 <p><strong>api-key providers</strong> get the same multi-credential model as a list of keys:
 paste a key (it's validated first) and it joins the list, <strong>name</strong> each one, and
 pick which is <strong>active</strong> (the one that's used) with <em>Use</em>. That's the same
@@ -241,7 +250,7 @@ external transports (Telegram / Discord / Slack / WeChat) to
 per-account identities. Cross-channel message routing + a
 declarative tool-availability system are tracked as the next
 set of features.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -275,6 +284,6 @@ set of features.</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

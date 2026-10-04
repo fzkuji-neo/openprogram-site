@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790196881" data-alt-lang-url="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Framework embedding · OpenProgram Docs</title>
-<meta name="description" content="Embedding in your own stack # You already have an application, an LLM client you trust, and a place where you keep state. What you want from OpenProgram is the">
+<meta name="description" content="Embedding in your own stack # Use Agent and Runtime as a Python library inside an existing application. The host supplies its model client and decides whether">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html">
 <meta property="og:title" content="Framework embedding · OpenProgram Docs">
-<meta property="og:description" content="Embedding in your own stack # You already have an application, an LLM client you trust, and a place where you keep state. What you want from OpenProgram is the">
+<meta property="og:description" content="Embedding in your own stack # Use Agent and Runtime as a Python library inside an existing application. The host supplies its model client and decides whether">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Framework embedding · OpenProgram Docs">
-<meta name="twitter:description" content="Embedding in your own stack # You already have an application, an LLM client you trust, and a place where you keep state. What you want from OpenProgram is the">
+<meta name="twitter:description" content="Embedding in your own stack # Use Agent and Runtime as a Python library inside an existing application. The host supplies its model client and decides whether">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink active" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink active" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -75,7 +77,7 @@
 <a class="navlink" href="/docs/capabilities/agentic-programming/philosophy.html" data-title-zh="设计原则" data-href-en="/docs/capabilities/agentic-programming/philosophy.html" data-href-zh="/docs/capabilities/agentic-programming/philosophy.zh.html">Philosophy</a>
 <a class="navlink active" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-title-zh="框架嵌入" data-href-en="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-zh="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">Framework embedding</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="编写函数">Writing functions</div><a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-title-zh="Python 函数" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">Python functions</a>
-<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="智能体函数" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">Agentic functions</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agent.html" data-title-zh="智能体函数" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agent.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agent.zh.html">Agentic functions</a>
 <a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-title-zh="函数元数据" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">Function metadata</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="选择下一步">Choosing the next step</div><a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-title-zh="工具循环" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html">Tool-call loops</a>
 <a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html" data-title-zh="顺序调用" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html">Fixed-order calls</a>
@@ -86,6 +88,7 @@
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
+<div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="记忆">Memory</div><a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="记忆管理" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Memory management</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="会话目标">Session goals</div><a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Goals</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div><a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程工作流" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Workflow automation</a></div>
@@ -103,172 +106,77 @@
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="指南">Guide</div><a class="navlink" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-title-zh="自编程智能体" data-href-en="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-zh="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html">Self-programming agents</a></div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Programming</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="框架嵌入">Framework embedding</span></nav><h1 id="embedding-in-your-own-stack">Embedding in your own stack<a class="header-anchor" href="#embedding-in-your-own-stack">#</a></h1>
-<p>You already have an application, an LLM client you trust, and a place where you
-keep state. What you want from OpenProgram is the part that is hard to
-rebuild — <code>@agentic_function</code> and the execution DAG that turns nested calls into
-context — and nothing else. No web UI, no terminal UI, no CLI, and no
-<code>~/.openprogram</code> directory appearing behind your back.</p>
-<p>That is the embedded mode: OpenProgram used as a plain Python library inside
-somebody else's runtime. Five steps get you there, using snippets that execute
-offline against a fake client and require no API key.</p>
-<h2 id="when-this-is-the-right-mode">When this is the right mode<a class="header-anchor" href="#when-this-is-the-right-mode">#</a></h2>
-<p>Reach for embedding when you are building the surrounding product yourself —
-a service, an agent framework of your own, a research harness — and you want
-DAG-context function calling as one component inside it. If instead you want
-the whole harness (chat surfaces, sessions, provider management, tools), run
-the platform normally; see <a href="/docs/start/GETTING_STARTED.html">Getting started</a>.</p>
-<h2 id="1-bring-your-own-llm-call">1. Bring your own LLM call<a class="header-anchor" href="#1-bring-your-own-llm-call">#</a></h2>
-<p>The integration surface is a single function:</p>
-<pre><code class="language-python"><span class="n">fn</span><span class="p">(</span><span class="n">content</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">response_format</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+<p>Use Agent and Runtime as a Python library inside an existing application. The host supplies its model client and decides whether to persist sessions. Library calls do not start the Web UI or terminal UI.</p>
+<h2 id="supply-a-host-runtime">Supply a host Runtime<a class="header-anchor" href="#supply-a-host-runtime">#</a></h2>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">Runtime</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">model_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"host-model"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Replace this offline response with the host's model client.</span>
+    <span class="k">return</span> <span class="s2">"Host model response"</span>
+
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">model_call</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"host-model"</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ReviewAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">classify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">review</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Classify review sentiment."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Classify review sentiment:</span><span class="se">\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">summarize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">review</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Summarize a review."""</span>
+        <span class="n">sentiment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="n">review</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Summarize this </span><span class="si">{</span><span class="n">sentiment</span><span class="si">}</span><span class="s2"> review:</span><span class="se">\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">reviewer</span> <span class="o">=</span> <span class="n">ReviewAgent</span><span class="p">(</span><span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="n">reviewer</span><span class="o">.</span><span class="n">summarize</span><span class="p">(</span><span class="s2">"The service was fast."</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">runtime</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre>
-<p><code>content</code> is a list of blocks, each <code>{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: ...}</code> (or an
-image block). Return the model's reply as a string. Whatever client you already
-use goes inside:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
-
-<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">()</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">openai_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"text"</span><span class="p">)</span>
-    <span class="n">reply</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">text</span><span class="p">}],</span>
-        <span class="n">response_format</span><span class="o">=</span><span class="n">response_format</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">reply</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
-</code></pre>
-<h2 id="2-wrap-it-in-a-runtime">2. Wrap it in a Runtime<a class="header-anchor" href="#2-wrap-it-in-a-runtime">#</a></h2>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runtime</span>
-
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">openai_call</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4o-mini"</span><span class="p">)</span>
-</code></pre>
-<p><code>Runtime(call=...)</code> is the constructor that takes your function directly; no
-provider is detected, no credential is read, no network call is made at
-construction time. (The alternative, <code>create_runtime()</code>, builds a runtime from
-the machine's configured provider — convenient for a standalone script, and
-exactly what an embedded host does <em>not</em> want. See
-<a href="/docs/models/providers.html">Providers</a>.)</p>
-<p>The four embedding entry points — <code>agentic_function</code>, <code>Runtime</code>, <code>decision</code>,
-<code>Session</code> — are re-exported from the package root and loaded lazily, so
-<code>import openprogram</code> on its own pulls in neither the runtime, nor the store,
-nor any provider.</p>
-<h2 id="3-write-your-functions">3. Write your functions<a class="header-anchor" href="#3-write-your-functions">#</a></h2>
-<p>The docstring is the instruction sent to the model. Calls nest, and the DAG
-records who called whom — which is what later calls receive as context.</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
-
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">classify_sentiment</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Classify the sentiment of a review as positive, negative, or neutral."""</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Sentiment of this review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">summarize_review</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Summarize a customer review in one sentence, noting its sentiment."""</span>
-    <span class="n">sentiment</span> <span class="o">=</span> <span class="n">classify_sentiment</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Summarize this </span><span class="si">{</span><span class="n">sentiment</span><span class="si">}</span><span class="s2"> review: </span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre>
-<p>Pass your runtime to the <strong>outermost</strong> call only. It propagates down the call
-chain automatically; nested functions just forward it. Omit it at the top and
-the entry point builds its own runtime from the machine's configured provider,
-which reaches for credentials and the network.</p>
-<p>Everything in <a href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html">Writing functions</a>
-applies unchanged — the decorator behaves the same embedded as it does inside
-the platform.</p>
-<h2 id="4-point-session-state-at-a-directory-you-choose">4. Point session state at a directory you choose<a class="header-anchor" href="#4-point-session-state-at-a-directory-you-choose">#</a></h2>
-<p><code>SessionStore(root_path=...)</code> is the explicit-directory entry point. Pass one
-and nothing consults <code>~/.openprogram</code>. Each session is a git repo under that
-root.</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">SessionStore</span><span class="p">,</span> <span class="n">session_scope</span>
+<p><code>Runtime(call=...)</code> accepts the host callback. It receives content blocks, a model name, and an optional response format. Construction does not make a model request. The host closes the Runtime it supplies.</p>
+<p>Agent methods inherit this Runtime automatically. The host does not pass it through every helper. Context and function scopes are automatic. The callback example returns a fixed response and requires no network access.</p>
+<h2 id="persist-an-explicit-session">Persist an explicit session<a class="header-anchor" href="#persist-an-explicit-session">#</a></h2>
+<p>The default Agent invocation does not give the instance a persistent conversation. Use an explicit store and session when the host needs continuity:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">Context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">SessionStore</span><span class="p">,</span> <span class="n">SessionNodeWriter</span>
 
 <span class="n">store</span> <span class="o">=</span> <span class="n">SessionStore</span><span class="p">(</span><span class="n">root_path</span><span class="o">=</span><span class="s2">"/var/lib/myapp/sessions"</span><span class="p">)</span>
-<span class="n">store</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="s2">"review-42"</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="s2">"main"</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="n">session_scope</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">"review-42"</span><span class="p">):</span>
-    <span class="n">summary</span> <span class="o">=</span> <span class="n">summarize_review</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<span class="n">store</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="s2">"research"</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="s2">"main"</span><span class="p">)</span>
+<span class="n">writer</span> <span class="o">=</span> <span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">"research"</span><span class="p">)</span>
+<span class="n">researcher</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">Context</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">writer</span><span class="p">),</span> <span class="n">tools</span><span class="o">=</span><span class="p">[])</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">researcher</span><span class="p">(</span><span class="s2">"List the project requirements."</span><span class="p">)</span>
+    <span class="n">second</span> <span class="o">=</span> <span class="n">researcher</span><span class="p">(</span><span class="s2">"Review the requirements from the previous call."</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">store</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre>
-<p><code>session_scope</code> routes DAG writes to that store for the duration of the block
-and restores the previous binding on exit. Skipping the <code>with</code> block is also
-valid: functions execute normally and simply persist nothing, which is what a
-host that keeps its own trace wants.</p>
-<h2 id="5-read-the-dag-back-or-drive-your-own-tool-loop">5. Read the DAG back, or drive your own tool loop<a class="header-anchor" href="#5-read-the-dag-back-or-drive-your-own-tool-loop">#</a></h2>
-<p><strong>Reading the DAG.</strong> Nodes carry a role (code / llm / user), a name, input,
-output, and a <code>caller</code> edge. Following <code>caller</code> turns the flat node list into
-the call tree:</p>
+<p><code>Context(store=writer)</code> explicitly continues this session across calls. The host owns its store and Runtime. <code>head_id</code> can select an existing branch tip. Default Agent calls remain independent.</p>
+<h2 id="inspect-calls-and-expose-tools">Inspect calls and expose tools<a class="header-anchor" href="#inspect-calls-and-expose-tools">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">SessionNodeWriter</span>
 
-<span class="n">graph</span> <span class="o">=</span> <span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">"review-42"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
-    <span class="n">kind</span> <span class="o">=</span> <span class="s2">"fn"</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_code</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"llm"</span> <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_llm</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"usr"</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">"→"</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">SessionNodeWriter</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="s2">"review-42"</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">caller</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
 </code></pre>
-<p><strong>Handing functions to your own loop.</strong> Every <code>@agentic_function</code> exposes
-<code>.spec</code> (a JSON schema built from the signature and docstring) and <code>.execute</code>.
-<code>to_openai_tools</code> reshapes the spec for the Chat Completions <code>tools=[...]</code>
-array:</p>
-<pre><code class="language-python"><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming.tool_format</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_openai_tools</span>
-
-<span class="n">tools</span> <span class="o">=</span> <span class="n">to_openai_tools</span><span class="p">([</span><span class="n">classify_sentiment</span><span class="p">,</span> <span class="n">summarize_review</span><span class="p">])</span>
-
-<span class="n">reply</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model</span><span class="o">=...</span><span class="p">,</span> <span class="n">messages</span><span class="o">=...</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">reply</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>
-    <span class="n">fn</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"classify_sentiment"</span><span class="p">:</span> <span class="n">classify_sentiment</span><span class="p">}[</span><span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">,</span> <span class="o">**</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">call</span><span class="o">.</span><span class="n">function</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>
-</code></pre>
-<p><code>runtime</code> goes in alongside the model's arguments. The model never sees that
-parameter — it is filtered out of the spec — and never supplies it.</p>
-<h2 id="relationship-to-a-full-install">Relationship to a full install<a class="header-anchor" href="#relationship-to-a-full-install">#</a></h2>
-<p>Embedding is a developer integration mode, not a reduced end-user edition.
-Use the complete source-development installation; it includes the same Web,
-terminal, provider, channel, search, browser, and first-party Program baseline
-as a release. The embedded import path uses only the library API and does not
-start the Web UI or TUI. Acceptance tests in <code>tests/embed/</code> enforce that import
-boundary, while the installed product remains complete.</p>
-<h2 id="host-integration-seams">Host integration seams<a class="header-anchor" href="#host-integration-seams">#</a></h2>
-<p>Two hooks let a host that <em>does</em> have a front end wire itself in:
-<code>set_cancellation_check</code> installs the checkpoint the exec loop calls before each
-LLM attempt (raise from it to abort a run), and <code>set_session_id_provider</code> tells
-the core which session a question should be routed back to. Both live in
-<code>openprogram.agentic_programming.function</code> and default to headless no-ops, so
-embedded code that never touches them behaves correctly: nothing cancels, and
-<code>runtime.can_ask()</code> reports <code>False</code> because nobody is there to answer.</p>
-<h2 id="see-also">See also<a class="header-anchor" href="#see-also">#</a></h2>
-<ul>
-<li><a href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html"><code>@agentic_function</code></a> — the decorator in depth</li>
-<li><a href="/docs/reference/api/runtime.html">Runtime API</a> — <code>exec()</code> parameters and behaviour</li>
-<li><a href="/docs/reference/design/runtime/README.html">Embedding seams</a> — the design contract behind this mode</li>
-</ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/philosophy.html" data-href-en="/docs/capabilities/agentic-programming/philosophy.html" data-href-zh="/docs/capabilities/agentic-programming/philosophy.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="设计原则">Philosophy</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="Python 函数">Python functions</span></a></div></article></main>
+<p>Ordinary public Agent methods receive call scopes. To expose a method as a model tool, set <code>tool=True</code> in its <code>method_options</code>. This explicit registration supplies <code>.spec</code> and <code>.execute</code>. Recording alone does not grant tool access. See the <a href="/docs/reference/api/agent.html">Agent and Context API</a>.</p>
+<h2 id="method-behavior-and-host-hooks">Method behavior and host hooks<a class="header-anchor" href="#method-behavior-and-host-hooks">#</a></h2>
+<p>Agent methods provide the complete execution contract. <code>set_cancellation_check</code> and <code>set_session_id_provider</code> remain available from <code>openprogram.agentic_programming.call_state</code> for host cancellation and question routing.</p>
+<p>The embedded import path uses library APIs. It does not replace the complete installed product. Import checks are in <code>tests/embed/</code>. See <a href="/docs/reference/api/runtime.html">Runtime</a> and the <a href="/docs/capabilities/agentic-programming/writing-functions/agent.html">programming guide</a>.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/philosophy.html" data-href-en="/docs/capabilities/agentic-programming/philosophy.html" data-href-zh="/docs/capabilities/agentic-programming/philosophy.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="设计原则">Philosophy</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="Python 函数">Python functions</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
-<a class="lvl-2" href="#when-this-is-the-right-mode">When this is the right mode</a>
+<a class="lvl-2" href="#supply-a-host-runtime">Supply a host Runtime</a>
 </li>
 <li>
-<a class="lvl-2" href="#1-bring-your-own-llm-call">1. Bring your own LLM call</a>
+<a class="lvl-2" href="#persist-an-explicit-session">Persist an explicit session</a>
 </li>
 <li>
-<a class="lvl-2" href="#2-wrap-it-in-a-runtime">2. Wrap it in a Runtime</a>
+<a class="lvl-2" href="#inspect-calls-and-expose-tools">Inspect calls and expose tools</a>
 </li>
 <li>
-<a class="lvl-2" href="#3-write-your-functions">3. Write your functions</a>
-</li>
-<li>
-<a class="lvl-2" href="#4-point-session-state-at-a-directory-you-choose">4. Point session state at a directory you choose</a>
-</li>
-<li>
-<a class="lvl-2" href="#5-read-the-dag-back-or-drive-your-own-tool-loop">5. Read the DAG back, or drive your own tool loop</a>
-</li>
-<li>
-<a class="lvl-2" href="#relationship-to-a-full-install">Relationship to a full install</a>
-</li>
-<li>
-<a class="lvl-2" href="#host-integration-seams">Host integration seams</a>
-</li>
-<li>
-<a class="lvl-2" href="#see-also">See also</a>
+<a class="lvl-2" href="#method-behavior-and-host-hooks">Method behavior and host hooks</a>
 </li>
 </ul></aside>
 </div>
@@ -280,6 +188,6 @@ embedded code that never touches them behaves correctly: nothing cancels, and
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

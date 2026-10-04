@@ -85,6 +85,7 @@
     .status-grid > div:last-child { border-bottom:0!important }
   }
 </style>
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="stylesheet" href="/docs/assets/raw-readability.css">
 <script defer src="/docs/assets/raw-readability.js"></script>
 </head>
@@ -338,7 +339,7 @@ replay:
 
   <h3>Runtime 构造与 credential 边界</h3>
   <p>严格离线必须覆盖 <code>create_runtime()</code>，不能只覆盖 <code>stream.py</code>。当前 factory 和 subscription runtime 构造器会在 <code>get_api_provider()</code> 前读取 API key/OAuth。目标实现不重构这些 live runtime：off/record 继续走现有 factory；replay 增加一个 credential-free 分支，只接受调用方显式给出的 provider/model，或 <code>AGENTIC_PROVIDER</code>/<code>AGENTIC_MODEL</code>、配置文件 <code>default_provider</code>/<code>default_model</code> 中已有的非凭证选择。没有这些选择时立即返回 replay 配置错误，不继续执行 CLI 探测或 AuthStore 探测。</p>
-  <p>replay factory 不实例化 subscription runtime，而是按 <code>PROVIDERS</code> 的 provider→model namespace 纯元数据构造基础 <code>Runtime</code>。plain provider 已有该字段；三个 subscription entry 新增 <code>model_namespace</code>：<code>claude-code→anthropic</code>、<code>openai-codex→openai-codex</code>、<code>gemini-cli→gemini-subscription</code>。API-routed provider 继续使用其模型目录 namespace。这个分支不读取录制文件来推断原始 factory provider：现有 v1 request 只保存 wire-level <code>Model</code>，无法区分 <code>claude-code</code> 与 <code>anthropic</code> 等共享 wire 的入口，也不能把多 API 文件的首个 model 当成所有后续 runtime 的 identity。请求进入 <code>ReplayProvider</code> 后由现有完整 request comparison 校验最终 <code>Model</code>、context、tools 和 options；不匹配按既有 <code>ReplayMismatch</code> 报告。</p>
+  <p>replay factory 不实例化 subscription runtime，而是按 <code>PROVIDERS</code> 的 provider→model namespace 纯元数据构造基础 <code>Runtime</code>。plain provider 已有该字段；三个 subscription entry 新增 <code>model_namespace</code>：<code>openai-codex→openai-codex</code>、<code>gemini-cli→gemini-subscription</code>。API-routed provider 继续使用其模型目录 namespace。这个分支不读取录制文件来推断原始 factory provider：现有 v1 request 只保存 wire-level <code>Model</code>，无法区分 <code>claude-code</code> 与 <code>anthropic</code> 等共享 wire 的入口，也不能把多 API 文件的首个 model 当成所有后续 runtime 的 identity。请求进入 <code>ReplayProvider</code> 后由现有完整 request comparison 校验最终 <code>Model</code>、context、tools 和 options；不匹配按既有 <code>ReplayMismatch</code> 报告。</p>
   <div class="note warning"><b>范围隔离：</b>当前主工作区存在并行 auth 账号管理重构。本任务不修改三个 subscription runtime 或 credential API，只在 replay factory 分支绕过它们；实现基于独立 worktree，合入时需复核 registry 的最终调用位置。</div>
 
   <h3>与 OpenProgram 执行模型的关系</h3>

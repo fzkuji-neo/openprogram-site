@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/start/features.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/start/features.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>功能 · OpenProgram Docs</title>
-<meta name="description" content="详解 # README 中的 核心特性 表格 指向这里，呈现每项特性背后更完整的来龙去脉。 Agentic Programming 设计理念 一文讲的是 为什么 ；本页讲的是 它在日常使用中如何体现 。 自动上下文 # 每一次 @agentic_function 调用都会作为一个节点记录进会话的 扁平对话 DAG">
+<meta name="description" content="详解 # README 中的 核心特性 表格 指向这里，呈现每项特性背后更完整的来龙去脉。 Agentic Programming 设计理念 一文讲的是 为什么 ；本页讲的是 它在日常使用中如何体现 。 自动上下文 # 每一次 Agent method 调用都会作为一个节点记录进会话的 扁平对话 DAG ——">
 <link rel="canonical" href="https://openprogram.io/docs/start/features.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/start/features.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/start/features.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/start/features.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/start/features.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/start/features.zh.html">
 <meta property="og:title" content="功能 · OpenProgram Docs">
-<meta property="og:description" content="详解 # README 中的 核心特性 表格 指向这里，呈现每项特性背后更完整的来龙去脉。 Agentic Programming 设计理念 一文讲的是 为什么 ；本页讲的是 它在日常使用中如何体现 。 自动上下文 # 每一次 @agentic_function 调用都会作为一个节点记录进会话的 扁平对话 DAG">
+<meta property="og:description" content="详解 # README 中的 核心特性 表格 指向这里，呈现每项特性背后更完整的来龙去脉。 Agentic Programming 设计理念 一文讲的是 为什么 ；本页讲的是 它在日常使用中如何体现 。 自动上下文 # 每一次 Agent method 调用都会作为一个节点记录进会话的 扁平对话 DAG ——">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="功能 · OpenProgram Docs">
-<meta name="twitter:description" content="详解 # README 中的 核心特性 表格 指向这里，呈现每项特性背后更完整的来龙去脉。 Agentic Programming 设计理念 一文讲的是 为什么 ；本页讲的是 它在日常使用中如何体现 。 自动上下文 # 每一次 @agentic_function 调用都会作为一个节点记录进会话的 扁平对话 DAG">
+<meta name="twitter:description" content="详解 # README 中的 核心特性 表格 指向这里，呈现每项特性背后更完整的来龙去脉。 Agentic Programming 设计理念 一文讲的是 为什么 ；本页讲的是 它在日常使用中如何体现 。 自动上下文 # 每一次 Agent method 调用都会作为一个节点记录进会话的 扁平对话 DAG ——">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink active" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -80,7 +82,7 @@
 <a href="/docs/capabilities/agentic-programming/philosophy.zh.html">Agentic Programming 设计理念</a>
 一文讲的是<em>为什么</em>；本页讲的是<em>它在日常使用中如何体现</em>。</p>
 <h2 id="自动上下文">自动上下文<a class="header-anchor" href="#自动上下文">#</a></h2>
-<p>每一次 <code>@agentic_function</code> 调用都会作为一个节点记录进会话的
+<p>每一次 <code>Agent</code> method 调用都会作为一个节点记录进会话的
 扁平对话 DAG —— 与用户消息、LLM 调用共存于同一个 DAG。
 嵌套调用会自动串接：</p>
 <pre><code>login_flow ✓ 8.8s
@@ -92,8 +94,17 @@
 <code>observe</code> 和 <code>click</code> 返回的内容。无需手动管理上下文：
 你只管编写函数，运行时会把 DAG 串接起来。</p>
 <p>装饰器上有两个开关，控制一次调用向后续 LLM 调用贡献什么：</p>
-<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="n">expose</span><span class="o">=</span><span class="s2">"full"</span><span class="p">,</span> <span class="n">render_range</span><span class="o">=</span><span class="p">{</span><span class="s2">"callers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">navigate</span><span class="p">(</span><span class="n">target</span><span class="p">):</span> <span class="o">...</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'navigate'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'expose'</span><span class="p">:</span> <span class="s1">'full'</span><span class="p">,</span> <span class="s1">'render_range'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'callers'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}},</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">navigate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span> <span class="o">...</span>
+
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">navigate</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">navigate</span>
 </code></pre>
 <p><code>expose</code> 决定后续调用能看到这次调用内部的多少 ——
 <code>io</code>（默认：只有输入 / 输出）、<code>llm</code>（只有它的 LLM 往来）、
@@ -102,9 +113,9 @@
 （<code>0</code> 表示完全隔断）；<code>{&quot;subcalls&quot;: N}</code> 在长循环里约束它自己
 帧内历史的规模。</p>
 <h2 id="编写函数的函数">编写函数的函数<a class="header-anchor" href="#编写函数的函数">#</a></h2>
-<p>编写、修复和搭建 <code>@agentic_function</code> 本身就是
+<p>编写、修复和搭建 <code>Agent</code> method 本身就是
 agent 的工作，用普通的文件编辑工具并按照
-<a href="/docs/reference/api/agentic-function.zh.html">Agentic function API</a> 完成。
+<a href="/docs/reference/api/agent.zh.html">Agentic function API</a> 完成。
 没有专门的 <code>create()</code> / <code>fix()</code> 框架调用：
 它们无非是包了一次 LLM 调用加一次文件写入，而 agent
 可以直接做这些事。</p>
@@ -202,9 +213,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 <p>同一个面板存在于 <strong>web</strong>（Settings → Providers）和 <strong>TUI</strong>
 （<code>/login &lt;provider&gt;</code>）中：列出 / 添加 / 激活 / 重命名 / 删除。终端里的 <code>/login</code>
 会在那里就地完成整个登录 —— OAuth、设备码、从 CLI 导入，
-或粘贴一个 API key —— 而不会把你弹去浏览器。Claude 订阅账户
-（<code>claude-code</code>）也在完全相同的面板背后 —— 只是这套通用界面的
-一个实例。</p>
+或粘贴一个 API key。</p>
 <p><strong>api-key 类型的 provider</strong> 也获得同样的多凭据模型，以一份密钥列表呈现：
 粘贴一个密钥（会先校验）它就加入列表，给每个密钥<strong>命名</strong>，并
 用 <em>Use</em> 选出哪个是<strong>激活的</strong>（即被使用的那个）。这与 OAuth provider 为
@@ -222,7 +231,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 外部传输（Telegram / Discord / Slack / WeChat）映射到按账户区分的身份。
 跨 channel 的消息路由 + 一套声明式的工具可用性系统，
 作为下一批特性在跟踪中。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -256,6 +265,6 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

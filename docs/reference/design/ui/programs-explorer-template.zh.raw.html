@@ -329,6 +329,7 @@
       .tree-toolbar { transition-duration: 0.01ms; }
     }
   </style>
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="stylesheet" href="/docs/assets/raw-readability.css">
 <script defer src="/docs/assets/raw-readability.js"></script>
 </head>
@@ -617,7 +618,7 @@
       createIcons({ attrs: { "stroke-width": 1.7 } });
     });
   </script>
-</body>
+<section style="padding:24px;max-width:960px;margin:auto"><h2>增量加载</h2><p>跨页面切换保留目录、选中项、展开状态和调用图。可见文件夹及选中的调用图每五秒在后台检测变化，重新聚焦和手动刷新也会检测；未变化时只返回版本确认。检测失败保留已有内容并允许重试。</p><p>后端构建结果时记录文件和目录元数据依赖，之后核对依赖、注册表及目录来源；未变化直接复用结果。修改过的源码按文件身份、大小、纳秒修改和变更时间重新解析。新增或删除条目使父目录失效。保留现有目录边界和源码大小限制。缓存为有上限的进程内存，不新增文件监听进程或持久化用户数据。</p><p>验收：再次进入立即显示；未变更源码不读取、不解析；修改、新增、删除更新对应界面；刷新保留选择及展开状态。实现状态：源码与页面行为验收通过。性能测量、独立审查和安装后的 App 验收维护在任务证据中。</p></section></body>
 </html>
 
 <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'&&window.parent!==window)parent.postMessage('op-docs-esc','*');});</script>

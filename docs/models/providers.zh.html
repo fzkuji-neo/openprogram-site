@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/models/providers.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/models/providers.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>模型服务 · OpenProgram Docs</title>
 <meta name="description" content="Provider 一览 # 本页列出仓库内置的 provider 实现（ openprogram/providers/ 下每个子目录一个）、各自的接入方式，以及在 Python 代码里直接使用 provider 的方法。内置实现之外， openprogram providers available 还能列出几百个走">
 <link rel="canonical" href="https://openprogram.io/docs/models/providers.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/models/providers.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/models/providers.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/models/providers.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/models/providers.html">
@@ -29,10 +31,10 @@
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink active" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink active" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -71,6 +73,7 @@
     <div class="nav-tree"><div class="nav-sec"><div class="nav-sec-title" data-title-zh="概览">Overview</div><a class="navlink" href="/docs/models/README.html" data-title-zh="模型配置" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Model configuration</a>
 <a class="navlink active" href="/docs/models/providers.html" data-title-zh="模型服务" data-href-en="/docs/models/providers.html" data-href-zh="/docs/models/providers.zh.html">Providers</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="配置">Configuration</div><a class="navlink" href="/docs/models/auth.html" data-title-zh="认证" data-href-en="/docs/models/auth.html" data-href-zh="/docs/models/auth.zh.html">Authentication</a>
+<a class="navlink" href="/docs/models/local-models.html" data-title-zh="使用本地部署的模型" data-href-en="/docs/models/local-models.html" data-href-zh="/docs/models/local-models.zh.html">Use locally deployed models</a>
 <a class="navlink" href="/docs/models/fast-tier.html" data-title-zh="高速模式" data-href-en="/docs/models/fast-tier.html" data-href-zh="/docs/models/fast-tier.zh.html">Fast mode</a>
 <a class="navlink" href="/docs/models/thinking-effort.html" data-title-zh="推理强度" data-href-en="/docs/models/thinking-effort.html" data-href-zh="/docs/models/thinking-effort.zh.html">Thinking effort</a>
 <a class="navlink" href="/docs/models/token-tracking.html" data-title-zh="Token 计量" data-href-en="/docs/models/token-tracking.html" data-href-zh="/docs/models/token-tracking.zh.html">Token accounting</a></div></div>
@@ -92,7 +95,7 @@
 <tr>
 <td><code>anthropic</code></td>
 <td>Anthropic Messages</td>
-<td>API key（<code>ANTHROPIC_API_KEY</code>）或 OAuth（Claude 订阅，PKCE / <code>claude setup-token</code> 粘贴）</td>
+<td>API key（<code>ANTHROPIC_API_KEY</code>）</td>
 <td>显式 prompt caching（<code>cache_control</code>，支持 1h TTL）</td>
 </tr>
 <tr>
@@ -242,7 +245,8 @@
 </tbody>
 </table>
 <p>流式输出所有 provider 都支持（整个层建立在流式接口上）。多模态输入按模型而非按 provider 决定，来自各 provider 的模型目录数据，界面上以模型实际标注为准。prompt caching 只在上表标注处经代码核实。</p>
-<p><code>claude_code</code>、<code>chatgpt_subscription</code>、<code>claude_max_proxy</code> 等空目录是别名占位（<code>claude-max</code> → <code>claude-code</code>、<code>chatgpt-subscription</code> → <code>openai-codex</code>），行为由别名表决定，不是独立实现。<code>minimax_cn_coding_plan</code> 同样纯配置驱动，没有自己的代码。</p>
+<h2 id="本地模型服务">本地模型服务<a class="header-anchor" href="#本地模型服务">#</a></h2>
+<p>Ollama、LM Studio、vLLM、llama.cpp 和通用本地服务作为内置 Provider 提供，支持地址配置、可选 API key、模型发现和手动模型 ID。连接多个服务时，可将自定义 Provider 标记为本地服务。配置方式和部署相关 token 限制见<a href="/docs/models/local-models.zh.html">本地模型</a>。</p>
 <h2 id="自定义-provider">自定义 provider<a class="header-anchor" href="#自定义-provider">#</a></h2>
 <p>上表没覆盖的 OpenAI 兼容端点可以在 Web UI 的 Settings → Providers 里添加：必填项只有显示名和 base URL（不填 id 时从名字自动派生）。之后同一个 Fetch 按钮就能浏览该端点 <code>/models</code> 返回的模型列表，启用后无需改代码即可使用。自定义 provider 记在配置的 <code>providers.&lt;id&gt;</code> 下，标记 <code>source: &quot;custom&quot;</code>。</p>
 <h2 id="库方式使用">库方式使用<a class="header-anchor" href="#库方式使用">#</a></h2>
@@ -256,17 +260,20 @@
 <pre><code class="language-python"><span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-sonnet-4-6"</span><span class="p">)</span>  <span class="c1"># Anthropic API key</span>
 <span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"openai"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4.1"</span><span class="p">)</span>               <span class="c1"># OpenAI Responses API</span>
 <span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"gemini"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gemini-2.5-flash"</span><span class="p">)</span>      <span class="c1"># Google Generative AI</span>
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"claude-code"</span><span class="p">)</span>   <span class="c1"># Claude 订阅直连，无需 API key</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">)</span>   <span class="c1"># 需要 Anthropic API key</span>
 <span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"openai-codex"</span><span class="p">)</span>  <span class="c1"># ChatGPT 订阅（Codex OAuth）</span>
 <span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"gemini-cli"</span><span class="p">)</span>    <span class="c1"># 复用 Gemini CLI 登录态</span>
 </code></pre>
 <p>上表其余 provider：<code>create_runtime(provider=..., model=...)</code> 会按该模型的协议自动路由，与聊天界面走同一条路径。</p>
 <p>Grok Subscription 在代理路由请求头中保留所选模型 ID。选择 <code>grok-4.6</code> 时请求该模型，不替换成 <code>grok-build</code> 别名。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/models/README.html" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="模型配置">Model configuration</span></a><a class="pn-link pn-next" href="/docs/models/auth.html" data-href-en="/docs/models/auth.html" data-href-zh="/docs/models/auth.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="认证">Authentication</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/models/README.html" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="模型配置">Model configuration</span></a><a class="pn-link pn-next" href="/docs/models/auth.html" data-href-en="/docs/models/auth.html" data-href-zh="/docs/models/auth.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="认证">Authentication</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
 <a class="lvl-2" href="#内置-provider">内置 provider</a>
+</li>
+<li>
+<a class="lvl-2" href="#本地模型服务">本地模型服务</a>
 </li>
 <li>
 <a class="lvl-2" href="#自定义-provider">自定义 provider</a>
@@ -284,6 +291,6 @@
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

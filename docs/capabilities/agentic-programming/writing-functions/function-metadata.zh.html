@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>函数元数据 · OpenProgram Docs</title>
-<meta name="description" content="本文档定义本框架中的函数必须携带哪些元数据（无论它是否调用 LLM）、这些元数据存放在何处，以及哪些组件会消费它们。 适用范围：所有用 @agentic_function 装饰的函数，以及任何传入 render_options 或决策菜单协议其他组件的普通 Python 可调用对象。（">
+<meta name="description" content="本文档定义本框架中的函数必须携带哪些元数据（无论它是否调用 LLM）、这些元数据存放在何处，以及哪些组件会消费它们。 适用范围：所有用 Agent method 装饰的函数，以及任何传入 render_options 或决策菜单协议其他组件的普通 Python 可调用对象。（">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
 <meta property="og:title" content="函数元数据 · OpenProgram Docs">
-<meta property="og:description" content="本文档定义本框架中的函数必须携带哪些元数据（无论它是否调用 LLM）、这些元数据存放在何处，以及哪些组件会消费它们。 适用范围：所有用 @agentic_function 装饰的函数，以及任何传入 render_options 或决策菜单协议其他组件的普通 Python 可调用对象。（">
+<meta property="og:description" content="本文档定义本框架中的函数必须携带哪些元数据（无论它是否调用 LLM）、这些元数据存放在何处，以及哪些组件会消费它们。 适用范围：所有用 Agent method 装饰的函数，以及任何传入 render_options 或决策菜单协议其他组件的普通 Python 可调用对象。（">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="函数元数据 · OpenProgram Docs">
-<meta name="twitter:description" content="本文档定义本框架中的函数必须携带哪些元数据（无论它是否调用 LLM）、这些元数据存放在何处，以及哪些组件会消费它们。 适用范围：所有用 @agentic_function 装饰的函数，以及任何传入 render_options 或决策菜单协议其他组件的普通 Python 可调用对象。（">
+<meta name="twitter:description" content="本文档定义本框架中的函数必须携带哪些元数据（无论它是否调用 LLM）、这些元数据存放在何处，以及哪些组件会消费它们。 适用范围：所有用 Agent method 装饰的函数，以及任何传入 render_options 或决策菜单协议其他组件的普通 Python 可调用对象。（">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink active" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink active" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -75,7 +77,7 @@
 <a class="navlink" href="/docs/capabilities/agentic-programming/philosophy.html" data-title-zh="设计原则" data-href-en="/docs/capabilities/agentic-programming/philosophy.html" data-href-zh="/docs/capabilities/agentic-programming/philosophy.zh.html">Philosophy</a>
 <a class="navlink" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-title-zh="框架嵌入" data-href-en="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-zh="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html">Framework embedding</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="编写函数">Writing functions</div><a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-title-zh="Python 函数" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html">Python functions</a>
-<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-title-zh="智能体函数" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html">Agentic functions</a>
+<a class="navlink" href="/docs/capabilities/agentic-programming/writing-functions/agent.html" data-title-zh="智能体函数" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agent.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agent.zh.html">Agentic functions</a>
 <a class="navlink active" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-title-zh="函数元数据" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">Function metadata</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="选择下一步">Choosing the next step</div><a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-title-zh="工具循环" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html">Tool-call loops</a>
 <a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html" data-title-zh="顺序调用" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html">Fixed-order calls</a>
@@ -86,6 +88,7 @@
 <a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
+<div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="记忆">Memory</div><a class="navlink" href="/docs/capabilities/memory.html" data-title-zh="记忆管理" data-href-en="/docs/capabilities/memory.html" data-href-zh="/docs/capabilities/memory.zh.html">Memory management</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="会话目标">Session goals</div><a class="navlink" href="/docs/capabilities/goal.html" data-title-zh="目标" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html">Goals</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="Agentic 工作流">Agentic workflows</div><a class="navlink" href="/docs/capabilities/agentic-workflow.html" data-title-zh="自编程工作流" data-href-en="/docs/capabilities/agentic-workflow.html" data-href-zh="/docs/capabilities/agentic-workflow.zh.html">Workflow automation</a></div>
@@ -104,11 +107,11 @@
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="编写函数">Writing functions</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="函数元数据">Function metadata</span></nav><h1 id="函数元数据">函数元数据<a class="header-anchor" href="#函数元数据">#</a></h1>
 <p>本文档定义本框架中的函数必须携带哪些元数据（无论它是否调用 LLM）、这些元数据存放在何处，以及哪些组件会消费它们。</p>
-<p>适用范围：所有用 <code>@agentic_function</code> 装饰的函数，以及任何传入 <code>render_options</code> 或决策菜单协议其他组件的普通 Python 可调用对象。（<code>runtime.exec(tools=[...])</code> 不接受普通可调用对象——条目必须是 <code>@agentic_function</code>、<code>{&quot;spec&quot;, &quot;execute&quot;}</code> 字典，或带有 <code>.spec</code>/<code>.execute</code> 的对象；其他任何形式都会抛出 <code>TypeError</code>。）</p>
+<p>适用范围：所有用 <code>Agent</code> method 装饰的函数，以及任何传入 <code>render_options</code> 或决策菜单协议其他组件的普通 Python 可调用对象。（<code>runtime.exec(tools=[...])</code> 不接受普通可调用对象——条目必须是 <code>Agent</code> method、<code>{&quot;spec&quot;, &quot;execute&quot;}</code> 字典，或带有 <code>.spec</code>/<code>.execute</code> 的对象；其他任何形式都会抛出 <code>TypeError</code>。）</p>
 <h2 id="1-为什么需要这份规范">1. 为什么需要这份规范<a class="header-anchor" href="#1-为什么需要这份规范">#</a></h2>
 <p>历史上，同一份信息曾散落在多个位置：</p>
 <ul>
-<li>参数描述既可以写在 docstring 的 <code>Args:</code> 段落里，也可以写在 <code>@agentic_function(input={...})</code> 中</li>
+<li>参数描述既可以写在 docstring 的 <code>Args:</code> 段落里，也可以写在 <code>method_options = dict(input={...})</code> 中</li>
 <li>决策菜单的调用方在调用处手写一份冗长的 <code>available</code> 注册字典，重复了函数上已有的信息</li>
 <li>不同的消费方（tool_use spec、WebUI、决策菜单、meta 工具）遵循的读取顺序约定略有差异</li>
 </ul>
@@ -196,52 +199,52 @@
 </tr>
 <tr>
 <td>单个参数的描述</td>
-<td><code>@agentic_function(input={&quot;x&quot;: {&quot;description&quot;: ...}})</code></td>
+<td><code>method_options = dict(input={&quot;x&quot;: {&quot;description&quot;: ...}})</code></td>
 <td><code>fn.input_meta[&quot;x&quot;][&quot;description&quot;]</code></td>
 </tr>
 <tr>
 <td>单个参数的枚举值</td>
-<td><code>@agentic_function(input={&quot;x&quot;: {&quot;options&quot;: [...]}})</code></td>
+<td><code>method_options = dict(input={&quot;x&quot;: {&quot;options&quot;: [...]}})</code></td>
 <td><code>fn.input_meta[&quot;x&quot;][&quot;options&quot;]</code></td>
 </tr>
 <tr>
 <td>该参数是否对 LLM 可见</td>
-<td><code>@agentic_function(input={&quot;x&quot;: {&quot;hidden&quot;: True}})</code></td>
+<td><code>method_options = dict(input={&quot;x&quot;: {&quot;hidden&quot;: True}})</code></td>
 <td><code>fn.input_meta[&quot;x&quot;][&quot;hidden&quot;]</code></td>
 </tr>
 <tr>
 <td>WebUI 占位符</td>
-<td><code>@agentic_function(input={&quot;x&quot;: {&quot;placeholder&quot;: &quot;...&quot;}})</code></td>
+<td><code>method_options = dict(input={&quot;x&quot;: {&quot;placeholder&quot;: &quot;...&quot;}})</code></td>
 <td><code>fn.input_meta[&quot;x&quot;][&quot;placeholder&quot;]</code></td>
 </tr>
 <tr>
 <td>WebUI 多行输入</td>
-<td><code>@agentic_function(input={&quot;x&quot;: {&quot;multiline&quot;: True}})</code></td>
+<td><code>method_options = dict(input={&quot;x&quot;: {&quot;multiline&quot;: True}})</code></td>
 <td><code>fn.input_meta[&quot;x&quot;][&quot;multiline&quot;]</code></td>
 </tr>
 <tr>
 <td>动态选项来源</td>
-<td><code>@agentic_function(input={&quot;x&quot;: {&quot;options_from&quot;: &quot;functions&quot;}})</code></td>
+<td><code>method_options = dict(input={&quot;x&quot;: {&quot;options_from&quot;: &quot;functions&quot;}})</code></td>
 <td><code>fn.input_meta[&quot;x&quot;][&quot;options_from&quot;]</code></td>
 </tr>
 <tr>
 <td>框架自动注入的参数</td>
-<td>分布在两个文件中的两个常量，值均为 <code>{&quot;runtime&quot;, &quot;exec_runtime&quot;, &quot;review_runtime&quot;}</code>：<code>agentic_programming/function.py</code> 中的 <code>_RUNTIME_PARAMS</code>（注入 + 从 tool-spec 中过滤）和 <code>agentic_programming/decision.py</code> 中的 <code>_AUTO_PARAMS</code>（菜单隐藏 + 派发）</td>
+<td>分布在两个文件中的两个常量，值均为 <code>{&quot;runtime&quot;, &quot;exec_runtime&quot;, &quot;review_runtime&quot;}</code>：<code>agentic_programming/call_state.py</code> 中的 <code>_RUNTIME_PARAMS</code>（注入 + 从 tool-spec 中过滤）和 <code>agentic_programming/decision.py</code> 中的 <code>_AUTO_PARAMS</code>（菜单隐藏 + 派发）</td>
 <td>模块级</td>
 </tr>
 <tr>
 <td>覆盖环境 LLM 的 system prompt</td>
-<td><code>@agentic_function(system=&quot;...&quot;)</code></td>
+<td><code>method_options = dict(system=&quot;...&quot;)</code></td>
 <td><code>fn.system</code></td>
 </tr>
 <tr>
 <td>DAG expose 模式</td>
-<td><code>@agentic_function(expose=&quot;io&quot;|&quot;llm&quot;|&quot;full&quot;|&quot;hidden&quot;)</code>——控制<strong>调用方</strong>在其 DAG 渲染中能看到本函数的哪些内容</td>
+<td><code>method_options = dict(expose=&quot;io&quot;|&quot;llm&quot;|&quot;full&quot;|&quot;hidden&quot;)</code>——控制<strong>调用方</strong>在其 DAG 渲染中能看到本函数的哪些内容</td>
 <td><code>fn.expose</code></td>
 </tr>
 <tr>
 <td>DAG 渲染范围</td>
-<td><code>@agentic_function(render_range={&quot;callers&quot;: N, &quot;subcalls&quot;: M})</code>——控制<strong>本函数自身</strong>的 <code>llm()</code> 调用会读取多少 DAG 历史。两者都是基于 <code>seq</code> 的节点数切片：<code>callers</code> = 在本函数帧开始<strong>之前</strong>写入的最近 N 个节点（默认 <code>None</code> = 不设上限，<code>0</code> = 隔绝所有先前上下文）；<code>subcalls</code> = 自本函数帧开始<strong>以来</strong>写入的最近 N 个节点（默认 <code>-1</code> = 不设上限——帧能看到自身的进展；子函数的内部内容是由<em>它们自己</em>的 <code>expose</code> 设置隐藏的，而非由 subcalls 计数隐藏；仅当需要在循环中主动限制 prompt 体积时才设 <code>N&gt;=0</code>）。</td>
+<td><code>method_options = dict(render_range={&quot;callers&quot;: N, &quot;subcalls&quot;: M})</code>——控制<strong>本函数自身</strong>的 <code>llm()</code> 调用会读取多少 DAG 历史。两者都是基于 <code>seq</code> 的节点数切片：<code>callers</code> = 在本函数帧开始<strong>之前</strong>写入的最近 N 个节点（默认 <code>None</code> = 不设上限，<code>0</code> = 隔绝所有先前上下文）；<code>subcalls</code> = 自本函数帧开始<strong>以来</strong>写入的最近 N 个节点（默认 <code>-1</code> = 不设上限——帧能看到自身的进展；子函数的内部内容是由<em>它们自己</em>的 <code>expose</code> 设置隐藏的，而非由 subcalls 计数隐藏；仅当需要在循环中主动限制 prompt 体积时才设 <code>N&gt;=0</code>）。</td>
 <td><code>fn.render_range</code></td>
 </tr>
 <tr>
@@ -251,9 +254,9 @@
 </tr>
 </tbody>
 </table>
-<p><strong>核心原则</strong>：凡是可通过签名 / 注解表达的内容，就不在装饰器中重复；凡是可通过 <code>input=</code> 表达的内容，就不在 docstring 中重复。</p>
-<p>装饰器还接受共享的工具注册 / 门控 kwargs（<code>name</code>、<code>description</code>、<code>toolset</code>、<code>unsafe_in</code>、<code>requires_approval</code>、<code>available_if</code>、<code>defer</code> 等），详见 <code>docs/reference/design/function/calling-unification.md</code>；<code>cache</code> / <code>cache_ttl</code>（按 name + args 记忆化结果）和 <code>timeout</code>（N 秒后强行终止函数体并返回一个错误结果）的行为与 <code>@function</code> 中一致。</p>
-<h3 id="一个裸-agentic_function-的有效默认值">一个裸 <code>@agentic_function</code> 的有效默认值<a class="header-anchor" href="#一个裸-agentic_function-的有效默认值">#</a></h3>
+<p><strong>核心原则</strong>：凡是可通过签名 / 注解表达的内容，就不在方法配置中重复；凡是可通过 <code>input=</code> 表达的内容，就不在 docstring 中重复。</p>
+<p>方法配置还接受共享的工具注册 / 门控 kwargs（<code>name</code>、<code>description</code>、<code>toolset</code>、<code>unsafe_in</code>、<code>requires_approval</code>、<code>available_if</code>、<code>defer</code> 等），详见 <code>docs/reference/design/function/calling-unification.md</code>；<code>cache</code> / <code>cache_ttl</code>（按 name + args 记忆化结果）和 <code>timeout</code>（N 秒后强行终止函数体并返回一个错误结果）的行为与 <code>@function</code> 中一致。</p>
+<h3 id="一个裸-agent-method-的有效默认值">一个裸 <code>Agent</code> method 的有效默认值<a class="header-anchor" href="#一个裸-agent-method-的有效默认值">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -265,13 +268,13 @@
 <tbody>
 <tr>
 <td><code>expose</code></td>
-<td><code>&quot;io&quot;</code></td>
+<td><code>&quot;full&quot;</code> for ordinary methods, <code>&quot;io&quot;</code> for explicit tools</td>
 <td>调用方能看到我的 name + input + output。我内部的 <code>llm()</code> 调用对它们隐藏。</td>
 </tr>
 <tr>
 <td><code>render_range</code></td>
 <td><code>None</code> → <code>render_context</code> 回落到 <code>callers=None, subcalls=-1</code></td>
-<td>帧之前的历史不设上限。帧内节点（帧自身的进展：先前的 <code>llm()</code> 结果、返回的子函数 io）同样不设上限。子 <code>@agentic_function</code> 的内部内容之所以保持隐藏，是因为子函数携带 <code>expose=&quot;io&quot;</code>，而非因为 subcalls 对其做了裁剪。</td>
+<td>帧之前的历史不设上限。帧内节点（帧自身的进展：先前的 <code>llm()</code> 结果、返回的子函数 io）同样不设上限。子 <code>Agent</code> method 的内部内容之所以保持隐藏，是因为子函数携带 <code>expose=&quot;io&quot;</code>，而非因为 subcalls 对其做了裁剪。</td>
 </tr>
 <tr>
 <td>顶层对话轮次</td>
@@ -334,65 +337,69 @@
 <li>在行内定义确切的输出格式；不要指望 docstring 或外部上下文来传达它。</li>
 </ul>
 <h2 id="5-input-与-docstring-的-args-段落">5. <code>input=</code> 与 docstring 的 <code>Args:</code> 段落<a class="header-anchor" href="#5-input-与-docstring-的-args-段落">#</a></h2>
-<p>历史上，同一份参数描述既可能出现在 docstring 的 <code>Args:</code> 段落，也可能出现在 <code>@agentic_function(input={...})</code> 中。本规范将 <code>input=</code> 定为可信来源。</p>
+<p>历史上，同一份参数描述既可能出现在 docstring 的 <code>Args:</code> 段落，也可能出现在 <code>method_options = dict(input={...})</code> 中。本规范将 <code>input=</code> 定为可信来源。</p>
 <h3 id="推荐写法新代码必须采用">推荐写法（新代码必须采用）<a class="header-anchor" href="#推荐写法新代码必须采用">#</a></h3>
 <p>最小示例：</p>
-<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">"text"</span><span class="p">:</span>  <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Text to polish."</span><span class="p">},</span>
-    <span class="s2">"style"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Output style."</span><span class="p">,</span> <span class="s2">"options"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"academic"</span><span class="p">,</span> <span class="s2">"casual"</span><span class="p">]},</span>
-<span class="p">})</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Polish a text in the given style."""</span>
-    <span class="o">...</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'polish'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'input'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'text'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Text to polish.'</span><span class="p">},</span> <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Output style.'</span><span class="p">,</span> <span class="s1">'options'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'academic'</span><span class="p">,</span> <span class="s1">'casual'</span><span class="p">]}}},</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Polish a text in the given style."""</span>
+        <span class="o">...</span>
+
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">polish</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">polish</span>
 </code></pre>
 <p>更完整的示例，演练了更多元数据特性（placeholder、multiline、hidden、混合类型）：</p>
-<pre><code class="language-python"><span class="nd">@agentic_function</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="p">{</span>
-    <span class="s2">"essay"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Essay to review."</span><span class="p">,</span>
-        <span class="s2">"placeholder"</span><span class="p">:</span> <span class="s2">"Paste the essay text here..."</span><span class="p">,</span>
-        <span class="s2">"multiline"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s2">"rubric_id"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Which rubric to apply."</span><span class="p">,</span>
-        <span class="s2">"options"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"ielts_writing"</span><span class="p">,</span> <span class="s2">"toefl_writing"</span><span class="p">,</span> <span class="s2">"gre_argument"</span><span class="p">],</span>
-    <span class="p">},</span>
-    <span class="s2">"max_score"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Upper bound for the numeric score."</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s2">"show_rubric_internals"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Include rubric breakdown in the output."</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s2">"session_id"</span><span class="p">:</span> <span class="p">{</span>
-        <span class="c1"># 由系统提供；LLM 看不到它。</span>
-        <span class="s2">"hidden"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="p">},</span>
-<span class="p">})</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">review_essay</span><span class="p">(</span>
-    <span class="n">essay</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">rubric_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">max_score</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">show_rubric_internals</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>           <span class="c1"># 由 Python 通过上下文填充，而非 LLM</span>
-    <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">,</span>          <span class="c1"># 自动注入</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Score an essay against a named rubric and return a structured report."""</span>
-    <span class="o">...</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'review_essay'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'input'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'essay'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Essay to review.'</span><span class="p">,</span> <span class="s1">'placeholder'</span><span class="p">:</span> <span class="s1">'Paste the essay text here...'</span><span class="p">,</span> <span class="s1">'multiline'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="s1">'rubric_id'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Which rubric to apply.'</span><span class="p">,</span> <span class="s1">'options'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'ielts_writing'</span><span class="p">,</span> <span class="s1">'toefl_writing'</span><span class="p">,</span> <span class="s1">'gre_argument'</span><span class="p">]},</span> <span class="s1">'max_score'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Upper bound for the numeric score.'</span><span class="p">},</span> <span class="s1">'show_rubric_internals'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Include rubric breakdown in the output.'</span><span class="p">},</span> <span class="s1">'session_id'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'hidden'</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}},</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">review_essay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="n">essay</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">rubric_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">max_score</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">show_rubric_internals</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>           <span class="c1"># 由 Python 通过上下文填充，而非 LLM</span>
+        <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">,</span>          <span class="c1"># 自动注入</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Score an essay against a named rubric and return a structured report."""</span>
+        <span class="o">...</span>
+
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">review_essay</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">review_essay</span>
 </code></pre>
 <p>docstring 只保留一行摘要——<strong>没有 <code>Args:</code> 段落，也没有 <code>Returns:</code> 段落</strong>。如果返回值字段的含义对下游 LLM 驱动的调用很重要，就用结构化返回类型（例如 <code>TypedDict</code> 或 dataclass）来编码它，以便消费方能够反射它；不要在 docstring 段落里重复这套 schema。</p>
 <h3 id="旧写法仍受支持">旧写法（仍受支持）<a class="header-anchor" href="#旧写法仍受支持">#</a></h3>
-<pre><code class="language-python"><span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Polish a text in the given style.</span>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        text: Text to polish.</span>
-<span class="sd">        style: Output style.</span>
-<span class="sd">        runtime: LLM runtime.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'polish'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="p">}</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Polished text.</span>
-<span class="sd">    """</span>
-    <span class="o">...</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Polish a text in the given style.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Text to polish.</span>
+<span class="sd">            style: Output style.</span>
+<span class="sd">            runtime: LLM runtime.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Polished text.</span>
+<span class="sd">        """</span>
+        <span class="o">...</span>
+
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">polish</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">polish</span>
 </code></pre>
 <p>旧函数仍然能运行，但 <code>Args:</code> 段落是死文本——<strong>框架中任何地方都不存在 docstring-<code>Args:</code> 解析器</strong>（见 §10）。<code>_build_agentic_tool_spec</code> 的回落顺序如下：</p>
 <pre><code>fn.input_meta[name][&quot;description&quot;]
@@ -403,7 +410,7 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 </code></pre>
 <p><code>render_options</code> 只从 <code>input_meta</code> 读取 <code>description</code> 和 <code>options</code>；缺少二者的参数只会得到 name + type。</p>
 <h2 id="6-普通-python-可调用对象未装饰">6. 普通 Python 可调用对象（未装饰）<a class="header-anchor" href="#6-普通-python-可调用对象未装饰">#</a></h2>
-<p>决策菜单路径并不强制要求 <code>@agentic_function</code>：普通可调用对象可以传给 <code>render_options</code>（也可作为 <code>decision.make</code> / <code>choices=</code> 的选项），但它们携带的元数据更少。它们<strong>不能</strong>传给 <code>runtime.exec(tools=[...])</code>——对于任何既不是 <code>@agentic_function</code>、也不是 <code>{&quot;spec&quot;, &quot;execute&quot;}</code> 字典、又不带 <code>.spec</code>/<code>.execute</code> 的对象，<code>_adapt_tools</code> 都会抛出 <code>TypeError</code>。</p>
+<p>决策菜单路径并不强制要求 <code>Agent</code> method：普通可调用对象可以传给 <code>render_options</code>（也可作为 <code>decision.make</code> / <code>choices=</code> 的选项），但它们携带的元数据更少。它们<strong>不能</strong>传给 <code>runtime.exec(tools=[...])</code>——对于任何既不是 <code>Agent</code> method、也不是 <code>{&quot;spec&quot;, &quot;execute&quot;}</code> 字典、又不带 <code>.spec</code>/<code>.execute</code> 的对象，<code>_adapt_tools</code> 都会抛出 <code>TypeError</code>。</p>
 <table>
 <thead>
 <tr>
@@ -435,7 +442,7 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 </tr>
 </tbody>
 </table>
-<p>在以下场景使用普通可调用对象：参数很少的简单决策分支、不暴露 WebUI 界面、且不需要丰富的菜单提示。一旦你需要枚举值、隐藏参数或详细描述，就立刻升级到 <code>@agentic_function</code>。</p>
+<p>在以下场景使用普通可调用对象：参数很少的简单决策分支、不暴露 WebUI 界面、且不需要丰富的菜单提示。一旦你需要枚举值、隐藏参数或详细描述，就立刻升级到 <code>Agent</code> method。</p>
 <h2 id="7-自动注入的参数">7. 自动注入的参数<a class="header-anchor" href="#7-自动注入的参数">#</a></h2>
 <p>下列参数名按约定保留：如果某函数的签名包含其中任何一个，框架会在调用时自动注入它们。LLM 看不到它们，也不需要填写。</p>
 <table>
@@ -460,10 +467,10 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 </tr>
 </tbody>
 </table>
-<p>这些名字存放在两个文件中的两个常量里：<code>agentic_programming/function.py</code> 中的 <code>_RUNTIME_PARAMS</code>（运行时注入 + 从 tool spec 中过滤）和 <code>agentic_programming/decision.py</code> 中的 <code>_AUTO_PARAMS</code>（从决策菜单中隐藏 + 派发）。要新增一个自动注入的名字，需同时改这两处。不要在单个调用处用 <code>input={&quot;x&quot;: {&quot;hidden&quot;: True}}</code> 来标记它们。</p>
+<p>这些名字存放在两个文件中的两个常量里：<code>agentic_programming/call_state.py</code> 中的 <code>_RUNTIME_PARAMS</code>（运行时注入 + 从 tool spec 中过滤）和 <code>agentic_programming/decision.py</code> 中的 <code>_AUTO_PARAMS</code>（从决策菜单中隐藏 + 派发）。要新增一个自动注入的名字，需同时改这两处。不要在单个调用处用 <code>input={&quot;x&quot;: {&quot;hidden&quot;: True}}</code> 来标记它们。</p>
 <h2 id="8-webui-渲染行为">8. WebUI 渲染行为<a class="header-anchor" href="#8-webui-渲染行为">#</a></h2>
-<p>WebUI 不会反射运行中的 Python 对象：它对源文件（<code>openprogram/webui/_functions.py</code>）做 AST/正则解析。因此 <code>input=</code> 必须在装饰器调用中写成字面量字典，才能在表单中显示出来——动态构建的元数据（变量、辅助函数调用）对 WebUI 是不可见的。</p>
-<p>WebUI 表单按下列规则渲染每个参数（实现见 <code>apps/web/components/chat/composer/modes/fn-form/fn-form.tsx</code> 和 <code>fn-form-fields.tsx</code>）。在编写 <code>@agentic_function(input={...})</code> 时，用下表来预判你的函数会生成哪种输入控件：</p>
+<p>WebUI 不会反射运行中的 Python 对象：它对源文件（<code>openprogram/webui/_functions.py</code>）做 AST/正则解析。因此 <code>input=</code> 必须在方法配置调用中写成字面量字典，才能在表单中显示出来——动态构建的元数据（变量、辅助函数调用）对 WebUI 是不可见的。</p>
+<p>WebUI 表单按下列规则渲染每个参数（实现见 <code>apps/web/components/chat/composer/modes/fn-form/fn-form.tsx</code> 和 <code>fn-form-fields.tsx</code>）。在编写 <code>method_options = dict(input={...})</code> 时，用下表来预判你的函数会生成哪种输入控件：</p>
 <table>
 <thead>
 <tr>
@@ -521,7 +528,7 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 <tr>
 <td><code>effects=[&quot;fs&quot;, &quot;net&quot;, &quot;state&quot;]</code></td>
 <td>标记函数副作用，用于权限门控 / 危险操作拦截</td>
-<td>装饰器上已存在一个门控界面（<code>requires_approval</code>、<code>check_fn</code>、<code>unsafe_in</code>、<code>available_if</code>、<code>defer</code>）；在其之上再加一个声明式的 <code>effects=</code> 字段仍属未来工作</td>
+<td>方法配置上已存在一个门控界面（<code>requires_approval</code>、<code>check_fn</code>、<code>unsafe_in</code>、<code>available_if</code>、<code>defer</code>）；在其之上再加一个声明式的 <code>effects=</code> 字段仍属未来工作</td>
 </tr>
 <tr>
 <td><code>permissions=[...]</code></td>
@@ -549,13 +556,13 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 <h2 id="10-迁移路径仅供参考">10. 迁移路径（仅供参考）<a class="header-anchor" href="#10-迁移路径仅供参考">#</a></h2>
 <p>将既有代码迁移到本规范的推荐顺序；并非严格要求：</p>
 <ol>
-<li>在 <code>agentic_programming/function.py</code> 中添加一个共享辅助函数 <code>_parse_docstring_args(fn) -&gt; dict[name, description]</code></li>
+<li>在 <code>agentic_programming/call_state.py</code> 中添加一个共享辅助函数 <code>_parse_docstring_args(fn) -&gt; dict[name, description]</code></li>
 <li>让 <code>_build_agentic_tool_spec</code> 调用该辅助函数作为回落（目前 spec 完全不读取 docstring 的 <code>Args:</code>）</li>
 <li>让 <code>render_options</code> 调用同一个辅助函数作为同样的回落</li>
-<li>既有的 <code>@agentic_function</code> 函数无需立即改写；在你顺手触及它们时再随机迁移</li>
+<li>既有的 <code>Agent</code> method 函数无需立即改写；在你顺手触及它们时再随机迁移</li>
 </ol>
 <h2 id="11-风格检查清单">11. 风格检查清单<a class="header-anchor" href="#11-风格检查清单">#</a></h2>
-<p>编写一个新的 <code>@agentic_function</code> 时：</p>
+<p>编写一个新的 <code>Agent</code> method 时：</p>
 <ul class="contains-task-list">
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> docstring 第一段是一行摘要（直接说明函数做什么 / 何时选用它）</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> docstring 中没有 <code>Args:</code> 或 <code>Returns:</code> 段落（除非你确实出于调试 / 阅读目的想要它们）</li>
@@ -568,13 +575,13 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 </ul>
 <h2 id="12-参考资料">12. 参考资料<a class="header-anchor" href="#12-参考资料">#</a></h2>
 <ul>
-<li><code>openprogram/agentic_programming/function.py</code> —— <code>@agentic_function</code> 装饰器实现</li>
+<li><code>openprogram/agentic_programming/call_state.py</code> —— <code>Agent</code> method 方法配置实现</li>
 <li><code>openprogram/agentic_programming/decision.py</code> —— 选项菜单渲染、回复解析，以及下一步决策原语（<code>decision.make</code>、<code>render_options</code>、<code>parse_args</code>、<code>DecisionError</code>）</li>
-<li><code>docs/capabilities/agentic-programming/writing-functions/agentic-function.md</code> —— 装饰器使用指南</li>
+<li><code>docs/capabilities/agentic-programming/writing-functions/agent.md</code> —— 方法配置使用指南</li>
 <li><code>docs/reference/design/function/calling-unification.md</code> —— 函数 / 工具调用框架</li>
 <li><code>docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.md</code> —— 单轮原生 tool-use 循环机制</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agentic-function.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agentic-function.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="智能体函数">Agentic functions</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="工具循环">Tool-call loops</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/agent.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/agent.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/agent.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="智能体函数">Agentic functions</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="工具循环">Tool-call loops</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -589,7 +596,7 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 </summary>
 <ul class="toc-list">
 <li>
-<a class="lvl-3" href="#一个裸-agentic_function-的有效默认值">一个裸 @agentic_function 的有效默认值</a>
+<a class="lvl-3" href="#一个裸-agent-method-的有效默认值">一个裸 Agent method 的有效默认值</a>
 </li>
 </ul>
 </details>
@@ -642,6 +649,6 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

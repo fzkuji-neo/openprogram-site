@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790196881" data-alt-lang-url="/docs/reference/design/providers/network-proxy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/reference/design/providers/network-proxy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Network proxy · OpenProgram Docs</title>
-<meta name="description" content="Outbound network proxy # Provider HTTP traffic has two separate concerns: httpx environment-proxy diagnostics, and the managed client&#x27;s outbound security">
+
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/providers/network-proxy.html">
+
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/providers/network-proxy.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/providers/network-proxy.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/providers/network-proxy.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/providers/network-proxy.html">
 <meta property="og:title" content="Network proxy · OpenProgram Docs">
-<meta property="og:description" content="Outbound network proxy # Provider HTTP traffic has two separate concerns: httpx environment-proxy diagnostics, and the managed client&#x27;s outbound security">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Network proxy · OpenProgram Docs">
-<meta name="twitter:description" content="Outbound network proxy # Provider HTTP traffic has two separate concerns: httpx environment-proxy diagnostics, and the managed client&#x27;s outbound security">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,10 +63,10 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
-<div class="layout">
+<div class="layout no-toc">
   <nav class="sidebar" aria-label="Documentation">
     <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
            aria-label="Filter docs" placeholder="Filter docs…" autocomplete="off" spellcheck="false">
@@ -74,8 +76,9 @@
 <a class="navlink" href="/docs/reference/design/implementation-status.html" data-title-zh="实现索引" data-href-en="/docs/reference/design/implementation-status.html" data-href-zh="/docs/reference/design/implementation-status.zh.html">Implementation index</a>
 <a class="navlink" href="/docs/reference/design/framework-comparison.html" data-title-zh="框架对比" data-href-en="/docs/reference/design/framework-comparison.html" data-href-zh="/docs/reference/design/framework-comparison.zh.html">Framework comparison</a>
 <a class="navlink" href="/docs/reference/design/feature-matrix.html" data-title-zh="功能矩阵" data-href-en="/docs/reference/design/feature-matrix.html" data-href-zh="/docs/reference/design/feature-matrix.zh.html">Feature matrix</a></details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">81</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">12</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">83</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<a class="navlink" href="/docs/reference/design/runtime/codex-capability-adoption.html" data-title-zh="Codex 功能核对" data-href-en="/docs/reference/design/runtime/codex-capability-adoption.html" data-href-zh="/docs/reference/design/runtime/codex-capability-adoption.zh.html">Codex capability audit</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="调用流程" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Call flow</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/control.html" data-title-zh="执行控制" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html">Execution control</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-title-zh="操作生命周期" data-href-en="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html">Action lifecycle</a>
@@ -119,10 +122,11 @@
 <a class="navlink" href="/docs/reference/design/runtime/operations/chat-progress-recovery.html" data-title-zh="进度恢复" data-href-en="/docs/reference/design/runtime/operations/chat-progress-recovery.html" data-href-zh="/docs/reference/design/runtime/operations/chat-progress-recovery.zh.html">Progress recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html" data-title-zh="网页可靠性" data-href-en="/docs/reference/design/runtime/web-runtime-reliability.html" data-href-zh="/docs/reference/design/runtime/web-runtime-reliability.zh.html">Web reliability</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-frontend-spawn.html" data-title-zh="前端进程" data-href-en="/docs/reference/design/runtime/web-frontend-spawn.html" data-href-zh="/docs/reference/design/runtime/web-frontend-spawn.zh.html">Frontend processes</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="配置与操作">Configuration and operations</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html" data-title-zh="智能体设置" data-href-en="/docs/reference/design/runtime/agent-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent settings</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="配置与操作">Configuration and operations</span><span class="nav-count">9</span></summary><a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html" data-title-zh="智能体设置" data-href-en="/docs/reference/design/runtime/agent-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-core-configuration-ui.html" data-title-zh="基础设置" data-href-en="/docs/reference/design/runtime/agent-core-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-core-configuration-ui.zh.html">Core settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-tool-configuration-ui.html" data-title-zh="工具设置" data-href-en="/docs/reference/design/runtime/agent-tool-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-tool-configuration-ui.zh.html">Tool settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html" data-title-zh="能力设置" data-href-en="/docs/reference/design/runtime/agent-capability-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-capability-configuration-ui.zh.html">Capability settings</a>
+<a class="navlink" href="/docs/reference/design/runtime/agent-configuration-plan.html" data-title-zh="Agent 实施计划" data-href-en="/docs/reference/design/runtime/agent-configuration-plan.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-plan.zh.html">Agent implementation plan</a>
 <a class="navlink" href="/docs/reference/design/runtime/chat-search-settings.html" data-title-zh="聊天搜索" data-href-en="/docs/reference/design/runtime/chat-search-settings.html" data-href-zh="/docs/reference/design/runtime/chat-search-settings.zh.html">Chat search</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具集" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Toolsets</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="输入请求" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">Input requests</a>
@@ -182,18 +186,20 @@
 <a class="navlink" href="/docs/reference/design/memory/written-marker.viz.html" data-title-zh="写入游标图解" data-href-en="/docs/reference/design/memory/written-marker.viz.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.viz.html">Write cursor diagram</a>
 <a class="navlink" href="/docs/reference/design/memory/written-marker.html" data-title-zh="写入游标" data-href-en="/docs/reference/design/memory/written-marker.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.html">Write cursor</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">59</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">61</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">15</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/app-icon.html" data-title-zh="应用图标" data-href-en="/docs/reference/design/ui/app-icon.html" data-href-zh="/docs/reference/design/ui/app-icon.zh.html">App icon</a>
 <a class="navlink" href="/docs/reference/design/ui/invariants.html" data-title-zh="界面不变量" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html">UI invariants</a>
 <a class="navlink" href="/docs/reference/design/ui/surface-system.html" data-title-zh="界面层次" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">UI surfaces</a>
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="状态存储" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">State stores</a>
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html" data-title-zh="主题" data-href-en="/docs/reference/design/ui/theme-system.html" data-href-zh="/docs/reference/design/ui/theme-system.zh.html">Themes</a>
 <a class="navlink" href="/docs/reference/design/ui/window-state.html" data-title-zh="窗口状态" data-href-en="/docs/reference/design/ui/window-state.html" data-href-zh="/docs/reference/design/ui/window-state.zh.html">Window state</a>
+<a class="navlink" href="/docs/reference/design/ui/center-canvas-layout.html" data-title-zh="中间画布：任意分屏布局 — 交互原型与规划" data-href-en="/docs/reference/design/ui/center-canvas-layout.html" data-href-zh="/docs/reference/design/ui/center-canvas-layout.zh.html">Center canvas layout</a>
 <a class="navlink" href="/docs/reference/design/ui/session-tab-identity.html" data-title-zh="标签身份" data-href-en="/docs/reference/design/ui/session-tab-identity.html" data-href-zh="/docs/reference/design/ui/session-tab-identity.zh.html">Tab identity</a>
 <a class="navlink" href="/docs/reference/design/ui/window-lifecycle.html" data-title-zh="窗口生命周期" data-href-en="/docs/reference/design/ui/window-lifecycle.html" data-href-zh="/docs/reference/design/ui/window-lifecycle.zh.html">Window lifecycle</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html" data-title-zh="交互反馈" data-href-en="/docs/reference/design/ui/interaction-feedback.html" data-href-zh="/docs/reference/design/ui/interaction-feedback.zh.html">Interaction feedback</a>
+<a class="navlink" href="/docs/reference/design/ui/page-loading-performance.html" data-title-zh="页面加载性能" data-href-en="/docs/reference/design/ui/page-loading-performance.html" data-href-zh="/docs/reference/design/ui/page-loading-performance.zh.html">Page loading performance</a>
 <a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="状态指示" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Status indicators</a>
 <a class="navlink" href="/docs/reference/design/ui/session-status.html" data-title-zh="会话状态" data-href-en="/docs/reference/design/ui/session-status.html" data-href-zh="/docs/reference/design/ui/session-status.zh.html">Session status</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="对话与编辑器">Chat and composer</span><span class="nav-count">16</span></summary><a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment options</a>
@@ -255,8 +261,7 @@
 <a class="navlink" href="/docs/reference/design/providers/metadata-load-diagnostics.html" data-title-zh="元数据诊断" data-href-en="/docs/reference/design/providers/metadata-load-diagnostics.html" data-href-zh="/docs/reference/design/providers/metadata-load-diagnostics.zh.html">Metadata diagnostics</a>
 <a class="navlink" href="/docs/reference/design/providers/bailian-model-catalog.html" data-title-zh="百炼模型目录" data-href-en="/docs/reference/design/providers/bailian-model-catalog.html" data-href-zh="/docs/reference/design/providers/bailian-model-catalog.zh.html">Bailian catalog</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="用量统计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage metering</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="账号与认证">Authentication</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">Credential resolution</a>
-<a class="navlink" href="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-title-zh="Claude 订阅" data-href-en="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-href-zh="/docs/reference/design/providers/auth/claude-code-direct-oauth.zh.html">Claude subscription</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="账号与认证">Authentication</span><span class="nav-count">7</span></summary><a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">Credential resolution</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-connection-unification.html" data-title-zh="凭据连接" data-href-en="/docs/reference/design/providers/auth/credential-connection-unification.html" data-href-zh="/docs/reference/design/providers/auth/credential-connection-unification.zh.html">Credential connections</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-file-hardening.html" data-title-zh="文件凭据" data-href-en="/docs/reference/design/providers/auth/credential-file-hardening.html" data-href-zh="/docs/reference/design/providers/auth/credential-file-hardening.zh.html">File credentials</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-status-redesign.html" data-title-zh="凭据状态" data-href-en="/docs/reference/design/providers/auth/credential-status-redesign.html" data-href-zh="/docs/reference/design/providers/auth/credential-status-redesign.zh.html">Credential status</a>
@@ -270,7 +275,8 @@
 <a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replay</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.viz.html" data-title-zh="回放图解" data-href-en="/docs/reference/design/providers/record-replay.viz.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.viz.html">Replay diagram</a>
 <a class="navlink" href="/docs/reference/design/providers/responses-reasoning-replay.html" data-title-zh="推理记录回放" data-href-en="/docs/reference/design/providers/responses-reasoning-replay.html" data-href-zh="/docs/reference/design/providers/responses-reasoning-replay.zh.html">Reasoning replay</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">12</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<a class="navlink" href="/docs/reference/design/integrations/nooa.html" data-title-zh="直接调用、Agent 类与自动 DAG 上下文" data-href-en="/docs/reference/design/integrations/nooa.html" data-href-zh="/docs/reference/design/integrations/nooa.zh.html">Direct calls, Agent classes and automatic DAG context</a>
 <a class="navlink" href="/docs/reference/design/integrations/editor-integration.html" data-title-zh="编辑器集成" data-href-en="/docs/reference/design/integrations/editor-integration.html" data-href-zh="/docs/reference/design/integrations/editor-integration.zh.html">Editor integration</a>
 <a class="navlink" href="/docs/reference/design/integrations/extension-management.html" data-title-zh="扩展管理" data-href-en="/docs/reference/design/integrations/extension-management.html" data-href-zh="/docs/reference/design/integrations/extension-management.zh.html">Extension management</a>
 <a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="运行环境规范" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness standard</a>
@@ -286,7 +292,7 @@
 <a class="navlink" href="/docs/reference/design/channels/audit.html" data-title-zh="需求约束" data-href-en="/docs/reference/design/channels/audit.html" data-href-zh="/docs/reference/design/channels/audit.zh.html">Requirements</a>
 <a class="navlink" href="/docs/reference/design/channels/design.html" data-title-zh="架构" data-href-en="/docs/reference/design/channels/design.html" data-href-zh="/docs/reference/design/channels/design.zh.html">Architecture</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">15</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">16</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与权限">Security and permissions</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/system-access.html" data-title-zh="系统访问" data-href-en="/docs/reference/design/runtime/system-access.html" data-href-zh="/docs/reference/design/runtime/system-access.zh.html">System access</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html" data-title-zh="SSRF 防护" data-href-en="/docs/reference/design/runtime/ssrf-protection.html" data-href-zh="/docs/reference/design/runtime/ssrf-protection.zh.html">SSRF protection</a>
@@ -298,8 +304,9 @@
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="测试与错误处理">Testing and errors</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/testing/test-system.html" data-title-zh="测试系统" data-href-en="/docs/reference/design/testing/test-system.html" data-href-zh="/docs/reference/design/testing/test-system.zh.html">Test system</a>
 <a class="navlink" href="/docs/reference/design/testing/windows-ci.html" data-title-zh="Windows CI" data-href-en="/docs/reference/design/testing/windows-ci.html" data-href-zh="/docs/reference/design/testing/windows-ci.zh.html">Windows CI</a>
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="错误处理" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error handling</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="文档与网站">Documentation and website</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档站" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation site</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="文档与网站">Documentation and website</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档站" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation site</a>
 <a class="navlink" href="/docs/reference/design/site-discoverability-performance.html" data-title-zh="站点检索" data-href-en="/docs/reference/design/site-discoverability-performance.html" data-href-zh="/docs/reference/design/site-discoverability-performance.zh.html">Site discovery</a>
+<a class="navlink" href="/docs/reference/design/site-agent-readable-docs.html" data-title-zh="Agent 文档" data-href-en="/docs/reference/design/site-agent-readable-docs.html" data-href-zh="/docs/reference/design/site-agent-readable-docs.zh.html">Agent-readable docs</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
@@ -326,181 +333,18 @@
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="研究材料">Research</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/proactive/_research_archive/evaluation.html" data-title-zh="评估" data-href-en="/docs/reference/design/proactive/_research_archive/evaluation.html" data-href-zh="/docs/reference/design/proactive/_research_archive/evaluation.zh.html">Evaluation</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
+</details>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">6</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
+<a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a></details>
 </details></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="模型与外部接入">Models and connections</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="请求与模型">Requests and models</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="网络代理">Network proxy</span></nav><h1 id="outbound-network-proxy">Outbound network proxy<a class="header-anchor" href="#outbound-network-proxy">#</a></h1>
-<p>Provider HTTP traffic has two separate concerns: httpx environment-proxy
-diagnostics, and the managed client's outbound security policy. Managed
-clients are built through <code>openprogram.security.safe_http</code>; they do not consume
-the mount map from <code>http_proxy.py</code>. An enforcing proxy is part of
-<code>OutboundSecurityConfig.policy_proxy</code>, so URL policy and proxy routing are
-evaluated together. Product-facing documentation lives in
-<code>docs/server/configuration.md</code>.</p>
-<h2 id="1-why-one-resolver">1. Why one resolver<a class="header-anchor" href="#1-why-one-resolver">#</a></h2>
-<p>The implementation keeps the following outbound paths distinct:</p>
-<table>
-<thead>
-<tr>
-<th>Path</th>
-<th>Who uses it</th>
-<th>Proxy semantics without a shared resolver</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Managed client (<code>providers/utils/http_client.py</code>)</td>
-<td>provider SDK and streaming paths</td>
-<td>Uses <code>safe_http</code> with a consumer-specific URL policy. A policy proxy is explicit in <code>OutboundSecurityConfig.policy_proxy</code>; the client does not activate <code>get_proxy_mounts()</code> or unmanaged proxy environment state.</td>
-</tr>
-<tr>
-<td>SDK / ad-hoc raw httpx</td>
-<td>OpenAI-compat chat (openai SDK inside <code>openai_completions</code> / <code>openai_responses</code>), OAuth flows, token refresh, &quot;test provider&quot; button</td>
-<td>Full httpx env semantics: lowercase beats uppercase, <code>ALL_PROXY</code> honoured, <code>NO_PROXY</code> honoured.</td>
-</tr>
-<tr>
-<td>CLI subprocess</td>
-<td>claude_code, codex CLI, gemini CLI</td>
-<td>Inherits the shell env; the external CLI does its own proxy handling.</td>
-</tr>
-</tbody>
-</table>
-<p>The managed path deliberately has stronger URL and credential policy than a
-plain httpx client. A provider request therefore must not silently inherit an
-unmanaged process proxy: callers either use the managed security configuration
-or use a deliberately scoped plain client whose httpx environment semantics are
-documented at that call site.</p>
-<p>A socks proxy makes the divergence visible immediately: a shell with
-<code>ALL_PROXY=socks5://127.0.0.1:7891</code> crashes every API-routed provider with
-&quot;Using SOCKS proxy, but the 'socksio' package is not installed&quot; while
-CLI-backed providers keep working.</p>
-<h2 id="2-how-openclaw-does-it">2. How OpenClaw does it<a class="header-anchor" href="#2-how-openclaw-does-it">#</a></h2>
-<p>Source: <code>references/openclaw/src/infra/net/proxy-env.ts</code>, <code>proxy-fetch.ts</code>,
-<code>src/infra/net/proxy/</code>, and https://docs.openclaw.ai/cli/proxy/.</p>
-<ul>
-<li><strong>One canonical env resolver</strong> (<code>proxy-env.ts</code>) that deliberately mirrors
-undici <code>EnvHttpProxyAgent</code> semantics: lowercase vars take precedence over
-uppercase; HTTPS requests prefer <code>https_proxy</code> then fall back to
-<code>http_proxy</code>; <code>ALL_PROXY</code> is a fallback fed in explicitly. A full
-<code>NO_PROXY</code> matcher (comma/whitespace split, case-insensitive, <code>*</code>,
-leading-dot, <code>*.</code>, subdomain suffix, optional <code>:port</code>, bracketed IPv6,
-plus their own IPv4-CIDR extension) gates every proxy decision — it is
-a reimplementation kept in sync with undici because undici doesn't
-export its matcher.</li>
-<li><strong>One explicit override</strong>: <code>--proxy-url</code> flag / <code>proxy.proxyUrl</code> config /
-<code>OPENCLAW_PROXY_URL</code> env, with optional <code>--proxy-ca-file</code>, implemented as
-a <code>makeProxyFetch(proxyUrl)</code> wrapper over undici <code>ProxyAgent</code>, plus a
-managed-proxy lifecycle (validation, TLS options, active-state tracking).</li>
-<li>Provider HTTP helpers all route through these helpers; the SSRF guard
-(<code>fetch-guard.ts</code>) composes with the same <code>matchesNoProxy</code>.</li>
-</ul>
-<p>OpenProgram borrows the useful diagnostic property that standard environment
-variables have one documented interpretation, while its managed provider path
-adds a separate policy-proxy boundary. OpenClaw goes further with proxy
-lifecycle validation and SSRF gating, which this design does not need.</p>
-<h2 id="3-resolution-order">3. Resolution order<a class="header-anchor" href="#3-resolution-order">#</a></h2>
-<ol>
-<li><code>OPENPROGRAM_PROXY_URL</code> — explicit first-party override used by the
-diagnostic helper and callers that deliberately use the environment proxy
-map. It is not an implicit override for managed clients.</li>
-<li>Standard environment variables, parsed by httpx's own
-<code>get_environment_proxies()</code>: <code>http_proxy</code>/<code>HTTP_PROXY</code>,
-<code>https_proxy</code>/<code>HTTPS_PROXY</code>, <code>all_proxy</code>/<code>ALL_PROXY</code>,
-<code>no_proxy</code>/<code>NO_PROXY</code>. Using httpx's parser rather than a reimplementation
-gives diagnostic callers the same parsing behavior as httpx. Note this
-delegates to urllib's <code>getproxies()</code>, so on
-macOS/Windows the OS-level proxy settings apply when no env vars are
-set — same as any Python process.</li>
-<li>Managed provider clients do not use this environment resolution as an
-implicit security-policy override. If a managed request must use a proxy,
-declare it in <code>OutboundSecurityConfig.policy_proxy</code>; the policy layer then
-validates the proxy and target relationship before opening the connection.</li>
-</ol>
-<h2 id="4-mechanics">4. Mechanics<a class="header-anchor" href="#4-mechanics">#</a></h2>
-<ul>
-<li><code>providers/utils/http_proxy.py</code> exposes <code>get_proxy_mounts()</code> as a diagnostic
-helper for the environment proxy map and the <code>OPENPROGRAM_PROXY_URL</code>
-override. Managed provider clients do not consume this map; the rescue
-command uses it to report configured proxy state.</li>
-<li><code>providers/utils/http_client.py::build_async_client</code> delegates to
-<code>safe_async_client</code> or <code>configured_safe_async_client</code>. The managed client
-applies the registered consumer's URL policy, bounded timeouts, and socket
-hardening. When a policy proxy is configured, <code>safe_http</code> creates the
-decision-aware proxy transport and strips proxy credentials from requests
-before dispatch.</li>
-<li>The OpenAI, Anthropic, and Google SDK consumers are registered in
-<code>openprogram/security/safe_http.py</code> with an injected-transport disposition.
-Their shared-client lifecycle remains explicit; it is not implemented by
-passing <code>mounts=</code> from <code>http_proxy.py</code>.</li>
-<li>One-shot raw httpx clients (OAuth flows, token refresh, marketplace) are
-plain <code>httpx.AsyncClient()</code>s on purpose:
-their env semantics are already identical by construction, and they
-don't need streaming hardening. <code>OPENPROGRAM_PROXY_URL</code> does not apply
-to them, which is an accepted limit rather than an oversight.</li>
-<li>Subscription model listing uses <code>safe_client(&quot;provider.fixed_api&quot;)</code>. It
-therefore follows <code>OutboundSecurityConfig.policy_proxy</code> and deliberately
-ignores ambient environment and OS proxy settings.</li>
-<li>A plain httpx caller that opts into SOCKS environment handling must provide
-the corresponding <code>httpx[socks]</code> dependency; managed clients do not infer
-that dependency from an ambient <code>ALL_PROXY</code>.</li>
-<li><code>openprogram rescue</code> carries a proxy probe: it reports the resolved proxy
-configuration and fails with an exact fix when a socks proxy is
-configured but socksio is missing.</li>
-<li>The test suite is proxy-isolated: <code>tests/conftest.py</code> strips the proxy
-env vars and pins urllib's OS-settings fallback to env-only, so a
-developer's Clash/system proxy can't hijack the integration tests'
-localhost requests. Live smoke tests opt back into the real network
-with <code>OPENPROGRAM_TEST_LIVE=1 pytest -m slow</code>.</li>
-</ul>
-<h2 id="5-deliberately-not-built">5. Deliberately not built<a class="header-anchor" href="#5-deliberately-not-built">#</a></h2>
-<ul>
-<li>A <code>proxy.url</code> config key / CLI flag (OpenClaw has one) — env vars cover
-today's users; the override env var is the cheap 90%. Add the config key
-when someone needs per-profile proxies.</li>
-<li>Proxy validation / lifecycle management (OpenClaw's managed proxy) and
-<code>--proxy-ca-file</code> — TLS-intercepting corporate proxies already work via
-httpx's standard <code>SSL_CERT_FILE</code>/<code>REQUESTS_CA_BUNDLE</code> handling
-(<code>trust_env=True</code>).</li>
-<li>An SSRF guard tied to proxy decisions — OpenProgram is a local tool, not
-a hosted gateway.</li>
-</ul>
-<h2 id="6-invariants">6. Invariants<a class="header-anchor" href="#6-invariants">#</a></h2>
-<ol>
-<li>Any new provider HTTP code MUST get its client from
-<code>build_async_client</code> / <code>get_shared_async_client</code> and a registered
-<code>safe_http</code> consumer; never construct a managed client with hand-rolled
-proxy kwargs.</li>
-<li>Never use <code>get_proxy_mounts()</code> as a substitute for
-<code>OutboundSecurityConfig.policy_proxy</code> on a managed request.</li>
-<li><code>get_proxy_mounts()</code> remains an environment-resolution diagnostic. If
-httpx moves <code>get_environment_proxies</code>, keep this helper's diagnostic output
-aligned with httpx rather than treating it as the managed transport
-contract.</li>
-<li><code>tests/component/security/test_http_proxy.py</code> pins both the diagnostic
-resolution rules and the fact that unmanaged environment proxies do not
-activate a managed provider client.</li>
-</ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/json-schema-structured-output.html" data-href-en="/docs/reference/design/providers/json-schema-structured-output.html" data-href-zh="/docs/reference/design/providers/json-schema-structured-output.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="结构化输出">Structured output</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/metadata-load-diagnostics.html" data-href-en="/docs/reference/design/providers/metadata-load-diagnostics.html" data-href-zh="/docs/reference/design/providers/metadata-load-diagnostics.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="元数据诊断">Metadata diagnostics</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<ul class="toc-list">
-<li>
-<a class="lvl-2" href="#1-why-one-resolver">1. Why one resolver</a>
-</li>
-<li>
-<a class="lvl-2" href="#2-how-openclaw-does-it">2. How OpenClaw does it</a>
-</li>
-<li>
-<a class="lvl-2" href="#3-resolution-order">3. Resolution order</a>
-</li>
-<li>
-<a class="lvl-2" href="#4-mechanics">4. Mechanics</a>
-</li>
-<li>
-<a class="lvl-2" href="#5-deliberately-not-built">5. Deliberately not built</a>
-</li>
-<li>
-<a class="lvl-2" href="#6-invariants">6. Invariants</a>
-</li>
-</ul></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="模型与外部接入">Models and connections</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="请求与模型">Requests and models</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="网络代理">Network proxy</span></nav><iframe class="viz-frame" src="/docs/reference/design/providers/network-proxy.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/json-schema-structured-output.html" data-href-en="/docs/reference/design/providers/json-schema-structured-output.html" data-href-zh="/docs/reference/design/providers/json-schema-structured-output.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="结构化输出">Structured output</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/metadata-load-diagnostics.html" data-href-en="/docs/reference/design/providers/metadata-load-diagnostics.html" data-href-zh="/docs/reference/design/providers/metadata-load-diagnostics.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="元数据诊断">Metadata diagnostics</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">
@@ -510,6 +354,6 @@ activate a managed provider client.</li>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

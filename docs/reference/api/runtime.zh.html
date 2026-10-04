@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/reference/api/runtime.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/reference/api/runtime.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>运行时 API · OpenProgram Docs</title>
 <meta name="description" content="Source: openprogram/agentic_programming/runtime.py LLM 运行时。封装 LLM provider,自动从 session DAG 算上下文、调用 LLM、把回复写回 DAG。 Runtime 类 # class Runtime ( call = None ,">
 <link rel="canonical" href="https://openprogram.io/docs/reference/api/runtime.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/api/runtime.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/api/runtime.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/api/runtime.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/api/runtime.html">
@@ -29,10 +31,10 @@
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -72,7 +74,7 @@
 <div class="nav-sec"><div class="nav-sec-title">API</div><a class="navlink" href="/docs/reference/API.html" data-title-zh="API 参考" data-href-en="/docs/reference/API.html" data-href-zh="/docs/reference/API.zh.html">API reference</a>
 <a class="navlink active" href="/docs/reference/api/runtime.html" data-title-zh="运行时 API" data-href-en="/docs/reference/api/runtime.html" data-href-zh="/docs/reference/api/runtime.zh.html">Runtime API</a>
 <a class="navlink" href="/docs/reference/api/providers.html" data-title-zh="模型服务 API" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html">Provider API</a>
-<a class="navlink" href="/docs/reference/api/agentic-function.html" data-title-zh="函数 API" data-href-en="/docs/reference/api/agentic-function.html" data-href-zh="/docs/reference/api/agentic-function.zh.html">Function API</a></div>
+<a class="navlink" href="/docs/reference/api/agent.html" data-title-zh="函数 API" data-href-en="/docs/reference/api/agent.html" data-href-zh="/docs/reference/api/agent.zh.html">Function API</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div><a class="navlink" href="/docs/reference/cli.html" data-title-zh="CLI 参考" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html">CLI reference</a>
 <a class="navlink" href="/docs/reference/config.html" data-title-zh="配置项参考" data-href-en="/docs/reference/config.html" data-href-zh="/docs/reference/config.zh.html">Configuration reference</a>
 <a class="navlink" href="/docs/reference/diagnostics.html" data-title-zh="诊断" data-href-en="/docs/reference/diagnostics.html" data-href-zh="/docs/reference/diagnostics.zh.html">Diagnostics</a>
@@ -101,6 +103,7 @@
 <a class="navlink" href="/docs/reference/cli/logs.html" data-title-zh="日志" data-href-en="/docs/reference/cli/logs.html" data-href-zh="/docs/reference/cli/logs.zh.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html" data-title-zh="MCP 服务器" data-href-en="/docs/reference/cli/mcp.html" data-href-zh="/docs/reference/cli/mcp.zh.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html" data-title-zh="记忆" data-href-en="/docs/reference/cli/memory.html" data-href-zh="/docs/reference/cli/memory.zh.html">memory</a>
+<a class="navlink" href="/docs/reference/cli/permissions.html" data-title-zh="CLI：权限规则" data-href-en="/docs/reference/cli/permissions.html" data-href-zh="/docs/reference/cli/permissions.zh.html">permissions</a>
 <a class="navlink" href="/docs/reference/cli/plugins.html" data-title-zh="插件" data-href-en="/docs/reference/cli/plugins.html" data-href-zh="/docs/reference/cli/plugins.zh.html">plugins</a>
 <a class="navlink" href="/docs/reference/cli/ports.html" data-title-zh="端口" data-href-en="/docs/reference/cli/ports.html" data-href-zh="/docs/reference/cli/ports.zh.html">ports</a>
 <a class="navlink" href="/docs/reference/cli/programs.html" data-title-zh="程序" data-href-en="/docs/reference/cli/programs.html" data-href-zh="/docs/reference/cli/programs.zh.html">programs</a>
@@ -202,7 +205,7 @@
 <tr>
 <td><code>system</code></td>
 <td><code>str</code></td>
-<td>可赋值的 system prompt,<code>exec()</code> 在 provider 路径上读取(<code>@agentic_function(system=...)</code> 装饰器会在调用期间设置它)</td>
+<td>可赋值的 system prompt,<code>exec()</code> 在 provider 路径上读取(<code>method_options[&quot;method&quot;][&quot;system&quot;]</code> 会在调用期间设置它)</td>
 </tr>
 <tr>
 <td><code>thinking_level</code></td>
@@ -236,7 +239,7 @@
              <span class="n">web_search</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">stream_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre>
 <p>调用 LLM,上下文从 session DAG 自动算出。</p>
-<p><strong>在 <code>@agentic_function</code> 内部调用时:</strong></p>
+<p><strong>在 Agent 方法或受管函数作用域内调用时：</strong></p>
 <ol>
 <li>从当前函数的 DAG 节点出发,<code>render_context</code> 按 <code>expose</code> / <code>render_range</code> 算出本次要读哪些历史节点</li>
 <li><code>render_dag_messages</code> 把这些节点渲染成 messages</li>
@@ -244,7 +247,7 @@
 <li>回复写进 <code>exec()</code> 开始时打开的那个 <code>llm</code> 节点</li>
 </ol>
 <p><strong>没安装 DAG store 时</strong>(standalone 脚本、无 dispatcher):<code>content</code> 包成单条 user message 作单轮调用发送,不做任何记录。</p>
-<p>一个 <code>@agentic_function</code> 可以多次调用 <code>exec()</code>,每次都是 DAG 上的一个新 <code>llm</code> 节点。</p>
+<p>Agent 方法或函数作用域可以多次调用 <code>exec()</code>,每次都是 DAG 上的一个新 <code>llm</code> 节点。</p>
 <h4 id="参数">参数<a class="header-anchor" href="#参数">#</a></h4>
 <table>
 <thead>
@@ -284,7 +287,7 @@
 <td><code>tools</code></td>
 <td><code>list | None</code></td>
 <td><code>None</code></td>
-<td>本次调用 LLM 可用的工具。每项可以是 <code>@agentic_function</code>、<code>{&quot;spec&quot;:..., &quot;execute&quot;:...}</code> 字典、或带 <code>.spec</code> / <code>.execute</code> 的对象。设了就跑工具循环直到模型返回纯文本。<strong>默认(<code>None</code>)不是&quot;无工具&quot;</strong>:调用会拿到完整的注册工具集;纯推理调用传 <code>toolset=&quot;none&quot;</code>,要显式空列表传 <code>tools=[]</code></td>
+<td>本次调用 LLM 可用的工具。每项可以是显式登记的 Agent 方法、<code>{&quot;spec&quot;:..., &quot;execute&quot;:...}</code> 字典、或带 <code>.spec</code> / <code>.execute</code> 的对象。设了就跑工具循环直到模型返回纯文本。<strong>默认(<code>None</code>)不是&quot;无工具&quot;</strong>:调用会拿到完整的注册工具集;纯推理调用传 <code>toolset=&quot;none&quot;</code>,要显式空列表传 <code>tools=[]</code></td>
 </tr>
 <tr>
 <td><code>toolset</code> / <code>tools_source</code> / <code>tools_allow</code> / <code>tools_deny</code></td>
@@ -369,13 +372,14 @@ provider 候选正文不属于公共诊断合同。</p>
 <hr />
 <h3 id="async_exec"><code>async_exec()</code><a class="header-anchor" href="#async_exec">#</a></h3>
 <pre><code class="language-python"><span class="k">await</span> <span class="n">Runtime</span><span class="o">.</span><span class="n">async_exec</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                         <span class="n">timeout_s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_retry</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
+                         <span class="n">timeout_s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">on_retry</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">toolset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">max_iterations</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre>
 <p><code>exec()</code> 的异步版本,具有相同的 <code>response_format=None</code> 文本返回以及结构化
 Python JSON 返回/异常合同。内部调用 <code>_async_call()</code>;<code>call=</code> 函数可同步或异步,
 默认 provider 路径使用同一 AgentSession structured lifecycle。<code>timeout_s</code> /
 <code>on_retry</code> 语义与 <code>exec()</code> 相同;重试用 <code>asyncio.sleep</code> 休眠,外部取消能生效。
-它没有公开的工具循环参数。</p>
+它接受同步工具循环选项，包括 tools、toolset、max_iterations 和工具授权过滤。</p>
 <hr />
 <h3 id="_call"><code>_call()</code><a class="header-anchor" href="#_call">#</a></h3>
 <pre><code class="language-python"><span class="n">Runtime</span><span class="o">.</span><span class="n">_call</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"default"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
@@ -423,59 +427,33 @@ Python JSON 返回/异常合同。内部调用 <code>_async_call()</code>;<code>
 <p>有前端会话连着时,runtime 可以在函数中途阻塞等用户输入:<code>runtime.ask(prompt, options=..., multi=..., questions=[...], timeout=300.0, default=None)</code>(一题或多题一屏),<code>runtime.confirm(prompt, default=False)</code>(是/否),<code>runtime.form(prompt, fields)</code>(多字段表单)。<code>runtime.can_ask()</code> 报告当前有没有人能回答(headless 跑时为 False)。用户拒绝抛 <code>UserDeclined</code>;超时给了 <code>default</code> 就返回它,否则抛 <code>AskTimeout</code>。</p>
 <hr />
 <h2 id="使用方式">使用方式<a class="header-anchor" href="#使用方式">#</a></h2>
-<h3 id="方式一传入-call-函数">方式一:传入 call 函数<a class="header-anchor" href="#方式一传入-call-函数">#</a></h3>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">agentic_function</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">Runtime</span>
+<p>宿主提供 Runtime，Agent 自动继承它。普通方法不需要装饰器或手动 Context 管理。</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">Runtime</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">my_llm</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"sonnet"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="c1"># 把 content 转成你的 provider 格式,发请求</span>
-    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">b</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"text"</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">my_llm</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"host-model"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">block</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span> <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">block</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"text"</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">call_my_api</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">texts</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">my_llm</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"sonnet"</span><span class="p">)</span>
+<span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">my_llm</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"host-model"</span><span class="p">)</span>
 
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">observe</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Look at the screen."""</span>
-    <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Find: </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
-        <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"image"</span><span class="p">,</span> <span class="s2">"path"</span><span class="p">:</span> <span class="s2">"screenshot.png"</span><span class="p">},</span>
-    <span class="p">])</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Observer</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">observe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Identify the requested screen element."""</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">([</span>
+            <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Find: </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"image"</span><span class="p">,</span> <span class="s2">"path"</span><span class="p">:</span> <span class="s2">"screenshot.png"</span><span class="p">},</span>
+        <span class="p">])</span>
+
+<span class="n">observer</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">(</span><span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="s2">"login button"</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">runtime</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre>
-<h3 id="方式二子类化">方式二:子类化<a class="header-anchor" href="#方式二子类化">#</a></h3>
-<pre><code class="language-python"><span class="k">class</span><span class="w"> </span><span class="nc">MyAnthropicRuntime</span><span class="p">(</span><span class="n">Runtime</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"sonnet"</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">anthropic</span><span class="o">.</span><span class="n">Anthropic</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"sonnet"</span><span class="p">,</span> <span class="n">response_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">messages_content</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">block</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"text"</span><span class="p">:</span>
-                <span class="n">messages_content</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="n">block</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]})</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">messages</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
-            <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">messages_content</span><span class="p">}],</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
-
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">MyAnthropicRuntime</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s2">"sk-..."</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-sonnet-4-6"</span><span class="p">)</span>
-</code></pre>
-<h3 id="多个-runtime-共存">多个 Runtime 共存<a class="header-anchor" href="#多个-runtime-共存">#</a></h3>
-<pre><code class="language-python"><span class="n">fast</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">gemini_call</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"gemini-2.5-flash"</span><span class="p">)</span>
-<span class="n">strong</span> <span class="o">=</span> <span class="n">Runtime</span><span class="p">(</span><span class="n">call</span><span class="o">=</span><span class="n">claude_call</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"sonnet"</span><span class="p">)</span>
-
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">observe</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Quick observation with cheap model."""</span>
-    <span class="k">return</span> <span class="n">fast</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">])</span>
-
-<span class="nd">@agentic_function</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">plan</span><span class="p">(</span><span class="n">goal</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Complex planning with strong model."""</span>
-    <span class="k">return</span> <span class="n">strong</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">])</span>
-</code></pre>
-<hr />
+<p><a href="/docs/reference/api/agent.zh.html">Agent 与 Context API</a> 说明配置、显式会话与作用域。方法配置继续兼容。</p>
 <h2 id="retry-机制">Retry 机制<a class="header-anchor" href="#retry-机制">#</a></h2>
 <p><code>exec()</code> 和 <code>async_exec()</code> 内置自动重试,用于处理 LLM API 的临时性错误(网络超时、速率限制、服务器错误等)。</p>
 <h3 id="配置">配置<a class="header-anchor" href="#配置">#</a></h3>
@@ -532,7 +510,7 @@ Attempt 3: ConnectionError: timeout
 </code></pre>
 <h3 id="重试的边界">重试的边界<a class="header-anchor" href="#重试的边界">#</a></h3>
 <p>瞬态传输失败、结构化输出修正，以及启用工具时的异常重复输出，共用本次调用的失败恢复额度。重复响应在同一 Agent 上下文内重新生成，保留已完成的工具结果及 Runtime 回执，不设置整体 Token 或执行时长上限。显式调用限制、取消、权限失败和恢复额度耗尽仍然有效。重新生成响应不代表可以重复外部写入；写入结果不确定时必须先检查实际记录。函数自身的逻辑错误仍需修改代码。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/API.html" data-href-en="/docs/reference/API.html" data-href-zh="/docs/reference/API.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="API 参考">API reference</span></a><a class="pn-link pn-next" href="/docs/reference/api/providers.html" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="模型服务 API">Provider API</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/API.html" data-href-en="/docs/reference/API.html" data-href-zh="/docs/reference/API.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="API 参考">API reference</span></a><a class="pn-link pn-next" href="/docs/reference/api/providers.html" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="模型服务 API">Provider API</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -604,21 +582,7 @@ Attempt 3: ConnectionError: timeout
 </details>
 </li>
 <li>
-<details class="toc-disclosure" open=""><summary>
 <a class="lvl-2" href="#使用方式">使用方式</a>
-</summary>
-<ul class="toc-list">
-<li>
-<a class="lvl-3" href="#方式一传入-call-函数">方式一:传入 call 函数</a>
-</li>
-<li>
-<a class="lvl-3" href="#方式二子类化">方式二:子类化</a>
-</li>
-<li>
-<a class="lvl-3" href="#多个-runtime-共存">多个 Runtime 共存</a>
-</li>
-</ul>
-</details>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
@@ -650,6 +614,6 @@ Attempt 3: ConnectionError: timeout
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

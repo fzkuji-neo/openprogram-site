@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790196881" data-alt-lang-url="/docs/reference/design/integrations/mcp-integration.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/reference/design/integrations/mcp-integration.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MCP tools · OpenProgram Docs</title>
-<meta name="description" content="MCP Tool Integration # This document is the design of the MCP client layer: the role OpenProgram plays in the protocol, where the module lives, how servers are">
+
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/integrations/mcp-integration.html">
+
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/integrations/mcp-integration.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/integrations/mcp-integration.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/integrations/mcp-integration.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/integrations/mcp-integration.html">
 <meta property="og:title" content="MCP tools · OpenProgram Docs">
-<meta property="og:description" content="MCP Tool Integration # This document is the design of the MCP client layer: the role OpenProgram plays in the protocol, where the module lives, how servers are">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MCP tools · OpenProgram Docs">
-<meta name="twitter:description" content="MCP Tool Integration # This document is the design of the MCP client layer: the role OpenProgram plays in the protocol, where the module lives, how servers are">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,10 +63,10 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
-<div class="layout">
+<div class="layout no-toc">
   <nav class="sidebar" aria-label="Documentation">
     <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
            aria-label="Filter docs" placeholder="Filter docs…" autocomplete="off" spellcheck="false">
@@ -74,8 +76,9 @@
 <a class="navlink" href="/docs/reference/design/implementation-status.html" data-title-zh="实现索引" data-href-en="/docs/reference/design/implementation-status.html" data-href-zh="/docs/reference/design/implementation-status.zh.html">Implementation index</a>
 <a class="navlink" href="/docs/reference/design/framework-comparison.html" data-title-zh="框架对比" data-href-en="/docs/reference/design/framework-comparison.html" data-href-zh="/docs/reference/design/framework-comparison.zh.html">Framework comparison</a>
 <a class="navlink" href="/docs/reference/design/feature-matrix.html" data-title-zh="功能矩阵" data-href-en="/docs/reference/design/feature-matrix.html" data-href-zh="/docs/reference/design/feature-matrix.zh.html">Feature matrix</a></details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">81</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">12</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">83</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<a class="navlink" href="/docs/reference/design/runtime/codex-capability-adoption.html" data-title-zh="Codex 功能核对" data-href-en="/docs/reference/design/runtime/codex-capability-adoption.html" data-href-zh="/docs/reference/design/runtime/codex-capability-adoption.zh.html">Codex capability audit</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="调用流程" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Call flow</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/control.html" data-title-zh="执行控制" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html">Execution control</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-title-zh="操作生命周期" data-href-en="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html">Action lifecycle</a>
@@ -119,10 +122,11 @@
 <a class="navlink" href="/docs/reference/design/runtime/operations/chat-progress-recovery.html" data-title-zh="进度恢复" data-href-en="/docs/reference/design/runtime/operations/chat-progress-recovery.html" data-href-zh="/docs/reference/design/runtime/operations/chat-progress-recovery.zh.html">Progress recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html" data-title-zh="网页可靠性" data-href-en="/docs/reference/design/runtime/web-runtime-reliability.html" data-href-zh="/docs/reference/design/runtime/web-runtime-reliability.zh.html">Web reliability</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-frontend-spawn.html" data-title-zh="前端进程" data-href-en="/docs/reference/design/runtime/web-frontend-spawn.html" data-href-zh="/docs/reference/design/runtime/web-frontend-spawn.zh.html">Frontend processes</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="配置与操作">Configuration and operations</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html" data-title-zh="智能体设置" data-href-en="/docs/reference/design/runtime/agent-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent settings</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="配置与操作">Configuration and operations</span><span class="nav-count">9</span></summary><a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html" data-title-zh="智能体设置" data-href-en="/docs/reference/design/runtime/agent-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-core-configuration-ui.html" data-title-zh="基础设置" data-href-en="/docs/reference/design/runtime/agent-core-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-core-configuration-ui.zh.html">Core settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-tool-configuration-ui.html" data-title-zh="工具设置" data-href-en="/docs/reference/design/runtime/agent-tool-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-tool-configuration-ui.zh.html">Tool settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html" data-title-zh="能力设置" data-href-en="/docs/reference/design/runtime/agent-capability-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-capability-configuration-ui.zh.html">Capability settings</a>
+<a class="navlink" href="/docs/reference/design/runtime/agent-configuration-plan.html" data-title-zh="Agent 实施计划" data-href-en="/docs/reference/design/runtime/agent-configuration-plan.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-plan.zh.html">Agent implementation plan</a>
 <a class="navlink" href="/docs/reference/design/runtime/chat-search-settings.html" data-title-zh="聊天搜索" data-href-en="/docs/reference/design/runtime/chat-search-settings.html" data-href-zh="/docs/reference/design/runtime/chat-search-settings.zh.html">Chat search</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具集" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Toolsets</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="输入请求" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">Input requests</a>
@@ -182,18 +186,20 @@
 <a class="navlink" href="/docs/reference/design/memory/written-marker.viz.html" data-title-zh="写入游标图解" data-href-en="/docs/reference/design/memory/written-marker.viz.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.viz.html">Write cursor diagram</a>
 <a class="navlink" href="/docs/reference/design/memory/written-marker.html" data-title-zh="写入游标" data-href-en="/docs/reference/design/memory/written-marker.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.html">Write cursor</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">59</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">61</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">15</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/app-icon.html" data-title-zh="应用图标" data-href-en="/docs/reference/design/ui/app-icon.html" data-href-zh="/docs/reference/design/ui/app-icon.zh.html">App icon</a>
 <a class="navlink" href="/docs/reference/design/ui/invariants.html" data-title-zh="界面不变量" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html">UI invariants</a>
 <a class="navlink" href="/docs/reference/design/ui/surface-system.html" data-title-zh="界面层次" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">UI surfaces</a>
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="状态存储" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">State stores</a>
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html" data-title-zh="主题" data-href-en="/docs/reference/design/ui/theme-system.html" data-href-zh="/docs/reference/design/ui/theme-system.zh.html">Themes</a>
 <a class="navlink" href="/docs/reference/design/ui/window-state.html" data-title-zh="窗口状态" data-href-en="/docs/reference/design/ui/window-state.html" data-href-zh="/docs/reference/design/ui/window-state.zh.html">Window state</a>
+<a class="navlink" href="/docs/reference/design/ui/center-canvas-layout.html" data-title-zh="中间画布：任意分屏布局 — 交互原型与规划" data-href-en="/docs/reference/design/ui/center-canvas-layout.html" data-href-zh="/docs/reference/design/ui/center-canvas-layout.zh.html">Center canvas layout</a>
 <a class="navlink" href="/docs/reference/design/ui/session-tab-identity.html" data-title-zh="标签身份" data-href-en="/docs/reference/design/ui/session-tab-identity.html" data-href-zh="/docs/reference/design/ui/session-tab-identity.zh.html">Tab identity</a>
 <a class="navlink" href="/docs/reference/design/ui/window-lifecycle.html" data-title-zh="窗口生命周期" data-href-en="/docs/reference/design/ui/window-lifecycle.html" data-href-zh="/docs/reference/design/ui/window-lifecycle.zh.html">Window lifecycle</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html" data-title-zh="交互反馈" data-href-en="/docs/reference/design/ui/interaction-feedback.html" data-href-zh="/docs/reference/design/ui/interaction-feedback.zh.html">Interaction feedback</a>
+<a class="navlink" href="/docs/reference/design/ui/page-loading-performance.html" data-title-zh="页面加载性能" data-href-en="/docs/reference/design/ui/page-loading-performance.html" data-href-zh="/docs/reference/design/ui/page-loading-performance.zh.html">Page loading performance</a>
 <a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="状态指示" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Status indicators</a>
 <a class="navlink" href="/docs/reference/design/ui/session-status.html" data-title-zh="会话状态" data-href-en="/docs/reference/design/ui/session-status.html" data-href-zh="/docs/reference/design/ui/session-status.zh.html">Session status</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="对话与编辑器">Chat and composer</span><span class="nav-count">16</span></summary><a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment options</a>
@@ -255,8 +261,7 @@
 <a class="navlink" href="/docs/reference/design/providers/metadata-load-diagnostics.html" data-title-zh="元数据诊断" data-href-en="/docs/reference/design/providers/metadata-load-diagnostics.html" data-href-zh="/docs/reference/design/providers/metadata-load-diagnostics.zh.html">Metadata diagnostics</a>
 <a class="navlink" href="/docs/reference/design/providers/bailian-model-catalog.html" data-title-zh="百炼模型目录" data-href-en="/docs/reference/design/providers/bailian-model-catalog.html" data-href-zh="/docs/reference/design/providers/bailian-model-catalog.zh.html">Bailian catalog</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="用量统计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage metering</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="账号与认证">Authentication</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">Credential resolution</a>
-<a class="navlink" href="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-title-zh="Claude 订阅" data-href-en="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-href-zh="/docs/reference/design/providers/auth/claude-code-direct-oauth.zh.html">Claude subscription</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="账号与认证">Authentication</span><span class="nav-count">7</span></summary><a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">Credential resolution</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-connection-unification.html" data-title-zh="凭据连接" data-href-en="/docs/reference/design/providers/auth/credential-connection-unification.html" data-href-zh="/docs/reference/design/providers/auth/credential-connection-unification.zh.html">Credential connections</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-file-hardening.html" data-title-zh="文件凭据" data-href-en="/docs/reference/design/providers/auth/credential-file-hardening.html" data-href-zh="/docs/reference/design/providers/auth/credential-file-hardening.zh.html">File credentials</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-status-redesign.html" data-title-zh="凭据状态" data-href-en="/docs/reference/design/providers/auth/credential-status-redesign.html" data-href-zh="/docs/reference/design/providers/auth/credential-status-redesign.zh.html">Credential status</a>
@@ -270,7 +275,8 @@
 <a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replay</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.viz.html" data-title-zh="回放图解" data-href-en="/docs/reference/design/providers/record-replay.viz.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.viz.html">Replay diagram</a>
 <a class="navlink" href="/docs/reference/design/providers/responses-reasoning-replay.html" data-title-zh="推理记录回放" data-href-en="/docs/reference/design/providers/responses-reasoning-replay.html" data-href-zh="/docs/reference/design/providers/responses-reasoning-replay.zh.html">Reasoning replay</a></details>
-<details class="nav-sec nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">12</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<details class="nav-sec nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<a class="navlink" href="/docs/reference/design/integrations/nooa.html" data-title-zh="直接调用、Agent 类与自动 DAG 上下文" data-href-en="/docs/reference/design/integrations/nooa.html" data-href-zh="/docs/reference/design/integrations/nooa.zh.html">Direct calls, Agent classes and automatic DAG context</a>
 <a class="navlink" href="/docs/reference/design/integrations/editor-integration.html" data-title-zh="编辑器集成" data-href-en="/docs/reference/design/integrations/editor-integration.html" data-href-zh="/docs/reference/design/integrations/editor-integration.zh.html">Editor integration</a>
 <a class="navlink" href="/docs/reference/design/integrations/extension-management.html" data-title-zh="扩展管理" data-href-en="/docs/reference/design/integrations/extension-management.html" data-href-zh="/docs/reference/design/integrations/extension-management.zh.html">Extension management</a>
 <a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="运行环境规范" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness standard</a>
@@ -286,7 +292,7 @@
 <a class="navlink" href="/docs/reference/design/channels/audit.html" data-title-zh="需求约束" data-href-en="/docs/reference/design/channels/audit.html" data-href-zh="/docs/reference/design/channels/audit.zh.html">Requirements</a>
 <a class="navlink" href="/docs/reference/design/channels/design.html" data-title-zh="架构" data-href-en="/docs/reference/design/channels/design.html" data-href-zh="/docs/reference/design/channels/design.zh.html">Architecture</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">15</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">16</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与权限">Security and permissions</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/system-access.html" data-title-zh="系统访问" data-href-en="/docs/reference/design/runtime/system-access.html" data-href-zh="/docs/reference/design/runtime/system-access.zh.html">System access</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html" data-title-zh="SSRF 防护" data-href-en="/docs/reference/design/runtime/ssrf-protection.html" data-href-zh="/docs/reference/design/runtime/ssrf-protection.zh.html">SSRF protection</a>
@@ -298,8 +304,9 @@
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="测试与错误处理">Testing and errors</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/testing/test-system.html" data-title-zh="测试系统" data-href-en="/docs/reference/design/testing/test-system.html" data-href-zh="/docs/reference/design/testing/test-system.zh.html">Test system</a>
 <a class="navlink" href="/docs/reference/design/testing/windows-ci.html" data-title-zh="Windows CI" data-href-en="/docs/reference/design/testing/windows-ci.html" data-href-zh="/docs/reference/design/testing/windows-ci.zh.html">Windows CI</a>
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="错误处理" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error handling</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="文档与网站">Documentation and website</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档站" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation site</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="文档与网站">Documentation and website</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档站" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation site</a>
 <a class="navlink" href="/docs/reference/design/site-discoverability-performance.html" data-title-zh="站点检索" data-href-en="/docs/reference/design/site-discoverability-performance.html" data-href-zh="/docs/reference/design/site-discoverability-performance.zh.html">Site discovery</a>
+<a class="navlink" href="/docs/reference/design/site-agent-readable-docs.html" data-title-zh="Agent 文档" data-href-en="/docs/reference/design/site-agent-readable-docs.html" data-href-zh="/docs/reference/design/site-agent-readable-docs.zh.html">Agent-readable docs</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
@@ -326,297 +333,18 @@
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="研究材料">Research</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/proactive/_research_archive/evaluation.html" data-title-zh="评估" data-href-en="/docs/reference/design/proactive/_research_archive/evaluation.html" data-href-zh="/docs/reference/design/proactive/_research_archive/evaluation.zh.html">Evaluation</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
+</details>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">6</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
+<a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a></details>
 </details></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="模型与外部接入">Models and connections</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展与集成">Extensions and integrations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="MCP 工具">MCP tools</span></nav><h1 id="mcp-tool-integration">MCP Tool Integration<a class="header-anchor" href="#mcp-tool-integration">#</a></h1>
-<blockquote>
-<p>This document is the design of the MCP client layer: the role OpenProgram
-plays in the protocol, where the module lives, how servers are configured
-and connected, and how MCP tools reach the LLM. Related code:
-<code>openprogram/mcp/</code>.</p>
-</blockquote>
-<h2 id="in-one-sentence">In one sentence<a class="header-anchor" href="#in-one-sentence">#</a></h2>
-<p>Register the tools provided by an external MCP server as in-framework <code>AgentTool</code>s, so the LLM calls them exactly the way it calls a local <code>@function</code>/<code>@agentic_function</code>. On worker startup, spawn a subprocess for every enabled server in the config file, run JSON-RPC over stdio, wrap their <code>tools/list</code>, and mount the result into <code>_registry</code>.</p>
-<h2 id="role-we-are-the-client-not-the-server">Role — we are the client, not the server<a class="header-anchor" href="#role-we-are-the-client-not-the-server">#</a></h2>
-<p>MCP is a protocol that defines a &quot;tool provider&quot; (server) and a &quot;tool consumer&quot; (client).</p>
-<table>
-<thead>
-<tr>
-<th>Role</th>
-<th>Who plays it</th>
-<th>Examples</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Server</td>
-<td>The process that provides tools</td>
-<td><code>@drawio/mcp</code>, <code>@modelcontextprotocol/server-filesystem</code></td>
-</tr>
-<tr>
-<td>Client</td>
-<td>The LLM framework, which exposes the server's tools to the LLM</td>
-<td>OpenProgram, Claude Desktop, Claude Code, Cursor, Cline, opencode</td>
-</tr>
-</tbody>
-</table>
-<p>We are the client. This design <strong>does not cover</strong> exposing OpenProgram's own tools to an external client — that direction is a separate, standalone module that does not reuse the code in <code>openprogram/mcp/</code>, documented in the authoritative <a href="/docs/reference/design/integrations/mcp-server.html">MCP server design and evidence</a>.</p>
-<h2 id="directory-location">Directory location<a class="header-anchor" href="#directory-location">#</a></h2>
-<p><code>openprogram/mcp/</code> is a <strong>top-level module</strong>, a sibling of <code>openprogram/channels/</code>. It does <strong>not</strong> live under <code>openprogram/programs/</code>.</p>
-<p>Rationale:</p>
-<ul>
-<li>MCP is an <strong>external-protocol adapter layer</strong>, which is a different thing from &quot;the implementation of a function.&quot; Our function system (<code>@function</code> / <code>@agentic_function</code> / the code under <code>agentics/</code>) is locally-implemented tools; MCP is tools fetched from an external process. The two layers are orthogonal concepts.</li>
-<li>Both opencode (<code>src/mcp/</code>) and Claude Code (<code>src/services/mcp/</code>) treat MCP as a standalone module, fully separate from local tool implementations.</li>
-<li>In our project, <code>channels/</code> (message channels) is the existing precedent for an &quot;external-protocol adapter&quot; — it brings external message sources in. MCP also brings something external in, just a tool source instead, so its <strong>location should match channels</strong>.</li>
-</ul>
-<h2 id="reference-implementation">Reference implementation<a class="header-anchor" href="#reference-implementation">#</a></h2>
-<p>For a full side-by-side, see <code>references/opencode/packages/opencode/src/mcp/</code>. OpenProgram's MCP layer is essentially a Python translation of opencode's.</p>
-<p><code>references/hermes-agent/mcp_serve.py</code> and <code>references/openclaw/src/mcp/</code> also provide MCP, but <strong>both are the server side</strong> (exposing their own capabilities to Claude Desktop and the like), which is the opposite direction of what we're doing.</p>
-<h2 id="configuration">Configuration<a class="header-anchor" href="#configuration">#</a></h2>
-<p><code>&lt;state_dir&gt;/mcp_servers.json</code> (default <code>~/.openprogram/mcp_servers.json</code>; the path follows profile switches automatically via <code>paths.get_state_dir</code>).</p>
-<pre><code class="language-json"><span class="p">{</span>
-<span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"drawio"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"local"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"npx"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-y"</span><span class="p">,</span><span class="w"> </span><span class="s2">"@drawio/mcp"</span><span class="p">],</span>
-<span class="w">      </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
-<span class="w">      </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>type</code></td>
-<td><code>&quot;local&quot;</code> (stdio subprocess), <code>&quot;http&quot;</code> (Streamable HTTP), or <code>&quot;sse&quot;</code> (legacy SSE). Remote types take <code>url</code> / <code>headers</code> / <code>auth</code> (<code>none</code>, <code>bearer</code>, or <code>oauth</code>)</td>
-</tr>
-<tr>
-<td><code>command</code></td>
-<td>Subprocess command + argument list</td>
-</tr>
-<tr>
-<td><code>env</code></td>
-<td>Environment variables injected into the subprocess (the base environment is inherited from the parent process; this overrides / appends to it)</td>
-</tr>
-<tr>
-<td><code>enabled</code></td>
-<td>Set false to temporarily disable a server without deleting its config</td>
-</tr>
-<tr>
-<td><code>timeout_seconds</code></td>
-<td>Startup wait + the read timeout for a single call</td>
-</tr>
-</tbody>
-</table>
-<p>A missing file or a parse failure is non-fatal — <code>load_configs()</code> returns an empty list, the worker starts normally, and one warning line is logged. MCP is an opt-in feature.</p>
-<h3 id="credentials">Credentials<a class="header-anchor" href="#credentials">#</a></h3>
-<p><code>env</code> and <code>headers</code> are free-form, so any entry can hold a credential: <code>ENDPOINT</code> can carry a signed URL as readily as <code>API_KEY</code> carries a key. Rather than guess from names, every value in both maps is treated as a secret, alongside the bearer token and the OAuth client secret.</p>
-<p>Two serializations keep that separation explicit. <code>MCPServerConfig.to_storage_dict()</code> carries full values and is used only to write <code>mcp_servers.json</code>. <code>to_response_dict()</code> replaces each value with <code>{&quot;has_value&quot;: bool, &quot;masked&quot;: str}</code> and reduces the auth secrets to <code>has_token</code> / <code>has_client_secret</code> plus a mask, and it is what every route returns — <code>/api/mcp/servers</code>, <code>/api/mcp/servers/{name}</code>, <code>/api/mcp/catalog</code>, and <code>/api/mcp/catalog/diff</code>. No route returns a stored MCP credential.</p>
-<p><code>PATCH /api/mcp/servers/{name}</code> therefore cannot ask the client to send back what it was shown. It applies preserve / replace / delete per name:</p>
-<table>
-<thead>
-<tr>
-<th>Body</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name absent (or the whole <code>env</code> / <code>headers</code> field absent)</td>
-<td><strong>preserve</strong> the stored value</td>
-</tr>
-<tr>
-<td>name present with a value</td>
-<td><strong>replace</strong> with that value</td>
-</tr>
-<tr>
-<td>name present with an empty string</td>
-<td><strong>delete</strong> the name</td>
-</tr>
-</tbody>
-</table>
-<p>The same rule covers <code>auth.token</code> and <code>auth.client_secret</code>. Changing <code>auth.kind</code> drops the other kind's secret, since it is no longer reachable or useful. The Web UI opens its secret inputs empty and lists only the stored names, so an untouched field is omitted and preserved.</p>
-<p>The config file holds these secrets, so <code>save_configs()</code> writes it owner-only: a temp file created <code>0600</code> in one syscall, <code>fsync</code>, then <code>os.replace</code>. A file left <code>0644</code> by an older version narrows on its next save. The route persists only after the restart succeeds, so an edit that fails to start leaves the stored credentials intact.</p>
-<h2 id="code-structure">Code structure<a class="header-anchor" href="#code-structure">#</a></h2>
-<pre><code>openprogram/mcp/
-  __init__.py    public re-exports: load_mcp_servers / shutdown_mcp_servers / server_status
-  config.py      MCPServerConfig + load_configs (reads mcp_servers.json, purely static)
-  client.py     MCPClient — a single server's stdio subprocess + ClientSession + supervisor task
-  adapter.py    MCP wire types ↔ AgentTool type translation (pure functions, stateless)
-  registry.py    global manager: load_mcp_servers / shutdown_mcp_servers / server_status
-</code></pre>
-<p>Four files, one responsibility each: config, single connection, translation, management.</p>
-<h2 id="call-path-there-is-only-one-llm-initiated-automatically">Call path — there is only one, LLM-initiated automatically<a class="header-anchor" href="#call-path-there-is-only-one-llm-initiated-automatically">#</a></h2>
-<pre><code>You type &quot;draw a flowchart&quot; in the webui
-  ↓
-worker → agent_loop → calls the LLM API with all tools (local + MCP)
-  ↓
-LLM decides, emits tool_call(name=&quot;drawio__open_drawio_xml&quot;, args={...})
-  ↓
-agent_loop looks up the AgentTool in _registry, awaits execute(args)
-  ↓ execute is the closure built in adapter.register_remote_tool
-  ↓ the closure has captured the corresponding MCPClient, and directly calls client.call_tool(original tool name, args)
-  ↓ MCPClient sends it over stdio JSON-RPC to the corresponding drawio subprocess
-  ↓
-the drawio MCP subprocess executes (invokes the macOS open command to launch the browser)
-  ↓ returns CallToolResult
-  ↓
-adapter.convert_call_result turns the MCP content blocks into an AgentToolResult
-  ↓
-agent_loop stuffs the result into chat history and calls the LLM once more
-  ↓
-the LLM sees the tool result and generates the final text reply &quot;Done&quot;
-  ↓
-the webui displays it
-</code></pre>
-<p>The whole chain completes synchronously on the FastAPI main loop, with <strong>no cross-thread / cross-event-loop scheduling involved</strong>.</p>
-<p><code>/api/run/{name}</code> / the CLI <code>programs run</code> / the <code>/programs</code> page do <strong>not</strong> wire up MCP tools — those are entry points for local functions. MCP tools are invisible to the user; the LLM uses them implicitly.</p>
-<h2 id="key-technical-decisions">Key technical decisions<a class="header-anchor" href="#key-technical-decisions">#</a></h2>
-<h3 id="1-persistent-connection-supervisor-task">1. Persistent connection + supervisor task<a class="header-anchor" href="#1-persistent-connection-supervisor-task">#</a></h3>
-<p>MCP is designed around a long-lived bidirectional connection (the server can push progress notifications, resource-update notifications, etc.). The official Python SDK exposes the session as a nested async-context-manager:</p>
-<pre><code class="language-python"><span class="k">async</span> <span class="k">with</span> <span class="n">stdio_client</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">as</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">ClientSession</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-        <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-        <span class="o">...</span>
-</code></pre>
-<p>Holding a context manager across function calls requires keeping <code>__aexit__</code> pending, for which Python has no direct API. The cleanest approach is to wrap the whole nested block in a long-lived coroutine and put it in an <code>asyncio.Task</code> acting as a supervisor:</p>
-<pre><code class="language-python"><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_supervisor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">async</span> <span class="k">with</span> <span class="n">stdio_client</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">as</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
-        <span class="k">async</span> <span class="k">with</span> <span class="n">ClientSession</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-            <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">session</span><span class="o">.</span><span class="n">list_tools</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">session</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tools</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">tools</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_ready</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shutdown</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>      <span class="c1"># stay parked here, waiting for the shutdown signal</span>
-</code></pre>
-<p><code>start()</code> creates the supervisor task and <code>await self._ready.wait()</code>; <code>call_tool()</code> simply reuses <code>self._session</code>; <code>stop()</code> sets <code>self._shutdown</code>, the supervisor exits the nested <code>async with</code>, and the subprocess closes automatically.</p>
-<p>A startup failure (the spawn doesn't come up, or initialize errors out) also goes through <code>self._ready.set()</code>, sets <code>self.error</code> to the reason string, unblocks <code>start()</code>, and the manager, seeing the error, skips tool registration and logs one line.</p>
-<h3 id="2-tool-namespace-server__tool">2. Tool namespace <code>{server}__{tool}</code><a class="header-anchor" href="#2-tool-namespace-server__tool">#</a></h3>
-<p>opencode uses <code>{server}:{tool}</code> as the namespace separator. We switch to a double underscore, <code>{server}__{tool}</code>, because OpenAI's tool-name regex is <code>^[a-zA-Z0-9_-]+$</code>, which rejects the colon. Anthropic uses the same character set.</p>
-<p><code>adapter.namespace_tool_name(server, tool)</code> does both:</p>
-<ul>
-<li>replaces any character outside <code>[A-Za-z0-9_-]</code> with <code>_</code></li>
-<li>truncates to 64 characters (OpenAI's hard limit), preserving the tool suffix</li>
-</ul>
-<p>Same-named tools across servers will collide, and the later-registered one overrides the earlier — consistent with last-wins elsewhere in the framework.</p>
-<h3 id="3-eager-spawn-vs-lazy-spawn">3. eager spawn vs. lazy spawn<a class="header-anchor" href="#3-eager-spawn-vs-lazy-spawn">#</a></h3>
-<p>opencode is lazy: it doesn't connect when the service is instantiated; it spawns on the first <code>tools()</code> call. We choose <strong>eager</strong>: <code>load_mcp_servers()</code> runs to completion in the FastAPI startup hook before the worker enters its serving state.</p>
-<p>Rationale: eager is simple to implement and leaves the state stable after startup. The cost is that each enabled server can block for up to <code>timeout_seconds</code> (servers start sequentially, one at a time). drawio-mcp's first <code>npx -y @drawio/mcp</code> also has to download from npm, which can be slow, so the timeout defaults to 30s and the user can raise it.</p>
-<p>Non-fatal: if a server fails to start, the manager records the error, skips registering its tools, and the worker keeps starting and can still use the other servers (and all local tools).</p>
-<h3 id="4-tolerant-content-conversion">4. Tolerant content conversion<a class="header-anchor" href="#4-tolerant-content-conversion">#</a></h3>
-<p><code>adapter.convert_call_result()</code> handles the MCP return value:</p>
-<table>
-<thead>
-<tr>
-<th>MCP type</th>
-<th>Converted to</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>TextContent</code></td>
-<td><code>providers.types.TextContent</code> (chat history)</td>
-</tr>
-<tr>
-<td><code>ImageContent</code></td>
-<td><code>providers.types.ImageContent</code> (multimodal LLM)</td>
-</tr>
-<tr>
-<td><code>EmbeddedResource</code></td>
-<td>expanded into <code>[resource: &lt;uri&gt;]</code> text — raw bytes are not stuffed into chat</td>
-</tr>
-<tr>
-<td>unknown / future types</td>
-<td><code>repr(block)</code> text — at least the LLM can see that something came back</td>
-</tr>
-</tbody>
-</table>
-<p>An <code>isError=True</code> return is reflected in <code>details[&quot;is_error&quot;]</code>, and what the LLM sees in chat history is the tool-result text, consistent with the error path of local tools.</p>
-<h3 id="5-test-isolation-beware-of-from-openprogrampaths-import-get_state_dir">5. Test isolation — beware of <code>from openprogram.paths import get_state_dir</code><a class="header-anchor" href="#5-test-isolation-beware-of-from-openprogrampaths-import-get_state_dir">#</a></h3>
-<p><code>tests/integration/store/test_attach_lazy_session.py</code> uses <code>monkeypatch.setattr(&quot;openprogram.paths.get_state_dir&quot;, ...)</code> to redirect the state directory. If <code>config.py</code> pulls it in via <code>from openprogram.paths import get_state_dir</code>, the first import happens <strong>during</strong> the attach test (because the webui startup hook triggers <code>_start_mcp_servers</code> → import <code>openprogram.mcp</code> → import <code>config</code>), and the lambda gets permanently bound into our module, leaking after the attach test ends.</p>
-<p>Fix: <code>from openprogram import paths as _paths</code>, and look up the attribute live on every call to <code>_paths.get_state_dir()</code>. Watch out: if the test suite adds a new paths monkeypatch, confirm our <code>config.py</code> still goes through the module reference.</p>
-<h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
-<p>The design above is implemented over the stdio transport. The boundaries of
-what is built:</p>
-<ol>
-<li><strong>All three transports are implemented</strong> (stdio, Streamable HTTP, SSE). Remote auth supports static bearer tokens and OAuth 2.1 PKCE. OAuth is delegated to the MCP SDK's <code>OAuthClientProvider</code> via <code>token_storage.PersistentOAuthProvider</code>, which persists what a silent reconnect needs across worker restarts: tokens plus an absolute <code>expires_at</code>, the dynamic client registration (whose loopback redirect port is reused so re-auth presents a registered redirect_uri), and the discovered authorization-server metadata (so a cold-start refresh POSTs to the real token endpoint, not the <code>&lt;server&gt;/token</code> fallback). An expired access token is renewed with the refresh token in the background; the browser consent flow only runs on first auth or when refresh is rejected, which the supervisor surfaces as <code>error_kind=&quot;needs_reauth&quot;</code>.</li>
-<li><strong><code>tools/*</code> is the only protocol surface consumed.</strong> MCP also defines <code>prompts/*</code>, <code>resources/*</code>, and <code>sampling/*</code>, none of which has a corresponding concept in the framework. <code>sampling/createMessage</code> would let a server borrow the client's LLM for inference; the client rejects such requests today.</li>
-<li><strong>A config change takes effect on worker restart.</strong> The server list is not hot-reloaded, and <code>MCPClient</code> has no <code>restart</code> between <code>start()</code> and <code>stop()</code>. A <code>restart_server(name)</code> API would remove the need to restart the whole worker.</li>
-<li><strong>Concurrent calls to one server serialize on the ClientSession lock.</strong> <code>MCPClient._call_lock</code> queues them. This is not a performance problem — an MCP server is single-flight to begin with — but one slow tool blocks other tool calls on the same server.</li>
-<li><strong>The tool list is read once.</strong> The supervisor pulls <code>list_tools</code> at startup and never asks again, so tools a server adds or removes mid-flight are invisible. The protocol's <code>tools/list_changed</code> notification is not listened for.</li>
-<li><strong><code>_loaded</code> is a module global.</strong> Tests reset it before re-testing; see the <code>tests/integration/programs/test_mcp_client.py::_reset_mcp_loader_flag</code> fixture.</li>
-</ol>
-<p>The webui settings page does not yet render <code>server_status()</code>; doing so would
-surface each server's status, error message, tool count, and most recent call
-result.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/harness-standard.html" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="运行环境规范">Harness standard</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/mcp-server.html" data-href-en="/docs/reference/design/integrations/mcp-server.html" data-href-zh="/docs/reference/design/integrations/mcp-server.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="MCP 服务端">MCP server</span></a></div></article></main>
-  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
-<ul class="toc-list">
-<li>
-<a class="lvl-2" href="#in-one-sentence">In one sentence</a>
-</li>
-<li>
-<a class="lvl-2" href="#role-we-are-the-client-not-the-server">Role — we are the client, not the server</a>
-</li>
-<li>
-<a class="lvl-2" href="#directory-location">Directory location</a>
-</li>
-<li>
-<a class="lvl-2" href="#reference-implementation">Reference implementation</a>
-</li>
-<li>
-<details class="toc-disclosure" open=""><summary>
-<a class="lvl-2" href="#configuration">Configuration</a>
-</summary>
-<ul class="toc-list">
-<li>
-<a class="lvl-3" href="#credentials">Credentials</a>
-</li>
-</ul>
-</details>
-</li>
-<li>
-<a class="lvl-2" href="#code-structure">Code structure</a>
-</li>
-<li>
-<a class="lvl-2" href="#call-path-there-is-only-one-llm-initiated-automatically">Call path — there is only one, LLM-initiated automatically</a>
-</li>
-<li>
-<details class="toc-disclosure" open=""><summary>
-<a class="lvl-2" href="#key-technical-decisions">Key technical decisions</a>
-</summary>
-<ul class="toc-list">
-<li>
-<a class="lvl-3" href="#1-persistent-connection-supervisor-task">1. Persistent connection + supervisor task</a>
-</li>
-<li>
-<a class="lvl-3" href="#2-tool-namespace-server__tool">2. Tool namespace {server}__{tool}</a>
-</li>
-<li>
-<a class="lvl-3" href="#3-eager-spawn-vs-lazy-spawn">3. eager spawn vs. lazy spawn</a>
-</li>
-<li>
-<a class="lvl-3" href="#4-tolerant-content-conversion">4. Tolerant content conversion</a>
-</li>
-<li>
-<a class="lvl-3" href="#5-test-isolation-beware-of-from-openprogrampaths-import-get_state_dir">5. Test isolation — beware of from openprogram.paths import get_state_dir</a>
-</li>
-</ul>
-</details>
-</li>
-<li>
-<a class="lvl-2" href="#appendix-implementation-status">Appendix: Implementation Status</a>
-</li>
-</ul></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="模型与外部接入">Models and connections</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展与集成">Extensions and integrations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="MCP 工具">MCP tools</span></nav><iframe class="viz-frame" src="/docs/reference/design/integrations/mcp-integration.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/harness-standard.html" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="运行环境规范">Harness standard</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/mcp-server.html" data-href-en="/docs/reference/design/integrations/mcp-server.html" data-href-zh="/docs/reference/design/integrations/mcp-server.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="MCP 服务端">MCP server</span></a></div></article></main>
+  <aside class="toc"></aside>
 </div>
 
 <div class="search-overlay">
@@ -626,6 +354,6 @@ result.</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

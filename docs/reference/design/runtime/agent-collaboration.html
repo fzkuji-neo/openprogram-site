@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790196881" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agent communication · OpenProgram Docs</title>
-<meta name="description" content="Agent collaboration: one cross-branch communication primitive # All of agent collaboration collapses into a single primitive: cross-branch communication . An">
+<meta name="description" content="Agent collaboration: branches, executions and messages # This document defines the collaboration contract and identifies the current implementation gaps in §7.">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/agent-collaboration.html">
 <meta property="og:title" content="Agent communication · OpenProgram Docs">
-<meta property="og:description" content="Agent collaboration: one cross-branch communication primitive # All of agent collaboration collapses into a single primitive: cross-branch communication . An">
+<meta property="og:description" content="Agent collaboration: branches, executions and messages # This document defines the collaboration contract and identifies the current implementation gaps in §7.">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Agent communication · OpenProgram Docs">
-<meta name="twitter:description" content="Agent collaboration: one cross-branch communication primitive # All of agent collaboration collapses into a single primitive: cross-branch communication . An">
+<meta name="twitter:description" content="Agent collaboration: branches, executions and messages # This document defines the collaboration contract and identifies the current implementation gaps in §7.">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -74,8 +76,9 @@
 <a class="navlink" href="/docs/reference/design/implementation-status.html" data-title-zh="实现索引" data-href-en="/docs/reference/design/implementation-status.html" data-href-zh="/docs/reference/design/implementation-status.zh.html">Implementation index</a>
 <a class="navlink" href="/docs/reference/design/framework-comparison.html" data-title-zh="框架对比" data-href-en="/docs/reference/design/framework-comparison.html" data-href-zh="/docs/reference/design/framework-comparison.zh.html">Framework comparison</a>
 <a class="navlink" href="/docs/reference/design/feature-matrix.html" data-title-zh="功能矩阵" data-href-en="/docs/reference/design/feature-matrix.html" data-href-zh="/docs/reference/design/feature-matrix.zh.html">Feature matrix</a></details>
-<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">81</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">12</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">83</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<a class="navlink" href="/docs/reference/design/runtime/codex-capability-adoption.html" data-title-zh="Codex 功能核对" data-href-en="/docs/reference/design/runtime/codex-capability-adoption.html" data-href-zh="/docs/reference/design/runtime/codex-capability-adoption.zh.html">Codex capability audit</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="调用流程" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Call flow</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/control.html" data-title-zh="执行控制" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html">Execution control</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-title-zh="操作生命周期" data-href-en="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html">Action lifecycle</a>
@@ -119,10 +122,11 @@
 <a class="navlink" href="/docs/reference/design/runtime/operations/chat-progress-recovery.html" data-title-zh="进度恢复" data-href-en="/docs/reference/design/runtime/operations/chat-progress-recovery.html" data-href-zh="/docs/reference/design/runtime/operations/chat-progress-recovery.zh.html">Progress recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-runtime-reliability.html" data-title-zh="网页可靠性" data-href-en="/docs/reference/design/runtime/web-runtime-reliability.html" data-href-zh="/docs/reference/design/runtime/web-runtime-reliability.zh.html">Web reliability</a>
 <a class="navlink" href="/docs/reference/design/runtime/web-frontend-spawn.html" data-title-zh="前端进程" data-href-en="/docs/reference/design/runtime/web-frontend-spawn.html" data-href-zh="/docs/reference/design/runtime/web-frontend-spawn.zh.html">Frontend processes</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="配置与操作">Configuration and operations</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html" data-title-zh="智能体设置" data-href-en="/docs/reference/design/runtime/agent-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent settings</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="配置与操作">Configuration and operations</span><span class="nav-count">9</span></summary><a class="navlink" href="/docs/reference/design/runtime/agent-configuration-ui.html" data-title-zh="智能体设置" data-href-en="/docs/reference/design/runtime/agent-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-ui.zh.html">Agent settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-core-configuration-ui.html" data-title-zh="基础设置" data-href-en="/docs/reference/design/runtime/agent-core-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-core-configuration-ui.zh.html">Core settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-tool-configuration-ui.html" data-title-zh="工具设置" data-href-en="/docs/reference/design/runtime/agent-tool-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-tool-configuration-ui.zh.html">Tool settings</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-capability-configuration-ui.html" data-title-zh="能力设置" data-href-en="/docs/reference/design/runtime/agent-capability-configuration-ui.html" data-href-zh="/docs/reference/design/runtime/agent-capability-configuration-ui.zh.html">Capability settings</a>
+<a class="navlink" href="/docs/reference/design/runtime/agent-configuration-plan.html" data-title-zh="Agent 实施计划" data-href-en="/docs/reference/design/runtime/agent-configuration-plan.html" data-href-zh="/docs/reference/design/runtime/agent-configuration-plan.zh.html">Agent implementation plan</a>
 <a class="navlink" href="/docs/reference/design/runtime/chat-search-settings.html" data-title-zh="聊天搜索" data-href-en="/docs/reference/design/runtime/chat-search-settings.html" data-href-zh="/docs/reference/design/runtime/chat-search-settings.zh.html">Chat search</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具集" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Toolsets</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="输入请求" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">Input requests</a>
@@ -182,18 +186,20 @@
 <a class="navlink" href="/docs/reference/design/memory/written-marker.viz.html" data-title-zh="写入游标图解" data-href-en="/docs/reference/design/memory/written-marker.viz.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.viz.html">Write cursor diagram</a>
 <a class="navlink" href="/docs/reference/design/memory/written-marker.html" data-title-zh="写入游标" data-href-en="/docs/reference/design/memory/written-marker.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.html">Write cursor</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">59</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">61</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">15</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/app-icon.html" data-title-zh="应用图标" data-href-en="/docs/reference/design/ui/app-icon.html" data-href-zh="/docs/reference/design/ui/app-icon.zh.html">App icon</a>
 <a class="navlink" href="/docs/reference/design/ui/invariants.html" data-title-zh="界面不变量" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html">UI invariants</a>
 <a class="navlink" href="/docs/reference/design/ui/surface-system.html" data-title-zh="界面层次" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html">UI surfaces</a>
 <a class="navlink" href="/docs/reference/design/ui/state-layer.html" data-title-zh="状态存储" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html">State stores</a>
 <a class="navlink" href="/docs/reference/design/ui/theme-system.html" data-title-zh="主题" data-href-en="/docs/reference/design/ui/theme-system.html" data-href-zh="/docs/reference/design/ui/theme-system.zh.html">Themes</a>
 <a class="navlink" href="/docs/reference/design/ui/window-state.html" data-title-zh="窗口状态" data-href-en="/docs/reference/design/ui/window-state.html" data-href-zh="/docs/reference/design/ui/window-state.zh.html">Window state</a>
+<a class="navlink" href="/docs/reference/design/ui/center-canvas-layout.html" data-title-zh="中间画布：任意分屏布局 — 交互原型与规划" data-href-en="/docs/reference/design/ui/center-canvas-layout.html" data-href-zh="/docs/reference/design/ui/center-canvas-layout.zh.html">Center canvas layout</a>
 <a class="navlink" href="/docs/reference/design/ui/session-tab-identity.html" data-title-zh="标签身份" data-href-en="/docs/reference/design/ui/session-tab-identity.html" data-href-zh="/docs/reference/design/ui/session-tab-identity.zh.html">Tab identity</a>
 <a class="navlink" href="/docs/reference/design/ui/window-lifecycle.html" data-title-zh="窗口生命周期" data-href-en="/docs/reference/design/ui/window-lifecycle.html" data-href-zh="/docs/reference/design/ui/window-lifecycle.zh.html">Window lifecycle</a>
 <a class="navlink" href="/docs/reference/design/ui/web-styles.html" data-title-zh="样式组织" data-href-en="/docs/reference/design/ui/web-styles.html" data-href-zh="/docs/reference/design/ui/web-styles.zh.html">Style organization</a>
 <a class="navlink" href="/docs/reference/design/ui/interaction-feedback.html" data-title-zh="交互反馈" data-href-en="/docs/reference/design/ui/interaction-feedback.html" data-href-zh="/docs/reference/design/ui/interaction-feedback.zh.html">Interaction feedback</a>
+<a class="navlink" href="/docs/reference/design/ui/page-loading-performance.html" data-title-zh="页面加载性能" data-href-en="/docs/reference/design/ui/page-loading-performance.html" data-href-zh="/docs/reference/design/ui/page-loading-performance.zh.html">Page loading performance</a>
 <a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="状态指示" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Status indicators</a>
 <a class="navlink" href="/docs/reference/design/ui/session-status.html" data-title-zh="会话状态" data-href-en="/docs/reference/design/ui/session-status.html" data-href-zh="/docs/reference/design/ui/session-status.zh.html">Session status</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="对话与编辑器">Chat and composer</span><span class="nav-count">16</span></summary><a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment options</a>
@@ -255,8 +261,7 @@
 <a class="navlink" href="/docs/reference/design/providers/metadata-load-diagnostics.html" data-title-zh="元数据诊断" data-href-en="/docs/reference/design/providers/metadata-load-diagnostics.html" data-href-zh="/docs/reference/design/providers/metadata-load-diagnostics.zh.html">Metadata diagnostics</a>
 <a class="navlink" href="/docs/reference/design/providers/bailian-model-catalog.html" data-title-zh="百炼模型目录" data-href-en="/docs/reference/design/providers/bailian-model-catalog.html" data-href-zh="/docs/reference/design/providers/bailian-model-catalog.zh.html">Bailian catalog</a>
 <a class="navlink" href="/docs/reference/design/usage-metering.html" data-title-zh="用量统计" data-href-en="/docs/reference/design/usage-metering.html" data-href-zh="/docs/reference/design/usage-metering.zh.html">Usage metering</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="账号与认证">Authentication</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">Credential resolution</a>
-<a class="navlink" href="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-title-zh="Claude 订阅" data-href-en="/docs/reference/design/providers/auth/claude-code-direct-oauth.html" data-href-zh="/docs/reference/design/providers/auth/claude-code-direct-oauth.zh.html">Claude subscription</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="账号与认证">Authentication</span><span class="nav-count">7</span></summary><a class="navlink" href="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-title-zh="凭据解析" data-href-en="/docs/reference/design/providers/auth/api-key-resolution-unification.html" data-href-zh="/docs/reference/design/providers/auth/api-key-resolution-unification.zh.html">Credential resolution</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-connection-unification.html" data-title-zh="凭据连接" data-href-en="/docs/reference/design/providers/auth/credential-connection-unification.html" data-href-zh="/docs/reference/design/providers/auth/credential-connection-unification.zh.html">Credential connections</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-file-hardening.html" data-title-zh="文件凭据" data-href-en="/docs/reference/design/providers/auth/credential-file-hardening.html" data-href-zh="/docs/reference/design/providers/auth/credential-file-hardening.zh.html">File credentials</a>
 <a class="navlink" href="/docs/reference/design/providers/auth/credential-status-redesign.html" data-title-zh="凭据状态" data-href-en="/docs/reference/design/providers/auth/credential-status-redesign.html" data-href-zh="/docs/reference/design/providers/auth/credential-status-redesign.zh.html">Credential status</a>
@@ -270,7 +275,8 @@
 <a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replay</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.viz.html" data-title-zh="回放图解" data-href-en="/docs/reference/design/providers/record-replay.viz.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.viz.html">Replay diagram</a>
 <a class="navlink" href="/docs/reference/design/providers/responses-reasoning-replay.html" data-title-zh="推理记录回放" data-href-en="/docs/reference/design/providers/responses-reasoning-replay.html" data-href-zh="/docs/reference/design/providers/responses-reasoning-replay.zh.html">Reasoning replay</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">12</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<a class="navlink" href="/docs/reference/design/integrations/nooa.html" data-title-zh="直接调用、Agent 类与自动 DAG 上下文" data-href-en="/docs/reference/design/integrations/nooa.html" data-href-zh="/docs/reference/design/integrations/nooa.zh.html">Direct calls, Agent classes and automatic DAG context</a>
 <a class="navlink" href="/docs/reference/design/integrations/editor-integration.html" data-title-zh="编辑器集成" data-href-en="/docs/reference/design/integrations/editor-integration.html" data-href-zh="/docs/reference/design/integrations/editor-integration.zh.html">Editor integration</a>
 <a class="navlink" href="/docs/reference/design/integrations/extension-management.html" data-title-zh="扩展管理" data-href-en="/docs/reference/design/integrations/extension-management.html" data-href-zh="/docs/reference/design/integrations/extension-management.zh.html">Extension management</a>
 <a class="navlink" href="/docs/reference/design/integrations/harness-standard.html" data-title-zh="运行环境规范" data-href-en="/docs/reference/design/integrations/harness-standard.html" data-href-zh="/docs/reference/design/integrations/harness-standard.zh.html">Harness standard</a>
@@ -286,7 +292,7 @@
 <a class="navlink" href="/docs/reference/design/channels/audit.html" data-title-zh="需求约束" data-href-en="/docs/reference/design/channels/audit.html" data-href-zh="/docs/reference/design/channels/audit.zh.html">Requirements</a>
 <a class="navlink" href="/docs/reference/design/channels/design.html" data-title-zh="架构" data-href-en="/docs/reference/design/channels/design.html" data-href-zh="/docs/reference/design/channels/design.zh.html">Architecture</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">15</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">16</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与权限">Security and permissions</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Authority and sandbox</a>
 <a class="navlink" href="/docs/reference/design/runtime/system-access.html" data-title-zh="系统访问" data-href-en="/docs/reference/design/runtime/system-access.html" data-href-zh="/docs/reference/design/runtime/system-access.zh.html">System access</a>
 <a class="navlink" href="/docs/reference/design/runtime/ssrf-protection.html" data-title-zh="SSRF 防护" data-href-en="/docs/reference/design/runtime/ssrf-protection.html" data-href-zh="/docs/reference/design/runtime/ssrf-protection.zh.html">SSRF protection</a>
@@ -298,8 +304,9 @@
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="测试与错误处理">Testing and errors</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/testing/test-system.html" data-title-zh="测试系统" data-href-en="/docs/reference/design/testing/test-system.html" data-href-zh="/docs/reference/design/testing/test-system.zh.html">Test system</a>
 <a class="navlink" href="/docs/reference/design/testing/windows-ci.html" data-title-zh="Windows CI" data-href-en="/docs/reference/design/testing/windows-ci.html" data-href-zh="/docs/reference/design/testing/windows-ci.zh.html">Windows CI</a>
 <a class="navlink" href="/docs/reference/design/error-handling.html" data-title-zh="错误处理" data-href-en="/docs/reference/design/error-handling.html" data-href-zh="/docs/reference/design/error-handling.zh.html">Error handling</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="文档与网站">Documentation and website</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档站" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation site</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="文档与网站">Documentation and website</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/docs-site.html" data-title-zh="文档站" data-href-en="/docs/reference/design/docs-site.html" data-href-zh="/docs/reference/design/docs-site.zh.html">Documentation site</a>
 <a class="navlink" href="/docs/reference/design/site-discoverability-performance.html" data-title-zh="站点检索" data-href-en="/docs/reference/design/site-discoverability-performance.html" data-href-zh="/docs/reference/design/site-discoverability-performance.zh.html">Site discovery</a>
+<a class="navlink" href="/docs/reference/design/site-agent-readable-docs.html" data-title-zh="Agent 文档" data-href-en="/docs/reference/design/site-agent-readable-docs.html" data-href-zh="/docs/reference/design/site-agent-readable-docs.zh.html">Agent-readable docs</a>
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
@@ -326,316 +333,164 @@
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="研究材料">Research</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/proactive/_research_archive/evaluation.html" data-title-zh="评估" data-href-en="/docs/reference/design/proactive/_research_archive/evaluation.html" data-href-zh="/docs/reference/design/proactive/_research_archive/evaluation.zh.html">Evaluation</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
+</details>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">6</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
+<a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a></details>
 </details></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="DAG 与协作">DAG and collaboration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="智能体通信">Agent communication</span></nav><h1 id="agent-collaboration-one-cross-branch-communication-primitive">Agent collaboration: one cross-branch communication primitive<a class="header-anchor" href="#agent-collaboration-one-cross-branch-communication-primitive">#</a></h1>
-<p>All of agent collaboration collapses into <strong>a single primitive: cross-branch
-communication</strong>. An agent can spawn other agents and send messages to other
-branches or other sessions. These look like different operations, but
-<strong>underneath they are the same thing</strong>: deliver content to a branch, trigger
-that branch to run a turn,
-and send the result back to the caller automatically. Everything is a tool call,
-and everything is built on the existing event layer.</p>
-<blockquote>
-<p>§1 is the vocabulary the whole tool surface is built on; read it first.</p>
-</blockquote>
-<hr />
-<h2 id="0-core-there-is-only-one-primitive">0. Core: there is only one primitive<a class="header-anchor" href="#0-core-there-is-only-one-primitive">#</a></h2>
-<p>The whole collaboration story has exactly one primitive:</p>
-<blockquote>
-<p><strong>Cross-branch communication</strong> = <strong>deliver content</strong> to a branch (another
-branch of the same session, a different session, one created on the spot, or
-one that already exists) → <strong>trigger</strong> that branch to run a turn (the model
-reads the delivered content) → the result is <strong>sent back automatically</strong> to
-the caller (append a new message + trigger the caller to run a turn, and
-the caller reads it and continues).</p>
-</blockquote>
-<p>Every collaboration operation is a <strong>parameterization</strong> of that primitive:</p>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="DAG 与协作">DAG and collaboration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="智能体通信">Agent communication</span></nav><h1 id="agent-collaboration-branches-executions-and-messages">Agent collaboration: branches, executions and messages<a class="header-anchor" href="#agent-collaboration-branches-executions-and-messages">#</a></h1>
+<p>This document defines the collaboration contract and identifies the current implementation gaps in §7. The saved Agent configuration contract is maintained in <a href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent configuration</a>; admission, resource accounting and cancellation limits are maintained in <a href="/docs/reference/design/runtime/agent-resource-governance.html">resource governance</a>. A saved AgentSpec is reusable configuration. A runtime branch is conversation state, and one branch can execute multiple Jobs. Creating a branch does not create a new saved AgentSpec.</p>
+<h2 id="0-shared-delivery-distinct-lifecycle">0. Shared delivery, distinct lifecycle<a class="header-anchor" href="#0-shared-delivery-distinct-lifecycle">#</a></h2>
+<p>Collaboration reuses branch addressing, turn dispatch and the existing event layer. The operation decides whether a branch is created and whether work is submitted immediately or after inbox delivery. These choices do not imply a separate execution engine.</p>
 <table>
 <thead>
 <tr>
 <th>Operation</th>
-<th>Which use of communication it is</th>
-<th>Tool</th>
+<th>Branch effect</th>
+<th>Execution effect</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Spawn a sub-agent</strong></td>
-<td><strong>Create</strong> a branch + deliver a message + auto-reply</td>
-<td><code>agent</code></td>
+<td><code>agent(prompt=..., start_from=...)</code></td>
+<td>Create a branch and run the supplied prompt in one call</td>
+<td>Both admit a Job; foreground waits and returns the reply, background returns <code>execution_id</code> immediately</td>
 </tr>
 <tr>
-<td><strong>Dispatch a task to an existing agent</strong></td>
-<td>Deliver a <strong>tracked task</strong> to an existing branch + auto-reply</td>
-<td><code>agent(to=…)</code></td>
+<td><code>agent(prompt=..., to=...)</code></td>
+<td>Continue an existing branch</td>
+<td>Admit a tracked Job, then run or queue its turn; return <code>execution_id</code></td>
 </tr>
 <tr>
-<td><strong>Message an agent</strong></td>
-<td>Deliver a message to an <strong>existing</strong> branch + auto-reply</td>
-<td><code>send_message</code></td>
+<td><code>send_message(message=..., to=...)</code></td>
+<td>Continue an existing branch</td>
+<td>Deliver a message; an actual async turn still creates a Job. An inbox receipt alone does not prove execution admission</td>
 </tr>
 </tbody>
 </table>
-<p>Delivered content is always read and used by the target model. Count is
-arbitrary (spawn can create N, a message can go to many), so it is not a
-distinguishing dimension. Both uses share one deliver → trigger → reply-back
-path.</p>
-<p><code>attach</code> is not an operation. It is how a communication result is drawn as a
-&quot;return edge&quot; on the DAG (marking which branch the result came back from).</p>
-<hr />
-<h2 id="1-four-domains-one-word-each">1. Four domains, one word each<a class="header-anchor" href="#1-four-domains-one-word-each">#</a></h2>
-<p>Collaboration is four domains. Each owns one noun and one set of tools, and
-the words never overlap — a term means the same thing everywhere it appears.</p>
+<p>The target completion contract returns nonempty results to the caller without requiring the recipient to call <code>send_message</code> explicitly. A recipient may omit an additional explicit message; that is what “replying is optional” means. Standard completion-path wiring for automatic follow-up remains unverified as described in §7. Do not interpret message delivery as a guarantee that the target model will follow the message or produce a reply.</p>
+<p><code>attach</code> is a stored pointer and a DAG presentation relationship for a newly created branch. It is neither a message nor a separate execution.</p>
+<h2 id="1-four-object-domains-and-their-operations">1. Four object domains and their operations<a class="header-anchor" href="#1-four-object-domains-and-their-operations">#</a></h2>
+<p>The domains distinguish objects, not mutually exclusive operations. <code>agent</code> can create a branch and submit an execution in the same call. Querying or cancelling that execution belongs to execution control; moving branch creation into a second task tool adds no capability.</p>
 <table>
 <thead>
 <tr>
 <th>Domain</th>
-<th>Noun</th>
-<th>Tools</th>
-<th>What it is</th>
+<th>Object</th>
+<th>Public surface</th>
+<th>Responsibility</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Planning</td>
-<td><strong>todo</strong></td>
+<td><code>todo</code></td>
 <td><code>todo_create</code> / <code>todo_update</code> / <code>todo_list</code></td>
-<td>A hand-written checklist: entries, status, owner, dependencies. Written intent, and nothing runs because an entry exists</td>
+<td>Record intended work; a checklist entry starts nothing</td>
 </tr>
 <tr>
 <td>Execution</td>
-<td><strong>task</strong></td>
-<td><code>job_output</code> / <code>job_stop</code> / <code>list_jobs</code></td>
-<td>Work handed out and now running: a task id, a status, a result</td>
+<td><code>Job</code> / canonical execution</td>
+<td><code>list_jobs</code>, <code>job_output</code>; control action <code>execution.cancel</code></td>
+<td>Observe or control accepted execution, including queued and terminal states</td>
 </tr>
 <tr>
-<td>Entity</td>
-<td><strong>agent</strong></td>
-<td><code>agent</code> / <code>list_agents</code> / <code>archive_agent</code></td>
-<td>What does the work: create a new one, hand work to an existing one (<code>to=</code>), list the agents, archive one that is finished</td>
+<td>Conversation</td>
+<td>Runtime Agent branch</td>
+<td><code>agent</code>, <code>list_agents</code>, <code>archive_agent</code></td>
+<td>Create/continue/address/archive branches, not the saved Agent configuration registry</td>
 </tr>
 <tr>
 <td>Communication</td>
-<td><strong>message</strong></td>
-<td><code>send_message</code> / <code>read_conversation</code></td>
-<td>Messaging and reading: deliver a message, read any branch in full</td>
+<td>Message</td>
+<td><code>send_message</code>, <code>read_conversation</code></td>
+<td>Deliver content or read authorized history; the triggered turn has its own execution accounting</td>
 </tr>
 </tbody>
 </table>
-<p>Writing &quot;benchmark the parser&quot; on the todo list starts nothing. <code>agent(…)</code>
-starts something, and what comes back is a task id. The list says what was
-intended; <code>list_jobs</code> says what is running.</p>
-<p>An agent's conversation is a <strong>branch</strong>: a <code>(session_id, head_id)</code> pair
-inside a session. Two heads in one session are two branches of one
-conversation; two sessions are two conversations. Every agent address is a
-branch — <code>&quot;SID:HEAD&quot;</code>, or the branch's name.</p>
-<h3 id="only-the-dispatcher-operates-on-a-task">Only the dispatcher operates on a task<a class="header-anchor" href="#only-the-dispatcher-operates-on-a-task">#</a></h3>
-<p>Three things can be done to dispatched work, and only the dispatcher can
-do them:</p>
-<table>
-<thead>
-<tr>
-<th>What the dispatcher can do</th>
-<th>What it means</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>The result comes back</td>
-<td>When the task ends, its reply lands in the dispatcher's conversation automatically, whether or not the dispatcher is still waiting</td>
-</tr>
-<tr>
-<td>It can be stopped</td>
-<td><code>job_stop</code> cancels the task; one still queued is withdrawn before it ever runs</td>
-</tr>
-<tr>
-<td>Cancellation cascades</td>
-<td>Stopping a task stops everything that task dispatched, all the way down</td>
-</tr>
-</tbody>
-</table>
-<p><code>read_conversation</code> makes every task id readable, so ownership is checked
-rather than assumed: <code>job_output</code> and <code>job_stop</code> refuse a task another
-session dispatched (§5.10). Calls with no session context (the user, the
-UI) are not gated.</p>
-<p><code>send_message</code> carries none of the three, which is why anyone may write to
-anyone. It delivers a message and the receiver answers or does not. It
-creates no task id, cannot be cancelled, and does not cascade, so a message
-never interrupts work that is already running.</p>
-<h3 id="agent-has-two-modes"><code>agent</code> has two modes<a class="header-anchor" href="#agent-has-two-modes">#</a></h3>
+<p>Background Agent calls return <code>execution_id</code>. The current runner uses <code>execution_id == Job.id</code>; the <code>job_output(job_id=...)</code> parameter and its <code>details.job_id</code> field retain that name. This is one identity, not two independent tasks. The public tools are <code>list_jobs</code> and <code>job_output</code>, not <code>list_tasks</code> or <code>task_output</code>. There is no registered <code>job_stop</code> or <code>task_stop</code> tool in the current catalog. UI/API cancellation uses the existing <code>execution.command</code> envelope with <code>action=&quot;execution.cancel&quot;</code>, <code>command_id</code>, <code>execution_id</code>, <code>expected_version</code> and an empty <code>payload</code>; authentication and action authorization remain mandatory. See <a href="/docs/reference/design/runtime/execution/control.html">execution control</a>.</p>
+<p>A branch is addressed by <code>&quot;SID:HEAD&quot;</code> or an unambiguous branch name. A saved <code>agent_id</code> selects configuration; it is not this branch address. The term “task” may describe work in prose, but public identifiers and tool names use the actual schemas above.</p>
+<h3 id="agent-modes-and-one-call-fork"><code>agent</code> modes and one-call fork<a class="header-anchor" href="#agent-modes-and-one-call-fork">#</a></h3>
 <table>
 <thead>
 <tr>
 <th>Call</th>
-<th>What happens</th>
+<th>Behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>agent(prompt=…)</code></td>
-<td>Creates a new agent and runs it. Blocks for the reply, or returns a task id with <code>run_in_background=true</code></td>
+<td><code>agent(prompt=...)</code></td>
+<td>Create and execute a new branch; foreground reply by default, background execution ID when requested</td>
 </tr>
 <tr>
-<td><code>agent(prompt=…, to=&quot;reviewer&quot;)</code></td>
-<td>Creates nothing. The prompt goes to the existing agent named <code>reviewer</code> as a tracked task and runs as its next turn, queued behind whatever it is doing now — one turn at a time. Always returns a task id</td>
+<td><code>agent(prompt=..., start_from=&quot;SID:MSG&quot;, description=&quot;review&quot;)</code></td>
+<td>Fork the exact historical node, assign a label and execute the prompt immediately</td>
+</tr>
+<tr>
+<td><code>agent(prompt=..., to=&quot;review&quot;)</code></td>
+<td>Submit another execution to the existing branch; no new branch or saved configuration</td>
 </tr>
 </tbody>
 </table>
-<p>Both produce a task; only the first produces an agent. <code>to</code> and <code>start_from</code>
-are mutually exclusive: the target already has a history, so there is no
-fork point left to choose.</p>
-<p>A whole delegation reads in the four words:</p>
-<pre><code>todo_create(&quot;benchmark the parser&quot;)            → todo #1 on the board
-todo_update(&quot;1&quot;, status=&quot;in_progress&quot;)
-agent(&quot;benchmark the parser&quot;, &quot;bench&quot;,
-      run_in_background=true)                  → job_id=t_7f2
-list_jobs()                                   → t_7f2 running — bench
-send_message(&quot;how far along?&quot;, to=&quot;bench&quot;)     → the agent answers, no task created
-job_output(&quot;t_7f2&quot;)                           → the result, when it lands
-todo_update(&quot;1&quot;, status=&quot;completed&quot;)
-archive_agent(to=&quot;bench&quot;)                      → archived out of the agent list
+<p>With <code>to</code>, <code>start_from=&quot;inherit&quot;</code> and <code>start_from=&quot;SID:MSG&quot;</code> are rejected. The API's default <code>&quot;clean&quot;</code> is a placeholder in this mode and does not clear the target's history. <code>description</code> names a new branch; <code>to</code> always addresses an existing one. There is no need to call both modes to fork and execute:</p>
+<pre><code class="language-python"><span class="n">agent</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s2">"Review the result from this node"</span><span class="p">,</span>
+      <span class="n">start_from</span><span class="o">=</span><span class="s2">"SID:MSG"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"review"</span><span class="p">,</span>
+      <span class="n">run_in_background</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre>
-<h3 id="names-shared-with-claude-code">Names shared with Claude Code<a class="header-anchor" href="#names-shared-with-claude-code">#</a></h3>
-<p><code>agent</code>, <code>list_agents</code>, <code>send_message</code>, <code>job_output</code> and <code>job_stop</code> carry
-the same meaning here as in Claude Code, deliberately — a model that knows
-those names already knows these tools.</p>
-<p>One name deliberately differs. Claude Code's <code>TaskList</code> is a todo planning
-board, not a view of running work. The planning board here takes the
-<code>todo_*</code> prefix instead, so the collision cannot happen and <code>list_jobs</code>
-keeps its literal reading: the tasks that are running.</p>
-<p>Three tools have no Claude Code counterpart — <code>list_jobs</code> (there, a model
-cannot enumerate its background tasks), <code>archive_agent</code> (archiving an agent
-out of the agent list, §2.6), and <code>read_conversation</code> (another agent's
-history as a readable transcript, rather than the raw session files).</p>
-<hr />
-<h2 id="2-the-primitive-as-tools">2. The primitive as tools<a class="header-anchor" href="#2-the-primitive-as-tools">#</a></h2>
-<p>Wrap the primitive into tools an agent can call. The division of labor
-mirrors Claude Code: <strong><code>agent</code> creates agents, <code>send_message</code> talks to
-them, <code>list_agents</code> sees them.</strong></p>
+<p><code>job_output</code> checks the current session/job relationship (§5.10). Cancellation uses canonical execution authorization, not a tool-name alias or knowledge of an ID. <code>send_message</code> lacks the explicit assignment semantics of <code>agent(to=...)</code>, but its execution does not bypass admission, cancellation or resource accounting merely because it began as a message.</p>
+<h3 id="reference-naming">Reference naming<a class="header-anchor" href="#reference-naming">#</a></h3>
+<p>The comparison with other frameworks is maintained in <a href="/docs/reference/design/runtime/agent-collab-comparison.html">Agent collaboration comparison</a>. It supplies design context, not a guarantee that another product exposes identical tool names or semantics. This repository's registered tools and canonical execution interface define the public names used here.</p>
+<h2 id="2-tools-and-branch-addressing">2. Tools and branch addressing<a class="header-anchor" href="#2-tools-and-branch-addressing">#</a></h2>
+<p>These entries reuse existing branches, Jobs and execution control. Completion follow-up and other target behavior require the acceptance listed in §7.</p>
 <h3 id="21-the-tools">2.1 The tools<a class="header-anchor" href="#21-the-tools">#</a></h3>
-<p><strong><code>agent</code> — spawn a new agent (the only tool that creates branches):</strong></p>
-<pre><code>agent(
-    prompt: str,                        # instruction for the spawned agent
-    description: str = &quot;&quot;,              # short label, becomes the branch name
-    agent_id: str = &quot;&quot;,                 # agent profile; defaults to the session's
-    start_from: str = &quot;clean&quot;,          # &quot;clean&quot; / &quot;inherit&quot; / &quot;SID:MSG_ID&quot;
-    run_in_background: bool = false,    # false=block for the reply; true=job_id
-    to: str = &quot;&quot;,                       # dispatch to an EXISTING agent instead
-    archive_when_done: bool = false,    # archive the spawned agent at terminal state (§2.6)
-) -&gt; str
-</code></pre>
-<p><code>start_from</code> picks where the new branch starts: <code>&quot;clean&quot;</code> (default) is a new
-root seeing only the prompt; <code>&quot;inherit&quot;</code> forks off the calling turn with the
-full chain; <code>&quot;SID:MSG_ID&quot;</code> forks off that exact node (any session),
-inheriting the chain up to it. <code>run_in_background=true</code> returns a <code>job_id</code>; its
-companions <code>job_output(job_id)</code> (block for the result) and
-<code>job_stop(job_id)</code> (cancel) manage the background form.</p>
-<p><code>&quot;SID:MSG_ID&quot;</code> is an exact fork address. Both the session and the message must
-exist before the spawn is admitted; the message is not snapped to a branch's
-current tip. An archived branch may still be used because this operation reads
-recorded history and creates a new branch rather than delivering work to the
-archived branch.</p>
-<p>When the address names another session, keep the two session roles separate.
-If session S at node A starts from <code>&quot;T:M&quot;</code>, the new branch and the canonical
-Job run in target session T, with M as the exact predecessor. The Job records
-<code>parent_session_id=T</code>, <code>parent_msg_id=M</code>, <code>caller_session_id=S</code>, and
-<code>caller_msg_id=A</code>. Its attach card is stored beside A in source session S, but
-the card's <code>attach.session_id</code> is T and its terminal <code>head_id</code> is the new target
-branch tip. Writing or finalising that card does not move S's HEAD, and the
-spawned turn uses <code>advance_head=false</code>, so it does not replace T's selected
-HEAD either. An asynchronous completion may subsequently advance S's HEAD by
-writing the ordinary reply-back turn described in §2.5.</p>
-<p><strong><code>to=</code> — dispatch a tracked task to an EXISTING agent.</strong> With <code>to</code> set the
-tool creates no branch: the prompt is handed to the named existing branch
-as a formal task. Addressing is send_message's, verbatim (<code>&quot;SID:HEAD&quot;</code>
-snaps onto the branch's current tip; a branch name resolves exact-first,
-then unique prefix; ambiguity lists candidates). What distinguishes a
-dispatch from a message is task tracking:</p>
-<ul>
-<li>A <strong>Task entity</strong> is created (the runner's task record): the dispatcher gets
-a <code>job_id</code> back immediately, <code>job_output</code> waits on it, <code>job_stop</code>
-withdraws or cancels it, and <code>list_jobs</code> shows it.</li>
-<li>Delivery reuses the message machinery: an idle target runs the task as
-the next turn on its branch; a busy target queues it in its inbox
-(§5.4) — the Task entity is pre-created in <code>pending</code> so the id exists
-while the work waits, and the drain runs the SAME task. The delivered
-turn is prefixed with a task receipt header (<code>[task from SID:HEAD] This is a tracked task …</code>) so the target knows the reply is the task's
-result, returned to the dispatcher automatically.</li>
-<li>At terminal state the result flows back as a followup notification into
-the dispatcher's session, with the reply text carried inline in the
-notification. A dispatch creates no branch, so there is no attach
-pointer: attach records that a call created the branch it points at,
-which is untrue of work handed to an agent that already exists.</li>
-<li><code>to</code> and <code>start_from</code> are mutually exclusive (the target branch keeps its
-own history; a fork-point choice contradicts that — the call errors).
-<code>to</code> is always asynchronous, so <code>run_in_background</code> is ignored.
-Dispatching to the caller's own current branch is refused (do the work
-directly). A dispatch spends the message budget, not the spawn budget
-(§5.1) — it creates no agent.</li>
-</ul>
-<p><strong><code>send_message</code> — talk to an EXISTING agent:</strong></p>
-<pre><code>send_message(
-    message: str,                       # content/instruction delivered to the target
-    to: str,                            # see to values below
-    agent_id: str = &quot;main&quot;,             # which agent the target runs as
-) -&gt; str
-</code></pre>
-<p><strong><code>to</code> values — every value names a branch that already exists:</strong></p>
+<p>The existing <code>agent</code> entry accepts <code>prompt</code>, optional <code>description</code>, <code>agent_id</code>, <code>start_from=&quot;clean&quot;</code>, <code>run_in_background=False</code>, <code>to=&quot;&quot;</code> and <code>archive_when_done=False</code>. <code>agent_id</code> selects a saved configuration; the configuration resolver contract is specified separately. Foreground creation calls <code>run_agent_turn</code>, which persists a Job through <code>spawn_job(wait=True)</code> and waits for its result. Background creation and existing-branch dispatch also admit Jobs. The foreground tool returns final text rather than the immediate execution-ID response; return shape does not change resource admission.</p>
+<p><code>start_from</code> selects a new root (<code>clean</code>), the caller's history (<code>inherit</code>), or the exact predecessor <code>SID:MSG</code>. Existence and history-read authorization must be checked before execution; §7 distinguishes current existence checks from the target shared visibility policy. Archived history may be a fork source because forking creates a new branch instead of delivering to the archived branch.</p>
+<p>For a caller node A in session S and <code>start_from=&quot;T:M&quot;</code>, the new branch executes in T. A background Job records <code>parent_session_id=T</code>, <code>parent_msg_id=M</code>, <code>caller_session_id=S</code>, <code>caller_msg_id=A</code>. The attach pointer itself is stored in S beside A; its payload <code>attach.session_id=T</code> and terminal <code>attach.head_id</code> identify the target result.</p>
 <table>
 <thead>
 <tr>
-<th>to</th>
-<th>Meaning</th>
+<th>Render/read operation</th>
+<th>Identity to use</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>&quot;sid:head&quot;</code></td>
-<td>Deliver message to an existing branch. The node names the branch, not a fork point: delivery always lands on the branch's current tip, so a stale head (the branch ran more turns since) is still a valid address and never forks off history. A node that is a shared ancestor of several branches is ambiguous — the error lists the candidates (name + <code>sid:current-tip</code>). Snapping applies to live branches only: the head of a branch a merge absorbed resolves to itself (§2.6). To fork off a specific node, use <code>agent(start_from=&quot;sid:msg_id&quot;)</code>.</td>
+<td>Locate the pointer card and its caller</td>
+<td>The stored message/WS envelope's source <code>session_id</code> plus pointer ID/caller metadata</td>
 </tr>
 <tr>
-<td><code>&quot;&lt;branch name&gt;&quot;</code></td>
-<td>Deliver to a named branch. Tried when the value is not <code>SID:HEAD</code> syntax: exact name match wins, a unique prefix is accepted next; several matches return an error listing the candidates (name + <code>sid:head</code>), zero matches point to <code>list_agents</code>. <code>list_agents</code> marks each branch's name so the model can address by name directly.</td>
+<td>Load the attached result</td>
+<td><code>extra.attach.session_id</code> plus <code>extra.attach.head_id</code>; never search the source DAG for the target node</td>
+</tr>
+<tr>
+<td>Draw same-session branch relationships</td>
+<td>Only use local DAG edges when source and target sessions match</td>
+</tr>
+<tr>
+<td>Present a cross-session attachment</td>
+<td>Use the external-attachment card; retain source placement and target session/head references</td>
 </tr>
 </tbody>
 </table>
-<p>The removed spawn addressing (<code>to=&quot;new&quot;</code> / <code>&quot;new:sid:msg_id&quot;</code>) is rejected
-with an error that points to the <code>agent</code> tool.</p>
-<p>Every delivery (direct or queued, see §5.4) is prefixed with a
-sender-receipt header —
-<code>[message from SID:HEAD] To reply, use send_message(to=&quot;SID:HEAD&quot;). Replying is optional …</code> — so the receiver knows who sent it, how to answer, and that not
-answering is legitimate. Agent-tool spawns carry the bare prompt: a spawned
-agent has no earlier sender to reply to.</p>
-<p>One use:</p>
-<ul>
-<li><strong>Message an existing branch/session</strong>: <code>to=&quot;sid:head&quot;</code> → deliver message
-to that branch, trigger one turn, and the answer is sent back automatically.
-Cross-session uses the same path (<code>to</code> can be any session).</li>
-</ul>
-<p>Both tools drive the same primitive; a spawn is the same
-deliver → trigger → reply-back flow with a freshly created branch as the
-target.</p>
-<p><strong>One flow, whichever tool starts it:</strong></p>
-<ol>
-<li>The target branch is resolved — <code>agent</code> creates it (<code>start_from</code> picks
-where it starts); <code>send_message</code> resolves <code>to</code> onto an existing branch's
-current tip.</li>
-<li>The receipt header plus the message is delivered there.</li>
-<li>The target runs one turn and the model reads everything delivered.</li>
-<li>The reply comes back on its own. The send returned instantly, so the
-caller never blocked; when the target finishes, its answer is appended to
-the caller's conversation and the caller runs a turn to read it.</li>
-</ol>
+<p>The UI already separates local attach relationships from external cards. Current full AttachCard navigation opens T without explicitly selecting H; the execution strip can select (T,H). The target is consistent exact-head navigation, with this difference recorded in §7. Neither attach creation nor terminal update moves the selected HEAD of S or T; a later authorized follow-up is a separate turn. The source identity is owned by the stored message/envelope, not duplicated as an independently writable target payload field. Validate both identities when projecting; reject mismatches instead of choosing one arbitrarily. See <a href="/docs/reference/design/runtime/dag/rendering.html">DAG attach rendering</a>.</p>
+<p><code>agent(to=...)</code> admits a Job for an existing branch; a busy branch queues it. The branch is resolved to its current tip, and ambiguous names fail with candidates. It creates no new attach pointer. <code>archive_when_done=True</code> is invalid with <code>to</code>; only a call that creates a branch can declare this completion policy.</p>
+<p><code>send_message(message, to, agent_id=&quot;main&quot;)</code> uses the same existing-target resolver. A direct async delivery creates a Job and returns a <code>delivery_id</code> identifying that run; a busy target first receives an inbox entry, whose delivery receipt is distinct from a later execution ID. No new branch is created. Old <code>to=&quot;new&quot;</code> forms are invalid; creation belongs to <code>agent(start_from=..., prompt=...)</code>. Delivery and admission limits are specified in §5.1–5.2.</p>
+<p>An explicit message carries a sender address and instructions for an optional additional <code>send_message</code> reply. The target automatic-completion contract is independent of that choice; its current wiring status is listed in §7. A missing target never silently creates a branch.</p>
 <h3 id="22-referencing-other-branches">2.2 Referencing other branches<a class="header-anchor" href="#22-referencing-other-branches">#</a></h3>
 <p>A message is plain text, exactly like a user message. When the target should
 consider other branches, the sender writes that into <code>message</code>: quote the
 conclusion directly (each branch's reply already flowed back to the sender via
 reply-back), or name the branch (<code>SID:HEAD</code> or its name) and the target reads
-it itself with <code>read_conversation</code>. The target model decides how much of the
-named branch to read, so context stays bounded without a dedicated aggregation
-parameter.</p>
-<h3 id="23-list_agents-seeing-each-other-a-precondition-for-communication">2.3 <code>list_agents</code> — seeing each other (a precondition for communication)<a class="header-anchor" href="#23-list_agents-seeing-each-other-a-precondition-for-communication">#</a></h3>
+it itself with <code>read_conversation</code>. The target model selects the amount to read,
+subject to the output limits in §5.6 and read authorization in §5.9; no dedicated
+aggregation parameter is added.</p>
+<h3 id="23-list_agents-discover-addressable-branches">2.3 <code>list_agents</code> — discover addressable branches<a class="header-anchor" href="#23-list_agents-discover-addressable-branches">#</a></h3>
 <pre><code>list_agents(scope=&quot;session&quot;, limit=20, agent_id?, source?) -&gt; str   # db.list_sessions + db.list_branches
 </code></pre>
 <p><code>scope</code> picks the view: <code>&quot;session&quot;</code> (default) lists the current session's
@@ -673,9 +528,10 @@ stresses one thing: <strong>branches spawned by the agent tool and branches the 
 forks by hand use the same naming path (both get a Stage 1 placeholder name
 plus Stage 2 automatic renaming); neither may be skipped.</strong></li>
 </ul>
-<h3 id="25-where-the-reply-back-node-lands-the-initiators-current-tail-serialized">2.5 Where the reply-back node lands: the initiator's current tail, serialized<a class="header-anchor" href="#25-where-the-reply-back-node-lands-the-initiators-current-tail-serialized">#</a></h3>
-<p>For the asynchronous reply-back, <code>_dispatch_followup</code> feeds the
-target branch's reply into the delivery session as a <strong>synthetic user-role
+<h3 id="25-reply-placement-the-initiators-current-head-serialized">2.5 Reply placement: the initiator's current HEAD, serialized<a class="header-anchor" href="#25-reply-placement-the-initiators-current-head-serialized">#</a></h3>
+<p>This section specifies target completion semantics and the existing helper behavior, not a verified standard completion-path connection; see §7.</p>
+<p>For the asynchronous reply-back, <code>_dispatch_followup</code> submits the
+target branch's reply to the delivery session as a <strong>synthetic user-role
 turn</strong>. <strong>Key rule: the reply-back <code>TurnRequest</code> leaves <code>branch_from</code> unset
 (INHERIT_PARENT) — the dispatcher resolves it to the delivery session's
 current HEAD and advances it.</strong> A per-delivery-session follow-up lock
@@ -683,17 +539,15 @@ current HEAD and advances it.</strong> A per-delivery-session follow-up lock
 sub-tasks finishing produce one serial chain
 <code>… → notice₁ → answer₁ → notice₂ → answer₂</code> — each follow-up reads a HEAD
 that already contains the previous answer.</p>
-<p>Why the reply is not pinned to the spawn node (<code>caller_msg_id</code>): with N
-parallel sub-tasks forked from one turn, every reply-back would land as a
-sibling hanging off that same node, and the single user message that
-triggered the spawns would be answered N times on N parallel branches.
-Anchoring at HEAD keeps all N completions on a single conversation path.</p>
-<p>The return-flow provenance is not lost by this anchoring: the <strong>attach
-pointer</strong> written at spawn time does hang off
-<code>predecessor = caller_msg_id</code>, so the DAG still shows which turn each
-sub-branch forked from and which branch each result flowed back from.
-The sub-branch itself stays a parallel independent branch and <strong>does not
-merge back into the mainline</strong>.</p>
+<p>The reply does not use the spawn node (<code>caller_msg_id</code>) as its predecessor:
+with N parallel subtasks forked from one turn, every reply would otherwise
+create a sibling under that node, answering the initiating user message N
+times on N branches. Using the current HEAD serializes all N completions on
+one conversation branch.</p>
+<p>The <strong>attach pointer</strong> written at spawn time retains
+<code>predecessor = caller_msg_id</code>, so the DAG preserves the initiating turn and
+source branch of each result. The sub-branch stays independent and <strong>does not
+merge into the initiator's branch</strong>.</p>
 <p>For a cross-session spawn, the pointer remains in the initiator's session but
 references the target <code>(session_id, head_id)</code>. Terminal finalisation reads the
 target branch and its ContextCommit in the target session, then patches the
@@ -705,112 +559,46 @@ attach pointer, its asynchronous follow-up consumes the result through attach
 expansion rather than duplicating the reply inline. <code>send_message</code> and
 <code>agent(to=...)</code> create no branch and no attach pointer, so their replies remain
 inline and receive neither spawn marker.</p>
-<h3 id="26-archiving-removing-an-agent-from-the-agent-list">2.6 Archiving: removing an agent from the agent list<a class="header-anchor" href="#26-archiving-removing-an-agent-from-the-agent-list">#</a></h3>
-<p>Branches live forever in the session DAG — fork, replay, and
-<code>read_conversation</code> all depend on that — so without an archive flag
-<code>list_agents</code> accumulates every agent ever spawned, and the model keeps
-addressing workers whose job finished long ago. Archiving is that flag:
-<code>archived: true</code> on the branch's meta entry, the same <code>branches</code> entry that
-carries the name, written with <code>set_branch_meta</code> and read with
-<code>get_branch_meta</code>. Sharing an entry with the name is safe because every
-writer merges field by field under the index lock: Stage-2 auto-naming
-(branch-naming.md) sets <code>name</code> and its own counters and cannot drop the
-archive flag, and it skips archived branches anyway — an agent whose work
-is finished needs no new name.</p>
-<p><strong>Archiving stops new deliveries to a branch and keeps its history.</strong></p>
+<h3 id="26-archiving-a-global-branch-state">2.6 Archiving: a global branch state<a class="header-anchor" href="#26-archiving-a-global-branch-state">#</a></h3>
+<p>Archiving writes <code>archived: true</code> to the target branch's metadata. It is global within that local state store, not a caller-to-target visibility relation. If A archives B, C's subsequent <code>list_agents(scope=&quot;session&quot;/&quot;all&quot;)</code> also omits B. <code>scope=&quot;archived&quot;</code> explicitly lists archived branch records. Existing history is retained; archive is not data deletion or storage compaction.</p>
+<p>“One-way” refers only to the state transition: the current toolset has no unarchive operation. It does not mean “hidden for the caller only.” Reusing archived history is a new <code>agent(start_from=&quot;SID:MSG&quot;, prompt=...)</code> call with a distinct branch lifecycle. A branch left idle but never archived can still appear; explicit/manual completion policy, not caller-specific filtering, decides that state.</p>
 <table>
 <thead>
 <tr>
 <th>Operation on an archived branch</th>
-<th>Behavior</th>
+<th>Contract</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>list_agents</code> (<code>scope=&quot;session&quot;</code> / <code>&quot;all&quot;</code>)</td>
-<td>Hidden</td>
+<td>Normal <code>list_agents</code> views</td>
+<td>Hidden for every caller using the same store</td>
 </tr>
 <tr>
-<td><code>list_agents(scope=&quot;archived&quot;)</code></td>
-<td>Listed: every archived branch, including one a merge absorbed</td>
+<td><code>scope=&quot;archived&quot;</code></td>
+<td>Visible in the archive view, including archived records whose heads were merged</td>
 </tr>
 <tr>
-<td><code>send_message(to=…)</code></td>
-<td>Refused: <code>agent SID:HEAD is archived</code></td>
+<td>New <code>send_message</code> / <code>agent(to=...)</code></td>
+<td>Refused by the shared existing-target resolver</td>
 </tr>
 <tr>
-<td><code>agent(to=…)</code></td>
-<td>Refused, same message</td>
+<td>Already running execution</td>
+<td>Continues; archive does not cancel it</td>
 </tr>
 <tr>
-<td><code>read_conversation</code></td>
-<td>Reads it as usual</td>
-</tr>
-<tr>
-<td><code>agent(start_from=&quot;SID:MSG_ID&quot;)</code></td>
-<td>Forks it as usual</td>
+<td><code>read_conversation</code> / historical fork</td>
+<td>Permitted only under the applicable history visibility policy; archive itself is not an access grant</td>
 </tr>
 </tbody>
 </table>
-<p>The refusal lives in exactly one place: <code>resolve_existing_target</code> (the
-addressing both delivery paths share, §2.1) checks the flag right after it
-snaps an address onto the branch's current tip, so every delivery inherits
-the guard and no caller can route around it. <code>archive_agent</code> reaches
-archived branches through that same resolver with <code>allow_archived=True</code>.</p>
-<p><strong>Archiving is orthogonal to merging.</strong> A merge absorbs a branch into
-another one, and the absorbed head leaves <code>list_branches</code> because its
-content is now reachable from the branch that absorbed it. That is a fact
-about where content lives, and it happens on its own: the task runner
-absorbs a background spawn's branch the moment the spawn completes
-successfully. Archiving is a fact about the agent that worked on the
-branch, and it is always an explicit act. Neither implies the other, so the
-two are stored apart (<code>merged_heads</code> in the session meta,
-<code>archived</code> on the branch entry) and read apart:</p>
+<p>Merging and archiving remain separate: a merged branch may leave the live-tip list without being marked archived. The archive view reads stored branch records; a merged head must resolve to its own branch when archiving, not to the branch that absorbed it.</p>
+<p>Two entry points share the target archive state:</p>
 <ul>
-<li><code>list_agents(scope=&quot;archived&quot;)</code> reads the archive flag off the branch
-entries (<code>store.list_archived_branches</code>) rather than filtering the live
-tip list, so every archived branch is listed whether or not a merge
-absorbed it. This is what makes <code>archive_when_done</code> observable on a spawn
-that succeeded, which is exactly the case where the merge comes first.</li>
-<li>The default scope and <code>scope=&quot;all&quot;</code> list live branch tips, so a merged
-branch stays out of both, archived or not. That is the merge's own
-behavior and archiving does not change it.</li>
-<li>A merged head keeps addressing its own branch. <code>resolve_existing_target</code>
-snaps onto the current tip of a live branch; the head of a branch a merge
-retired is snapped nowhere and resolves to itself
-(<code>store.merged_heads</code>). Without that rule
-<code>archive_agent(to=&quot;SID:MERGED_HEAD&quot;)</code> resolves to whichever live branch
-absorbed the node, archives that branch instead, and reports success for
-it.</li>
+<li><code>archive_agent(to, reason=&quot;&quot;)</code> archives an existing branch. Repeating the manual operation is idempotent. The current implementation allows any local session with the tool capability to archive another branch and does not impose a creator-only check; this is a shared local trust boundary, not multi-user isolation. The target lifecycle action must use the same scoped authorization framework as other branch operations.</li>
+<li><code>agent(archive_when_done=True)</code> declares a terminal archive policy only for a branch created by that call. It is invalid with <code>to</code>. The synchronous path currently writes the flag; the asynchronous helper exists, but standard completion-path integration requires the §7 acceptance before it is claimed implemented.</li>
 </ul>
-<p>Two ways to archive:</p>
-<ul>
-<li><strong><code>agent(archive_when_done=true)</code></strong> — the spawn declares up front that
-the agent it creates is a one-shot worker. The branch is marked at
-terminal state (<code>completed</code> / <code>errored</code> / <code>cancelled</code>), after the result
-has flowed back to the caller; the synchronous spawn form marks it once
-the result is in hand. The write is best-effort: a failed meta write is
-logged and the result still returns. Spawn-only — combined with <code>to=</code> the
-call errors, because a dispatch targets an agent it did not create.</li>
-<li><strong><code>archive_agent(to, reason=&quot;&quot;)</code></strong> — archive an agent after the fact. <code>to</code>
-takes the same addresses as <code>send_message</code> (<code>&quot;SID:HEAD&quot;</code> or a branch
-name). Archiving an already-archived branch is an idempotent notice, not
-an error.</li>
-</ul>
-<p><strong>Any session may archive any agent.</strong> Archiving is not gated the way
-<code>job_stop</code> is (§5.10), because it does not do what <code>job_stop</code> does: it
-interrupts no running work and deletes nothing. A task already running on
-the branch runs to its end, <code>read_conversation</code> still reads the branch and
-<code>agent(start_from=&quot;SID:MSG_ID&quot;)</code> still forks it. All that changes is that
-the branch leaves <code>list_agents</code> and stops accepting <code>send_message</code> and
-<code>agent(to=)</code>. Any session can see that an agent is finished, so any session
-can say so.</p>
-<p><strong>Archiving is one-way; there is no unarchive.</strong> The flag means &quot;this
-conversation is finished&quot;, and a finished conversation whose memory is worth
-reusing is forked with <code>agent(start_from=&quot;SID:MSG_ID&quot;)</code> — a fresh branch
-with its own name and its own lifecycle, which is what reusing it actually
-requires. An unarchive tool would only be a second way to do the same thing.</p>
-<hr />
+<p>If manual archiving happens first, the executing Job is not cancelled and terminal handling never reopens the branch. The target shared archive operation preserves the first <code>archived_at</code> and an explicit manual reason; a later automatic request may fill missing fields but not overwrite them. Current automatic/synchronous writes can refresh the timestamp, so metadata idempotence is a remaining implementation gap. Failure to persist automatic archive is reported separately from the execution result and must not turn a successful result into a failure. Accepted-but-not-started deliveries recheck the target archive state before starting; rejecting them terminates their Job/receipt with an explicit reason rather than silently losing it.</p>
 <h2 id="3-what-collaboration-looks-like-while-it-happens">3. What collaboration looks like while it happens<a class="header-anchor" href="#3-what-collaboration-looks-like-while-it-happens">#</a></h2>
 <p>Collaboration runs on the framework's shared event layer, so it is visible
 live rather than only in hindsight. Three effects follow from that, and they
@@ -831,258 +619,117 @@ waits for approval. Sub-agents are held by the same gate, and
 <p>The event layer itself — the bus, the event model, the registry, the veto
 protocol — is documented in
 <a href="/docs/reference/design/proactive/event-layer.html">proactive/event-layer</a>.</p>
-<hr />
-<h2 id="4-end-to-end-two-agents-see-each-other-and-communicate">4. End to end: two agents see each other and communicate<a class="header-anchor" href="#4-end-to-end-two-agents-see-each-other-and-communicate">#</a></h2>
-<p>A and B run at the same time (different branches of one session, or different
-sessions):</p>
+<h2 id="4-end-to-end-target-sequence">4. End-to-end target sequence<a class="header-anchor" href="#4-end-to-end-target-sequence">#</a></h2>
 <ol>
-<li><strong>See</strong>: A calls <code>list_agents</code> → sees B's session and its active
-branch <code>(B_session, B_head)</code>.</li>
-<li><strong>Send</strong>: A calls <code>send_message(&quot;...&quot;, to=&quot;B_session:B_head&quot;)</code> →
-returns instantly and A carries on.</li>
-<li><strong>B receives</strong>: the message lands in B's branch (a △ &quot;message from A&quot; on B's
-side), and B runs a turn to answer it (△). Both frontends see it live via
-ws.frame.</li>
-<li><strong>Reply back to A</strong>: when B finishes, <code>_dispatch_followup</code> automatically
-appends the reply to the end of A (△) + triggers A to run a turn; A reads
-it on that turn and can continue.</li>
-<li><strong>Repeatable</strong>: A can <code>send_message</code> B again — neither branch blocks and
-nothing is serialized.</li>
+<li>Resolve an existing visible target from <code>list_agents</code> or an explicit authorized address.</li>
+<li>Submit <code>send_message</code> or <code>agent(to=...)</code>. Acknowledge inbox receipt separately from Job admission; a rejected admission returns its reason without claiming work started.</li>
+<li>Run the target turn under its configured context, resource limits and execution authority. A busy target follows the shared serialization/queue policy; the sender need not block.</li>
+<li>For an admitted managed execution, commit terminal result and attach state first. The target completion policy schedules at most one idempotent nonempty follow-up to the caller; failure or empty output must not create an unbounded reply cycle.</li>
+<li>Read the result via authorized <code>job_output</code>/execution resources even when delegation allowance is exhausted. New dispatches recheck topology, resource, archive and authorization constraints.</li>
 </ol>
-<p>Spawn (the <code>agent</code> tool) is another parameterization of the same flow and is
-not listed separately.</p>
-<hr />
+<p>Automatic follow-up wiring is a required public-entry acceptance item, not proven by a test that calls the helper directly.</p>
 <h2 id="5-robustness-and-safety">5. Robustness and safety<a class="header-anchor" href="#5-robustness-and-safety">#</a></h2>
 <p>Communication creates branches, triggers other branches to run, and writes
 across sessions. Those side effects need boundaries.</p>
-<h3 id="51-three-budgets-bound-every-chain">5.1 Three budgets bound every chain<a class="header-anchor" href="#51-three-budgets-bound-every-chain">#</a></h3>
-<p>Recursive collaboration is allowed — a spawned agent can message further
-agents for multi-level decomposition — and three budgets keep it finite. A
-<strong>chain</strong> is everything that grows out of one user turn. Two of the
-budgets travel with the chain, each on its own counter; the third counts
-siblings inside one turn.</p>
+<h3 id="51-topology-limits-and-exact-exhaustion-behavior">5.1 Topology limits and exact exhaustion behavior<a class="header-anchor" href="#51-topology-limits-and-exact-exhaustion-behavior">#</a></h3>
+<p>Depth, message count and fan-out constrain collaboration topology. They are not token budgets, aggregate session admission counts or permissions. <a href="/docs/reference/design/runtime/agent-resource-governance.html">Resource governance</a> owns the separate live/queue/cumulative and token/cost/runtime/idle constraints.</p>
 <table>
 <thead>
 <tr>
-<th>Budget</th>
-<th>Setting</th>
-<th>Default</th>
-<th>Counter</th>
-<th>What spends it</th>
+<th>Limit</th>
+<th>Current setting / default</th>
+<th>Scope and accounting</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Spawn depth</strong></td>
-<td><code>agent.max_spawn_depth</code></td>
-<td>1</td>
-<td><code>depth._chain_generations</code></td>
-<td>Creating an agent, and nothing else: <code>agent</code> without <code>to=</code>. The new agent runs one generation in</td>
+<td>Spawn depth</td>
+<td><code>agent.max_spawn_depth=1</code></td>
+<td>Generation along a lineage path; only a newly created branch increases it</td>
 </tr>
 <tr>
-<td><strong>Messages</strong></td>
-<td><code>agent.max_messages</code></td>
-<td>8</td>
-<td><code>depth._chain_messages</code></td>
-<td>Every hop: a spawn, a <code>send_message</code> delivery, an <code>agent(to=…)</code> dispatch, and a result flowing back</td>
+<td>Messages</td>
+<td><code>agent.max_messages=8</code></td>
+<td>Message depth along a lineage path; a delivery passes sender count + 1 to its target, without incrementing the sender's sibling calls</td>
 </tr>
 <tr>
-<td><strong>Fan-out</strong></td>
-<td><code>agent.max_spawn_fanout</code></td>
-<td>8</td>
-<td><code>agent._fanout_used</code>, per (session, turn)</td>
-<td>Creating an agent, counted per turn instead of per chain</td>
+<td>Fan-out</td>
+<td><code>agent.max_spawn_fanout=8</code></td>
+<td>New branches per caller <code>(session, turn)</code>; existing-branch dispatch and messages do not spend it</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Setting any of them to 0 removes that limit entirely</strong> — nothing
-accumulates against it and nothing is refused because of it.</p>
-<p><strong>Reading a result spends a message and no generation.</strong> The turn that
-carries a finished agent's reply back is the <em>dispatcher's</em> turn, so it
-runs at the dispatcher's generation count (<code>Task.caller_chain_generations</code>,
-re-bound by <code>JobRunner._dispatch_followup</code>) and one message further
-along. That keeps the most common multi-agent shape open: send a batch of
-work out, read what comes back, send the next batch. One counter for both
-budgets closes it — the coordinator's follow-up turn inherits the worker's
-count of 1, and every later <code>agent</code> call in that chain is refused. The
-message counter is what still ends such a chain: each wave costs messages,
-and the eighth stops it.</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>agent.max_spawn_depth<span class="w"> </span><span class="m">2</span><span class="w">   </span><span class="c1"># workers may open one more generation</span>
-openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>agent.max_messages<span class="w"> </span><span class="m">0</span><span class="w">      </span><span class="c1"># unlimited conversation between agents</span>
-openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>agent.max_spawn_fanout<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="c1"># wider parallel fan-out per turn</span>
-</code></pre>
-<p><strong>What the budgets do when they run out.</strong> A call that would overrun is
-refused with a reason the model can act on, and it keeps every other
-tool. Once the <strong>message</strong> budget is spent, <code>agent</code>, <code>job_output</code> and
-<code>job_stop</code> leave the tool list altogether: every form of delegation
-hands a message over, so a chain out of messages can do nothing with
-them, and a tool sitting in the listing makes the model try to call it.
-The generation budget never removes a tool, because a chain out of
-generations still dispatches work to agents that already exist. Neither
-does the fan-out budget: it is spent inside a turn, and the tool list is
-frozen at the turn boundary, so it can only refuse.</p>
-<p>Typical behavior at the defaults (spawn depth 1, messages 8, fan-out 8):</p>
-<ul>
-<li>The main agent spawns workers. A worker asked to spawn again is told
-to do the work itself with its own tools.</li>
-<li>That same worker keeps <code>agent(to=…)</code> and <code>send_message</code>: it can hand
-work to agents that <strong>already exist</strong> and answer whoever wrote to it.
-Only creating a new generation is closed to it.</li>
-<li>The main agent spawns a wave of workers, reads their results as they
-come back, and spawns the next wave. Reading costs messages, never
-generations, so the workers stay one generation deep however many
-waves there are.</li>
-<li>A and B messaging back and forth stop after the 8th message of the
-chain, whichever of them is holding the turn. The reply hop re-binds
-the finished task's count instead of adding to it, so one round trip
-costs 1 and 8 buys eight round trips.</li>
-<li>A turn that calls <code>agent</code> a ninth time is refused and pointed at the
-eight agents it already has. The next turn starts a fresh fan-out
-budget, so this stops a runaway turn without becoming a quota on the
-session.</li>
-</ul>
-<p>At <code>agent.max_spawn_depth: 2</code> a worker may open one more generation and
-the third refuses. At <code>0</code>, <code>0</code> and <code>0</code> nothing is ever refused, and
-runaway protection falls to the concurrency cap and the per-turn
-iteration cap (§5.2) plus the user's Stop.</p>
-<p><strong>Self-send refusal</strong> is unconditional and independent of all three
-budgets: a <code>to</code> pointing at the issuing branch itself is a direct cycle
-and is refused immediately.</p>
-<p><strong>Where the numbers come from.</strong> Each default is calibrated against the
-eight reference implementations surveyed in
-<code>agent-collab-comparison.html</code> §05, and the reasoning is kept next to
-each constant in the code (<code>agent.MAX_SPAWN_DEPTH</code>,
-<code>agent.MAX_SPAWN_FANOUT</code>, <code>depth.MAX_MESSAGES</code>).</p>
-<ul>
-<li><strong>Spawn depth 1</strong> is what openclaw, codex-cli V1, hermes-agent and
-opencode all settle on. Claude Code's 3 does not transfer: its leaked
-tree has no depth counter and strips the <code>Agent</code> tool from every
-subagent unless <code>USER_TYPE=ant</code>, so an external user's effective depth
-there is 1, and its async tool allowlist omits <code>Agent</code> outright, so a
-background subagent never spawns whatever the counter says. Depth 3
-applies only to synchronous nesting, where the parent's tool call
-blocks for the whole child run. Our unattended path is
-<code>run_in_background=True</code>, and 1 is the value Claude Code enforces
-there.</li>
-<li><strong>Messages 8</strong> is anchored on openclaw, the only reference that counts
-the same thing: its agent-to-agent ping-pong stops after 5 alternating
-replies by default and 20 at most. 8 sits between them, which is where
-a counter that also pays for spawns and dispatches belongs.</li>
-<li><strong>Fan-out 8</strong> covers the one runaway nothing else counted. A spawn
-hands its count to the child and leaves the parent's own untouched, so
-before this budget a single turn could call <code>agent</code> until the
-50-iteration cap stopped it. openclaw is the only reference with a
-true fan-out cap (5 live children per parent, range 1 to 20); hermes'
-3 and pi-mono's 8 validate the length of a batch argument, which does
-not transfer because <code>agent</code> creates one child per call. 8 is two
-widths of our four-worker pool, so a turn can fill the pool and keep
-one wave queued behind it.</li>
-</ul>
-<p><strong>Two guards we looked at and did not take.</strong> openclaw rate-limits
-parent-to-child messages to one every 2 seconds, and hermes gives each
-delegated subtask a 600 second timeout.</p>
-<ul>
-<li>The 2 second limit guards openclaw's <em>steer</em> path, which aborts the
-child's in-flight run, drains its queues and restarts it, so two
-steers close together abort each other mid-abort. Its non-interrupting
-sibling send has no rate limit at all. <code>send_message</code> is the
-non-interrupting kind: a busy target queues (§5.4) and the message is
-delivered as its own turn, so there is nothing to thrash.</li>
-<li>hermes' 600 seconds is a caller-side <code>Future.result(timeout=…)</code>, not a
-kill. On expiry it sets a cooperative interrupt flag and abandons the
-worker thread, and a child wedged in blocking I/O keeps running. We
-already have both halves of that and stronger: <code>job_output(timeout=)</code>
-is the same caller-side wait (default 30s, ceiling 600s), and
-<code>job_stop</code> cancels cooperatively, kills the active runtime and forces
-the entity terminal after 30s. What neither we nor hermes have is a
-deadline that fires with nobody watching. Adding one means scheduling
-<code>cancel_job</code> at submit time in <code>JobRunner</code>, and the bound that makes
-it rarely necessary is the 50-iteration per-turn cap below.</li>
-</ul>
-<p><strong>How the counts travel.</strong> Both counters live in ContextVars
-(<code>send_message…depth._chain_messages</code>, <code>._chain_generations</code>). A chain
-crosses three thread boundaries and each one has to hand them over
-explicitly, because a Python thread starts with its ContextVars at their
-defaults:</p>
+<p>A topology setting of <code>0</code> disables that check; propagated context counters may still exist. Resource limits have different syntax: <code>null</code> means unset/inherit and a configured numeric value must be positive. Do not transfer the topology convention <code>0=unlimited</code> to the resource schema.</p>
+<p>The follow-up helper binds the completed Job's <code>chain_messages</code> unchanged and restores <code>caller_chain_generations</code>; it does not add another message or generation for reading the result. Thus the message setting is not a shared quota counting all branches' traffic. Fan-out and session admission counts constrain sibling/cumulative work separately. The helper's standard completion-path integration is a pending acceptance item (§7).</p>
 <table>
 <thead>
 <tr>
-<th>Hop</th>
-<th>How the counts arrive</th>
+<th>Attempt when a limit is exhausted</th>
+<th>Required behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Dispatcher → tool body</td>
-<td><code>copy_context()</code> in <code>functions/_runtime.py</code> carries both into the executor thread</td>
+<td>New branch with exhausted message, depth or fan-out allowance</td>
+<td>Reject this creation with its reason; no new branch/Job from the rejected attempt</td>
 </tr>
 <tr>
-<td>Sender → task worker</td>
-<td>Both are persisted on the Task (<code>chain_messages</code>, always sender + 1; <code>chain_generations</code>, sender + 1 for a spawn and unchanged for a dispatch) and re-bound by <code>JobRunner._run_one</code></td>
+<td><code>agent(to=B)</code> or <code>send_message(to=B)</code> with exhausted message allowance</td>
+<td>Reject this delivery even though no branch is created; depth/fan-out alone do not block it</td>
 </tr>
 <tr>
-<td>Task → reply follow-up</td>
-<td><code>JobRunner._dispatch_followup</code> re-binds the finished task's <code>chain_messages</code> and its <code>caller_chain_generations</code> in its own thread</td>
+<td>Existing Job, caller's current turn, local nondelegation tools</td>
+<td>Do not automatically cancel them merely because a topology count reached its limit</td>
+</tr>
+<tr>
+<td><code>job_output</code>, execution snapshots or <code>execution.cancel</code></td>
+<td>Remain available under their normal authorization; observation and stopping work consume no delegation allowance</td>
 </tr>
 </tbody>
 </table>
-<p>The reply hop is where the two budgets part company, and each direction
-matters. Messages carry over from the child: the follow-up turn is where
-A reads B's answer and writes the next message, so a follow-up that
-started at 0 would give A a fresh budget on every round and the
-8-message cap would never be reached. Generations go back to the
-dispatcher's count: the follow-up creates nobody, and inheriting the
-child's count left an agent that had read one worker's reply unable to
-create any further agent in that chain.</p>
-<p>The same thread also re-binds <code>_current_job_id</code> to the finished task's
-<code>parent_job_id</code>, so a task A spawns while reading the reply belongs to
-the same lineage cascading cancel walks (§5.3).</p>
-<p>The session id those tools read (<code>run_control._current_session_id</code>) is
-bound by <code>TurnBindings</code> for the length of the turn, alongside the turn
-id, so it is present on every path into <code>process_user_turn</code> and not only
-the ones whose caller bound it first. Binding fills in only when nothing
-is bound: an entry point that owns the id for a scope wider than one turn
-(the webui exec thread, a task runner worker, a channel adapter) keeps
-it, so a nested turn for another session cannot repoint the cancel hook
-or <code>runtime.ask</code> at a session that registered no turn token.</p>
-<h3 id="52-concurrency-limit-queueing">5.2 Concurrency limit + queueing<a class="header-anchor" href="#52-concurrency-limit-queueing">#</a></h3>
-<ul>
-<li>Spawning runs on the <code>JobRunner</code> thread pool, capped by
-<code>OPENPROGRAM_JOB_WORKERS</code> (default 4). Spawn eight at once and anything over
-the cap <strong>queues</strong>, running as slots free up, without overloading anything.
-This is a global pool, so it bounds what runs at once and not how much
-work one turn can create. That is the fan-out budget's job (§5.1).</li>
-<li>Chat turns, spawned ones included, have no inner tool-call hard cap
-(Codex loops until an assistant message; DeepSeek's ReactLoopAgent has
-no maxSteps). A caller-supplied <code>max_iterations</code> can still stop a nested
-<code>runtime.exec</code> (default 20). Identical failed tools are skipped after two
-repeats. The user can cancel the turn.</li>
-</ul>
-<h3 id="53-cancellation-propagation-cascading">5.3 Cancellation propagation (cascading)<a class="header-anchor" href="#53-cancellation-propagation-cascading">#</a></h3>
-<ul>
-<li>Cancelling a task <strong>also cancels every task it spawned</strong>. Each spawn made
-from inside a running task records the chain on the Task entity
-(<code>parent_job_id</code>, defaulted from the runner's current-task ContextVar).
-<code>JobRunner.cancel_job</code> walks the persisted entities breadth-first over
-that chain (visited-set guard, so even a malformed cycle terminates):
-pending/queued descendants flip straight to cancelled without ever running;
-running ones go through the same per-task cancel path as the root —
-session cancel event + <code>kill_active_runtime</code> + the 30s force-cancel
-watchdog. No zombie threads or subprocesses remain.</li>
-<li><strong>Descendants are cancelled before the root.</strong> Cancelling the root makes
-its worker drop out, and the freed pool slot immediately starts the next
-queued future, which is a descendant the cascade had not reached yet. It
-then ran a full turn for work the user had already stopped. Walking the
-chain first means the worker that picks the descendant up finds an
-entity already at <code>cancelled</code> and returns without calling
-<code>run_agent_turn</code>. Ordering only; <code>cancel_job</code> still returns the root's
-post-update entity, and <code>None</code> for a task id that resolves to no session.</li>
-<li>Session-level cancel (the user's Stop on a session) additionally clears the
-session's send_message inbox (<code>inbox.clear</code>): the queued messages are new
-work that has not started yet, and a user stopping a session wants all of
-its work to stop. Each dropped entry leaves a system notice in its sender's
-session so the sender knows the message was never delivered.</li>
-</ul>
+<p>Current <code>agent</code>/<code>send_message</code> admission checks enforce the new-delivery limits. <code>job_output</code> remains available after message exhaustion and retains its normal session and ancestor ownership checks. Reading a result does not spend a message or create a delivery. There is no registered <code>job_stop</code> tool; UI/API cancellation uses the existing <code>execution.cancel</code> command.</p>
+<p>A spawn consumes message depth and generation, plus caller-turn fan-out. Existing-branch dispatch consumes only message depth among these three, but still admits a new execution under §5.2. A later independent user turn gets its own topology context; accepted Jobs continue to count in the session's cumulative resource total. Direct self-delivery is independently rejected.</p>
+<p>The reference comparisons for the chosen defaults remain in <a href="/docs/reference/design/runtime/agent-collab-comparison.html">collaboration comparison</a>; current enforcement follows the source and schema above rather than an assumed equivalence to another product.</p>
+<h3 id="52-live-queued-and-cumulative-execution-resources">5.2 Live, queued and cumulative execution resources<a class="header-anchor" href="#52-live-queued-and-cumulative-execution-resources">#</a></h3>
+<p>Resource checks apply in addition to §5.1, not as alternative names for its counters.</p>
+<table>
+<thead>
+<tr>
+<th>Resource limit</th>
+<th>Accounting</th>
+<th>At the boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max_live_per_session</code> and <code>OPENPROGRAM_JOB_WORKERS</code></td>
+<td>Active execution in the target session / global worker capacity</td>
+<td>An admitted Job waits queued while no execution capacity is available</td>
+</tr>
+<tr>
+<td><code>max_queued_per_session</code></td>
+<td>Accepted execution waiting for capacity</td>
+<td>A full queue rejects admission with <code>quota.queue_full</code>, normally retryable; no Job is fabricated</td>
+</tr>
+<tr>
+<td><code>max_jobs_per_session</code></td>
+<td>Cumulative successful Job admissions in the target session, including later terminal Jobs</td>
+<td>Reject with <code>quota.jobs_exhausted</code>; terminal completion does not refund the count</td>
+</tr>
+<tr>
+<td>token / cost / runtime / idle</td>
+<td>Governed execution and inherited budget scopes</td>
+<td>Apply the resource-governance reservation, cancellation and accounting contract</td>
+</tr>
+</tbody>
+</table>
+<p>The current governor attributes these session counters to <code>Job.parent_session_id</code>, the session in which the execution runs. For a cross-session call S→T, that is T; <code>caller_session_id=S</code> identifies the caller and does not silently move the admission charge to S. Caller-turn fan-out and parent budget scopes remain separate constraints. <code>max_jobs_per_session</code> therefore is not a renamed depth or fan-out budget.</p>
+<p>Background creation, <code>agent(to=...)</code> and actual async turns triggered by <code>send_message</code> all reach Job admission. A busy <code>agent(to=...)</code> already has an admitted Job before its inbox wait; a busy ordinary message can have only a delivery receipt until its turn is submitted. Do not display that receipt as accepted execution or consume a second cumulative admission when an existing queued Job starts.</p>
+<p>Foreground branch creation also admits a Job through <code>run_agent_turn</code> → <code>spawn_job(wait=True)</code> and therefore participates in Job resource limits. Ordinary main chat and other direct runtime entry points must be assessed separately; the name “foreground” alone does not determine accounting.</p>
+<p>Setting the topology limits to zero does not disable resource governance or cancellation. “Spawn 30 Jobs and they all queue” is not a universal guarantee: fan-out or queue/cumulative limits can reject requests before capacity queueing.</p>
+<h3 id="53-cancellation-propagation">5.3 Cancellation propagation<a class="header-anchor" href="#53-cancellation-propagation">#</a></h3>
+<p>Use the existing canonical execution cancellation path and <code>parent_job_id</code> lineage. Parent cancellation must prevent unstarted descendants from running, request cancellation of active descendants, and preserve stopping state until actual exit is acknowledged. Queued-work withdrawal must not issue a session-wide stop that interrupts another execution. A terminal Job remains queryable and its cumulative admission is not refunded.</p>
+<p>The user-visible distinction is requested cancellation versus confirmed termination. Resource release, worker loss, non-preemptible operations and reconciliation follow <a href="/docs/reference/design/runtime/agent-resource-governance.html">resource governance</a>; a fixed watchdog timeout alone is not proof that a thread or subprocess exited. Session-wide Stop has broader scope than cancelling one addressed execution, and inbox withdrawals must leave an explicit delivery outcome.</p>
 <h3 id="54-sending-to-a-branch-that-is-already-running-race">5.4 Sending to a branch that is &quot;already running&quot; (race)<a class="header-anchor" href="#54-sending-to-a-branch-that-is-already-running-race">#</a></h3>
 <p>When A messages B, B may be mid-turn. <strong>Do not interrupt, do not drop — queue.</strong>
 The busy check is <code>run_control.is_turn_running(target)</code> — every concurrent turn
@@ -1101,7 +748,7 @@ queued, processed when its current turn ends&quot;.</li>
 <li><strong>Draining</strong>: the dispatcher drains the inbox at turn end
 (<code>_process_turn_once</code> → <code>_drain_send_message_inbox</code>, on both the success and
 the error return), delivering each entry as one async turn through the
-normal path (<code>run_agent_turn_async</code> → auto-followup back to the sender),
+normal async execution path; completion notification follows the target contract and §7 status,
 continued from the target's current head. Delivery-then-delete: an entry is
 removed only after its delivery turn was submitted — a crash between the two
 may re-deliver (acceptable); the reverse order could lose a message (not
@@ -1126,25 +773,13 @@ text counts as a deliberate resend instead of a retry loop.</li>
 <p>If the sub/target branch fails (crash / timeout / model error), <strong>it still
 replies back</strong>, with <code>is_error</code> and the reason in the content (&quot;B failed:
 <reason>&quot;), and the caller's model decides for itself whether to resend, reroute,
-or give up. <strong>No built-in retry or circuit breaker</strong> — the parent is a model, and
-its judgment beats a fixed policy.</p>
-<h3 id="56-result-truncation">5.6 Result truncation<a class="header-anchor" href="#56-result-truncation">#</a></h3>
-<p>If the reply-back content exceeds <code>max_result_chars</code> (reusing the 30k default
-from <code>@function</code>), it is <strong>truncated head and tail and the full text is stored in
-a file</strong>, with the file path included in the reply. Huge intermediate results do
-not blow up the caller's context or block the main flow.</p>
-<h3 id="57-sub-branch-identity-least-privilege">5.7 Sub-branch identity / least privilege<a class="header-anchor" href="#57-sub-branch-identity-least-privilege">#</a></h3>
-<ul>
-<li><code>agent_id</code> picks which agent the sub-branch runs as (different agent =
-different system prompt + toolset + model).</li>
-<li>model supports <code>inherit</code> (inherit the caller's model), or an explicitly weaker
-one.</li>
-<li><strong>By default a sub-branch has no more privilege than its caller</strong> (least
-privilege); dangerous tools (deleting files and the like) still go through the
-§5.8 interception, which <code>permission_mode=bypass</code> cannot disable.</li>
-<li>A sub-branch <strong>sees only the delivered message and the responses after it</strong>,
-and does not inherit the caller's full history (saves context and isolates).</li>
-</ul>
+or give up. <strong>No automatic task resubmission is implied.</strong> A new dispatch requires the normal authorization and remaining limits; provider transport retries retain their existing independent policy.</p>
+<h3 id="56-result-truncation-and-persisted-full-text">5.6 Result truncation and persisted full text<a class="header-anchor" href="#56-result-truncation-and-persisted-full-text">#</a></h3>
+<p>The current generic string/<code>ToolReturn</code> normalizer defaults to 30,000 characters, may reduce the effective cap for context capacity, retains a head/tail excerpt, and optionally writes the full UTF-8 result under <code>&lt;state_dir&gt;/tool_results/&lt;sanitized-call-id&gt;.txt</code>. The default profile resolves this to <code>~/.openprogram/tool_results/...</code>; it is a state-directory file, not an OS temporary file. Its path is reported only after a successful write. A write failure must not fabricate a path.</p>
+<p>This is not currently a universal guarantee for Job results: <code>job_output</code> returns <code>AgentToolResult</code>, which the shared normalizer passes through without applying its cap; the follow-up helper can also inline full <code>result_text</code>. No automatic TTL/garbage collection or target-session ACL for these files is established by the inspected helper.</p>
+<p>The target result contract applies one bounded excerpt to <code>job_output</code> and inline follow-up, while retaining the canonical result in the execution/session store. A full-text artifact records execution ID, owning session/project, media type, byte length and content hash; reads use the same visibility checks as the result. Generic filesystem access is not made private merely by omitting its path. Artifact retention follows the owning execution's configured retention; archive alone does not delete it. Until that resource/retention integration exists, report the present path and unknown lifetime without claiming automatic expiry or isolation. Tests must cover cap application to structured results, write failure, authorized reread and retained-file cleanup.</p>
+<h3 id="57-configuration-context-and-authority">5.7 Configuration, context and authority<a class="header-anchor" href="#57-configuration-context-and-authority">#</a></h3>
+<p><code>agent_id</code> selects saved execution configuration, independently of branch identity. The saved/inline override and model-selection design is defined in <a href="/docs/reference/design/runtime/agent-configuration-ui.html">Agent configuration</a>; selecting another configuration cannot expand the caller's enforced authority. <code>clean</code> omits inherited conversation messages, while <code>inherit</code> and an exact <code>SID:MSG</code> include only authorized chosen history. None of these modes removes system policy or establishes filesystem isolation. Do not describe every child as seeing only its prompt when the caller explicitly selected historical context.</p>
 <h3 id="58-unattended-interception-validation">5.8 Unattended interception + validation<a class="header-anchor" href="#58-unattended-interception-validation">#</a></h3>
 <ul>
 <li>Under an unattended policy that denies side effects, <code>send_message</code> is held
@@ -1153,33 +788,13 @@ gate, which <code>permission_mode=bypass</code> does not turn off.</li>
 <li>A <code>to</code> that names nothing is an error, never a silent creation. The regular
 permission gating applies on top.</li>
 </ul>
-<h3 id="59-branch-visibility">5.9 Branch visibility<a class="header-anchor" href="#59-branch-visibility">#</a></h3>
-<p>Branches are marked <strong>internal (sub-spawned) vs. user-visible</strong>: an internal
-branch can only be triggered by <code>send_message</code> and does not appear in the UI's
-session picker (but it is still drawn in the DAG and can be listed by
-list_agents so agents can address it).</p>
-<h3 id="510-task-ownership-job_output-job_stop">5.10 Task ownership (job_output / job_stop)<a class="header-anchor" href="#510-task-ownership-job_output-job_stop">#</a></h3>
-<p><code>read_conversation</code> can read any branch, so any agent can learn any
-job_id — without a gate, any agent could wait on or kill work it never
-dispatched. <code>job_output</code> and <code>job_stop</code> therefore verify ownership
-before acting: the current session must be the task's dispatcher
-(<code>caller_session_id</code>, or <code>parent_session_id</code> for a same-session spawn),
-or an ancestor on the task chain (the current task is an ancestor via
-<code>parent_job_id</code>, or the current session dispatched one of the task's
-ancestors — the same lineage cascading cancel walks). Anything else is
-refused: <code>[job_stop error] task {id} was not dispatched by this session</code>. Calls with no session context (the user, the UI) are not
-gated.</p>
-<p><code>job_stop</code> on a <code>to=</code>-dispatched task is state-dependent:</p>
-<ul>
-<li><strong>queued</strong> (target was busy, task waiting in its inbox) → the entry is
-withdrawn from the inbox and the entity flips to <code>cancelled</code>. No
-session-level cancel is sent: the target is busy running someone
-else's turn, which a withdrawal must not kill.</li>
-<li><strong>running</strong> → cancels that one turn on the target branch (the task's
-cancel event + session cancel bridge + runtime kill + 30s watchdog),
-not the target agent or its session.</li>
-<li><strong>terminal</strong> → idempotent no-op.</li>
-</ul>
+<h3 id="59-history-visibility-and-archive-authority">5.9 History visibility and archive authority<a class="header-anchor" href="#59-history-visibility-and-archive-authority">#</a></h3>
+<p>The target shared visibility policy covers <code>read_conversation</code>, source history for <code>start_from</code>, selected context, attach expansion and result-artifact reads. Validate the caller's principal and project/session scope before loading content. Branch addresses, saved <code>agent_id</code> and tool availability alone are not access grants; denied targets must not expose preview, titles or existence through fallback reads. Archiving requires the corresponding lifecycle permission and affects the globally stored branch state (§2.6).</p>
+<p>Current <code>read_conversation</code> resolves a session/head and reads that branch from the local store without a target-level owner/project ACL. Tool capability gating is therefore a broad local trust boundary, not per-Agent privacy. Existing history-read and archive tools must integrate the shared authorization before isolated-Agent or cross-user privacy is claimed. An “internal” branch presentation flag controls UI listing only; it is not an authorization boundary and does not prevent <code>agent(to=...)</code> from addressing an otherwise accessible branch.</p>
+<h3 id="510-result-ownership-and-execution-control">5.10 Result ownership and execution control<a class="header-anchor" href="#510-result-ownership-and-execution-control">#</a></h3>
+<p>Current <code>job_output</code> uses <code>_ownership.check_job_ownership</code>: a session matching the Job's execution session (<code>parent_session_id</code>), caller session, or an ancestor relation may read it. The helper walks at most 64 ancestors with cycle protection. With no current session context it returns no denial; that helper alone does not authenticate a user or an API request.</p>
+<p>Canonical execution read/control authorization is a separate existing boundary: validate owner authority, target project/session membership, action grants and the required capability (<code>runtime.control</code> for control). <code>execution.cancel</code> uses the current execution version and a command ID; it is not a <code>job_stop</code> alias. Knowing an execution ID does not grant authority. The target history policy in §5.9 reuses this authorization framework instead of assuming all local branch readers are execution owners.</p>
+<p>Cancellation follows <a href="/docs/reference/design/runtime/execution/control.html">execution control</a> and <a href="/docs/reference/design/runtime/agent-resource-governance.html">resource governance</a>. Queued cancellation prevents starting that execution without stopping an unrelated turn on the same target. Running cancellation moves through stopping and releases resources only after confirmed exit; terminal cancellation is idempotent. Do not promise that any Python thread disappears immediately or that accepting a cancel request proves completion.</p>
 <h3 id="511-explicitly-out-of-scope-and-why">5.11 Explicitly out of scope (and why)<a class="header-anchor" href="#511-explicitly-out-of-scope-and-why">#</a></h3>
 <ul>
 <li><strong>An extra parentID field</strong>: <code>(session_id, head_id)</code> plus caller/predecessor
@@ -1193,79 +808,143 @@ means naming the branches in <code>message</code> and letting the target model r
 synthesize them (§2.2). A model synthesizing is more flexible than a preset
 aggregation, so no fixed aggregation operators.</li>
 </ul>
-<hr />
-<h2 id="6-behavior-you-can-check">6. Behavior you can check<a class="header-anchor" href="#6-behavior-you-can-check">#</a></h2>
-<p>Each line below is independently observable — in the web UI, or in the
-session event log.</p>
+<h2 id="6-public-entry-acceptance">6. Public-entry acceptance<a class="header-anchor" href="#6-public-entry-acceptance">#</a></h2>
+<p>These are required observations, not a claim that all cases have already passed.</p>
 <table>
 <thead>
 <tr>
-<th>Behavior</th>
-<th>What you see</th>
+<th>Case</th>
+<th>Observable result</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Spawn (the <code>agent</code> tool)</td>
-<td>The agent calls once, a new branch runs a turn, and the result automatically follows up back to the caller; spawn events are visible in the event log</td>
+<td>C1 Names and identity</td>
+<td>Registered tools are <code>list_jobs</code>/<code>job_output</code>; foreground and background both admit a Job; canonical cancellation uses the versioned execution command</td>
 </tr>
 <tr>
-<td>Listing</td>
-<td><code>list_agents</code> lists the real multiple sessions and each one's branches</td>
+<td>C2 Fork and run</td>
+<td>One <code>agent(start_from=&quot;T:M&quot;, prompt=..., description=...)</code> call creates a branch at M and executes its prompt; <code>to</code> does not create missing targets</td>
 </tr>
 <tr>
-<td>Archiving (§2.6)</td>
-<td>An archived agent leaves <code>list_agents</code> and shows up under <code>scope=&quot;archived&quot;</code>; <code>send_message</code> and <code>agent(to=)</code> refuse it while <code>read_conversation</code> and <code>agent(start_from=…)</code> still work; any session may archive any agent, and the flag is one-way; a spawn that completed and was merged is still listed under <code>scope=&quot;archived&quot;</code>, and its head still addresses its own branch</td>
+<td>C3 Global archive</td>
+<td>After A archives B, C's normal list omits B; archive view retains it and new deliveries fail; history retention does not imply permission to read</td>
 </tr>
 <tr>
-<td>Send to an existing branch in the same session</td>
-<td>A sends to branch B of the same session, A does not block, B runs a turn, the reply returns to A automatically</td>
+<td>C4 Completion archive</td>
+<td>Manual-before-terminal, terminal-before-manual and retries preserve the first archive timestamp/manual reason; active work is not cancelled by archive; async public completion actually executes archive policy</td>
 </tr>
 <tr>
-<td>Cross-session</td>
-<td>A delivery to another session updates both sides live. <code>send_message</code> / <code>agent(to=...)</code> remain message-only. <code>agent(start_from=&quot;T:M&quot;)</code> creates the branch and canonical Job in T, keeps its card in the initiating session, and marks the source and target DAG nodes <code>spawn_out</code> / <code>spawn_remote</code> without moving either selected HEAD</td>
+<td>C5 Topology exhaustion</td>
+<td>Exhausted messages reject <code>agent(to=B)</code> without cancelling accepted work; exhausted depth/fan-out reject only branch creation; observation and cancellation remain authorized and available</td>
 </tr>
 <tr>
-<td>Robustness (§5)</td>
-<td>A↔B back-and-forth stops when the chain's message budget runs out, and a budget of 0 never stops it; spawning 30 at once queues instead of overloading; cancelling the parent stops every child; messaging a busy B queues and is delivered when its turn ends; the parent is told when a child fails; oversized results are truncated with a file path</td>
+<td>C6 Resource interaction</td>
+<td>Cross-session runs charge target admission; queue-full and cumulative-full report distinct errors; existing queued Jobs do not count twice; synchronous Agent runs obey admission too</td>
 </tr>
 <tr>
-<td>Safety (§5.7-5.9)</td>
-<td>Under a deny policy a delivery is held for confirmation; a nonexistent <code>to</code> raises an error; sub-branches have no more privilege than the parent and stay out of the UI picker</td>
+<td>C7 Attach location</td>
+<td>The card remains in S, while result lookup uses (T,H); both full AttachCard and execution strip select the exact target head without searching S for H</td>
 </tr>
 <tr>
-<td>Frontend</td>
-<td>Pick a branch in the web UI and send a message; the DAG shows the communication node plus the return-flow edge on hover</td>
+<td>C8 History privacy</td>
+<td>Denied <code>read_conversation</code>, historical fork, selected context and attach expansion do not expose target content or metadata; permitted equivalents still work</td>
+</tr>
+<tr>
+<td>C9 Full result</td>
+<td>Structured Job results and inline follow-up are capped, full text can be reread only with authorization, storage failure produces no false path, retention removes only owned eligible artifacts</td>
+</tr>
+<tr>
+<td>C10 Completion notifications</td>
+<td>Calling the public async Agent/message entry reaches canonical completion and emits the intended follow-up once; empty results, retry, error and cancellation do not generate endless follow-up turns</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-en="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-zh="/docs/reference/design/runtime/nested-llm-node-content.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="LLM 节点内容">LLM node content</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/agent-collab-architecture.html" data-href-en="/docs/reference/design/runtime/agent-collab-architecture.html" data-href-zh="/docs/reference/design/runtime/agent-collab-architecture.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="协作工具">Collaboration tools</span></a></div></article></main>
+<h2 id="7-implementation-status-and-evidence">7. Implementation status and evidence<a class="header-anchor" href="#7-implementation-status-and-evidence">#</a></h2>
+<p>This documentation change performs source inspection and document validation only. Helper-level tests or source definitions do not prove public-entry integration. Runtime changes below remain in the implementation plan, with resource gates governed by the linked resource design.</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Source-observed state</th>
+<th>Remaining acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Names / foreground admission</td>
+<td>Registered <code>list_jobs</code> and <code>job_output</code>; both synchronous <code>run_agent_turn</code> and async wrappers call Job admission</td>
+<td>Keep tool, UI and docs schema names aligned; no reintroduction of retired stop aliases</td>
+</tr>
+<tr>
+<td>Fork / global archive</td>
+<td>One-call historical fork and globally stored archive flag are present</td>
+<td>Preserve first archive metadata across manual/automatic writes; verify queued delivery recheck</td>
+</tr>
+<tr>
+<td>Async follow-up and auto-archive</td>
+<td>Helpers exist; inspected canonical and borrowed-claim completion paths update attach/wake waiters but do not call those helpers</td>
+<td>Connect idempotent completion behavior and test through public entries; synchronous tool-local archive is already called</td>
+</tr>
+<tr>
+<td>Message exhaustion</td>
+<td>New delegation is gated; <code>job_output</code> is also hidden by the same gate</td>
+<td>Preserve authorized result/control access at exhausted delegation allowance</td>
+</tr>
+<tr>
+<td>History visibility</td>
+<td><code>read_conversation</code> reads the local store without target-level owner/project ACL</td>
+<td>Integrate shared visibility and verify all history-consuming entries</td>
+</tr>
+<tr>
+<td>Cross-session attach</td>
+<td>Source placement and target lookup are separate in the data/UI; full-card navigation does not explicitly select H</td>
+<td>Align exact-head navigation with execution strip and test both</td>
+</tr>
+<tr>
+<td>Result truncation</td>
+<td>Generic string wrapper persists full text; structured Job output and inline follow-up are not uniformly capped</td>
+<td>Unified cap, authorized artifacts and explicit retention integration</td>
+</tr>
+</tbody>
+</table>
+<p>Source evidence:</p>
+<ul>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/agents/agent/agent/agent.py">Agent tool</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/sub_agent_run.py">Synchronous and asynchronous admission</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/agents/send_message/archive_agent/archive_agent.py">Archive</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/agents/send_message/send_message/send_message.py">Message delivery</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/agents/agent/job_output/job_output.py">Job output</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/tools/knowledge/read_conversation.py">History read</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/execution/authorization.py">Execution authorization</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/job/runner/progress.py">Completion helpers</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/job/runner/dispatch.py">Canonical completion</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/agent/job/runner/borrowed.py">Borrowed-claim completion</a></li>
+<li><a href="https://github.com/Fzkuji/OpenProgram/blob/main/openprogram/programs/_execution_common.py">Result persistence</a></li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-en="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-zh="/docs/reference/design/runtime/nested-llm-node-content.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="LLM 节点内容">LLM node content</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/agent-collab-architecture.html" data-href-en="/docs/reference/design/runtime/agent-collab-architecture.html" data-href-zh="/docs/reference/design/runtime/agent-collab-architecture.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="协作工具">Collaboration tools</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
-<a class="lvl-2" href="#0-core-there-is-only-one-primitive">0. Core: there is only one primitive</a>
+<a class="lvl-2" href="#0-shared-delivery-distinct-lifecycle">0. Shared delivery, distinct lifecycle</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
-<a class="lvl-2" href="#1-four-domains-one-word-each">1. Four domains, one word each</a>
+<a class="lvl-2" href="#1-four-object-domains-and-their-operations">1. Four object domains and their operations</a>
 </summary>
 <ul class="toc-list">
 <li>
-<a class="lvl-3" href="#only-the-dispatcher-operates-on-a-task">Only the dispatcher operates on a task</a>
+<a class="lvl-3" href="#agent-modes-and-one-call-fork">agent modes and one-call fork</a>
 </li>
 <li>
-<a class="lvl-3" href="#agent-has-two-modes">agent has two modes</a>
-</li>
-<li>
-<a class="lvl-3" href="#names-shared-with-claude-code">Names shared with Claude Code</a>
+<a class="lvl-3" href="#reference-naming">Reference naming</a>
 </li>
 </ul>
 </details>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
-<a class="lvl-2" href="#2-the-primitive-as-tools">2. The primitive as tools</a>
+<a class="lvl-2" href="#2-tools-and-branch-addressing">2. Tools and branch addressing</a>
 </summary>
 <ul class="toc-list">
 <li>
@@ -1275,16 +954,16 @@ session event log.</p>
 <a class="lvl-3" href="#22-referencing-other-branches">2.2 Referencing other branches</a>
 </li>
 <li>
-<a class="lvl-3" href="#23-list_agents-seeing-each-other-a-precondition-for-communication">2.3 list_agents — seeing each other (a precondition for communication)</a>
+<a class="lvl-3" href="#23-list_agents-discover-addressable-branches">2.3 list_agents — discover addressable branches</a>
 </li>
 <li>
 <a class="lvl-3" href="#24-new-branches-must-have-names">2.4 New branches must have names</a>
 </li>
 <li>
-<a class="lvl-3" href="#25-where-the-reply-back-node-lands-the-initiators-current-tail-serialized">2.5 Where the reply-back node lands: the initiator's current tail, serialized</a>
+<a class="lvl-3" href="#25-reply-placement-the-initiators-current-head-serialized">2.5 Reply placement: the initiator's current HEAD, serialized</a>
 </li>
 <li>
-<a class="lvl-3" href="#26-archiving-removing-an-agent-from-the-agent-list">2.6 Archiving: removing an agent from the agent list</a>
+<a class="lvl-3" href="#26-archiving-a-global-branch-state">2.6 Archiving: a global branch state</a>
 </li>
 </ul>
 </details>
@@ -1293,7 +972,7 @@ session event log.</p>
 <a class="lvl-2" href="#3-what-collaboration-looks-like-while-it-happens">3. What collaboration looks like while it happens</a>
 </li>
 <li>
-<a class="lvl-2" href="#4-end-to-end-two-agents-see-each-other-and-communicate">4. End to end: two agents see each other and communicate</a>
+<a class="lvl-2" href="#4-end-to-end-target-sequence">4. End-to-end target sequence</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
@@ -1301,13 +980,13 @@ session event log.</p>
 </summary>
 <ul class="toc-list">
 <li>
-<a class="lvl-3" href="#51-three-budgets-bound-every-chain">5.1 Three budgets bound every chain</a>
+<a class="lvl-3" href="#51-topology-limits-and-exact-exhaustion-behavior">5.1 Topology limits and exact exhaustion behavior</a>
 </li>
 <li>
-<a class="lvl-3" href="#52-concurrency-limit-queueing">5.2 Concurrency limit + queueing</a>
+<a class="lvl-3" href="#52-live-queued-and-cumulative-execution-resources">5.2 Live, queued and cumulative execution resources</a>
 </li>
 <li>
-<a class="lvl-3" href="#53-cancellation-propagation-cascading">5.3 Cancellation propagation (cascading)</a>
+<a class="lvl-3" href="#53-cancellation-propagation">5.3 Cancellation propagation</a>
 </li>
 <li>
 <a class="lvl-3" href="#54-sending-to-a-branch-that-is-already-running-race">5.4 Sending to a branch that is "already running" (race)</a>
@@ -1316,19 +995,19 @@ session event log.</p>
 <a class="lvl-3" href="#55-failure-reply-back">5.5 Failure reply-back</a>
 </li>
 <li>
-<a class="lvl-3" href="#56-result-truncation">5.6 Result truncation</a>
+<a class="lvl-3" href="#56-result-truncation-and-persisted-full-text">5.6 Result truncation and persisted full text</a>
 </li>
 <li>
-<a class="lvl-3" href="#57-sub-branch-identity-least-privilege">5.7 Sub-branch identity / least privilege</a>
+<a class="lvl-3" href="#57-configuration-context-and-authority">5.7 Configuration, context and authority</a>
 </li>
 <li>
 <a class="lvl-3" href="#58-unattended-interception-validation">5.8 Unattended interception + validation</a>
 </li>
 <li>
-<a class="lvl-3" href="#59-branch-visibility">5.9 Branch visibility</a>
+<a class="lvl-3" href="#59-history-visibility-and-archive-authority">5.9 History visibility and archive authority</a>
 </li>
 <li>
-<a class="lvl-3" href="#510-task-ownership-job_output-job_stop">5.10 Task ownership (job_output / job_stop)</a>
+<a class="lvl-3" href="#510-result-ownership-and-execution-control">5.10 Result ownership and execution control</a>
 </li>
 <li>
 <a class="lvl-3" href="#511-explicitly-out-of-scope-and-why">5.11 Explicitly out of scope (and why)</a>
@@ -1337,7 +1016,10 @@ session event log.</p>
 </details>
 </li>
 <li>
-<a class="lvl-2" href="#6-behavior-you-can-check">6. Behavior you can check</a>
+<a class="lvl-2" href="#6-public-entry-acceptance">6. Public-entry acceptance</a>
+</li>
+<li>
+<a class="lvl-2" href="#7-implementation-status-and-evidence">7. Implementation status and evidence</a>
 </li>
 </ul></aside>
 </div>
@@ -1349,6 +1031,6 @@ session event log.</p>
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

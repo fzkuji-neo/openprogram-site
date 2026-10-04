@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1790196881" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791088289" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>桌面应用 · OpenProgram Docs</title>
-<meta name="description" content="桌面 App 与内置浏览器 # 设置是应用级独立页面。从头像菜单、应用菜单、快捷键或 Browser 菜单打开设置，不会改变任何标签页及其前进、后退历史。点击标签页即可返回该标签页的内容。设置分类仍支持通过 URL 直接打开；恢复已保存的标签页时会自动移除旧的设置历史记录。 本地 App">
+<meta name="description" content="桌面 App 与内置浏览器 # 全部页面，包括设置和侧栏管理页面，均在选中标签中打开。标签名称随当前页面变化，后退/前进恢复该标签的路由和名称。切换标签恢复各自当前页面；访问页面不重命名会话。 本地 App 刷新会保留解包原生依赖的文件权限，并在此前刷新丢失执行权限时恢复 node-pty 终端辅助程序的执行权限。">
 <link rel="canonical" href="https://openprogram.io/docs/interfaces/desktop.zh.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/interfaces/desktop.zh.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/interfaces/desktop.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/interfaces/desktop.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/interfaces/desktop.html">
@@ -15,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/interfaces/desktop.zh.html">
 <meta property="og:title" content="桌面应用 · OpenProgram Docs">
-<meta property="og:description" content="桌面 App 与内置浏览器 # 设置是应用级独立页面。从头像菜单、应用菜单、快捷键或 Browser 菜单打开设置，不会改变任何标签页及其前进、后退历史。点击标签页即可返回该标签页的内容。设置分类仍支持通过 URL 直接打开；恢复已保存的标签页时会自动移除旧的设置历史记录。 本地 App">
+<meta property="og:description" content="桌面 App 与内置浏览器 # 全部页面，包括设置和侧栏管理页面，均在选中标签中打开。标签名称随当前页面变化，后退/前进恢复该标签的路由和名称。切换标签恢复各自当前页面；访问页面不重命名会话。 本地 App 刷新会保留解包原生依赖的文件权限，并在此前刷新丢失执行权限时恢复 node-pty 终端辅助程序的执行权限。">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -24,15 +26,15 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="桌面应用 · OpenProgram Docs">
-<meta name="twitter:description" content="桌面 App 与内置浏览器 # 设置是应用级独立页面。从头像菜单、应用菜单、快捷键或 Browser 菜单打开设置，不会改变任何标签页及其前进、后退历史。点击标签页即可返回该标签页的内容。设置分类仍支持通过 URL 直接打开；恢复已保存的标签页时会自动移除旧的设置历史记录。 本地 App">
+<meta name="twitter:description" content="桌面 App 与内置浏览器 # 全部页面，包括设置和侧栏管理页面，均在选中标签中打开。标签名称随当前页面变化，后退/前进恢复该标签的路由和名称。切换标签恢复各自当前页面；访问页面不重命名会话。 本地 App 刷新会保留解包原生依赖的文件权限，并在此前刷新丢失执行权限时恢复 node-pty 终端辅助程序的执行权限。">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink active" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink active" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -76,7 +78,7 @@
 <a class="navlink" href="/docs/interfaces/acp.html" data-title-zh="编辑器集成" data-href-en="/docs/interfaces/acp.html" data-href-zh="/docs/interfaces/acp.zh.html">Editor integration</a></div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="桌面应用">Desktop App</span></nav><h1 id="桌面-app-与内置浏览器">桌面 App 与内置浏览器<a class="header-anchor" href="#桌面-app-与内置浏览器">#</a></h1>
-<p>设置是应用级独立页面。从头像菜单、应用菜单、快捷键或 Browser 菜单打开设置，不会改变任何标签页及其前进、后退历史。点击标签页即可返回该标签页的内容。设置分类仍支持通过 URL 直接打开；恢复已保存的标签页时会自动移除旧的设置历史记录。</p>
+<p>全部页面，包括设置和侧栏管理页面，均在选中标签中打开。标签名称随当前页面变化，后退/前进恢复该标签的路由和名称。切换标签恢复各自当前页面；访问页面不重命名会话。</p>
 <p>本地 App 刷新会保留解包原生依赖的文件权限，并在此前刷新丢失执行权限时恢复 node-pty 终端辅助程序的执行权限。</p>
 <p>每个标签独立保存后退和前进历史，默认入口页是该标签的初始页面。后退和前进只恢复当前标签中的页面，切换标签不增加历史。从另一个入口页打开相同目的地时，两个标签各自保留。后退后选择新目的地，只替换当前标签的前进记录。历史随标签保存；网页内部的 URL 导航由浏览器控件处理。</p>
 <p>macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。</p>
@@ -136,6 +138,7 @@
 <p>需要扩展 OpenProgram 本身时，使用 <a href="/docs/capabilities/plugins.zh.html">OpenProgram Plugins</a>、Skills、MCP servers、Programs 或 agent tools。这些能力不修改内嵌网页运行时。</p>
 <p>持续维护的工程规范见<a href="/docs/reference/design/ui/built-in-browser.zh.html">内置浏览器设计</a>与 <a href="/docs/reference/design/integrations/web-use.zh.html">Web Use / Computer Use 边界</a>。</p>
 <h2 id="会话资源">会话资源<a class="header-anchor" href="#会话资源">#</a></h2>
+<p>在分屏画布中，点击聊天窗格会同步切换 Files、Activity 和 Resources 的会话；点击网页窗格会保留同一画布中最后选中的可见聊天。把网页标签或窗格把手拖到 Resources，即可关联到该会话。分屏标签只包含一个网页时，会关联其中的网页；包含多个网页时，拖动所需网页的窗格把手。悬停时显示蓝色放置区域和“松开以添加到资源”。松手并成功关联后展开资源面板，显示确认通知。失败时显示重试提示，网页保持可用。</p>
 <p>点击右侧栏的 <strong>资源</strong>，打开 <strong>会话资源</strong>。通过侧栏折叠按钮收起或展开面板。面板仅显示当前会话所属的资源，没有搜索框。切换会话会更新所列资源。列表按网页、虚拟机、桌面、终端、应用、容器、远程环境和其他资源分组，仅显示非空类型。会话名和网页标题不参与分组。折叠状态按会话和类型保存；折叠只隐藏条目，不停止资源或关闭小窗。右侧原有预览、在标签中打开和关闭网页按钮保持不变。选择非网页资源时隐藏网页小窗，使用该资源已有的视图或详情。面板列出完整的软件或环境对象：网页、VM／桌面关联，以及集成明确登记的容器或远程环境。代码执行、命令、脚本、后台进程和输出属于 Activity；文件视图保持独立；持久 Terminal 环境关联会话后显示在同一资源列表中。没有归属记录的视图和新建草稿会话不显示会话资源；打开已有归属的资源时保留其会话上下文。</p>
 <p>有会话归属的 Agent 网页默认不占顶部标签，固定或显式分屏时保留在顶部；没有归属记录的旧网页保留在顶部。点击网页可打开原有视图；网页支持固定和关闭。折叠面板或分组不会停止资源。选择资源后，资源面板继续显示在视图右侧。关闭网页后，活动列表立即移除该项，并处理关闭请求；如果未确认关闭，该项会重新显示。</p>
 <p>Docker 与 SSH 命令保留在代码执行／Activity 流程中，执行命令不等于创建软件资源。GUI Harness 记录配置的桌面或 VM 关联；其他集成必须登记实际软件或环境对象及其身份，不能用命令、镜像名或进程代替。点击环境资源可查看目标和状态。</p>
@@ -163,7 +166,9 @@
 <p><code>resource</code> 工具通过 <code>describe</code> 返回 provider 及其支持的操作和参数结构。先调用 <code>resource(action=&quot;describe&quot;)</code>，再按返回的结构调用。内置 <code>web</code> 和 <code>terminal</code> 保留原有资源标识和检查；现有 <code>web_use</code>、<code>terminal_use</code> 继续兼容。例如 <code>resource(provider=&quot;terminal&quot;, action=&quot;list&quot;)</code> 列出可用 shell，<code>observe</code> 返回后续操作需要的 generation、binding、input revision 和输出 cursor。</p>
 <p>只允许调用 provider 声明的操作。网页 <code>release</code> 释放控制会话而保留网页，<code>close</code> 使用已观察实例的控制绑定关闭准确的网页；终端 <code>release</code> 保留进程，<code>close</code> 请求终止进程。Terminal 需要来自对应 Desktop 窗口的有效执行，不能绕过任务 sandbox。</p>
 <p>可信 Python 集成可以通过 <code>openprogram.resource_interface.registry.register(...)</code> 注册 <code>ResourceProvider</code>，为每种操作声明 JSON Schema 和调用适配器。适配器负责自身的授权和生命周期。重复名称会被拒绝，参数在调用前验证。这是可信集成 API，不接受 Agent 或网页提供任意代码。集成可以通过已有 <code>openprogram.session_resources.resource_use(...)</code> 在 Resources 上报会话使用情况；已启用的安装应用根据操作清单自动注册 <code>application.&lt;id&gt;</code>。关联当前会话的实例显示在 Resources，并复用现有隔离应用视图。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页界面">Web UI</span></a></div></article></main>
+<h2 id="programs-加载">Programs 加载<a class="header-anchor" href="#programs-加载">#</a></h2>
+<p>离开再返回“能力 → Programs”时，目录树、选中的 Program 和已加载的调用图保持显示。页面可见时每五秒后台检测展开目录和所选调用图，重新聚焦也会检测；未变化的文件复用分析结果。点击刷新不会重置选择或已展开目录。检测失败时保留已有内容，便于重试。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页界面">Web UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -210,6 +215,9 @@
 </ul>
 </details>
 </li>
+<li>
+<a class="lvl-2" href="#programs-加载">Programs 加载</a>
+</li>
 </ul></aside>
 </div>
 
@@ -220,6 +228,6 @@
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>

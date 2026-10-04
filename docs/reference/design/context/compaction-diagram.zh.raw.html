@@ -271,7 +271,9 @@
   }
   .toc a:hover { color: var(--blue); }
   .toc .indent { padding-left: 1.25rem; }
+#request-checkpoints th:first-child, #request-checkpoints td:first-child { min-width: 7rem; overflow-wrap: normal; }
 </style>
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="stylesheet" href="/docs/assets/raw-readability.css">
 <script defer src="/docs/assets/raw-readability.js"></script>
 </head>
@@ -290,6 +292,7 @@
 <section id="rolling-summary-contract">
 <h2>滚动摘要的当前约束</h2>
 <p>压缩使用与模型请求相同的 DAG 可见性、工具结果渲染和 aging 规则。顶层对话只定义可替换范围；每个范围的预算包含实际可见的子调用。最近完整用户轮次始终保留，默认保留最近两个用户轮次；token 预算不足时允许少于二十条顶层消息。短且已经低于保留预算的历史不调用摘要模型。</p>
+<p>如果保留两个轮次后仍超过目标 token 预算，就改在下一个完整用户轮次边界切分，只保留最近一轮原文。这样已完成且工具输出很长的轮次不会使压缩失效。不得拆开正在执行的用户轮次；要压缩的工具证据必须进入摘要输入。完成事件同时报告压缩前后 token 数及是否真正应用摘要。</p>
 <p>摘要输入从选定范围的第一条开始，包含原始用户要求、前次摘要和可见工具结果。摘要输入与 covers_ids 表达同一范围，不存在未提供给摘要模型却被移除的前缀。前次摘要只来自当前分支适用的记录，不使用其他分支的会话级缓存。</p>
 <p>生成后先在内存图中执行相同的替换及渲染，只有 token 估算严格降低才写入。估算包含摘要标记和工具结果，压缩标记与上下文面板使用同一消息渲染。失败、取消、空摘要、无收益或生成期间内容变化均不提交摘要、不增加压缩次数。失败不会用丢弃内容的结构摘要替代。</p>
 <p>存储仍使用一个滚动摘要与原有 covers_ids；不迁移或删除历史。重复压缩吸收当前适用摘要；分支隔离、HEAD 不变以及工具结果与调用配对继续由现有 DAG 渲染规则保证。历史错误摘要不自动重写。</p>
@@ -578,7 +581,19 @@
 </details>
 
 </div>
-<section id="intra-turn-request"><h2>同一消息内的请求压缩</h2><p>聊天与函数内部共用 AgentLoop 的发送前处理：在转换消息、注入记忆、解析实际工具后计量请求。压缩仅替换当前请求视图中已完成工具组的结果文本，保留调用参数、结果 ID、错误状态、用户原文和多模态内容。原始执行记录不被改写。</p><p>摘要采用独立预算分块，调用次数与总时限有上限；摘要请求不再次进入 AgentLoop。缓存只属于本次 AgentContext，按原结果内容与模型配置匹配，不跨函数视图。优先处理较早结果，最新一次工具组保留；必要时也可处理已完成的最新组。每次发送都重新检查实际工具与系统内容。</p><p>未显式设置输出上限时，发送上限取模型能力、默认输出预留量与上下文四分之一的最小值；计量和 provider 请求使用同一个值。显式上限不被静默降低，保护内容与该上限合计超预算时仍拒绝发送。</p><p>本次范围：单轮工具累积的请求压缩；不替换既有跨轮 DAG 摘要机制，不承诺语义无损或本地估算等同 provider 计数。不可压缩的保护内容超预算时，不发送已知超预算请求。</p><p>实现状态：已接入共享 AgentLoop 请求入口，并通过独立规格与质量评审；单轮连续调用、函数内部入口、原文保留、摘要预算、取消及凭据传递均有回归测试。此处理不生成持久化 DAG 摘要节点。</p></section></body>
+<section id="intra-turn-request"><h2>同一消息内的请求压缩</h2><p>聊天与函数内部共用 AgentLoop 的发送前处理：在转换消息、注入记忆、解析实际工具后计量请求。压缩仅替换当前请求视图中已完成工具组的结果文本，保留调用参数、结果 ID、错误状态、用户原文和多模态内容。原始执行记录不被改写。</p><p>摘要采用独立预算分块，调用次数与总时限有上限；摘要请求不再次进入 AgentLoop。缓存只属于本次 AgentContext，按原结果内容与模型配置匹配，不跨函数视图。优先处理较早结果，最新一次工具组保留；必要时也可处理已完成的最新组。每次发送都重新检查实际工具与系统内容。</p><p>未显式设置输出上限时，发送上限取模型能力、默认输出预留量与上下文四分之一的最小值；计量和 provider 请求使用同一个值。显式上限不被静默降低，保护内容与该上限合计超预算时仍拒绝发送。</p><p>本次范围：单轮工具累积的请求压缩；不替换既有跨轮 DAG 摘要机制，不承诺语义无损或本地估算等同 provider 计数。不可压缩的保护内容超预算时，不发送已知超预算请求。</p><p>实现状态：已接入共享 AgentLoop 请求入口，并通过独立规格与质量评审；单轮连续调用、函数内部入口、原文保留、摘要预算、取消及凭据传递均有回归测试。此处理不生成持久化 DAG 摘要节点。</p></section><section id="request-checkpoints" style="max-width:900px;margin:2rem auto;padding:1rem;overflow-wrap:anywhere"><h2>请求检查点与有预算限制的摘要</h2>
+<p>本方案改进请求内压缩，保持 DAG 存储方式不变，供维护者审查请求预算和历史保留行为。</p>
+<table style="display:block;overflow-x:auto"><thead><tr><th>阶段</th><th>行为</th><th>边界</th></tr></thead><tbody>
+<tr><td>预算</td><td>每次请求计算系统提示、工具定义、响应 schema、输出预留和历史。</td><td>切换备用模型后重新计算。</td></tr>
+<tr><td>工具证据</td><td>优先摘要已完成工具组的纯文本结果。</td><td>保留调用标识和错误标记。</td></tr>
+<tr><td>请求检查点</td><td>仍超预算时，摘要较早的完整纯文本执行前缀，保留所有用户消息原文和最新助手执行片段。</td><td>不拆分工具组，不删除多模态、签名推理或未完成内容。</td></tr>
+<tr><td>摘要请求</td><td>分段处理全部原文，以滚动摘要合并。服务端报告超限时缩小分段重试。</td><td>限制次数和时间；取消、错误、预算用尽均保留原始历史。</td></tr>
+<tr><td>继续执行</td><td>仅在模型与原始前缀完全一致时复用检查点，仅发送验证过预算的请求。</td><td>原始执行消息和 DAG 节点不变。</td></tr>
+</tbody></table>
+<p>参考 <a href="https://github.com/openai/codex/blob/main/codex-rs/core/src/compact.rs">Codex 本地压缩</a>保留用户消息并替换旧执行历史的行为。OpenProgram 将其适配到请求视图，不复制 Rust 源码、不截断用户指令、不接入远端加密压缩，也不替换 DAG。摘要始终作为助手数据，不作为系统指令。</p>
+<h3>验收与实现状态</h3><p id="request-checkpoint-status">审查已通过，完整验证未通过。定向测试、独立规格审查和质量审查均通过；四项仓库检查在修改前基线上同样失败。本功能尚未标记完成，主分支集成和安装版 App 验收仍待完成。</p>
+<ul><li>旧助手文本和工具参数超出窗口时，AgentLoop 可继续请求。</li><li>保留的工具调用与结果完整配对，最近执行片段和用户消息保持原样。</li><li>摘要请求符合预算，处理全部原文；超限重试不静默删除输入。</li><li>取消、前缀变化、模型切换、多模态内容不能错误复用摘要。</li></ul></section>
+</body>
 </html>
 
 <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'&&window.parent!==window)parent.postMessage('op-docs-esc','*');});</script>

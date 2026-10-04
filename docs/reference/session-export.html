@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1790196881" data-alt-lang-url="/docs/reference/session-export.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/reference/session-export.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Session export · OpenProgram Docs</title>
 <meta name="description" content="Write a conversation out as a file you can keep, diff, or send to someone: Markdown for reading and reviewing, HTML for sharing a session with a person who">
 <link rel="canonical" href="https://openprogram.io/docs/reference/session-export.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/session-export.html.md">
+<link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/session-export.html">
 <link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/session-export.zh.html">
 <link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/session-export.html">
@@ -29,10 +31,10 @@
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/mark.svg">
-<link rel="stylesheet" href="/docs/assets/site.css?v=5efdcab3">
+<link rel="stylesheet" href="/docs/assets/site.css?v=6520ba46">
 <link rel="stylesheet" href="/docs/assets/pygments-light.css" media="(prefers-color-scheme: light)" id="pyg-light">
 <link rel="stylesheet" href="/docs/assets/pygments-dark.css" media="(prefers-color-scheme: dark)" id="pyg-dark">
-<script src="/docs/assets/theme.js?v=5efdcab3"></script>
+<script src="/docs/assets/theme.js?v=6520ba46"></script>
 
 </head>
 <body>
@@ -61,7 +63,7 @@
     </div>
   </div>
 </header>
-<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/claude-code.html" data-title-zh="集成" data-href-en="/docs/integrations/claude-code.html" data-href-zh="/docs/integrations/claude-code.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
+<nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink active" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
 <div class="layout">
@@ -72,7 +74,7 @@
 <div class="nav-sec"><div class="nav-sec-title">API</div><a class="navlink" href="/docs/reference/API.html" data-title-zh="API 参考" data-href-en="/docs/reference/API.html" data-href-zh="/docs/reference/API.zh.html">API reference</a>
 <a class="navlink" href="/docs/reference/api/runtime.html" data-title-zh="运行时 API" data-href-en="/docs/reference/api/runtime.html" data-href-zh="/docs/reference/api/runtime.zh.html">Runtime API</a>
 <a class="navlink" href="/docs/reference/api/providers.html" data-title-zh="模型服务 API" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html">Provider API</a>
-<a class="navlink" href="/docs/reference/api/agentic-function.html" data-title-zh="函数 API" data-href-en="/docs/reference/api/agentic-function.html" data-href-zh="/docs/reference/api/agentic-function.zh.html">Function API</a></div>
+<a class="navlink" href="/docs/reference/api/agent.html" data-title-zh="函数 API" data-href-en="/docs/reference/api/agent.html" data-href-zh="/docs/reference/api/agent.zh.html">Function API</a></div>
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="CLI 与配置">CLI and configuration</div><a class="navlink" href="/docs/reference/cli.html" data-title-zh="CLI 参考" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html">CLI reference</a>
 <a class="navlink" href="/docs/reference/config.html" data-title-zh="配置项参考" data-href-en="/docs/reference/config.html" data-href-zh="/docs/reference/config.zh.html">Configuration reference</a>
 <a class="navlink" href="/docs/reference/diagnostics.html" data-title-zh="诊断" data-href-en="/docs/reference/diagnostics.html" data-href-zh="/docs/reference/diagnostics.zh.html">Diagnostics</a>
@@ -101,6 +103,7 @@
 <a class="navlink" href="/docs/reference/cli/logs.html" data-title-zh="日志" data-href-en="/docs/reference/cli/logs.html" data-href-zh="/docs/reference/cli/logs.zh.html">logs</a>
 <a class="navlink" href="/docs/reference/cli/mcp.html" data-title-zh="MCP 服务器" data-href-en="/docs/reference/cli/mcp.html" data-href-zh="/docs/reference/cli/mcp.zh.html">mcp</a>
 <a class="navlink" href="/docs/reference/cli/memory.html" data-title-zh="记忆" data-href-en="/docs/reference/cli/memory.html" data-href-zh="/docs/reference/cli/memory.zh.html">memory</a>
+<a class="navlink" href="/docs/reference/cli/permissions.html" data-title-zh="CLI：权限规则" data-href-en="/docs/reference/cli/permissions.html" data-href-zh="/docs/reference/cli/permissions.zh.html">permissions</a>
 <a class="navlink" href="/docs/reference/cli/plugins.html" data-title-zh="插件" data-href-en="/docs/reference/cli/plugins.html" data-href-zh="/docs/reference/cli/plugins.zh.html">plugins</a>
 <a class="navlink" href="/docs/reference/cli/ports.html" data-title-zh="端口" data-href-en="/docs/reference/cli/ports.html" data-href-zh="/docs/reference/cli/ports.zh.html">ports</a>
 <a class="navlink" href="/docs/reference/cli/programs.html" data-title-zh="程序" data-href-en="/docs/reference/cli/programs.html" data-href-zh="/docs/reference/cli/programs.zh.html">programs</a>
@@ -163,14 +166,15 @@ openprogram<span class="w"> </span>sessions<span class="w"> </span><span class="
 <p>Tool results are capped at 4,000 characters and arguments at 1,000, with the cut marked inline (<code>… [+N chars truncated]</code>). One 2 MB file read should not drown the reasoning around it. Turn text itself is not truncated.</p>
 <p>The HTML export is one self-contained file: styles are inline, there are no scripts and no external requests, and it follows the reader's light/dark system setting through <code>prefers-color-scheme</code>. It opens in any browser, offline.</p>
 <h2 id="redaction">Redaction<a class="header-anchor" href="#redaction">#</a></h2>
-<p>Every string in the export — turn text, tool arguments, tool results — passes through the same secret scrubber the provider recorder uses (<code>remove_secret_values</code> in <code>openprogram/providers/recording.py</code>). It removes the values of secret-named fields (<code>api_key</code>, <code>authorization</code>, <code>token</code>, <code>password</code>, …) and secret-shaped strings anywhere in free text: bearer tokens, <code>sk-</code> keys, credentials in URL query parameters or userinfo. Removed values are replaced with <code>[secret removed]</code>.</p>
+<p>Every displayed string in the export — title, session identifier, role label, tool name, turn text, tool arguments, and tool results — passes through the same secret scrubber the provider recorder uses (<code>remove_secret_values</code> in <code>openprogram/providers/recording.py</code>). It removes the values of secret-named fields (<code>api_key</code>, <code>authorization</code>, <code>token</code>, <code>password</code>, …) and secret-shaped strings anywhere in free text: bearer tokens, <code>sk-</code> keys, credentials in URL query parameters or userinfo. Removed values are replaced with <code>[secret removed]</code>.</p>
+<p>Structured arguments, including serialized JSON objects and arrays, are scrubbed before rendering. Redaction runs before argument and result clipping. Arguments too deeply nested to redact safely are replaced with <code>[arguments omitted: nesting too deep]</code>. Exporting does not modify the stored conversation.</p>
 <p>This is a safety net over known credential shapes, not a guarantee. A secret in an unusual format can still survive, so read an export before sending it somewhere public.</p>
 <h2 id="related">Related<a class="header-anchor" href="#related">#</a></h2>
 <ul>
 <li><a href="/docs/reference/cli.html">CLI commands</a> — the full command surface.</li>
 <li><a href="/docs/reference/API.html">API</a> — the rest of the HTTP endpoints.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-09-24</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/diagnostics.html" data-href-en="/docs/reference/diagnostics.html" data-href-zh="/docs/reference/diagnostics.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="诊断">Diagnostics</span></a><a class="pn-link pn-next" href="/docs/reference/output-styles.html" data-href-en="/docs/reference/output-styles.html" data-href-zh="/docs/reference/output-styles.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="输出风格">Output styles</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/diagnostics.html" data-href-en="/docs/reference/diagnostics.html" data-href-zh="/docs/reference/diagnostics.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="诊断">Diagnostics</span></a><a class="pn-link pn-next" href="/docs/reference/output-styles.html" data-href-en="/docs/reference/output-styles.html" data-href-zh="/docs/reference/output-styles.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="输出风格">Output styles</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -198,6 +202,6 @@ openprogram<span class="w"> </span>sessions<span class="w"> </span><span class="
   </div>
 </div>
 
-<script src="/docs/assets/site.js?v=5efdcab3"></script>
+<script src="/docs/assets/site.js?v=6520ba46"></script>
 </body>
 </html>
