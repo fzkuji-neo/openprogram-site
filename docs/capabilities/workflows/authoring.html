@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/capabilities/workflows/authoring.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791112937" data-alt-lang-url="/docs/capabilities/workflows/authoring.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -395,7 +395,7 @@ openprogram<span class="w"> </span>workflows<span class="w"> </span>publish<span
 </tr>
 </tbody>
 </table>
-<p>Behavior testing currently supports macOS and Linux where the OS sandbox is available. It has a 60-second process deadline, disables network and automatic pytest plugins, removes credential environment variables, protects snapshot source from writes, uses an isolated home and temporary workspace, and prevents background processes from surviving the test. macOS denies subprocess creation; Linux confines descendants to a private PID namespace. Mock external process calls in portable publication tests. It does not fall back to unsandboxed execution. Failed tests, timeout, or unavailable sandbox prevent publication.</p>
+<p>Behavior testing currently supports macOS and Linux where the OS sandbox is available. It has a 60-second process deadline, disables network and automatic pytest plugins, removes credential environment variables, protects snapshot source from writes, uses an isolated home and temporary workspace, and prevents background processes from surviving the test. macOS denies subprocess creation; Linux confines descendants to a private PID namespace. Mock external process calls in portable publication tests. The host initializes an isolated standard SessionStore before applying the sandbox. The test runner binds its writer through Context, so ordinary Agent methods can execute and record calls without creating a Git subprocess inside the sandbox. It does not fall back to unsandboxed execution. Failed tests, timeout, or unavailable sandbox prevent publication.</p>
 <p>Publication does not change the authored directory. It rejects an existing destination unless replacement is explicit:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>publish<span class="w"> </span>./project_report<span class="w"> </span>--replace<span class="w"> </span>--json
 </code></pre>

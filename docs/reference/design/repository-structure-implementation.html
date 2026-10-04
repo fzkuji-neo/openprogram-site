@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791088289" data-alt-lang-url="/docs/reference/design/repository-structure-implementation.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791112937" data-alt-lang-url="/docs/reference/design/repository-structure-implementation.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -423,7 +423,7 @@ The compatibility package resolves the application modules without duplicating t
 <p><code>scripts/install-release.sh</code> remains the public installer entry, while its
 implementation resides under <code>scripts/release/</code>. The root npm workspace and lock
 file coordinate Web, Desktop and CLI dependencies. Consumers must not assume a
-separate lock file or dependency installation below each application.</p>
+separate lock file or dependency installation below each application. A dependency patch keeps the application manifest, root workspace lock and installed package version aligned. Integrating duplicate dependency branches preserves both commit ancestries without duplicating the version change. The lock retains the transitive package entries still required by installed consumers, including optional package graphs; a successful installer exit alone does not prove those consumers can load. Public consumer import checks accompany cold installation. The combined source runs the shared verification manifest before publication.</p>
 <p>The default local runtime uses port <code>18100</code> and <code>~/.openprogram</code>. Installed-App
 acceptance uses <code>/Applications/OpenProgram.app</code>; repository layout changes must
 preserve packaging and installed imports as well as source-checkout execution.</p>
