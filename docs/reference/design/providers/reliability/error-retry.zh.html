@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791138962" data-alt-lang-url="/docs/reference/design/providers/reliability/error-retry.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791145004" data-alt-lang-url="/docs/reference/design/providers/reliability/error-retry.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -402,7 +402,7 @@ invalid api key / invalid_api_key                        ← 凭证错误
 </ul>
 <h2 id="错误信息的可诊断性">错误信息的可诊断性<a class="header-anchor" href="#错误信息的可诊断性">#</a></h2>
 <p><code>agent.py</code> 捕获异常时,<code>err_text = f&quot;{type(err).__name__}: {err}&quot;</code>(异常文本为空时退化为只有类型名),并把 traceback 打到 stderr。<code>runtime.py</code> 的兜底信息不再是裸的 <code>&quot;Agent session failed&quot;</code>,而是带上每次 attempt 的 <code>类型名: 异常文本</code> 列表和失败原因(permanently / after N attempts)。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/reliability/error-and-timeout-mechanism.html" data-href-en="/docs/reference/design/providers/reliability/error-and-timeout-mechanism.html" data-href-zh="/docs/reference/design/providers/reliability/error-and-timeout-mechanism.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="错误与超时">Errors and timeouts</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/reliability/error-taxonomy-propagation.html" data-href-en="/docs/reference/design/providers/reliability/error-taxonomy-propagation.html" data-href-zh="/docs/reference/design/providers/reliability/error-taxonomy-propagation.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="错误传播">Error propagation</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/providers/reliability/error-and-timeout-mechanism.html" data-href-en="/docs/reference/design/providers/reliability/error-and-timeout-mechanism.html" data-href-zh="/docs/reference/design/providers/reliability/error-and-timeout-mechanism.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="错误与超时">Errors and timeouts</span></a><a class="pn-link pn-next" href="/docs/reference/design/providers/reliability/error-taxonomy-propagation.html" data-href-en="/docs/reference/design/providers/reliability/error-taxonomy-propagation.html" data-href-zh="/docs/reference/design/providers/reliability/error-taxonomy-propagation.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="错误传播">Error propagation</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

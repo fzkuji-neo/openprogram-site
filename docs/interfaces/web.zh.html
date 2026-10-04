@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791138962" data-alt-lang-url="/docs/interfaces/web.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791145004" data-alt-lang-url="/docs/interfaces/web.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,6 +152,18 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 </thead>
 <tbody>
 <tr>
+<td><code>/agents</code></td>
+<td>Agents：创建、配置 Agent（模型、能力、记忆、上下文），并用它开始对话</td>
+</tr>
+<tr>
+<td><code>/applications</code></td>
+<td>应用：从本地文件夹安装软件，然后打开、启用、在新标签页隐藏、更新或卸载</td>
+</tr>
+<tr>
+<td><code>/scheduler</code></td>
+<td>定时任务：一次性、周期和监控任务，按类型筛选；可暂停、恢复或删除每个任务</td>
+</tr>
+<tr>
 <td><code>/chats</code></td>
 <td>History 枢纽：会话列表（<code>/history</code> 同页）；Projects 和 Memory 是同一页上的 tab</td>
 </tr>
@@ -165,7 +177,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 </tr>
 <tr>
 <td><code>/plugins</code></td>
-<td>Abilities → Plugins：已安装 / 市场 / 错误</td>
+<td>Abilities → Plugins：已安装 / 发现（市场）/ 问题</td>
 </tr>
 <tr>
 <td><code>/mcp</code></td>
@@ -186,6 +198,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 </tbody>
 </table>
 <p><code>/settings</code> 直接打开会跳到 <code>/settings/general</code>。模型凭据仍在 <code>/settings/providers</code>，见<a href="/docs/models/README.zh.html">配置模型</a>。</p>
+<p>窗口较窄（宽度不超过 900px）时，左侧栏默认收起为图标栏，直到你展开它；展开后导航到其他页面会再次收起。宽度低于 760px 时，设置导航同样默认显示为图标栏，窗口缩小到该宽度时也会自动收起。你手动展开或收起侧栏的选择会被保留。</p>
 <h3 id="标签拖动外观">标签拖动外观<a class="header-anchor" href="#标签拖动外观">#</a></h3>
 <p>设置 → General 的“标签拖动外观”同时控制标签栏内外的标签拖动外观，以及分屏标题的悬浮预览。透明度可调为 0–100%，背景模糊可调为 0–40px，阴影强度可调为 0–100%。修改即时生效，设置预览与实际拖动标签共用这些数值。默认透明度 20%、模糊 16px、阴影强度 25%。“恢复默认”只重置这三个选项，不改变主题或其他偏好。</p>
 <p>偏好保存在本浏览器，并同步到同源窗口。重新加载或切换明暗主题后保留数值。透明度 0% 为不透明；模糊 0px 和阴影 0% 分别关闭对应效果。这些选项不改变普通按钮或 Resources 拖放目标的描边。</p>
@@ -214,7 +227,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 <p>完成的回复会为本地文件链接和返回的附件显示“打开预览”卡片。当前会话的新回复会将第一个支持预览的输出文件显示在聊天旁边。重新打开历史记录或收到后台会话回复时不会自动打开文件。已有分屏布局和预览中的未保存编辑会保留；点击卡片可主动打开文件。会话项目内的文件使用项目编辑器，其他获准访问的附件以只读方式打开。</p>
 <p>可见的预览会检查磁盘变化，在源文件被修改或重新生成后显示“文件已修改”。点击“刷新”加载最新内容。读取失败时保留之前的预览，未保存编辑也会保留，直到保存或主动放弃。已完成的 Goal 会在回复下方显示紧凑状态及实际记录的活动时长；点击状态可查看原始 Goal 详情。</p>
 <p>同一项目文件的标签共享编辑器和草稿。关闭一个标签后，其他标签仍可使用。如果同一文件在两栏中同时可见，可点击“在此显示”将编辑器移到这一栏。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="桌面应用">Desktop App</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="终端界面">Terminal UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="桌面应用">Desktop App</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="终端界面">Terminal UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

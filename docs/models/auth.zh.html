@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791138962" data-alt-lang-url="/docs/models/auth.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791145004" data-alt-lang-url="/docs/models/auth.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -189,7 +189,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 <p>Program 内部的 Codex 模型调用使用该 provider 的活动账户，包括通过 <code>openprogram providers use openai-codex &lt;account&gt;</code> 选择的账户。脚本可以用 <code>create_runtime(provider=&quot;openai-codex&quot;, profile=&quot;&lt;account&gt;&quot;)</code> 固定其他账户。终止认证错误及 provider 明确标记为不可重试的其他错误只发出一次请求；错误分类在 Program runtime 中保留。没有显式重试判定的普通回调异常保留 Program 原有的有界重试。</p>
 <p>本地回调监听启动后才打开授权页面。请保持服务商面板打开，直到显示登录成功。页面未打开时点击“打开登录页面”。回调无法到达 App 时，可以在登录面板粘贴本次登录的回调 URL。</p>
 <p>兑换凭据返回 HTTP 403 表示 OpenAI 拒绝请求，仅凭状态码无法确定是账号权限还是网络原因。面板会区分已识别的授权错误，并显示连接重试。授权码过期或已使用时应重新登录。取消或离开面板会结束本次登录。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/models/providers.html" data-href-en="/docs/models/providers.html" data-href-zh="/docs/models/providers.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="模型服务">Providers</span></a><a class="pn-link pn-next" href="/docs/models/local-models.html" data-href-en="/docs/models/local-models.html" data-href-zh="/docs/models/local-models.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="使用本地部署的模型">Use locally deployed models</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/models/providers.html" data-href-en="/docs/models/providers.html" data-href-zh="/docs/models/providers.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="模型服务">Providers</span></a><a class="pn-link pn-next" href="/docs/models/local-models.html" data-href-en="/docs/models/local-models.html" data-href-zh="/docs/models/local-models.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="使用本地部署的模型">Use locally deployed models</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

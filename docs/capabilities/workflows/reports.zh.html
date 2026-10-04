@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791138962" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791145004" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -158,7 +158,7 @@
 <h2 id="飞书网页操作失败">飞书网页操作失败<a class="header-anchor" href="#飞书网页操作失败">#</a></h2>
 <p>飞书检查和写入阶段只提供 <code>web_use</code>，使用当前的 <code>command</code> 参数协议。接受页面观察或报告写入前必须有真实工具回执，模型正文中的工具调用文本不算网页操作。这两个阶段不设置固定的总超时或工具轮次上限，显式 Runtime 部署限制仍然生效。网页访问失败通过总入口传递，不再作为成功文本返回。后续子 Workflow 失败时，原始异常保留此前已完成子任务的结果，总入口不会自动重跑这些任务。</p>
 <p>提交和修改也要求准确字段绑定及重新读回字段。提交请求遇到已有记录时返回检查结果，只有明确要求修改才允许更新。最终提交或保存动作在派发前记录，结果不确定时不能自动再次点击。没有原始事实的五维空占位不计入进展正文。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工作流编写">Workflow authoring</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="界面智能体">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工作流编写">Workflow authoring</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="界面智能体">GUI Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
