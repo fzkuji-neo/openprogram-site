@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791112937" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791138962" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -406,7 +406,7 @@
 <p>The Claude Code reference documents refusal fallback; Codex's orchestrator documents approval before execution and policy-limited escalation. Neither establishes a universal recovery algorithm for this execution database. The receipt implementation adapts the existing local transaction and checkpoint contracts.</p>
 
 <h2>Provider response events</h2><p>Every dispatched model request has a unique request_id and exactly one started and completed event. Completion records completed, failed, cancelled or incomplete, including transport exceptions and EOF without a provider terminal event. Exceptions and cancellation propagate unchanged; event accounting does not replay tools or authorize model retries. Legacy partial text fallback remains incomplete. Completion observers do not treat unsuccessful requests as successful answers.</p>
-</div><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/control.html" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="执行控制">Execution control</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="工作树">Worktrees</span></a></div></article></main>
+</div><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/control.html" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="执行控制">Execution control</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="工作树">Worktrees</span></a></div></article></main>
   <aside class="toc"></aside>
 </div>
 
