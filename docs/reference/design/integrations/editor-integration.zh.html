@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791145004" data-alt-lang-url="/docs/reference/design/integrations/editor-integration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791170839" data-alt-lang-url="/docs/reference/design/integrations/editor-integration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -372,7 +372,7 @@
 <p>适配器基于 <code>dispatcher.process_user_turn</code>，与 webui 线程、子 Agent 和任务执行器使用同一非 HTTP 入口，因此共享工具门控、权限与持久化，而非重新实现。轮次携带 <code>local_owner_authority()</code>：同机编辑器代表所有者交互式发言，这使 <code>approval.request</code> 可用。批准通过订阅 <code>question.asked</code> 事件到达编辑器，并通过 <code>resolve_question_and_broadcast</code> 回答，因此现有门控、规则及“始终允许”的规则持久化路径不变。</p>
 <p>明确未实现：<code>session/set_mode</code> 和 <code>session/set_model</code>（Agent id 与权限模式由进程参数指定）、编辑器的 <code>fs/*</code> 与 <code>terminal/*</code> 客户端能力（OpenProgram 自有工具已能读写工作树），以及 <code>session/new</code> 传入的 MCP 服务器（OpenProgram 使用自身 MCP 配置）。</p>
 <p>仍未完成：GUI 条目的矩阵重新核查。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/nooa.html" data-href-en="/docs/reference/design/integrations/nooa.html" data-href-zh="/docs/reference/design/integrations/nooa.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="直接调用、Agent 类与自动 DAG 上下文">Direct calls, Agent classes and automatic DAG context</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/extension-management.html" data-href-en="/docs/reference/design/integrations/extension-management.html" data-href-zh="/docs/reference/design/integrations/extension-management.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="扩展管理">Extension management</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/nooa.html" data-href-en="/docs/reference/design/integrations/nooa.html" data-href-zh="/docs/reference/design/integrations/nooa.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="直接调用、Agent 类与自动 DAG 上下文">Direct calls, Agent classes and automatic DAG context</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/extension-management.html" data-href-en="/docs/reference/design/integrations/extension-management.html" data-href-zh="/docs/reference/design/integrations/extension-management.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="扩展管理">Extension management</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

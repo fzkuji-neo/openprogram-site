@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791145004" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791170839" data-alt-lang-url="/docs/reference/design/ui/turn-occupancy.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -384,7 +384,7 @@
 <code>include_usage</code>：Grok/xAI 经常在最后一个 token 之后不关 SSE，界面就会一直显示还在回答。usage 只再短等一下（<code>USAGE_DRAIN_S</code>），然后发 <code>EventDone</code>。</p>
 <h2 id="4-秒宽限只给真子进程">4 秒宽限只给真子进程<a class="header-anchor" href="#4-秒宽限只给真子进程">#</a></h2>
 <p><code>CANCEL_GRACE_S = 4.0</code> 保留。只在 owner 有子进程、或有会杀掉子进程的 terminate 钩子时生效（工具、process runner）。只有 token、没有进程、没有杀子进程钩子的聊天 owner，取消意图之后不得再等 4 秒。协作取消 + HTTP 中止就够了；占用已经释放。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/slash-and-compact.html" data-href-en="/docs/reference/design/ui/slash-and-compact.html" data-href-zh="/docs/reference/design/ui/slash-and-compact.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="斜杠命令">Slash commands</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/websocket-command-lifecycle.html" data-href-en="/docs/reference/design/ui/websocket-command-lifecycle.html" data-href-zh="/docs/reference/design/ui/websocket-command-lifecycle.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="WebSocket 周期">WebSocket lifecycle</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/slash-and-compact.html" data-href-en="/docs/reference/design/ui/slash-and-compact.html" data-href-zh="/docs/reference/design/ui/slash-and-compact.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="斜杠命令">Slash commands</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/websocket-command-lifecycle.html" data-href-en="/docs/reference/design/ui/websocket-command-lifecycle.html" data-href-zh="/docs/reference/design/ui/websocket-command-lifecycle.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="WebSocket 周期">WebSocket lifecycle</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

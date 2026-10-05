@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791145004" data-alt-lang-url="/docs/reference/design/framework-overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791170839" data-alt-lang-url="/docs/reference/design/framework-overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -663,7 +663,7 @@
 <hr />
 <h2 id="主线锚点速查">主线锚点速查<a class="header-anchor" href="#主线锚点速查">#</a></h2>
 <p>dispatcher 入口 <code>openprogram/agent/dispatcher/__init__.py</code> 的 <code>process_user_turn</code>；turn_id 绑定 <code>:379</code>；历史/分支解析 <code>:186–198</code>；user 节点写入 <code>:298</code>；<strong>调模型前 prepare/auto-compact</strong> <code>_run_loop_blocking :885/:896/:1074</code>；finalize <code>:711</code>/<code>dispatcher/finalize.py:175</code>（ContextCommit 回填 <code>:283</code>、after_turn <code>:308</code>→<code>engine.py:437</code>）。事件总线 <code>events/bus.py:141/159/241</code>；tool.before 拦截 <code>agent_loop.py:695/:701</code> + <code>openprogram/events/tool_gate.py</code> 的 <code>decide_tool_gate</code>。上下文 <code>engine.py:194</code> + 两条压缩路径（auto-compact <code>openprogram/agent/dispatcher/loop_runner.py</code> 的 <code>run_loop_blocking</code> / <code>microcompact.py</code>）。agent loop <code>agent_loop.py:114/205/654</code>；子 agent <code>sub_agent_run.py:41</code>。协作 <code>send_message.py:186/393</code>，深度上限 <code>:35</code>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/README.html" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="设计指南">Design guide</span></a><a class="pn-link pn-next" href="/docs/reference/design/repository-structure.html" data-href-en="/docs/reference/design/repository-structure.html" data-href-zh="/docs/reference/design/repository-structure.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="仓库结构">Repository structure</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/README.html" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="设计指南">Design guide</span></a><a class="pn-link pn-next" href="/docs/reference/design/repository-structure.html" data-href-en="/docs/reference/design/repository-structure.html" data-href-zh="/docs/reference/design/repository-structure.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="仓库结构">Repository structure</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

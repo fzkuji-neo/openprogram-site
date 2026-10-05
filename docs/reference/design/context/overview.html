@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791145004" data-alt-lang-url="/docs/reference/design/context/overview.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791170839" data-alt-lang-url="/docs/reference/design/context/overview.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -705,7 +705,7 @@ discardable and recomputable state in a SQL table, versus ContextCommit as an im
 git JSON. ContextCommit is what the system uses; the ideas that carried over (compaction tightens
 monotonically, the view is a pure function, summaries are not written to the DAG) are described above.</p>
 <p>Current context occupancy uses the last measured request, never the sum of requests in a turn. Empty terminal events preserve the last measurement. If no measurement exists, the UI uses a local estimate. Persisted usage and calibration from the older cumulative accounting format are invalidated; cumulative billing totals remain unchanged.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/README.html" data-href-en="/docs/reference/design/context/README.html" data-href-zh="/docs/reference/design/context/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="阅读指南">Reading guide</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html" data-href-en="/docs/reference/design/context/composition.html" data-href-zh="/docs/reference/design/context/composition.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="组成">Composition</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/README.html" data-href-en="/docs/reference/design/context/README.html" data-href-zh="/docs/reference/design/context/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="阅读指南">Reading guide</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html" data-href-en="/docs/reference/design/context/composition.html" data-href-zh="/docs/reference/design/context/composition.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="组成">Composition</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

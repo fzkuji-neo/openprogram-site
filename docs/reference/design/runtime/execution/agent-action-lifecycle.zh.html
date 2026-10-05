@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791145004" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-action-lifecycle.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791170839" data-alt-lang-url="/docs/reference/design/runtime/execution/agent-action-lifecycle.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -397,7 +397,7 @@
 <h2>审批接入</h2><p>复用现有持久化审批等待。自动风险拒绝不占执行失败重复次数，使相同操作能够达到人工审批阈值。无有效判断的检查错误不自动授权。仅宿主在已授权实现开始前记录执行；已完成和未执行结果均先于检查点保存，不信任应用返回的执行状态。每次模型请求按适用规则过滤工具，保留已保存执行契约。实时事件和历史记录传递宿主结果状态。累计计数在累计阈值触发的审批完成或权限版本变化时重置。</p><p>Claude Code 文档提供拒绝回退策略，Codex 调度实现提供先审批后执行和受策略限制的升级。二者不构成适用于本项目数据库的通用恢复算法；结果保存使用现有事务和检查点机制。</p>
 
 <h2>模型请求事件</h2><p>每次发出的模型请求具有唯一 request_id，并且恰好记录一次开始和结束。结束状态区分完成、失败、取消和未完整结束，覆盖传输异常及缺少终止事件的 EOF。异常与取消保持原样传播；事件记录不重放工具，也不增加模型重试。原有部分文本返回仍标为未完整结束。完成观察器不把失败请求视为成功回答。</p>
-</div><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-04</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/control.html" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="执行控制">Execution control</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="工作树">Worktrees</span></a></div></article></main>
+</div><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/control.html" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="执行控制">Execution control</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="工作树">Worktrees</span></a></div></article></main>
   <aside class="toc"></aside>
 </div>
 
