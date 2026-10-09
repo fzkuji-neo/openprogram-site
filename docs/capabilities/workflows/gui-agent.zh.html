@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791572554" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791573774" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,7 +152,7 @@
 <p>实现统一使用 OpenProgram 的高层 agentic programming 调用。<code>plan_next_capability</code>、桌面规划、验证和结论通过当前 Runtime 上下文调用 <code>llm()</code>；浏览器 Page 动作循环通过带动作工具和单次有界迭代的 <code>agent()</code> 执行。GUI workflow 代码不直接调用 <code>Runtime.exec</code>。根控制器不再嵌套一层 <code>goal()</code>，因为能力历史、终态提交、证据验证、超时、取消和无进展判断已经由根控制器负责；再加一层 goal 控制器会重复这些判断。</p>
 <p><code>vm_use</code> 需要兼容 OSWorld 的 HTTP endpoint。截图通过 <code>GET /screenshot</code> 获取，输入命令通过 <code>POST /execute</code> 发送。Harness 进程内的 VM 目标切换会串行执行。无论调用成功还是抛错，下一种能力执行前都会恢复原来的输入目标和截图 backend。endpoint 中的凭据和 query 值不会写入规划器的可用状态上下文。</p>
 <p>桌面观察会包含当前前台应用和截图坐标范围。如果目标应用窗口被最小化或位于另一个 macOS Space，并且经过一次有界的 Window 菜单恢复后仍不可用，运行会以 infeasible 停止，并要求用户移动或取消最小化该窗口；它不会持续创建新窗口。</p>
-<p>桌面坐标输入始终作用于当前前台 GUI。控制器取得准确的 macOS 进程和窗口目标后，<code>computer_use</code> 也可以只截取该窗口，并通过 Accessibility 执行控件支持的按压、文本赋值或滚动动作，不激活目标。控制期间，目标窗口左上角显示紫色 GUI Agent 提示；成功按压控件后，小鼠标标记显示本轮操作时的目标中心。后续同一窗口步骤会恢复上一轮标记，直到下一次成功动作更新它。输入和滚动使用相应图标。提示随窗口移动，只绘于目标窗口仍可见的区域；局部遮挡不会隐藏整个提示层，完全遮挡、最小化或关闭时不显示。正常步骤结束后，提示短暂显示“本轮已结束 · 上一动作”；失败或取消立即清除。提示层不激活应用、不接收鼠标事件，也不移动系统鼠标。浏览器动作在选中的 Page 后台执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。根据已记录的结果，控制器可以在不同能力之间切换。</p>
+<p>桌面坐标输入始终作用于当前前台 GUI。控制器取得准确的 macOS 进程和窗口目标后，<code>computer_use</code> 也可以只截取该窗口，并通过 Accessibility 执行控件支持的按压、文本赋值或滚动动作，不激活目标。控制期间，目标窗口顶部居中显示一个紧凑的深色胶囊，写着“OpenProgram 正在操作 WeChat”（系统首选语言不是中文时显示英文），并带一个缓慢闪烁的圆点。Agent 指针是一个 agent 强调色的箭头，第一次动作前停在窗口中央。成功执行动作后，它平滑移到所操作控件的中心；按压或选择会播放一次短促的波纹，并在旁边用小标签标明动作：点击、选择、输入或滚动。标签不显示输入的文字。后续同一窗口步骤会在原位恢复上一轮指针，不重播波纹，直到下一次成功动作移动它。系统开启“减弱动态效果”时，指针直接到位，不播放波纹和闪烁。胶囊和指针随窗口移动；局部遮挡不会隐藏它们，最小化或关闭窗口时不显示。正常步骤结束后，胶囊短暂显示“OpenProgram 已结束操作 WeChat”；失败或取消立即清除。提示层不接收点击；要让 agent 停下，和其他运行一样在 OpenProgram 的对话中停止。提示层不激活应用、不接收鼠标事件，也不移动系统鼠标。浏览器动作在选中的 Page 后台执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。根据已记录的结果，控制器可以在不同能力之间切换。</p>
 <p>所有运行共用终态字段：<code>status</code>（<code>succeeded</code>、<code>infeasible</code> 或 <code>failed</code>）、<code>success</code>、<code>reason_code</code>、<code>summary</code> 和 <code>handoff_instruction</code>。成功与否由 runner 决定，不由 conclusion 模型决定。只有 <code>succeeded</code> 的 <code>success</code> 为 true；infeasible 和 failed 一律返回 <code>success=false</code>。infeasible 还保留 blocker、标记和用户接手说明。自动能力路径还包含有序能力调用历史和耗时。</p>
 <p><code>max_seconds</code> 会在每次模型或能力调用前检查，并在调用返回后再次检查。超过截止时间才返回的终态提交会被拒绝，并统一为超时失败。Provider 取消采用协作式机制，因此已经发出的 provider 请求可能略晚于配置的总耗时边界才返回，但该迟到结果不会把任务变成成功。</p>
 <p>Function 卡片直接显示这个任务结果：验证成功显示 <code>Succeeded</code>，任务结束但未满足请求显示 <code>Failed</code>，接手说明要求用户操作时显示 <code>Needs takeover</code>。<code>Error</code> 表示运行时异常或不符合契约的 GUI 结果。内部 worker 的 completed 状态不会把失败的 GUI 结果显示成 <code>Completed</code>。</p>
