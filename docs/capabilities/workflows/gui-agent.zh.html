@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791573774" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791578071" data-alt-lang-url="/docs/capabilities/workflows/gui-agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -120,7 +120,7 @@
 <p>任务适合由当前内置浏览器 Page 完成时，仍使用同一个入口：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>programs<span class="w"> </span>run<span class="w"> </span>gui_agent<span class="w"> </span>-a<span class="w"> </span><span class="nv">task</span><span class="o">=</span><span class="s2">"在不置顶窗口的情况下检查并完成当前内置浏览器表单"</span>
 </code></pre>
-<p>受信任调用方还可以提供隐藏的控制器设置：<code>max_steps</code> 是动作安全上限，默认 150；<code>max_seconds</code> 是可选的总耗时安全上限；<code>app_name</code> 选择组件记忆；<code>backend</code> 指定已有 Page backend；<code>vm_url</code> 启用 <code>vm_use</code>。<code>surface=&quot;browser&quot;</code>，或未指定其他 surface 时设置 <code>backend</code>，会选择下文的标准浏览器 Agent 路径。其他 surface 设置仍为兼容性偏好。这些设置不出现在公开函数 schema 中。</p>
+<p>受信任调用方还可以提供隐藏的控制器设置：<code>max_steps</code> 是动作安全上限，默认 150；<code>max_seconds</code> 是总耗时预算；<code>app_name</code> 选择组件记忆；<code>backend</code> 指定已有 Page backend；<code>vm_url</code> 启用 <code>vm_use</code>。<code>surface=&quot;browser&quot;</code>，或未指定其他 surface 时设置 <code>backend</code>，会选择下文的标准浏览器 Agent 路径。其他 surface 设置仍为兼容性偏好。这些设置不出现在公开函数 schema 中。</p>
 <p>仅传 <code>task</code> 的执行在规划和已授权浏览器操作前不要求桌面权限。规划选择 <code>computer_use</code> 后，执行在发送该能力操作前检查原生权限。缺少可申请的系统授权时暂停同一任务；授权后使用保存的规划决策和能力结果继续。取消会阻止续跑，未确认结果的操作不会自动重复。缺少原生依赖仍是能力不可用，不进入权限等待。显式桌面执行保留初始权限检查。已安装默认 App 的真实权限恢复仍需验收。</p>
 <h2 id="显式浏览器执行">显式浏览器执行<a class="header-anchor" href="#显式浏览器执行">#</a></h2>
 <p>在有效的 macOS Runtime 执行中，受信任调用方可以选择 <code>surface=&quot;browser&quot;</code>。该路径使用一个标准 <code>agent()</code> 循环和持久、隔离的 <code>gui_exec</code> Python 工具，列出上下文授权的 Page，获取一次性 Page 权限并返回不透明句柄。它不会自动创建 Page，也不调用旧能力规划器。默认 backend 为 <code>open_claude_chrome</code>；不支持操作校验的显式 MCP backend 返回 <code>infeasible</code>，不会静默选择其他 backend。</p>
@@ -154,7 +154,8 @@
 <p>桌面观察会包含当前前台应用和截图坐标范围。如果目标应用窗口被最小化或位于另一个 macOS Space，并且经过一次有界的 Window 菜单恢复后仍不可用，运行会以 infeasible 停止，并要求用户移动或取消最小化该窗口；它不会持续创建新窗口。</p>
 <p>桌面坐标输入始终作用于当前前台 GUI。控制器取得准确的 macOS 进程和窗口目标后，<code>computer_use</code> 也可以只截取该窗口，并通过 Accessibility 执行控件支持的按压、文本赋值或滚动动作，不激活目标。控制期间，目标窗口顶部居中显示一个紧凑的深色胶囊，写着“OpenProgram 正在操作 WeChat”（系统首选语言不是中文时显示英文），并带一个缓慢闪烁的圆点。Agent 指针是一个 agent 强调色的箭头，第一次动作前停在窗口中央。成功执行动作后，它平滑移到所操作控件的中心；按压或选择会播放一次短促的波纹，并在旁边用小标签标明动作：点击、选择、输入或滚动。标签不显示输入的文字。后续同一窗口步骤会在原位恢复上一轮指针，不重播波纹，直到下一次成功动作移动它。系统开启“减弱动态效果”时，指针直接到位，不播放波纹和闪烁。胶囊和指针随窗口移动；局部遮挡不会隐藏它们，最小化或关闭窗口时不显示。正常步骤结束后，胶囊短暂显示“OpenProgram 已结束操作 WeChat”；失败或取消立即清除。提示层不接收点击；要让 agent 停下，和其他运行一样在 OpenProgram 的对话中停止。提示层不激活应用、不接收鼠标事件，也不移动系统鼠标。浏览器动作在选中的 Page 后台执行，不激活标签页、不置顶 OpenProgram 窗口，也不移动系统鼠标。根据已记录的结果，控制器可以在不同能力之间切换。</p>
 <p>所有运行共用终态字段：<code>status</code>（<code>succeeded</code>、<code>infeasible</code> 或 <code>failed</code>）、<code>success</code>、<code>reason_code</code>、<code>summary</code> 和 <code>handoff_instruction</code>。成功与否由 runner 决定，不由 conclusion 模型决定。只有 <code>succeeded</code> 的 <code>success</code> 为 true；infeasible 和 failed 一律返回 <code>success=false</code>。infeasible 还保留 blocker、标记和用户接手说明。自动能力路径还包含有序能力调用历史和耗时。</p>
-<p><code>max_seconds</code> 会在每次模型或能力调用前检查，并在调用返回后再次检查。超过截止时间才返回的终态提交会被拒绝，并统一为超时失败。Provider 取消采用协作式机制，因此已经发出的 provider 请求可能略晚于配置的总耗时边界才返回，但该迟到结果不会把任务变成成功。</p>
+<p><code>max_seconds</code> 会在每次模型或能力调用前检查，并在调用返回后再次检查。超过截止时间才返回的终态提交会被拒绝，并统一为超时失败。截止时间与步数或决策上限同时到达时，结果报告 <code>timeout</code>。Provider 取消采用协作式机制，因此已经发出的 provider 请求可能略晚于配置的总耗时边界才返回，但该迟到结果不会把任务变成成功。</p>
+<p>从对话或 Run 表单发起、没有传 <code>max_seconds</code> 的调用，预算为 300 秒；设置 <code>OPENPROGRAM_AGENTIC_TIMEOUT_S</code> 可以修改默认值（<code>0</code> 表示不限时）。预算会作为 <code>max_seconds</code> 交给 agent，因此时间用完的运行会自行停止，返回 <code>status=failed</code>、<code>reason_code=timeout</code> 和已完成的能力调用历史，不再调用 conclusion 模型。运行在独立进程中执行；只有预算之后再过 20%（至少 30 秒、最多 120 秒）仍未结束，OpenProgram 才结束该进程。此时的错误 <code>agentic subprocess timed out after N seconds</code> 会列出运行最后报告的步骤，以及如何放宽时间。</p>
 <p>Function 卡片直接显示这个任务结果：验证成功显示 <code>Succeeded</code>，任务结束但未满足请求显示 <code>Failed</code>，接手说明要求用户操作时显示 <code>Needs takeover</code>。<code>Error</code> 表示运行时异常或不符合契约的 GUI 结果。内部 worker 的 completed 状态不会把失败的 GUI 结果显示成 <code>Completed</code>。</p>
 <h2 id="依赖注意">依赖注意<a class="header-anchor" href="#依赖注意">#</a></h2>
 <ul>
@@ -165,7 +166,7 @@
 <li>运行前需要 runtime 配置好工作目录。工作流记录写入 OpenProgram 状态目录下的 <code>gui_harness/workflows/</code>，不再写入源码目录。</li>
 </ul>
 <p>源码与 README：<code>openprogram/programs/packages/gui_harness/</code>，上游仓库 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">Fzkuji/GUI-Agent-Harness</a>。</p>
-<p>通过 <code>web_use</code> 发现 Page 不代表所选 MCP 后端能够启动。官方 MCP server 无法启动或连接时，观察返回 <code>reason_code=computer_use_backend_unavailable</code>、<code>availability=unavailable</code>、实际 backend 和已关闭的会话。OpenProgram 释放失败的会话及 Page 租约，不自动改用其他后端。检查该后端的依赖和连接后，重新列出 Page 并观察。</p>
+<p>通过 <code>web_use</code> 发现 Page 不代表所选 MCP 后端能够启动。官方 MCP server 的固定版本已在 npm 缓存中时，直接从缓存启动，网络很慢或离线都不会拖慢启动。仍然无法启动或连接时，观察返回 <code>reason_code=computer_use_backend_unavailable</code>、<code>availability=unavailable</code>、实际 backend 和已关闭的会话。OpenProgram 释放失败的会话及 Page 租约，不自动改用其他后端。重新观察该 Page 即可重试，每次尝试都会重新启动后端。会话进行中 server 停止时，下一次观察会重启它。动作绝不会通过重启后的 server 发送：该动作返回 <code>computer_use_backend_unavailable</code> 和 <code>observe_required=true</code>，重新观察后再重试。</p>
 <p>Browser Workflow 表单只显示任务和可选目标 URL。动作上限、超时与 backend 使用内部默认设置，不显示 Advanced。显式程序调用仍可使用受支持的覆盖值。</p>
 <h2 id="系统权限检查">系统权限检查<a class="header-anchor" href="#系统权限检查">#</a></h2>
 <p>系统设置显示执行电脑上的可选桌面权限。打开页面或运行 <code>openprogram doctor</code>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791573774" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791578071" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -154,6 +154,13 @@
 <h2 id="重启与保留的浏览器页面">重启与保留的浏览器页面<a class="header-anchor" href="#重启与保留的浏览器页面">#</a></h2>
 <p>Desktop App 或 worker 进程重启后，你尚未关闭的网页会在后台自动恢复。应用保留同一保留 tab、会话与分支归属，以及最后确认的地址和标题。它在该保留 tab 后创建新的活页面；上一进程的句柄不再有效。不会为同一保留 tab 再开一份副本，不会重新打开你已关闭的网页，也不会显示你已隐藏的预览。紧凑画中画、纵向 Files / Activity / Resources 侧栏以及分组资源行保持原样。文案跟随 App 语言设置。</p>
 <p>网页正在回来时，资源行留在原类型分组，显示 <strong>正在恢复网页…</strong>。恢复失败时同一行显示 <strong>网页恢复失败</strong>。新的活页面之后需要重新连接时，显示 <strong>需要重新连接</strong>。这些行不会进入通用的不可用分组。明确关闭的网页和已退出的终端从活动资源列表移除。恢复网页不会启动或继续 Agent。空闲页面仍可直接操作。新任务仍按常规重新观察页面并检查权限。恢复会重新加载最后确认的 URL，并使用 Desktop <code>webtabs</code> 分区里已有的站点存储；上一进程中未保存的 DOM 与表单不会恢复。没有保留 tab 描述的旧资源记录不会自动重建，该行留在原分组并显示 <strong>网页恢复失败</strong>。这一有界重启行为已在默认 App 中实现。</p>
+<p>App 或 worker 重启时正在操作网页的 Agent 会继续使用浏览器工具，而不是反复失败：</p>
+<ul>
+<li>列出网页时最多等待 20 秒，等 App 重新连接。仍未连接时，工具报告 <code>desktop_unavailable</code>，并让 Agent 几秒后再次列出网页。发起窗口已不存在时，列出其他打开窗口中的网页。</li>
+<li>同一会话中更早 turn 的 session 或网页 token 会回到同一个 tab：工具重新观察该 tab 并返回新的观察结果。上一个动作绝不会重复执行，你关闭的网页也不会被重新打开。</li>
+<li>如果已无法确定是哪个 tab（例如 worker 重启后），错误中会列出当前网页及新的 token。Agent 用对应 token 观察任务网页，一次调用即可继续。</li>
+<li>导航或其他动作之后立即截图时，会先重新观察一次，因此不会因为观察过期而失败。</li>
+</ul>
 <p>每个预览都绑定实际会话，即使在同一个聊天标签内切换会话也不会改变归属。切换会话时隐藏原预览，并恢复当前会话自己的预览。仅保留在会话中的网页对其他 Agent 不可见、不可操作。点击 <strong>打开页面</strong> 将同一个网页显示为独立标签页，其他会话可以发现它，并在当前 Agent 释放排他控制后接管。打开标签页不会转移原会话的预览归属。</p>
 <h2 id="网页操作与暂停">网页操作与暂停<a class="header-anchor" href="#网页操作与暂停">#</a></h2>
 <p>你可以随时点击、滚动、输入、切换或关闭内置网页，这些操作不会暂停 Agent。Agent 也可以操作 OpenProgram 自己的网页。只有聊天输入框旁的任务暂停按钮控制执行。</p>

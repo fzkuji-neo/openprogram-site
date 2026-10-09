@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791573774" data-alt-lang-url="/docs/reference/config.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791578071" data-alt-lang-url="/docs/reference/config.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -451,6 +451,11 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td><code>OPENPROGRAM_EXEC_TIMEOUT_S</code></td>
 <td>调用方没传 <code>timeout_s</code> 时每次 <code>runtime.exec</code> 的默认墙钟预算（秒；没设或为 <code>0</code> = 不限时）</td>
 <td><code>openprogram/agentic_programming/runtime.py</code></td>
+</tr>
+<tr>
+<td><code>OPENPROGRAM_AGENTIC_TIMEOUT_S</code></td>
+<td><code>gui_agent</code>、<code>browser_agent</code> 调用没传 <code>max_seconds</code> 时的默认时间预算（秒；没设 = 300；<code>0</code> 或负数 = 不限时）。预算以 <code>max_seconds</code> 交给 agent，它到点自行停止并返回已完成的历史；预算之后再过 20%（30 到 120 秒）仍未结束，才强制结束进程</td>
+<td><code>openprogram/agent/process_runner.py</code></td>
 </tr>
 <tr>
 <td><code>OPENPROGRAM_FALLBACK_MODELS</code></td>

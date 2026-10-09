@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791573774" data-alt-lang-url="/docs/reference/config.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791578071" data-alt-lang-url="/docs/reference/config.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -451,6 +451,11 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td><code>OPENPROGRAM_EXEC_TIMEOUT_S</code></td>
 <td>Default wall-clock budget in seconds for every <code>runtime.exec</code> when the caller passes no <code>timeout_s</code> (unset or <code>0</code> = unbounded)</td>
 <td><code>openprogram/agentic_programming/runtime.py</code></td>
+</tr>
+<tr>
+<td><code>OPENPROGRAM_AGENTIC_TIMEOUT_S</code></td>
+<td>Default time budget in seconds for a <code>gui_agent</code> or <code>browser_agent</code> call that passes no <code>max_seconds</code> (unset = 300; <code>0</code> or less = no limit). The agent gets the budget as <code>max_seconds</code> and stops with its partial history; the process is killed only if it is still running after a further 20% of the budget (30 to 120 seconds)</td>
+<td><code>openprogram/agent/process_runner.py</code></td>
 </tr>
 <tr>
 <td><code>OPENPROGRAM_FALLBACK_MODELS</code></td>

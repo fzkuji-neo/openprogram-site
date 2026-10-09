@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791573774" data-alt-lang-url="/docs/interfaces/desktop.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791578071" data-alt-lang-url="/docs/interfaces/desktop.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -154,6 +154,13 @@
 <h2 id="restart-and-retained-browser-pages">Restart and retained browser pages<a class="header-anchor" href="#restart-and-retained-browser-pages">#</a></h2>
 <p>After the Desktop App or worker process restarts, pages you had not closed come back automatically in the background. The App keeps the same retained tab, session, and branch ownership, and the last confirmed address and title. It creates a new live page behind that retained tab; handles from the previous process are no longer valid. It does not open a second copy of the same retained tab, does not reopen a page you closed, and does not show a preview you had hidden. Compact picture-in-picture chrome, the vertical Files / Activity / Resources sidebar, and grouped resource rows stay as they were. Labels follow the App language setting.</p>
 <p>While a page is coming back, its row stays in its resource type group and shows <strong>Restoring page…</strong>. If restore fails, the same row shows <strong>Could not restore page</strong>. If the new live page later needs a new connection, the row shows <strong>Reconnect</strong>. Those rows do not move into a generic Unavailable group. Explicitly closed pages and exited terminals leave the active resource list. Restoring a page does not start or continue an Agent. Idle pages stay ready to use. A new task still observes the page and checks permission as usual. Restore reloads the last confirmed URL with site storage already in the Desktop <code>webtabs</code> partition; unsaved DOM and form fields from the previous process are not restored. An older resource record with no retained tab descriptor is not recreated automatically; that row stays in its original group as <strong>Could not restore page</strong>. This bounded restart behavior is implemented in the default App.</p>
+<p>An Agent that was using a page when the App or worker restarted continues with the browser tool instead of failing in a loop:</p>
+<ul>
+<li>Listing pages waits up to 20 seconds for the App to reconnect. If the App is still not connected, the tool reports <code>desktop_unavailable</code> and asks the Agent to list pages again after a few seconds. If the originating window is gone, pages in the other open windows are listed.</li>
+<li>A session or page token from an earlier turn of the same conversation leads back to the same tab: the tool observes that tab again and returns the fresh observation. The previous action is never repeated, and a page you closed is not reopened.</li>
+<li>If that tab is no longer known, for example after the worker restarted, the error lists the current pages with fresh tokens. The Agent observes the task page with its token in one call.</li>
+<li>A screenshot right after navigation or another action takes a fresh observation first, so it does not fail as stale.</li>
+</ul>
 <h2 id="browser-interaction-and-pause">Browser interaction and pause<a class="header-anchor" href="#browser-interaction-and-pause">#</a></h2>
 <p>You may click, scroll, type, navigate, or close built-in pages while an Agent works. These actions do not pause the Agent. Agents may also operate OpenProgram's own web interface. Use the task pause control next to the conversation composer to pause execution.</p>
 <p>When a task page disappears, the Agent reacquires the page or reopens its last known address if it has closed, then reads its current state. Previous clicks and submissions are not replayed automatically. Lost authentication or unsaved content is reported when it cannot be restored.</p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791573774" data-alt-lang-url="/docs/capabilities/tools.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791578071" data-alt-lang-url="/docs/capabilities/tools.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -242,7 +242,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>web_search</code> backends and keys (arXiv is key-free; DuckDuckGo also requires its optional package):</p>
+<p><code>web_search</code> backends and keys (arXiv and DuckDuckGo need no key and are always available):</p>
 <table>
 <thead>
 <tr>
@@ -314,8 +314,8 @@
 </tbody>
 </table>
 <p>The chat Web Search switch controls whether <code>web_search</code> is available for that message. Turning it off excludes the tool even in automatic tool mode. When enabled, the search schema is available immediately, including when Tools is off. Turning it on still respects the Agent's disabled tools and permissions. Tool profile choices belong to each conversation and survive tab changes and refreshes.</p>
-<p>Search keys take effect on subsequent calls without restarting. An unavailable saved default falls back to another available provider; an explicitly named unavailable provider reports an error. Jina search requires <code>JINA_API_KEY</code>.</p>
-<p><code>combine=&quot;race&quot;</code> returns the first nonempty successful response. <code>combine=&quot;rrf&quot;</code> retains results completed before the deadline. Total failure is reported as an error, distinct from a successful empty search. Already running requests finish under their transport timeouts.</p>
+<p>Search keys take effect on subsequent calls without restarting. An unavailable saved default falls back to another available provider; an explicitly named unavailable provider reports an error that gives the reason (for example the missing key) and lists the providers usable now. Jina search requires <code>JINA_API_KEY</code>. DuckDuckGo reads its no-JavaScript results page and returns the first page of hits (about ten); a bot challenge or an unreadable page is reported as an error, not as an empty search.</p>
+<p><code>combine=&quot;race&quot;</code> returns the first nonempty successful response. Named <code>providers</code> that cannot run are skipped; if none can run, the error lists each one with its reason. <code>combine=&quot;rrf&quot;</code> retains results completed before the deadline. Total failure is reported as an error, distinct from a successful empty search. Already running requests finish under their transport timeouts.</p>
 <h2 id="images-and-pdf">Images and PDF<a class="header-anchor" href="#images-and-pdf">#</a></h2>
 <table>
 <thead>
