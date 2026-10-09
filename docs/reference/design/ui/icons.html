@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791571859" data-alt-lang-url="/docs/reference/design/ui/icons.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791572554" data-alt-lang-url="/docs/reference/design/ui/icons.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -365,7 +365,7 @@ screen never mixes a filled glyph next to a line glyph by accident.</p>
 <tbody>
 <tr>
 <td><strong>Solar</strong> (Bold Duotone)</td>
-<td>The composer area: environment-row chips, the control row and its plus menu, model / permission badges, the effort pill, the question / approval panel, the send arrow</td>
+<td>The composer area: environment-row chips, the control row and its plus menu, model / permission badges, the effort pill, the question / approval panel, the send arrow. Also the tiles of the chat execution timeline rows</td>
 <td><code>apps/web/components/solar-icons</code> — bodies vendored from the Iconify <code>solar</code> set into <code>bodies.ts</code> by <code>apps/web/scripts/icons/fetch-solar.mjs</code></td>
 <td>CC BY 4.0, Solar Icons by 480 Design</td>
 </tr>
@@ -377,7 +377,7 @@ screen never mixes a filled glyph next to a line glyph by accident.</p>
 </tr>
 <tr>
 <td><strong>lucide-react</strong></td>
-<td>Everything else that needs no motion: timeline rows, settings bodies, dialogs</td>
+<td>Everything else that needs no motion: settings bodies, dialogs, the timeline's disclosure chevron</td>
 <td><code>lucide-react</code></td>
 <td>ISC</td>
 </tr>
@@ -517,6 +517,138 @@ The <code>?</code> help button in the effort card
 (<a href="/docs/reference/design/ui/effort-picker.html">effort-picker.html</a>) is lucide <code>CircleHelp</code> at 14px: Solar
 has no vendored question glyph yet, and the button is static, so it needs
 no motion handle. See the implementation status below for both.</p>
+<h2 id="solar-in-the-execution-timeline">Solar in the execution timeline<a class="header-anchor" href="#solar-in-the-execution-timeline">#</a></h2>
+<p>Each row of the expanded execution timeline starts with a 24 px tinted
+square (20 px when nested) holding a 13 px glyph (11 px nested). The
+glyphs are Solar Bold Duotone, so the rows read as flat filled marks in
+the tone colour rather than line drawings. <code>presentTool()</code> in
+<code>apps/web/components/chat/messages/tool-presentation.ts</code> picks the glyph
+per tool (<code>ToolPresentation.icon</code>, a <code>SolarIconName</code>); <code>StepRow</code> in
+<code>execution-strip.tsx</code> falls back to a glyph per row kind when no tool
+glyph is given. The tile and its tone colours are unchanged by the icon
+family.</p>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th>Solar icon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Command (<code>bash</code>, <code>terminal_use</code>, <code>process</code>)</td>
+<td><code>programming</code></td>
+</tr>
+<tr>
+<td>Execute code</td>
+<td><code>code-square</code></td>
+</tr>
+<tr>
+<td>Edit / write / patch</td>
+<td><code>pen-new-square</code></td>
+</tr>
+<tr>
+<td>Read file / PDF</td>
+<td><code>file-text</code></td>
+</tr>
+<tr>
+<td>List folder</td>
+<td><code>folder-open</code></td>
+</tr>
+<tr>
+<td>Find files (<code>glob</code>)</td>
+<td><code>file-search</code></td>
+</tr>
+<tr>
+<td>Search (<code>grep</code>, code search)</td>
+<td><code>magnifier</code></td>
+</tr>
+<tr>
+<td>Code intelligence (LSP)</td>
+<td><code>structure</code></td>
+</tr>
+<tr>
+<td>Web search / fetch</td>
+<td><code>global</code></td>
+</tr>
+<tr>
+<td>Browser control</td>
+<td><code>cursor</code></td>
+</tr>
+<tr>
+<td>Generate image / analyze image</td>
+<td><code>gallery-add</code> / <code>gallery</code></td>
+</tr>
+<tr>
+<td>Canvas, send file, message an agent</td>
+<td><code>plain-2</code></td>
+</tr>
+<tr>
+<td>Sub-agent tools</td>
+<td><code>bot</code></td>
+</tr>
+<tr>
+<td>Read conversation</td>
+<td><code>book</code></td>
+</tr>
+<tr>
+<td>Ask the user</td>
+<td><code>chat-round-question-mark</code></td>
+</tr>
+<tr>
+<td>Plan mode</td>
+<td><code>map</code></td>
+</tr>
+<tr>
+<td>Scheduled jobs</td>
+<td><code>calendar</code></td>
+</tr>
+<tr>
+<td>Run program</td>
+<td><code>box</code></td>
+</tr>
+<tr>
+<td>Use skill</td>
+<td><code>stars</code></td>
+</tr>
+<tr>
+<td>Resource, memory</td>
+<td><code>database</code></td>
+</tr>
+<tr>
+<td>Todos</td>
+<td><code>checklist</code></td>
+</tr>
+<tr>
+<td>Worktree</td>
+<td><code>git-branch</code></td>
+</tr>
+<tr>
+<td>Self-update</td>
+<td><code>refresh</code></td>
+</tr>
+<tr>
+<td>MCP</td>
+<td><code>plug-circle</code></td>
+</tr>
+<tr>
+<td>Any other function</td>
+<td><code>sledgehammer</code></td>
+</tr>
+<tr>
+<td>Fallbacks by row kind: thinking / LLM / sub-agent / function</td>
+<td><code>lightbulb-bolt</code> / <code>cpu</code> / <code>bot</code> / <code>sledgehammer</code></td>
+</tr>
+</tbody>
+</table>
+<p>Solar has no wrench, so generic function rows use the sledgehammer as
+their tool mark. The thinking fallback reuses <code>lightbulb-bolt</code>, the same
+glyph the model selector uses for reasoning. A failed row keeps its
+small stroked ✗, and the disclosure chevron after the summary stays
+lucide <code>ChevronRight</code>. Neither is a type glyph.</p>
+<p>Timeline glyphs are static (<code>motionPreset=&quot;none&quot;</code>). The row head is not
+a button, and clicking it only expands or collapses the row. The glyphs
+carry no tooltip, because transcript content gets no hover tips.</p>
 <h2 id="motion-contract">Motion contract<a class="header-anchor" href="#motion-contract">#</a></h2>
 <p>All three families speak the same imperative handle,
 <code>AnimatedNavIconHandle</code> (<code>startAnimation</code> / <code>stopAnimation</code>), so the
@@ -548,6 +680,8 @@ entry is still to be added (see below).</p>
 <li>Composer area on Solar, including the environment-row chips, the plus
 menu, the question / approval panel and the model / permission badges
 shared through <code>components/chat/top-bar</code>: <strong>implemented</strong>.</li>
+<li>Execution timeline row tiles on Solar (per-tool glyphs and the
+thinking / LLM / sub-agent / function fallbacks): <strong>implemented</strong>.</li>
 <li>Fast toggle as a state-driven gauge (needle idles low when off, sweeps
 to high and turns accent-red when on): <strong>not implemented</strong> — the
 animated-set gauge with a static <code>active</code> rotation remains.</li>
@@ -563,6 +697,9 @@ migration is planned for them.</li>
 <ul class="toc-list">
 <li>
 <a class="lvl-2" href="#solar-in-the-composer">Solar in the composer</a>
+</li>
+<li>
+<a class="lvl-2" href="#solar-in-the-execution-timeline">Solar in the execution timeline</a>
 </li>
 <li>
 <a class="lvl-2" href="#motion-contract">Motion contract</a>

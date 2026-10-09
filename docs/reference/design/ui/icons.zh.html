@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791571859" data-alt-lang-url="/docs/reference/design/ui/icons.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791572554" data-alt-lang-url="/docs/reference/design/ui/icons.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>图标体系 · OpenProgram Docs</title>
-<meta name="description" content="Web 端用三族图标。每一族有自己的地盘，一个界面里不会无意间把实心图标和线性图标并排放在一起。 族 地盘 包 / 来源 许可 Solar （Bold Duotone） 输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头">
+<meta name="description" content="Web 端用三族图标。每一族有自己的地盘，一个界面里不会无意间把实心图标和线性图标并排放在一起。 族 地盘 包 / 来源 许可 Solar （Bold Duotone） 输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 /">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/icons.zh.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/design/ui/icons.zh.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/icons.zh.html">
 <meta property="og:title" content="图标体系 · OpenProgram Docs">
-<meta property="og:description" content="Web 端用三族图标。每一族有自己的地盘，一个界面里不会无意间把实心图标和线性图标并排放在一起。 族 地盘 包 / 来源 许可 Solar （Bold Duotone） 输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头">
+<meta property="og:description" content="Web 端用三族图标。每一族有自己的地盘，一个界面里不会无意间把实心图标和线性图标并排放在一起。 族 地盘 包 / 来源 许可 Solar （Bold Duotone） 输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 /">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="图标体系 · OpenProgram Docs">
-<meta name="twitter:description" content="Web 端用三族图标。每一族有自己的地盘，一个界面里不会无意间把实心图标和线性图标并排放在一起。 族 地盘 包 / 来源 许可 Solar （Bold Duotone） 输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头">
+<meta name="twitter:description" content="Web 端用三族图标。每一族有自己的地盘，一个界面里不会无意间把实心图标和线性图标并排放在一起。 族 地盘 包 / 来源 许可 Solar （Bold Duotone） 输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 /">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -364,7 +364,7 @@
 <tbody>
 <tr>
 <td><strong>Solar</strong>（Bold Duotone）</td>
-<td>输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头</td>
+<td>输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头；以及聊天执行时间线每一行左侧的图标方块</td>
 <td><code>apps/web/components/solar-icons</code>——图标主体由 <code>apps/web/scripts/icons/fetch-solar.mjs</code> 从 Iconify 的 <code>solar</code> 集合取回，落在 <code>bodies.ts</code></td>
 <td>CC BY 4.0，Solar Icons by 480 Design</td>
 </tr>
@@ -376,7 +376,7 @@
 </tr>
 <tr>
 <td><strong>lucide-react</strong></td>
-<td>其余不需要动效的地方：时间线行、设置正文、对话框</td>
+<td>其余不需要动效的地方：设置正文、对话框、时间线行尾的展开箭头</td>
 <td><code>lucide-react</code></td>
 <td>ISC</td>
 </tr>
@@ -499,6 +499,124 @@
 <p>Solar 的撤回图标都是细线箭头，在按钮尺寸下几乎看不见，所以文件卡片的两个操作按钮改用 Font Awesome 的实心图标，由同一个脚本取回、放进同一张表（viewBox 记在 <code>SOLAR_VIEWBOXES</code>）。</p>
 <p>反映开关的图标随状态换形，而不只靠颜色：无人值守开启后眼睛闭上；运行中模式&quot;注入&quot;是前进箭头、&quot;排队&quot;是队列列表；项目目录丢失时项目 chip 变成警告三角。</p>
 <p>输入框区域有两个<strong>不是</strong> Solar 的图标。高速（Fast）开关保留动效集里的仪表盘，由 <code>active</code> 属性转动指针。思考力度卡片里的 <code>?</code> 帮助按钮（<a href="/docs/reference/design/ui/effort-picker.zh.html">effort-picker.zh.html</a>）是 14px 的 lucide <code>CircleHelp</code>：Solar 尚未取回问号图标，而且这个按钮是静态的，不需要动效句柄。二者均见文末实现状态。</p>
+<h2 id="执行时间线用-solar">执行时间线用 Solar<a class="header-anchor" href="#执行时间线用-solar">#</a></h2>
+<p>展开后的执行时间线，每一行以一个 24px 的着色方块开头（嵌套时 20px），里面是 13px 的图标（嵌套时 11px）。图标用 Solar Bold Duotone，所以各行显示为色调色的扁平实心标记，而不是线稿。<code>apps/web/components/chat/messages/tool-presentation.ts</code> 里的 <code>presentTool()</code> 按工具选图（<code>ToolPresentation.icon</code>，类型为 <code>SolarIconName</code>）；没有工具图标时，<code>execution-strip.tsx</code> 的 <code>StepRow</code> 按行类别兜底。方块本身和色调配色不随图标族改变。</p>
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>Solar 图标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>命令（<code>bash</code>、<code>terminal_use</code>、<code>process</code>）</td>
+<td><code>programming</code></td>
+</tr>
+<tr>
+<td>执行代码</td>
+<td><code>code-square</code></td>
+</tr>
+<tr>
+<td>修改 / 写入 / 补丁</td>
+<td><code>pen-new-square</code></td>
+</tr>
+<tr>
+<td>读取文件 / PDF</td>
+<td><code>file-text</code></td>
+</tr>
+<tr>
+<td>列出目录</td>
+<td><code>folder-open</code></td>
+</tr>
+<tr>
+<td>查找文件（<code>glob</code>）</td>
+<td><code>file-search</code></td>
+</tr>
+<tr>
+<td>搜索（<code>grep</code>、代码搜索）</td>
+<td><code>magnifier</code></td>
+</tr>
+<tr>
+<td>代码分析（LSP）</td>
+<td><code>structure</code></td>
+</tr>
+<tr>
+<td>网页搜索 / 抓取</td>
+<td><code>global</code></td>
+</tr>
+<tr>
+<td>浏览器操作</td>
+<td><code>cursor</code></td>
+</tr>
+<tr>
+<td>生成图片 / 分析图片</td>
+<td><code>gallery-add</code> / <code>gallery</code></td>
+</tr>
+<tr>
+<td>画布、发送文件、给代理发消息</td>
+<td><code>plain-2</code></td>
+</tr>
+<tr>
+<td>子代理类工具</td>
+<td><code>bot</code></td>
+</tr>
+<tr>
+<td>读取对话</td>
+<td><code>book</code></td>
+</tr>
+<tr>
+<td>向用户提问</td>
+<td><code>chat-round-question-mark</code></td>
+</tr>
+<tr>
+<td>规划模式</td>
+<td><code>map</code></td>
+</tr>
+<tr>
+<td>定时任务</td>
+<td><code>calendar</code></td>
+</tr>
+<tr>
+<td>运行程序</td>
+<td><code>box</code></td>
+</tr>
+<tr>
+<td>使用技能</td>
+<td><code>stars</code></td>
+</tr>
+<tr>
+<td>资源、记忆</td>
+<td><code>database</code></td>
+</tr>
+<tr>
+<td>待办</td>
+<td><code>checklist</code></td>
+</tr>
+<tr>
+<td>工作树</td>
+<td><code>git-branch</code></td>
+</tr>
+<tr>
+<td>自我更新</td>
+<td><code>refresh</code></td>
+</tr>
+<tr>
+<td>MCP</td>
+<td><code>plug-circle</code></td>
+</tr>
+<tr>
+<td>其他函数</td>
+<td><code>sledgehammer</code></td>
+</tr>
+<tr>
+<td>按行类别兜底：思考 / LLM / 子代理 / 函数</td>
+<td><code>lightbulb-bolt</code> / <code>cpu</code> / <code>bot</code> / <code>sledgehammer</code></td>
+</tr>
+</tbody>
+</table>
+<p>Solar 没有扳手，通用函数行用锤子（sledgehammer）作为工具标记；思考行兜底复用 <code>lightbulb-bolt</code>，与模型选择器里表示推理能力的图标相同。失败行保留小号描边 ✗，摘要后的展开箭头仍是 lucide <code>ChevronRight</code>，二者都不是类型图标。</p>
+<p>时间线图标是静态的（<code>motionPreset=&quot;none&quot;</code>）：行头不是按钮，点击只负责展开 / 收起。图标不带任何悬停提示，因为对话内容不加 tooltip。</p>
 <h2 id="动效约定">动效约定<a class="header-anchor" href="#动效约定">#</a></h2>
 <p>三族图标都讲同一套命令式句柄 <code>AnimatedNavIconHandle</code>（<code>startAnimation</code> / <code>stopAnimation</code>）：容器——按钮、菜单行、chip——才是悬停目标，图标自己 16px 的命中区从不单独动。父级挂上 ref 就接管驱动；没有 ref 的 Solar 图标跟随最近的可点击祖先（按钮、链接、菜单项、chip）的悬停，所以不论有没有接 ref，每个按钮的表现都一样；纯展示的图标——菜单勾、警告三角、模型能力标记——用 <code>none</code>。</p>
 <p>pqoqubbw 图标会自己重绘（扳手转一下、箭头跳一下）。实心的 Solar 图标做不到，所以 <code>SolarIcon</code> 提供几种克制而统一的预设：<code>pop</code>（放大到 1.12，默认）、<code>fly</code>（发送纸飞机向右上飞 1.5px）、<code>nudge</code>（箭头右移 1.5px）、<code>pulse</code>（一次性弹入，用于菜单项变为勾选时）和 <code>none</code>。<code>prefers-reduced-motion</code> 下全部不动。</p>
@@ -508,6 +626,7 @@
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <ul>
 <li>输入框区域换成 Solar，含环境条 chip、+ 菜单、提问 / 审批面板，以及经 <code>components/chat/top-bar</code> 共用的模型 / 权限徽章：<strong>已实现</strong>。</li>
+<li>执行时间线行图标换成 Solar（按工具选图，以及思考 / LLM / 子代理 / 函数兜底）：<strong>已实现</strong>。</li>
 <li>高速开关改为状态驱动的仪表盘（关时指针停在低速区，开时甩到高速区并变成强调红）：<strong>未实现</strong>——目前仍是动效集的仪表盘加静态 <code>active</code> 旋转。</li>
 <li>思考力度卡片的帮助图标换成 Solar <code>question-circle</code>（经 <code>fetch-solar.mjs</code> 取回）：<strong>未实现</strong>——暂用 lucide <code>CircleHelp</code>。</li>
 <li>面向用户的 Solar 第三方致谢（CC BY）：<strong>未实现</strong>。</li>
@@ -518,6 +637,9 @@
 <ul class="toc-list">
 <li>
 <a class="lvl-2" href="#输入框区域用-solar">输入框区域用 Solar</a>
+</li>
+<li>
+<a class="lvl-2" href="#执行时间线用-solar">执行时间线用 Solar</a>
 </li>
 <li>
 <a class="lvl-2" href="#动效约定">动效约定</a>
