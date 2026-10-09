@@ -63,7 +63,7 @@
   .demo-toolbar button { padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); cursor: pointer; }
   .demo-toolbar button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
   .demo-toolbar button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-  .theme-demo { --d-bg:#262624; --d-panel:#30302e; --d-text:#b8b5ad; --d-bright:#f0efea; --d-muted:#757370; --d-line:rgba(255,255,255,.1); --d-action:#d97757; --d-action-fg:#fff; --d-focus:rgba(240,239,234,.5); padding: 18px; background: var(--d-bg); color: var(--d-text); border-radius: var(--radius); }
+  .theme-demo { --d-bg:#191918; --d-panel:#252523; --d-text:#b8b5ad; --d-bright:#f0efea; --d-muted:#757370; --d-line:rgba(255,255,255,.1); --d-action:#d97757; --d-action-fg:#fff; --d-focus:rgba(240,239,234,.5); padding: 18px; background: var(--d-bg); color: var(--d-text); border-radius: var(--radius); }
   .theme-demo[data-demo-theme="beige-light"] { --d-bg:#faf9f5; --d-panel:#fff; --d-text:#3d3d3a; --d-bright:#141413; --d-muted:#91908c; --d-line:#dedcd1; --d-action:#c15f3c; --d-focus:rgba(20,20,19,.45); }
   .theme-demo[data-demo-theme="dark"] { --d-bg:#1e1e20; --d-panel:#252529; --d-text:#b6b6bb; --d-bright:#ededf0; --d-muted:#74747c; --d-line:rgba(255,255,255,.12); --d-action:#3b82f6; --d-focus:rgba(237,237,240,.5); }
   .theme-demo[data-demo-theme="light"] { --d-bg:#fff; --d-panel:#f5f5f7; --d-text:#3a3a40; --d-bright:#131317; --d-muted:#8c8c94; --d-line:#dcdce2; --d-action:#2563eb; --d-focus:rgba(19,19,23,.45); }
@@ -209,6 +209,8 @@
         <li><strong>可见验收</strong><span>默认安装版在深色、浅色和 aurora 下检查主窗口、tab、composer、popover 与桌面浮层。</span></li>
       </ul>
     </section>
+
+    <p>文本输入框和原生下拉框在聚焦时只改变现有边框的主题强调色，不添加 outline、偏移外圈或 box-shadow 边框，不改变控件尺寸。搜索框和聊天输入区由容器绘制唯一边界，内部编辑区保持无边框。导航、复选框、单选框、滑块和嵌入的第三方文档保留各自的键盘聚焦提示。</p>
 
     <section id="status">
       <h2>实现状态</h2>

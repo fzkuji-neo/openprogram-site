@@ -583,6 +583,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-name-resolution.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/tool-toggle-management.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-agent.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-agent.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/unified-session-context.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/web-frontend-spawn.html</loc></url>
@@ -648,10 +650,17 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-responsive-controls.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-tool-profile-menu.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/composer-tool-profile-menu.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/conversation-lifecycle.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/file-type-icons.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/file-type-icons.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/git-folder-pills.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/git-folder-pills.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/hover-tips.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/hover-tips.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/icons.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/icons.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/indicator-dots.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/indicator-dots.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/integrated-terminal.html</loc></url>

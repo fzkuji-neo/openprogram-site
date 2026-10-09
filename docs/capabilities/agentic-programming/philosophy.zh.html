@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791187171" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791563584" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -196,7 +196,7 @@
 </ul>
 <p>用户编排代码使用 <code>llm()</code> 发起单次模型请求。<code>Runtime.exec()</code> 保留为其下层的嵌入与基础设施 API。</p>
 <h3 id="3-context">3. <code>Context</code><a class="header-anchor" href="#3-context">#</a></h3>
-<p>执行过程的自动记录。每个用户轮次、每次 LLM 调用、每次函数调用都是同一张<strong>扁平 DAG</strong> 上的一个节点；边有两种：<code>caller</code>（哪个函数发起了这个节点）和 <code>reads</code>（一次 LLM 调用的 prompt 看到了哪些节点）。每个节点记录输入、输出、token 用量、耗时、失败原因。</p>
+<p>每个 Agent 执行分别管理自己的 DAG。聊天只记录用户消息、模型请求和直接工具调用；普通辅助函数不产生持久化节点。调用另一个 Agent 时创建独立 DAG，父图只保存调用结果和 child_session_id 引用。权限、取消与文件修改备份仍由原执行负责，不依赖图所有权。</p>
 <p>这张 DAG 不只是执行轨迹——它同时是<strong>每次 LLM 调用的历史来源</strong>：<code>llm()</code> 通过环境 runtime 从 DAG 渲染消息历史。装饰器上的两个旋钮按函数塑造这条数据流：</p>
 <ul>
 <li><code>expose</code> —— 一次调用完成后向父级暴露什么（默认 <code>&quot;io&quot;</code>：函数名 + 输入 + 输出，内部细节隐藏）。</li>
@@ -257,7 +257,7 @@
 <li><a href="/docs/reference/api">API 参考</a></li>
 <li><a href="/docs/reference/design">设计细节</a></li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/README.html" data-href-en="/docs/capabilities/agentic-programming/README.html" data-href-zh="/docs/capabilities/agentic-programming/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="指南">Guide</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-en="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-zh="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="框架嵌入">Framework embedding</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/README.html" data-href-en="/docs/capabilities/agentic-programming/README.html" data-href-zh="/docs/capabilities/agentic-programming/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="指南">Guide</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-en="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-zh="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="框架嵌入">Framework embedding</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

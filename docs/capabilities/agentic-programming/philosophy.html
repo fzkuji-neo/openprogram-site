@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791187171" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791563584" data-alt-lang-url="/docs/capabilities/agentic-programming/philosophy.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -196,7 +196,7 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 </ul>
 <p>User orchestration calls <code>llm()</code> for a single model request. <code>Runtime.exec()</code> remains the lower-level embedding and infrastructure API used underneath it.</p>
 <h3 id="3-context">3. <code>Context</code><a class="header-anchor" href="#3-context">#</a></h3>
-<p>The automatic record of execution. Every user turn, every LLM call, and every function call is one node on a single <strong>flat DAG</strong>; the edges are <code>caller</code> (which function invoked this node) and <code>reads</code> (which nodes an LLM call saw in its prompt). Each node records inputs, outputs, token usage, elapsed time, and failure reason.</p>
+<p>Each Agent execution owns its DAG. Chat records user messages, model requests and directly dispatched tools; ordinary helpers create no durable nodes. Calling another Agent creates an independent DAG; the parent stores the invocation result and a child_session_id reference. Permission, cancellation and file-checkpoint ownership remain with the originating execution, independent of graph ownership.</p>
 <p>The DAG is not just a trace — it is also <strong>where each LLM call's history comes from</strong>: <code>llm()</code> renders its message history from the DAG through the ambient runtime. Two decorator knobs shape that flow per function:</p>
 <ul>
 <li><code>expose</code> — what a completed call reveals to its parent (<code>&quot;io&quot;</code> by default: name + input + output, internals hidden).</li>
@@ -257,7 +257,7 @@ The paradigm is described in the paper <em>LLM-as-Code: Agentic Programming for 
 <li><a href="/docs/reference/api">API Reference</a></li>
 <li><a href="/docs/reference/design">Design Details</a></li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/README.html" data-href-en="/docs/capabilities/agentic-programming/README.html" data-href-zh="/docs/capabilities/agentic-programming/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="指南">Guide</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-en="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-zh="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="框架嵌入">Framework embedding</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/README.html" data-href-en="/docs/capabilities/agentic-programming/README.html" data-href-zh="/docs/capabilities/agentic-programming/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="指南">Guide</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-en="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.html" data-href-zh="/docs/capabilities/agentic-programming/embedding-in-your-own-stack.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="框架嵌入">Framework embedding</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

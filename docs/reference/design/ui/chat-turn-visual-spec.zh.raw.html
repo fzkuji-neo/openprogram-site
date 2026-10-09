@@ -76,47 +76,36 @@ h2{font-size:16px;color:var(--accent-orange);margin:44px 0 4px;display:flex;gap:
 .tl-collapse{display:grid;grid-template-rows:0fr;transition:grid-template-rows .18s ease}
 .tl.open .tl-collapse{grid-template-rows:1fr}
 .tl-collapse-inner{overflow:hidden;min-height:0}
-.tl-body{position:relative;margin:6px 0 4px;padding-left:38px}
-.tl-body::before{content:"";position:absolute;left:13.25px;top:16px;bottom:16px;width:1.5px;
-  background:var(--timeline-line);border-radius:1px}
-.step{position:relative;padding:2px 0 2px 2px}
-.step-head{position:relative;display:flex;align-items:center;gap:10px;color:var(--text-secondary);
-  font-size:13px;cursor:pointer;border-radius:6px;padding:3px 8px;user-select:none}
+.tl-body{position:relative;margin:8px 0 6px;padding-left:34px}
+.tl-body::before{content:"";position:absolute;left:11.5px;top:18px;bottom:18px;width:1px;
+  background:linear-gradient(to bottom,transparent,var(--timeline-line) 12px,var(--timeline-line) calc(100% - 12px),transparent)}
+.step{position:relative;padding:1px 0}
+.step-head{position:relative;display:flex;align-items:center;gap:8px;min-height:30px;color:var(--text-secondary);
+  font-size:13px;cursor:pointer;border-radius:8px;padding:3px 8px;user-select:none}
 .step-head:hover{background:var(--bg-hover)}
 .step-head:focus-visible{outline:1px solid var(--accent-cyan);outline-offset:1px;background:var(--bg-hover)}
-/* 图标锚在标题行内部（与文字天然对齐），底色遮住背后的竖线。
-   可展开行始终显示圆形状态：收起实心、展开空心；叶子行无圈。 */
-.step-icon{position:absolute;left:-36px;top:50%;transform:translateY(-50%);width:20px;height:20px;
-  --marker-size:26px;--marker-radius:13px;display:flex;align-items:center;justify-content:center;
-  background:var(--bg-primary);color:var(--text-secondary);isolation:isolate}
-.step[data-step-toggle]>.step-head>.step-icon{border-radius:50%;
-  --marker-surface:light-dark(color-mix(in srgb,currentColor 8%,var(--bg-primary)),
-    color-mix(in srgb,currentColor 14%,var(--bg-primary)));
-  transition:background-color .18s ease}
-.step[data-step-toggle]>.step-head>.step-icon::after{content:"";position:absolute;z-index:0;left:50%;top:50%;
-  box-sizing:border-box;width:var(--marker-size);height:var(--marker-size);border:2px solid var(--marker-surface);
-  border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
-.step[data-step-toggle]>.step-head>.step-icon::before{content:"";position:absolute;z-index:-1;left:50%;top:50%;
-  width:var(--marker-size);height:var(--marker-size);border-radius:50%;background:var(--marker-surface);
-  transform:translate(-50%,-50%);transform-origin:center top;pointer-events:none;
-  transition:top .22s cubic-bezier(.2,.7,.2,1),width .18s ease,height .22s cubic-bezier(.2,.7,.2,1),
-    border-radius .18s ease,background-color .18s ease}
-.step[data-step-toggle]:not(.open)>.step-head>.step-icon{
-  background-color:transparent}
-.step[data-step-toggle].open>.step-head>.step-icon{
-  background-color:var(--bg-primary);box-shadow:0 0 0 1px var(--bg-primary)}
-.step[data-step-toggle].open>.step-head>.step-icon::before{
-  top:calc(50% + var(--marker-radius) + 6px);width:1.5px;height:12px;border-radius:1px;
-  background-color:transparent}
-.step-icon svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;
+/* 图标块：24px 圆角方块，用步骤色调着色（16% 底色、26% 内描边、图标取满色）。色调与图标见 tool-presentation.ts。 */
+.step-icon{--tone:var(--timeline-function);position:absolute;left:-34px;top:50%;transform:translateY(-50%);
+  width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:7px;color:var(--tone);
+  background:linear-gradient(color-mix(in srgb,var(--tone) 16%,transparent),color-mix(in srgb,var(--tone) 16%,transparent)),var(--bg-primary);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tone) 26%,transparent);isolation:isolate}
+.step-icon svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.9;
   stroke-linecap:round;stroke-linejoin:round}
-/* 三类配色：思考紫 / 函数橙 / LLM 青 / 子代理绿（静态不动画）。 */
-.step-icon.k-thinking{color:var(--timeline-thinking)}
-.step-icon.k-function{color:var(--timeline-function)}
-.step-icon.k-llm{color:var(--timeline-llm)}
-.step-icon.k-subagent{color:var(--timeline-subagent)}
-.step-icon.is-error{color:var(--accent-red)}
-.step-title{flex:0 0 auto}
+/* 色调：思考紫 / LLM 青 / 子代理绿 / 命令绿 / 修改琥珀 / 读取蓝 / 搜索青 / 网页靛 / 其他函数橙。 */
+.step-icon.k-thinking{--tone:var(--timeline-thinking)}
+.step-icon.k-function{--tone:var(--timeline-function)}
+.step-icon.k-llm{--tone:var(--timeline-llm)}
+.step-icon.k-subagent{--tone:var(--timeline-subagent)}
+.step-icon.t-shell{--tone:light-dark(#15803d,#4ade80)}
+.step-icon.t-edit{--tone:light-dark(#b45309,#fbbf24)}
+.step-icon.t-read{--tone:light-dark(#1d4ed8,#60a5fa)}
+.step-icon.t-search{--tone:light-dark(#0e7490,#22d3ee)}
+.step-icon.t-web{--tone:light-dark(#4338ca,#818cf8)}
+.step-icon.is-error{--tone:var(--accent-red)}
+.step-title{flex:0 0 auto;color:var(--text-primary);font-weight:500}
+.step-target{flex:0 1 auto;min-width:0;max-width:55%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-family:var(--font-mono);font-size:12px;line-height:18px;padding:0 6px;border-radius:5px;
+  color:var(--text-secondary);background:color-mix(in srgb,var(--text-primary) 6%,transparent)}
 /* 标题 = 详情入口：悬停下划线；行内其他位置只负责展开/折叠。 */
 .step-title.link{cursor:pointer}
 .step-title.link:hover{color:var(--text-bright);text-decoration:underline}
@@ -144,12 +133,12 @@ h2{font-size:16px;color:var(--accent-orange);margin:44px 0 4px;display:flex;gap:
   transition:grid-template-rows .22s cubic-bezier(.2,.7,.2,1),opacity .14s ease,transform .22s cubic-bezier(.2,.7,.2,1)}
 .tl-sub-clip{min-height:0;overflow:hidden}
 .tl-sub-inner{padding:2px 0}
-.tl-sub::before{content:"";position:absolute;left:11.75px;top:12px;bottom:12px;width:1.5px;
-  background:var(--timeline-line);border-radius:1px;transform:translateY(-9.5px);
+.tl-sub::before{content:"";position:absolute;left:9.5px;top:14px;bottom:14px;width:1px;
+  background:var(--timeline-line);opacity:.7;transform:translateY(-9.5px);
   transition:transform .22s cubic-bezier(.2,.7,.2,1)}
-.tl-sub .step{padding:1px 0 1px 2px}
+.tl-sub .step{padding:1px 0}
 .tl-sub .step-head{font-size:12.5px;padding:3px 8px}
-.tl-sub .step-icon{left:-32px;width:17px;height:17px;--marker-size:23px;--marker-radius:11.5px}
+.tl-sub .step-icon{left:-30px;width:20px;height:20px;border-radius:6px}
 .tl-sub .step-icon svg{width:11px;height:11px}
 .tl-sub .step-body-inner{font-size:12.5px;padding:8px 12px}
 .step.open>.tl-sub{grid-template-rows:1fr;opacity:1;transform:translateY(0);pointer-events:auto}
@@ -209,17 +198,15 @@ h2{font-size:16px;color:var(--accent-orange);margin:44px 0 4px;display:flex;gap:
 /* ── 文件修改摘要与 Review ── */
 .change-target-demo{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:1px;max-width:980px;overflow:hidden;border:1px solid var(--border-light);border-radius:12px;background:var(--border-light)}
 .change-chat-pane,.change-review-pane{min-width:0;background:var(--bg-primary)}.change-chat-pane{padding:20px}
-.change-card-demo{container:change-card/inline-size;width:min(100%,680px);margin-top:17px;overflow:hidden;border:1px solid color-mix(in srgb,var(--border-light) 72%,transparent);border-radius:9px;background:var(--bg-tertiary);font-family:var(--font-sans)}
-.change-summary{height:40px;display:flex;align-items:center;gap:12px;padding:4px 10px 4px 12px;border-bottom:1px solid var(--border-light);background:var(--bg-tertiary);color:var(--text-secondary)}
-.change-summary-mark{flex:none;width:19px;height:19px;color:var(--text-muted)}.change-summary-mark svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transform-origin:center}.change-summary-mark:hover svg{animation:changeFeatherWrite 1.6s ease-in-out}@keyframes changeFeatherWrite{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(2px,-4px) rotate(-8deg)}50%{transform:translate(-2px,-2px) rotate(4deg)}75%{transform:translate(1px,-1px) rotate(-3deg)}}
-.change-summary-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-primary);font-size:14px;line-height:1;font-weight:600}.change-summary-stat{flex:none;display:inline-grid;grid-template-columns:auto auto;align-items:center;column-gap:4px;row-gap:1px;font:12px/1.2 var(--font-sans);font-variant-numeric:tabular-nums}
+.change-card-demo{container:change-card/inline-size;width:min(100%,680px);margin-top:17px;padding:6px;border-radius:16px;background:var(--bg-tertiary);box-shadow:0 1px 3px 0 rgb(0 0 0/.25),0 1px 2px -1px rgb(0 0 0/.25);transition:box-shadow .15s;font-family:var(--font-sans)}.change-card-demo:hover{box-shadow:0 4px 6px -1px rgb(0 0 0/.25),0 2px 4px -2px rgb(0 0 0/.25)}
+.change-summary{min-height:36px;display:flex;align-items:center;gap:10px;padding:0 0 6px 10px;color:var(--text-secondary)}
+.change-summary-mark{flex:none;width:18px;height:18px;color:var(--text-muted)}.change-summary-mark svg{display:block;width:100%;height:100%;fill:currentColor}
+.change-summary-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-bright);font-size:13.5px;line-height:1;font-weight:600}.change-summary-stat{flex:none;display:inline-flex;align-items:center;column-gap:4px;font:12px/1.2 var(--font-sans);font-variant-numeric:tabular-nums}
 .change-summary-stat b{font-weight:500}.add{color:var(--accent-green)}.del{color:var(--accent-red)}
-.change-summary-meter{grid-column:1/-1;width:100%;min-width:42px;height:2.5px;border-radius:999px;background:linear-gradient(90deg,var(--accent-green) 0 82%,var(--accent-red) 82% 100%);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--text-bright) 4%,transparent);opacity:.78}
-.change-summary-actions{flex:none;display:flex;align-items:center;gap:7px;margin-left:8px;white-space:nowrap}.change-summary-action{flex:none;height:28px;display:inline-flex;align-items:center;gap:4px;border:0;border-radius:6px;padding:0 4px;background:transparent;color:var(--text-muted);font:13px/1 var(--font-sans);cursor:pointer;white-space:nowrap}.change-summary-action.primary{border:1px solid var(--border-light);padding:0 10px;background:var(--bg-tertiary);color:var(--text-primary)}.change-summary-action-icon{flex:none;width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.change-summary-notice{display:block;min-width:0;max-width:min(48ch,40cqi);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--accent-orange);font:12px/1.2 var(--font-sans)}
+.change-summary-actions{flex:none;display:flex;align-items:center;gap:6px;margin-left:auto;white-space:nowrap}.change-summary-action{flex:none;height:28px;display:inline-flex;align-items:center;justify-content:center;gap:4px;border:0;border-radius:999px;padding:0 12px;background:var(--bg-secondary);box-shadow:0 1px 3px 0 rgb(0 0 0/.25),0 1px 2px -1px rgb(0 0 0/.25);color:var(--text-primary);font:12.5px/1 var(--font-sans);cursor:pointer;white-space:nowrap}.change-summary-action.icon{width:28px;padding:0;color:var(--text-secondary)}.change-summary-action svg{width:15px;height:15px;fill:currentColor}.change-summary-notice{display:block;min-width:0;max-width:min(48ch,40cqi);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--accent-orange);font:12px/1.2 var(--font-sans)}
 .change-category{display:none}
-.change-group{padding:4px;background:var(--bg-primary)}.change-row{height:28px;display:grid;grid-template-columns:minmax(0,1fr) max-content;align-items:center;column-gap:6px;padding:2px 6px;border-radius:5px;color:var(--text-secondary)}.change-row:hover{background:var(--bg-hover)}
-.change-row-name{min-width:0;display:flex;overflow:hidden;white-space:nowrap;font:13px/1.2 var(--font-sans)}.change-path-dir{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--text-muted)}.change-path-base{flex:none;color:var(--text-primary);font-weight:500}.change-row-counts{min-width:0;display:grid;grid-template-columns:max-content max-content;column-gap:6px;text-align:right;font:12px/1.2 var(--font-sans);font-variant-numeric:tabular-nums}.change-row-counts .add,.change-row-counts .del{min-width:3.5ch}.change-collapse{display:block;width:100%;height:32px;padding:0 12px;border:0;border-top:1px solid var(--border-light);background:var(--bg-tertiary);color:var(--text-secondary);font:13px/1 var(--font-sans);text-align:left;cursor:pointer}.change-collapse:hover{background:var(--bg-hover);color:var(--text-primary)}
-@media(prefers-color-scheme:light){.change-card-demo,.change-summary,.change-summary-action.primary,.change-collapse{background:var(--bg-primary);box-shadow:none}}
+.change-group{padding:3px;border-radius:11px;background:var(--bg-primary)}.change-row{height:30px;display:grid;grid-template-columns:auto minmax(0,1fr) max-content;align-items:center;column-gap:8px;padding:0 10px;border-radius:9px;color:var(--text-secondary)}.change-row:hover{background:var(--bg-hover)}.change-row-icon{display:inline-flex;color:var(--text-muted)}.change-row-icon svg{width:15px;height:15px;fill:currentColor}
+.change-row-name{min-width:0;display:flex;overflow:hidden;white-space:nowrap;font:13px/1.2 var(--font-sans)}.change-path-dir{min-width:0;overflow:hidden;text-overflow:ellipsis;color:var(--text-muted)}.change-path-base{flex:none;color:var(--text-bright)}.change-row-counts{min-width:0;display:grid;grid-template-columns:max-content max-content;column-gap:6px;text-align:right;font:12px/1.2 var(--font-sans);font-variant-numeric:tabular-nums}.change-row-counts .add,.change-row-counts .del{min-width:3.5ch}.change-collapse{display:block;width:100%;height:30px;margin-top:3px;padding:0 13px;border:0;border-radius:9px;background:transparent;color:var(--text-secondary);font:13px/1 var(--font-sans);text-align:left;cursor:pointer}.change-collapse:hover{background:var(--bg-hover);color:var(--text-primary)}
 .change-review-tab{display:flex;align-items:center;gap:8px;min-height:38px;padding:0 9px;border-bottom:1px solid var(--border-light);background:var(--bg-secondary);color:var(--text-primary);font-size:12px}.change-review-close{margin-left:auto;color:var(--text-muted)}
 .change-review-toolbar{display:flex;align-items:center;gap:9px;min-height:45px;padding:0 12px;border-bottom:1px solid var(--border-light);color:var(--text-secondary);font-size:11px}.change-review-toolbar .review-total{font:11px/1.4 var(--font-mono)}
 .change-scope-tabs,.change-review-modes{display:inline-flex;gap:2px;padding:2px;border-radius:6px;background:var(--bg-tertiary)}.change-review-modes{margin-left:auto}.change-scope-tab,.change-review-modes span{padding:3px 7px;border-radius:4px;color:var(--text-secondary);font-size:9px}.change-scope-tab.active,.change-review-modes span.active{background:var(--bg-hover);color:var(--text-primary)}
@@ -319,11 +306,12 @@ h2{font-size:16px;color:var(--accent-orange);margin:44px 0 4px;display:flex;gap:
   .branch-explain{grid-template-columns:1fr}
   .change-flow{grid-template-columns:1fr 1fr}.change-target-demo{grid-template-columns:1fr}.change-review-pane{min-height:360px}.change-summary{padding-inline:9px}.change-review-toolbar{flex-wrap:wrap;padding:7px 9px}.change-review-modes{margin-left:0}
 }
-@media(max-width:420px){.change-summary{height:40px;min-height:40px;gap:6px;padding-inline:6px}.change-summary-mark{width:19px;height:19px}.change-summary-title{font-size:0;white-space:nowrap}.change-summary-title::after{content:attr(data-short);font-size:13px}.change-summary-stat{min-width:0;column-gap:4px;font-size:12px}.change-summary-meter{min-width:40px}.change-summary-actions{gap:4px}.change-summary-action{height:28px;padding-inline:2px;font-size:13px}.change-summary-action.primary{padding-inline:7px}.change-summary-notice{max-width:92px}}
-@container change-card (max-width:420px){.change-summary{height:40px;min-height:40px;gap:6px;padding-inline:6px}.change-summary-mark{width:19px;height:19px}.change-summary-title{font-size:0;white-space:nowrap}.change-summary-title::after{content:attr(data-short);font-size:13px}.change-summary-stat{min-width:0;column-gap:4px;font-size:12px}.change-summary-meter{min-width:40px}.change-summary-actions{gap:4px}.change-summary-action{height:28px;padding-inline:2px;font-size:13px}.change-summary-action.primary{padding-inline:7px}.change-summary-notice{max-width:92px}}
+@media(max-width:420px){.change-summary{gap:6px;padding-left:6px}.change-summary-title{font-size:0;white-space:nowrap}.change-summary-title::after{content:attr(data-short);font-size:13px}.change-summary-actions{gap:4px}.change-summary-notice{max-width:92px}}
+@container change-card (max-width:420px){.change-summary{gap:6px;padding-left:6px}.change-summary-title{font-size:0;white-space:nowrap}.change-summary-title::after{content:attr(data-short);font-size:13px}.change-summary-actions{gap:4px}.change-summary-notice{max-width:92px}}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+/* +N −N diff badge: green half, red half. */.change-summary-stat,.change-row-counts{column-gap:0;border-radius:6px;overflow:hidden}.change-summary-stat .add,.change-summary-stat .del,.change-row-counts .add,.change-row-counts .del{min-width:0;padding:0 6px;line-height:19px;font-weight:500}.change-summary-stat .add,.change-row-counts .add{background:color-mix(in oklch,var(--accent-green) 18%,transparent)}.change-summary-stat .del,.change-row-counts .del{background:color-mix(in oklch,var(--accent-red) 18%,transparent)}
 </style>
 <link rel="describedby" href="https://openprogram.io/llms.txt">
 <link rel="stylesheet" href="/docs/assets/raw-readability.css">
@@ -394,7 +382,7 @@ h2{font-size:16px;color:var(--accent-orange);margin:44px 0 4px;display:flex;gap:
 </div>
 <div class="rule">规则：外层无框无底色；收起行 = 纯文字摘要 + ›（无按钮底色，与正文列左对齐）；所有收起行固定高 28px，第一行文字、箭头与同轮 28px 头像严格上下居中，不使用 top、transform 或 translate 做垂直偏移；回复文本永远直接可见，底部发送时间和复制、重试等操作只在消息 hover 或 footer 键盘 focus 时一起显示。<b>时间契约：</b>用户消息在发送成功时记录本地时间，Agent 回复与独立 function/runtime 在首个可见状态创建时记录开始时间；Agent 内的 thinking 和普通 tool step 共享所属 Agent 消息的开始时间，独立 runtime/sub-agent 消息保留自身开始时间。所有后续流式更新、终态更新和层级迁移均保留该时间，刷新后优先使用持久化的权威时间。发送或重试后、首个回复内容到达前的临时 thinking 状态只占一行，开始时间紧跟状态文字显示，不创建正常消息 footer；首个回复内容到达后再切换为正式消息布局。执行摘要、正文和时间戳采用不同字号与行高，因此正文到 footer 使用 14px 视觉间距，使两段可见文字之间的留白一致；不改变折叠行高度或头像位置。<br>
 Agent 回复发起的 function 及其执行树只属于该回复的执行时间线，不得再生成顶层 runtime 卡片；只有用户直接运行的 function 才作为独立 runtime 消息显示。<br>
-<b>展开只向下</b>：高度过渡用 grid 0fr↔1fr（0.18s），展开把下方内容推开、收起平滑抽走；<b>视口不许跳</b>——聊天区关掉原生 scroll anchoring（overflow-anchor:none），且用户点击后的 600ms 内暂停贴底吸附，展开/收起时开关行在屏幕上纹丝不动。收起动画结束后卸载子树，折叠状态不付渲染成本。<b>执行过程始终默认收起</b>：流式与历史消息都只显示摘要行，摘要小字以 shimmer 表示进行中；用户点击后可展开，列表继续向下拼接新步骤（淡入下滑 0.22s），当前运行中的行图标位用呼吸点，思考行的 note 显示最新一行。用户手动选择在本轮后续流式更新和落定时保持不变——流式与落定共用同一条时间线渲染路径（伪 blocks 由实时字段合成，finalize 后由真 blocks 接管）。</div>
+<b>展开只向下</b>：高度过渡用 grid 0fr↔1fr（0.18s），展开把下方内容推开、收起平滑抽走；<b>视口不许跳</b>——聊天区关掉原生 scroll anchoring（overflow-anchor:none），且用户点击后的 600ms 内暂停贴底吸附，展开/收起时开关行在屏幕上纹丝不动。收起动画结束后卸载子树，折叠状态不付渲染成本。<b>执行过程始终默认收起</b>：流式与历史消息都只显示摘要行，摘要使用原有文字扫光表示进行中；用户点击后可展开，列表继续向下拼接新步骤（淡入下滑 0.22s），运行行使用原有小点反馈，思考行的 note 显示最新一行。用户手动选择在本轮后续流式更新和落定时保持不变——流式与落定共用同一条时间线渲染路径（伪 blocks 由实时字段合成，finalize 后由真 blocks 接管）。</div>
 
 <!-- ═══════ 2. 时间线细节 ═══════ -->
 <h2><span class="num">2</span>时间线行：圆圈同时表示可展开与开合状态</h2>
@@ -464,12 +452,12 @@ Agent 回复发起的 function 及其执行树只属于该回复的执行时间�
     </div></div>
   </div>
 </div>
-<div class="rule">状态就画在图标位：运行中 = 呼吸点（青），失败 = 红 ✗，正常 = 类型图标（按类配色）；可展开性和开合状态也只在图标位表达——有子内容时始终显示圆形状态，收起实心、展开空心，叶子行不画圈。圆圈继承当前行的类型色；收起态为单一、均匀、不透明的浅色面，不是 hover 效果，鼠标移动不会改变它。<br>
-几何：主层 tl-body 左内边距 38px，20px 图标落在 4..24（中心 14），1.5px 竖线压在 13.25px；子层左内边距 34px，17px 图标（中心 12.5），竖线压在 11.75px。图标盒、圆心和竖线位置保持不变；收起态直接绘制主层 26px、子层 23px 的完整色面，内部和边缘颜色完全一致，并遮住背后的时间线。独立外圈固定为 2px，展开和收起时都不变化；展开态在图标盒外增加 1px 页面底色内遮罩，恰好覆盖到圆环内缘，灰色时间线只能从圆环外缘下方开始。总外径不改变行高和列宽。内部色面只改变自身宽高、纵向位置和透明度：26/23px 圆形缩为 1.5×12px 竖段并渐变透明，竖段上缘落在对应圆环下缘，最终由原有 1.5px 中性时间线单独显示连接关系。<br>
-动画：圆形色面、圆环配色和子内容在同一帧开始。色面、子内容高度和子时间线起点使用同一个 220ms cubic-bezier(.2,.7,.2,1)；子时间线自身的 -3px→0 位移之外，线起点再执行 -9.5px→-0.5px，使它和上方 12px 竖段在所有中间帧保持相接。圆环配色与内容透明度使用 140–180ms ease；折叠按相反方向执行。实现只依据同一个 open 状态，不增加中间状态。暗色与浅色模式分别使用独立的鲜艳类型色；浅色模式时间线使用 22% 中性色，深色模式使用 28%，均低于类型图标和文字的视觉权重。prefers-reduced-motion 下所有过渡缩短为 0.01ms。<br>
-不增加独立箭头，不预留箭头槽，也不显示“⋯ N 步”。右侧只保留 Copy、Switch 等动作，动作右缘不受行是否可展开影响。带下划线的标题始终是详情入口；辅助动作只在鼠标压着的那一行出现，进入和离开均即时切换，不做 opacity 过渡。:hover 必须挂在 step-head 而非整个 step——嵌套树里子行悬停不会同时显示祖先行的动作；键盘操作只由 :focus-visible 保持动作可见，鼠标点击留下的 focus 不会让旧行残留。点击图标、摘要或行内空白只展开/折叠，不打开详情。<br>
+<div class="rule">每个步骤行以 24px 圆角方块（7px 圆角）开头，用步骤色调着色：页面底色上叠 16% 色调、1px 内描边 26%、图标取满色。色调与图标来自 <code>tool-presentation.ts</code>：命令绿（终端）、文件修改琥珀（笔）、读取蓝（文件）、搜索青（放大镜）、网页与浏览器靛（地球或指针）、子代理绿（机器人）、记忆品红、规划石板灰、媒体玫红、系统暖灰、其他函数橙（扳手）；思考保持紫、LLM 保持青。失败 = 红色方块加 ✗；运行中 = 正常图标外加一圈绕方块旋转的锥形扫光。行文字：动词标题（运行、修改、网页搜索…）字重 500，随后是标识参数的等宽小标签，再是结果首行的淡色文字。行内不出现原始 JSON；完整参数与输出仍在右栏。<br>
+几何：主层 tl-body 左内边距 34px，24px 方块落在 0..24（中心 12），1px 竖线压在 11.5px，首尾 12px 渐隐。子时间线缩进 6px、左内边距 30px，20px 方块（6px 圆角、11px 图标），竖线在 9.5px。行高至少 30px（嵌套 26px）。<br>
+动画：可展开行在摘要后显示一个小箭头，展开时旋转 90°。子内容与子时间线共用一个 220ms cubic-bezier(.2,.7,.2,1) 过渡；整条执行条保持 180ms 折叠。prefers-reduced-motion 下所有过渡缩为 0.01ms。<br>
+可展开性只由该小箭头表达，不预留箭头槽，也不显示“⋯ N 步”。右侧只保留 Copy、Switch 等动作，动作右缘不受行是否可展开影响。带下划线的标题始终是详情入口；辅助动作只在鼠标压着的那一行出现，进入和离开均即时切换，不做 opacity 过渡。:hover 必须挂在 step-head 而非整个 step——嵌套树里子行悬停不会同时显示祖先行的动作；键盘操作只由 :focus-visible 保持动作可见，鼠标点击留下的 focus 不会让旧行残留。点击图标、摘要或行内空白只展开/折叠，不打开详情。<br>
 嵌套层级：函数内部还有子调用时（Agent method 的执行树、工具的多层 call-tree），展开就是<b>缩进一层的子时间线</b>——同一套行样式递归下去，层数不限。<br>
-<b>实现状态：</b>生产组件已使用收起实心、展开空心的圆点状态；收起态是均匀、不透明、能够遮住连接线的浅色色面，圆形色面连续缩小并露出原有连接线，子内容以同一个 220ms 过渡展开或折叠，外径统一为主层 26px、子层 23px。其余既有行为不变：所有时间线行均提供复制操作，右侧展开箭头和步骤数提示已移除。</div>
+<b>实现状态：</b>生产组件已使用按工具着色的圆角图标块、动词标题与参数标签、运行中锥形扫光和可展开行的小箭头；所有时间线行均提供复制操作，步骤数提示已移除。</div>
 
 <!-- ═══════ 3. 手动函数运行 ═══════ -->
 <h2><span class="num">3</span>手动函数运行：一个 FunctionInvocation，两种输入方式</h2>
@@ -538,7 +526,7 @@ Agent 回复发起的 function 及其执行树只属于该回复的执行时间�
 </div>
 <div class="rule"><b>入口合同：</b>FunctionForm 和精确函数表达式共用一个 kwargs 类型转换器和一个 HTTP 提交器；聊天提交只负责在其前面做精确识别，不能复制函数运行的占位、Project、channel、session 导航或错误回滚逻辑。识别成功后不得调用 <code>sendChatMessage</code>，不得写 pending user text。附件、运行中排队和系统 decision 不隐式变成函数参数。<br>
 顶部折叠标题、Conclusion 和 footer 共享同一个内容列起点，不使用各自的 left、padding-left、margin-left 或 transform 做视觉补偿。footer 与聊天消息的 footer 同款（同一套图标按钮 + 时间戳，悬停显现），justify-content:flex-start；Conclusion 或直接结果到 footer 的垂直间距固定复用 assistant 正文到 footer 的 14px 视觉段落间距，不另设紧凑间距；版本切换<b>复用聊天的 .message-nav 组件</b>（◀ N/M ▶），不另造样式。footer 的复制复制<b>根调用的实际结果</b>（error ?? output），不是参数 JSON。<br>
-<b>分支语义</b>：重试 = <b>参数不变的兄弟分支</b>；修改（Edit）= 把上一次的参数预填回表单、提交后作为<b>可改参数的兄弟分支</b>运行（fork_of_node → 锚到原调用的前驱）。两者都在原位替换显示、旧运行经 ◀ N/M ▶ 仍可回看——<b>绝不在会话尾部追加新调用</b>。运行中占位 = 单条呼吸点行；嵌套在别的消息里（nested）时不渲染 footer。<br>
+<b>分支语义</b>：重试 = <b>参数不变的兄弟分支</b>；修改（Edit）= 把上一次的参数预填回表单、提交后作为<b>可改参数的兄弟分支</b>运行（fork_of_node → 锚到原调用的前驱）。两者都在原位替换显示、旧运行经 ◀ N/M ▶ 仍可回看——<b>绝不在会话尾部追加新调用</b>。运行中占位 = 单条状态动画行；嵌套在别的消息里（nested）时不渲染 footer。<br>
 <b>实现状态：</b>生产函数 footer 已移除额外左内边距，时间行、折叠标题和 Conclusion 严格共享同一左缘。精确函数表达式、FunctionForm、共享 HTTP dispatcher、Advanced 参数分组和 bound 会话隔离均已实现；<code>function-invocation.test.mjs</code> 覆盖直接调用、普通文本边界、typed kwargs、成功绑定、导航与失败回滚，GUI 不可执行结果和 metadata 由对应 Python 回归覆盖，并已通过独立规格审查。</div>
 
 <!-- ═══════ 4. Sub-agent 当前行为 ═══════ -->
@@ -603,7 +591,7 @@ Agent 回复发起的 function 及其执行树只属于该回复的执行时间�
   </div>
 </div>
 
-<div class="diagnostic-note"><b>状态边界：</b>父级 workflow 是否仍为 <code>running</code> 只影响摘要 shimmer 和步骤状态，不决定外层展开状态。收起不会删除记录；用户展开后，原记录仍按时间线行显示。</div>
+<div class="diagnostic-note"><b>状态边界：</b>父级 workflow 是否仍为 <code>running</code> 只影响摘要状态动画 和步骤状态，不决定外层展开状态。收起不会删除记录；用户展开后，原记录仍按时间线行显示。</div>
 
 <table class="path-table">
   <thead><tr><th>调用路径</th><th>实时数据</th><th>页面节点</th><th>共同的可见性控制</th></tr></thead>
@@ -738,11 +726,11 @@ Agent 回复发起的 function 及其执行树只属于该回复的执行时间�
   <div class="change-chat-pane">
     <div class="reply">后台进程逻辑与测试已更新。</div>
     <div class="change-card-demo">
-      <div class="change-summary"><span class="change-summary-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z"/><path d="M16 8 2 22"/><path d="M17.5 15H9"/></svg></span><span class="change-summary-title" data-short="3 files">3 个文件已修改</span><span class="change-summary-stat"><b class="add">+27</b><b class="del">−6</b><span class="change-summary-meter" title="新增 82% · 删除 18%" aria-hidden="true"></span></span><span class="change-summary-actions"><span class="change-summary-notice" title="当前文件状态与记录的来源不匹配" role="status">当前文件状态与记录的来源不匹配</span><button class="change-summary-action primary" type="button">审查</button></span></div>
+      <div class="change-summary"><span class="change-summary-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="currentColor"><path d="M1 12C1 6.81455 1 4.22183 2.61091 2.61091C4.22183 1 6.81455 1 12 1C17.1854 1 19.7782 1 21.3891 2.61091C23 4.22183 23 6.81455 23 12C23 17.1854 23 19.7782 21.3891 21.3891C19.7782 23 17.1854 23 12 23C6.81455 23 4.22183 23 2.61091 21.3891C1 19.7782 1 17.1854 1 12Z" opacity=".5"/><path d="M13.9261 14.3018C14.1711 14.1107 14.3933 13.8885 14.8377 13.4441L20.378 7.90374C20.512 7.7698 20.4507 7.53909 20.2717 7.477C19.6178 7.25011 18.767 6.82414 17.9713 6.02835C17.1755 5.23257 16.7495 4.38186 16.5226 3.72788C16.4605 3.54892 16.2298 3.48761 16.0959 3.62156L10.5555 9.16192C10.1111 9.60634 9.88888 9.82854 9.69778 10.0736C9.47235 10.3626 9.27908 10.6753 9.12139 11.0062C8.98771 11.2867 8.88834 11.5848 8.68959 12.181L8.43278 12.9515L8.02443 14.1765L7.64153 15.3252C7.54373 15.6186 7.6201 15.9421 7.8388 16.1608C8.0575 16.3795 8.38099 16.4559 8.67441 16.3581L9.82308 15.9752L11.0481 15.5668L11.8186 15.31L11.8186 15.31C12.4148 15.1113 12.7129 15.0119 12.9934 14.8782C13.3243 14.7205 13.637 14.5273 13.9261 14.3018Z"/><path d="M22.1127 6.16905C23.2952 4.98656 23.2952 3.06936 22.1127 1.88687C20.9302 0.704377 19.013 0.704377 17.8306 1.88687L17.6524 2.06499C17.4806 2.23687 17.4027 2.47695 17.4456 2.7162C17.4726 2.8667 17.5227 3.08674 17.6138 3.3493C17.796 3.87439 18.14 4.56368 18.788 5.21165C19.4359 5.85961 20.1252 6.20364 20.6503 6.38581C20.9129 6.4769 21.1329 6.52697 21.2834 6.55399C21.5227 6.59693 21.7627 6.51905 21.9346 6.34717L22.1127 6.16905Z"/></g></svg></span><span class="change-summary-title" data-short="3 files">3 个文件已修改</span><span class="change-summary-stat"><b class="add">+27</b><b class="del">−6</b></span><span class="change-summary-actions"><span class="change-summary-notice" title="当前文件状态与记录的来源不匹配" role="status">当前文件状态与记录的来源不匹配</span><button class="change-summary-action primary" type="button">审查</button></span></div>
       <div class="change-group">
-        <div class="change-row"><span class="change-row-name"><span class="change-path-base">playbook.json</span></span><span class="change-row-counts"><span class="add">+1</span><span class="del">−1</span></span></div>
-        <div class="change-row"><span class="change-row-name"><span class="change-path-dir">src/runtime/</span><span class="change-path-base">player.py</span></span><span class="change-row-counts"><span class="add">+16</span><span class="del">−4</span></span></div>
-        <div class="change-row"><span class="change-row-name"><span class="change-path-dir">tests/</span><span class="change-path-base">test_player.py</span></span><span class="change-row-counts"><span class="add">+10</span><span class="del">−1</span></span></div>
+        <div class="change-row"><span class="change-row-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="currentColor"><path fill-rule="evenodd" d="M14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V10C2 6.22876 2 4.34315 3.17157 3.17157C4.34315 2 6.23869 2 10.0298 2C10.6358 2 11.1214 2 11.53 2.01666C11.5166 2.09659 11.5095 2.17813 11.5092 2.26057L11.5 5.09497C11.4999 6.19207 11.4998 7.16164 11.6049 7.94316C11.7188 8.79028 11.9803 9.63726 12.6716 10.3285C13.3628 11.0198 14.2098 11.2813 15.0569 11.3952C15.8385 11.5003 16.808 11.5002 17.9051 11.5001L18 11.5001H21.9574C22 12.0344 22 12.6901 22 13.5629V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22Z" clip-rule="evenodd" opacity=".5"/><path d="M11.5 17.25C11.9142 17.25 12.25 17.5858 12.25 18C12.25 18.4142 11.9142 18.75 11.5 18.75H6C5.58579 18.75 5.25 18.4142 5.25 18C5.25 17.5858 5.58579 17.25 6 17.25H11.5Z"/><path d="M14 13.75C14.4142 13.75 14.75 14.0858 14.75 14.5C14.75 14.9142 14.4142 15.25 14 15.25H6C5.58579 15.25 5.25 14.9142 5.25 14.5C5.25 14.0858 5.58579 13.75 6 13.75H14Z"/><path d="M11.5 2.00586C12.0266 2.01725 12.4003 2.05009 12.7842 2.14453C12.9404 2.18298 13.1407 2.24407 13.292 2.29883C13.8622 2.50534 14.2785 2.7833 15.1104 3.33887C16.0788 3.98569 17.1892 4.777 18 5.5C18.911 6.31239 19.9546 7.49387 20.7471 8.44238C20.8745 8.59494 20.938 8.67168 21.0312 8.79883C21.5613 9.52144 21.9336 10.546 21.9902 11.4404C22.0002 11.5979 22 11.7325 22 12H21.9844C21.9781 11.8216 21.9694 11.6555 21.957 11.5H17.9053C16.8082 11.5001 15.8382 11.4996 15.0566 11.3945C14.2097 11.2806 13.363 11.0192 12.6719 10.3281C11.9806 9.63685 11.7184 8.7895 11.6045 7.94238C11.4995 7.16098 11.4999 6.19157 11.5 5.09473L11.5088 2.25977L11.5 2.00586Z"/></g></svg></span><span class="change-row-name"><span class="change-path-base">playbook.json</span></span><span class="change-row-counts"><span class="add">+1</span><span class="del">−1</span></span></div>
+        <div class="change-row"><span class="change-row-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="currentColor"><path fill-rule="evenodd" d="M14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V10C2 6.22876 2 4.34315 3.17157 3.17157C4.34315 2 6.23869 2 10.0298 2C10.6358 2 11.1214 2 11.53 2.01666C11.5166 2.09659 11.5095 2.17813 11.5092 2.26057L11.5 5.09497C11.4999 6.19207 11.4998 7.16164 11.6049 7.94316C11.7188 8.79028 11.9803 9.63726 12.6716 10.3285C13.3628 11.0198 14.2098 11.2813 15.0569 11.3952C15.8385 11.5003 16.808 11.5002 17.9051 11.5001L18 11.5001H21.9574C22 12.0344 22 12.6901 22 13.5629V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22Z" clip-rule="evenodd" opacity=".5"/><path d="M11.5 17.25C11.9142 17.25 12.25 17.5858 12.25 18C12.25 18.4142 11.9142 18.75 11.5 18.75H6C5.58579 18.75 5.25 18.4142 5.25 18C5.25 17.5858 5.58579 17.25 6 17.25H11.5Z"/><path d="M14 13.75C14.4142 13.75 14.75 14.0858 14.75 14.5C14.75 14.9142 14.4142 15.25 14 15.25H6C5.58579 15.25 5.25 14.9142 5.25 14.5C5.25 14.0858 5.58579 13.75 6 13.75H14Z"/><path d="M11.5 2.00586C12.0266 2.01725 12.4003 2.05009 12.7842 2.14453C12.9404 2.18298 13.1407 2.24407 13.292 2.29883C13.8622 2.50534 14.2785 2.7833 15.1104 3.33887C16.0788 3.98569 17.1892 4.777 18 5.5C18.911 6.31239 19.9546 7.49387 20.7471 8.44238C20.8745 8.59494 20.938 8.67168 21.0312 8.79883C21.5613 9.52144 21.9336 10.546 21.9902 11.4404C22.0002 11.5979 22 11.7325 22 12H21.9844C21.9781 11.8216 21.9694 11.6555 21.957 11.5H17.9053C16.8082 11.5001 15.8382 11.4996 15.0566 11.3945C14.2097 11.2806 13.363 11.0192 12.6719 10.3281C11.9806 9.63685 11.7184 8.7895 11.6045 7.94238C11.4995 7.16098 11.4999 6.19157 11.5 5.09473L11.5088 2.25977L11.5 2.00586Z"/></g></svg></span><span class="change-row-name"><span class="change-path-dir">src/runtime/</span><span class="change-path-base">player.py</span></span><span class="change-row-counts"><span class="add">+16</span><span class="del">−4</span></span></div>
+        <div class="change-row"><span class="change-row-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><g fill="currentColor"><path fill-rule="evenodd" d="M14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V10C2 6.22876 2 4.34315 3.17157 3.17157C4.34315 2 6.23869 2 10.0298 2C10.6358 2 11.1214 2 11.53 2.01666C11.5166 2.09659 11.5095 2.17813 11.5092 2.26057L11.5 5.09497C11.4999 6.19207 11.4998 7.16164 11.6049 7.94316C11.7188 8.79028 11.9803 9.63726 12.6716 10.3285C13.3628 11.0198 14.2098 11.2813 15.0569 11.3952C15.8385 11.5003 16.808 11.5002 17.9051 11.5001L18 11.5001H21.9574C22 12.0344 22 12.6901 22 13.5629V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22Z" clip-rule="evenodd" opacity=".5"/><path d="M11.5 17.25C11.9142 17.25 12.25 17.5858 12.25 18C12.25 18.4142 11.9142 18.75 11.5 18.75H6C5.58579 18.75 5.25 18.4142 5.25 18C5.25 17.5858 5.58579 17.25 6 17.25H11.5Z"/><path d="M14 13.75C14.4142 13.75 14.75 14.0858 14.75 14.5C14.75 14.9142 14.4142 15.25 14 15.25H6C5.58579 15.25 5.25 14.9142 5.25 14.5C5.25 14.0858 5.58579 13.75 6 13.75H14Z"/><path d="M11.5 2.00586C12.0266 2.01725 12.4003 2.05009 12.7842 2.14453C12.9404 2.18298 13.1407 2.24407 13.292 2.29883C13.8622 2.50534 14.2785 2.7833 15.1104 3.33887C16.0788 3.98569 17.1892 4.777 18 5.5C18.911 6.31239 19.9546 7.49387 20.7471 8.44238C20.8745 8.59494 20.938 8.67168 21.0312 8.79883C21.5613 9.52144 21.9336 10.546 21.9902 11.4404C22.0002 11.5979 22 11.7325 22 12H21.9844C21.9781 11.8216 21.9694 11.6555 21.957 11.5H17.9053C16.8082 11.5001 15.8382 11.4996 15.0566 11.3945C14.2097 11.2806 13.363 11.0192 12.6719 10.3281C11.9806 9.63685 11.7184 8.7895 11.6045 7.94238C11.4995 7.16098 11.4999 6.19157 11.5 5.09473L11.5088 2.25977L11.5 2.00586Z"/></g></svg></span><span class="change-row-name"><span class="change-path-dir">tests/</span><span class="change-path-base">test_player.py</span></span><span class="change-row-counts"><span class="add">+10</span><span class="del">−1</span></span></div>
       </div>
       <button class="change-collapse" type="button">折叠</button>
     </div>
@@ -960,7 +948,7 @@ document.getElementById('reset-subagent').addEventListener('click',resetSubagent
 <p class="desc">聊天 Markdown 已在 <code>$$</code>/<code>$</code>/<code>\[</code>/<code>\(</code> 之前暂存完整内容块；处理顺序对应 <code>marked</code> 并在清洗后将其还原为转义文本。React 消息气泡仍需运行 KaTeX： <code>MarkdownText</code> 在绘制后排版，聊天区域固定路径则在观察到的消息列上调用 <code>typesetMath</code> 。未闭合的流式公式不构成完整暂存对；收到闭合符后的下一次绘制才排版。清洗、代码、链接和普通转义行为保持不变，不引入新数学库。</p>
 <p class="rule">验收：示例 <code>\(d_t\)</code> / <code>\(v_t = (d_t - d_{t+1}) / d_t\)</code> 在助手气泡中生成 KaTeX HTML；块级 <code>\[</code>/<code>$$</code> 以及行内 <code>$</code> 也如此。无公式正文和未闭合起始符不排版；无效公式不抛出异常。</p>
 </section>
-<p>助手回复不显示 token 与服务档位用量页脚。回复运行时，只有包含最后内容块的执行片段可显示渐变动画；更早片段保持静止。末尾出现文本块时，执行摘要动画停止。</p>
+<p>助手回复不显示 token 与服务档位用量页脚。当前执行片段使用原有文字扫光与运行小点；正文页脚不添加加载标识。</p>
 <section id="automatic-history"><h2>有界对话历史</h2>
 <p>对话记录使用双向、带字节预算的分页。每条连接持有一个小型 LRU，存储带消息 ID 索引、磁盘支持的不可变快照。分页请求只读取选定展示组，保留工具后代节点和压缩元数据。快照 token 限定于连接、会话及捕获的分支 head。替换快照或断开连接时释放临时文件。</p>
 <p>浏览器目标缓存四个对话，允许正在显示的分栏和在途请求暂时超过限制；删除对话时释放分页引用。每个已加载对话记录最多保留六个普通分页，内容预算为 8 MiB；为保留单个大轮次，允许一个不可拆分分页。淘汰从阅读位置的相反方向进行，绝不删除持久化记录，并保留活跃更新。向任一方向回滚时自动取回被淘汰分页。视口外已测量行卸载但保留高度；被淘汰行的高度记录删除。</p>
@@ -973,6 +961,10 @@ document.getElementById('reset-subagent').addEventListener('click',resetSubagent
 <p>性能契约：捕获消息既无压缩覆盖、也无需要图注解的 spawn/attach 关系时，有界聊天加载跳过图构建。需要注解时，共享图构建器执行相同语义过滤但不计算视口几何；打开 DAG 仍请求完整布局。首次持久化恢复的复杂度仍随存储节点数线性增长。Markdown 缓存使用256项 LRU 和 8 MiB 预算，按 UTF-16 源文与清洗输出长度估算；单项超预算时仍渲染但不缓存。缓存策略绝不绕过清洗。</p>
 <p>性能验收通过公开加载处理器与生产浏览器组件使用已持久化合成消息，分别记录耗时、帧间隔与保留堆内存。稳定回归检查断言跳过的工作、语义等价、缓存淘汰和有界保留，不断言特定机器计时。性能优化已实现并通过独立规格与质量审查。公开处理器回归验证跳过图工作与压缩等价；浏览器回归验证字节预算淘汰、LRU 提升和超大条目不缓存。耗时与保留堆比较属于合成测量，不保证完整 App 工作负载的性能。</p>
 <p>实现状态：已实现。30万条消息合成来源的浏览器测试验证有界双向分页、延迟传输下快速反向滚动、已保存消息恢复、实时行保留和加载期间跳转。后端索引读取、快照清理与 Web 回归测试集通过。冷构建仍读取权威分支一次；合成测量不能证明真实大型附件或工具输出的延迟。</p></section>
+<section id="generation-motion"><h2>对话加载标识</h2><p>仅将原有空回复 thinking… 提示旁的加载标识替换为新版 18px 开口双环。双环反向旋转并交替改变半径和线宽，颜色跟随主题；减少动态效果时保持静止，强制颜色模式使用系统文字色。</p><p>执行摘要、思考步骤、函数步骤、嵌套调用、分栏标题、重试提示和正文页脚不使用此标识。不再按照工具、思考或正文阶段增加标识位置。函数时间线恢复原有布局、文字扫光、运行小点、展开结构与详情交互。</p><p>验收：空回复加载提示显示一个新版标识；函数调用、思考内容和正文到达后，不在时间线或页脚添加双环。审批与终态不显示加载标识。保留独立的历史加载、嵌套进度和消息稳定性修复。实现与验收证据记录在 generation-motion-layout 任务报告中。</p></section>
+<section id="transcript-consistency"><h2>聊天更新的归属</h2><p>消息 ID 和有序 blocks 决定聊天内容。执行树补充所属回复，不通过状态树重新生成聊天。历史快照按同一消息合并已收到的进度：运行中的旧快照不能删除函数调用、缩短文字或将已结束回复恢复为运行中。终态快照更新状态与元数据，未携带执行记录时保留已收到的记录。切换分支和历史窗口仍删除窗口以外的行。</p><p>调用树保留持久化 path。同一函数的多次调用保持独立，在所有被文字分隔的执行组之间，每棵调用树只匹配一次。函数结束后保留原来的执行摘要；直接执行函数继续显示独立卡片。验收通过实际 reducer 和组件覆盖流式更新、部分历史、结束、迟到的调用树、错误、取消与重新加载。</p><p>实现状态：待验证。</p></section>
+<section id="queue-steer"><h2>排队与当前轮补充</h2><p>排队消息在当前轮结束后按顺序发送；补充消息在执行器确认接收后，显示在接收前后的回复内容之间。补充记录保留独立用户节点，回复的有序内容保存边界引用，实时流、取消和历史加载使用相同边界。旧记录缺少边界时只按已持久化的前驱关系把补充放到所属回复前，不猜测文本分割点。</p><p>轮询只确认同一命令，不改变可见等待提示。等待确认期间不能重复发送、编辑或移除。明确拒绝后保留为排队消息；连接异常保持待确认，不作为新一轮重发。附件保持普通排队语义。每个会话独立，排队中编辑保持顺序。</p><p>流式 steer：普通文本或思考生成期间接收的补充指令会结束当前模型请求，保留已生成内容，在已有的模型请求完成边界持久化应用指令，然后启动下一次请求。旧请求关闭后才继续。工具参数生成、运行中的工具和结构化输出继续使用原有安全点；steer 不取消或重复工具调用。定时检查也覆盖模型暂时没有输出的情况。</p><p>等待 steer 时停止：保留部分回复及其当前历史位置。因停止而被拒绝的补充消息保留为未发送草稿，通过明确的发送按钮重试，不自动转成下一轮。取消状态投影仅以比较并交换方式将当前顶层轮次从自身用户节点推进到已有回复节点，不改变后续消息或用户选择的其他分支。</p><p>实现状态：流式中断与停止保留已通过独立规格及质量审查、相关测试和完整验证；已安装 App 验收独立记录于发布证据。</p></section>
+<section id="chat-failures"><h2>失败回复</h2><p>失败回复保留已生成正文及有序的思考和函数记录。终止提示位于这些内容之后、消息操作之前。简短标题说明失败原因，技术详情默认折叠并按纯文本显示。不增加自动重试。</p><p>正文块与错误详情分别存储。节点 output 保留旧有错误文本语义，供模型上下文及非 Web 调用方读取；Web 映射从有序正文块中恢复已生成内容。失败节点在最终事件发出前保存详情、分类、可重试性和重试等待时间。刷新后恢复相同提示。兼容旧记录中的错误正文，不修改历史，不在错误提示中重复回复内容。</p><p>范围为主聊天错误、共享助手气泡及历史映射。取消、审批、嵌套函数详情、重试分支和 Goal 报告保持现有语义。沿用既有提供商错误分类设计，只补充持久化展示，不新增错误存储或第三方 UI 依赖。</p><p>验收：通过真实回合入口先产生正文和工具再失败；流式和冷启动历史均显示正文、记录及一条末尾错误。空回复和旧失败记录可见，成功和取消状态不新增错误提示。窄屏和深色主题中可展开详情。</p><p>发布回归继续验证浏览器权限继承和高层 agent 委派。已绑定页面的测试显式提供绑定，并验证现有的同一观察连续失败三次后停止及具体失败原因。这些测试不改变浏览器工作流和权限策略。</p><p>实现状态：实现、独立规格与质量审查及完整声明验证集均通过。浏览器回归测试与现有绑定页面路径及失败次数限制一致。已安装 App 验收独立记录于发布证据。</p></section>
 </body>
 </html>
 

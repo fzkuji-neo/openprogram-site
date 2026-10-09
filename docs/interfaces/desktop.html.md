@@ -31,6 +31,13 @@ Create a pane and select **Browser**, or open a new browser tab from the app tab
 
 The Browser menu owns browser-specific actions: new browser tab, Bookmarks, History, bookmarks-bar visibility, profile import, clear browsing data, and Browser settings. Window and pane actions remain in the OpenProgram window menu.
 
+Web tabs display the site favicon in both ordinary and split tabs. While an icon loads, or if it is unavailable, invalid, or fully transparent, the desktop App shows the standard browser icon instead. Reopening a retained page restores its current icon without reloading the page.
+
+If a webpage asks to confirm leaving during Reload, Back, Forward, or navigation, the App displays a confirmation. **Stay on page** is the default and cancellation action. Choose **Leave page** to continue the pending operation; unsaved changes may be lost.
+
+While a page loads, Reload becomes **Stop loading** (an X icon), and an animated line appears below the browser toolbar. Click Stop loading to cancel. The line disappears when loading finishes or stops; reduced-motion settings keep it static.
+
+
 ## Page navigation, popups, and right-click actions
 
 The webpage decides whether an action navigates its current page or requests a new browsing context. Ordinary links, form submissions, and same-page navigation stay in the current Browser tab. Links with `target="_blank"` and scripts that call `window.open()` create a distinct Browser tab and activate it immediately.
@@ -39,7 +46,11 @@ Right-click a link inside a webpage to open it in a new Browser tab or copy its 
 
 ## Bookmarks and History
 
-The bookmarks bar shows the direct contents of the imported or locally maintained Bookmarks bar. Non-empty Other bookmarks and Mobile bookmarks folders remain separate folder entries. Long rows use a bounded overflow menu; nested folders open one level at a time and remain scrollable within the current window.
+The bookmarks bar shows the direct contents of the imported or locally maintained Bookmarks bar. Items that do not fit appear in the double-chevron overflow menu. The separated **All bookmarks** button on the right opens the Bookmarks manager, including the original Other bookmarks and Mobile bookmarks folders. Folder names, order, and contents remain unchanged. Nested menus open one level at a time and remain scrollable within the current window.
+
+Website bookmarks display their saved favicon, falling back to the website’s own `/favicon.ico` and then a browser icon if unavailable. This applies to the bar, folder menus, and manager. Adding a bookmark preserves the current page icon; reopening a bookmarked URL updates it when the page provides a new icon. Icon requests do not send a referrer or use a third-party favicon service.
+
+During use, decoded icons are shared across the bar, folder menus, and tab components in each renderer. Reopening a bookmark menu reuses its document and icon cache; icons do not restart from the loading placeholder on every opening. The cache is bounded, retries failed sources after five minutes, and refreshes reused sources after thirty minutes when requested again. Closing the window releases its retained bookmark menu. Restarting the App can load icons again through the browser cache.
 
 The Bookmarks manager has a folder tree, current-folder list, search, favicon display, and item menus. History is grouped by local date and uses compact rows with time, favicon, title, and domain. Desktop Browser data is separate from backend state: History and the persistent `webtabs` partition live in Electron's per-user application-data directory, while chats, projects, Programs, and worker configuration remain under `~/.openprogram/`. Clearing browser data does not delete that backend state.
 
@@ -133,6 +144,12 @@ Providers only expose supported operations. Web `release` releases a control ses
 
 Trusted Python integrations can register a `ResourceProvider` with `openprogram.resource_interface.registry.register(...)`, declaring a JSON Schema for every supported operation and a callable adapter. The adapter is responsible for its native authorization and resource lifecycle. Registration rejects duplicate provider names and validates arguments before invoking the adapter. This is a trusted integration API, not a loader for arbitrary code supplied by the Agent or a webpage. Integrations can use the existing `openprogram.session_resources.resource_use(...)` context to report session usage in Resources. Enabled installed applications automatically register `application.<id>` from their operation manifest. Their session-associated instances open in Resources using the existing isolated application view.
 
+Browser tasks reuse an explicitly selected Page without reloading it or opening a replacement. Each action returns to the browser workflow for a new observation and verification. Reaching an execution safety limit stops the task instead of retrying completed actions; cleanup retains the calling conversation identity.
+
 ## Programs loading
 
 Abilities → Programs keeps its directory tree, selected Program and loaded call graph when you leave and return. Expanded folders and the selected graph are checked in the background every five seconds while the page is visible, and when focus returns. Unchanged files reuse their analysis. Refresh checks for changes without resetting your selection or expanded folders. A failed check retains the last loaded content so you can retry.
+
+Browser tasks can select a user-approved local file with `upload`, a fresh file-input `ref`, and `path` (up to 50 MiB). Upload uses the normal permission gate even for an already selected Page, because selecting a file can immediately transmit its contents. File read restrictions still apply. Observations expose selected filenames, not file contents or local paths. `file_selected` verifies selection only; confirming upload acceptance requires a separate assertion against the website response. An uncertain upload is not automatically repeated.
+
+Verification uses `assertion` and a non-empty `value`; `text` is for typing or reporting a blocker. Three consecutive failed actions or unmet assertions on the same observation stop with the actual failure reason. Permission or execution rejection stops without repeating the action. A reported blocker never counts as completion, and action counts measure Page mutations rather than model calls.

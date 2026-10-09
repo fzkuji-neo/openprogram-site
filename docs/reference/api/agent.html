@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791187171" data-alt-lang-url="/docs/reference/api/agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791563584" data-alt-lang-url="/docs/reference/api/agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -436,7 +436,11 @@
 <p>This contract restores execution at explicit steps, not arbitrary Python stack frames. Calls and external mutations outside steps, asynchronous orchestration, generators, live handles, and non-JSON results are not supported. If a process dies after an external action starts but before its result is committed, recovery requires reconciliation; it cannot assume that action failed. The function run dialog distinguishes functions that declare this contract from ordinary functions that require a new run after interruption.</p>
 <p>Do not share mutable Python globals, closures or defaults between steps. Pass persistent state through JSON step inputs and results; process-local mutations are not a recovery protocol.</p>
 <p>Import step dependencies at module scope. Imports inside retained helpers, dynamic import APIs and generated code are rejected before executing steps. Source-defined Python helpers are retained recursively. Opaque module and class dependencies currently support only the pinned standard library; third-party and user package objects are rejected because an initializer alone does not identify their implementation.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="模型服务 API">Provider API</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="CLI 参考">CLI reference</span></a></div></article></main>
+<h2 id="session-turns-and-continuation">Session turns and continuation<a class="header-anchor" href="#session-turns-and-continuation">#</a></h2>
+<p><code>Agent.run_turn(request, *, context=None, on_event=None, cancel_event=None, execution_context=None)</code> returns <code>TurnResult</code>. Import <code>TurnRequest</code> and <code>TurnResult</code> from <code>openprogram</code>. Instance configuration applies before a fresh turn; <code>Context.for_session(store, session_id, head_id=..., blocks=..., providers=...)</code> binds its persistent store and branch. A request for a different session is rejected. <code>Context.session_id</code> exposes the selected graph identity.</p>
+<p><code>arun_turn(request, **options)</code> runs the same operation asynchronously with cooperative cancellation. <code>resume_turn(continuation, **options)</code> and <code>aresume_turn(...)</code> reuse the checkpoint's request without repeating admission. Event callbacks receive the existing runtime event dictionaries and run on the execution thread. Durable pause and steering retain the existing execution-control owner and safe-point protocol.</p>
+<p><code>ChatAgent</code> inherits this contract and is the production conversation type. Overriding the turn entry methods does not automatically wrap them as ordinary helper calls. The old <code>openprogram.agent.dispatcher</code> imports alias the shared <code>openprogram.agent.turn_runtime</code> modules; they do not implement another execution loop.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="模型服务 API">Provider API</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="CLI 参考">CLI reference</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -482,6 +486,9 @@
 </li>
 </ul>
 </details>
+</li>
+<li>
+<a class="lvl-2" href="#session-turns-and-continuation">Session turns and continuation</a>
 </li>
 </ul></aside>
 </div>

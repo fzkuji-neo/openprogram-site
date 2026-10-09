@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791187171" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791563584" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,7 +108,7 @@
 <a class="navlink" href="/docs/reference/design/runtime/dag/branch-collaboration.html" data-title-zh="分支协作" data-href-en="/docs/reference/design/runtime/dag/branch-collaboration.html" data-href-zh="/docs/reference/design/runtime/dag/branch-collaboration.zh.html">Branch collaboration</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/layout.html" data-title-zh="布局规范" data-href-en="/docs/reference/design/runtime/dag/layout.html" data-href-zh="/docs/reference/design/runtime/dag/layout.zh.html">Layout specification</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/external-program-run-node.html" data-title-zh="程序节点" data-href-en="/docs/reference/design/runtime/dag/external-program-run-node.html" data-href-zh="/docs/reference/design/runtime/dag/external-program-run-node.zh.html">Program nodes</a>
-<a class="navlink" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-title-zh="持久化诊断" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html">Persistence diagnostics</a>
+<a class="navlink" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-title-zh="Agent 图所有权" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html">Agent DAG ownership</a>
 <a class="navlink active" href="/docs/reference/design/runtime/dag/rendering.html" data-title-zh="渲染规范" data-href-en="/docs/reference/design/runtime/dag/rendering.html" data-href-zh="/docs/reference/design/runtime/dag/rendering.zh.html">Rendering specification</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支命名" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Branch naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-title-zh="命名图解" data-href-en="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.viz.html">Naming diagram</a>
@@ -334,13 +334,18 @@
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">6</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">11</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
 <a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
-<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a>
+<a class="navlink" href="/docs/reference/design/runtime/unified-agent.html" data-title-zh="统一 Agent 执行" data-href-en="/docs/reference/design/runtime/unified-agent.html" data-href-zh="/docs/reference/design/runtime/unified-agent.zh.html">Unified Agent execution</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
+<a class="navlink" href="/docs/reference/design/ui/conversation-lifecycle.html">Conversation lifecycle and responsiveness</a>
+<a class="navlink" href="/docs/reference/design/ui/git-folder-pills.html" data-title-zh="文件夹 Git 胶囊" data-href-en="/docs/reference/design/ui/git-folder-pills.html" data-href-zh="/docs/reference/design/ui/git-folder-pills.zh.html">Git folder pills</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a>
+<a class="navlink" href="/docs/reference/design/ui/hover-tips.html" data-title-zh="输入框区域的悬停提示" data-href-en="/docs/reference/design/ui/hover-tips.html" data-href-zh="/docs/reference/design/ui/hover-tips.zh.html">Hover tips in the composer</a>
+<a class="navlink" href="/docs/reference/design/ui/icons.html" data-title-zh="图标体系" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html">Icon system</a></details>
 </details></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="DAG 与协作">DAG and collaboration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="渲染规范">Rendering specification</span></nav><div id="dag-渲染规范布局-连线-图例-默认可见性"></div>
@@ -449,9 +454,8 @@ fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的�
 步进恰好一个滚轮格（<code>ZOOM_STEP</code>），点读数本身重置 100%——按钮没有光标可锚，
 两者都以面板中心为锚。读数由 <code>apps/web/lib/runtime-bridge/dag/interaction/canvas.ts</code> 在每次视角变化时命令式写入——把
 一次手势的每个 wheel 事件走 React state 会让整棵树每秒重绘六十次。</p>
-<p>HUD 不自带任何外观。胶囊列在输入框 env-pill 规则里
-（<code>composer.module.css</code>），和旁边的 env chip 是同一条 24px 实底胶囊规则——
-同底、同内描边、同阴影、同 hover——永远不会跑偏。图例面板穿 <code>MENU_PANEL</code>
+<p>HUD 不自带任何外观。这几个胶囊带着 shadcn <code>elevated</code> <code>sm</code> 按钮的样式类
+（<code>buttonVariants</code>），和旁边的环境标签是同一套配方，永远不会跑偏。图例面板穿 <code>MENU_PANEL</code>
 （<code>components/chat/top-bar/menu-styles</code>），全应用弹层菜单共用的那一份框架；
 <code>apps/web/app/styles/dag/hud.css</code> 只留 HUD 内部排版（缩放簇的分段、图例的向上锚位和行）。</p>
 <table>
@@ -476,7 +480,7 @@ fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的�
 </tr>
 <tr>
 <td>HUD</td>
-<td><code>apps/web/components/chat/dag-view.tsx</code> 的 <code>DagHud</code>；胶囊外观来自 <code>composer.module.css</code> 的 env-pill 规则，图例框架来自 <code>MENU_PANEL</code>，内部排版在 <code>apps/web/app/styles/dag/hud.css</code></td>
+<td><code>apps/web/components/chat/dag-view.tsx</code> 的 <code>DagHud</code>；胶囊外观来自 <code>buttonVariants</code>（elevated sm），图例框架来自 <code>MENU_PANEL</code>，内部排版在 <code>apps/web/app/styles/dag/hud.css</code></td>
 </tr>
 </tbody>
 </table>
@@ -1249,7 +1253,7 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="持久化诊断">Persistence diagnostics</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="分支命名">Branch naming</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Agent 图所有权">Agent DAG ownership</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="分支命名">Branch naming</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

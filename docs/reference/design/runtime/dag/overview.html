@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791187171" data-alt-lang-url="/docs/reference/design/runtime/dag/overview.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791563584" data-alt-lang-url="/docs/reference/design/runtime/dag/overview.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,7 +108,7 @@
 <a class="navlink" href="/docs/reference/design/runtime/dag/branch-collaboration.html" data-title-zh="分支协作" data-href-en="/docs/reference/design/runtime/dag/branch-collaboration.html" data-href-zh="/docs/reference/design/runtime/dag/branch-collaboration.zh.html">Branch collaboration</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/layout.html" data-title-zh="布局规范" data-href-en="/docs/reference/design/runtime/dag/layout.html" data-href-zh="/docs/reference/design/runtime/dag/layout.zh.html">Layout specification</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/external-program-run-node.html" data-title-zh="程序节点" data-href-en="/docs/reference/design/runtime/dag/external-program-run-node.html" data-href-zh="/docs/reference/design/runtime/dag/external-program-run-node.zh.html">Program nodes</a>
-<a class="navlink" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-title-zh="持久化诊断" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html">Persistence diagnostics</a>
+<a class="navlink" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-title-zh="Agent 图所有权" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html">Agent DAG ownership</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/rendering.html" data-title-zh="渲染规范" data-href-en="/docs/reference/design/runtime/dag/rendering.html" data-href-zh="/docs/reference/design/runtime/dag/rendering.zh.html">Rendering specification</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支命名" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Branch naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-title-zh="命名图解" data-href-en="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.viz.html">Naming diagram</a>
@@ -334,13 +334,18 @@
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">6</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">11</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
 <a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
-<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a>
+<a class="navlink" href="/docs/reference/design/runtime/unified-agent.html" data-title-zh="统一 Agent 执行" data-href-en="/docs/reference/design/runtime/unified-agent.html" data-href-zh="/docs/reference/design/runtime/unified-agent.zh.html">Unified Agent execution</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
+<a class="navlink" href="/docs/reference/design/ui/conversation-lifecycle.html">Conversation lifecycle and responsiveness</a>
+<a class="navlink" href="/docs/reference/design/ui/git-folder-pills.html" data-title-zh="文件夹 Git 胶囊" data-href-en="/docs/reference/design/ui/git-folder-pills.html" data-href-zh="/docs/reference/design/ui/git-folder-pills.zh.html">Git folder pills</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a>
+<a class="navlink" href="/docs/reference/design/ui/hover-tips.html" data-title-zh="输入框区域的悬停提示" data-href-en="/docs/reference/design/ui/hover-tips.html" data-href-zh="/docs/reference/design/ui/hover-tips.zh.html">Hover tips in the composer</a>
+<a class="navlink" href="/docs/reference/design/ui/icons.html" data-title-zh="图标体系" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html">Icon system</a></details>
 </details></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="DAG 与协作">DAG and collaboration</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="设计概览">Design overview</span></nav><div id="session-dag-design"></div>
@@ -356,28 +361,8 @@ drawing; this file covers semantics only.</p>
 </blockquote>
 <p><img src="session-dag.svg" alt="Model visualization" /></p>
 <h2 id="1-overview-and-motivation">1. Overview and Motivation<a class="header-anchor" href="#1-overview-and-motivation">#</a></h2>
-<p>An entire session is <strong>one single DAG with a unique root</strong>. Every user message,
-every LLM call, every function call is a node in the same graph, sharing one
-monotonically increasing <code>seq</code>. The graph is simultaneously:</p>
-<ul>
-<li>the <strong>persistence record</strong> — the only durable account of what happened;</li>
-<li>the <strong>runtime context</strong> — every LLM call's context is a rendering of one
-path through this graph;</li>
-<li>the <strong>display source</strong> — chat transcript, call tree, and minimap are all
-projections of the same nodes.</li>
-</ul>
-<p>This fusion is the point of the design. Observability stacks (LangSmith,
-Datadog) split each request into an independent trace and group traces with a
-session tag, because they only observe after the fact and never read the record
-back. This system does read it back: <code>render_context</code> retrieves history by
-walking the same graph under the same <code>seq</code>, so turns must live in one connected
-graph. A unique root plus a shared <code>seq</code> is the hard constraint that makes it
-one graph — without the root, each top-level node would be an isolated root of
-its own disconnected graph.</p>
-<p>What is claimable as novel is the fusion itself: the recorded call tree <em>is</em>
-the runtime context, each call queries it by frame scope + per-function expose,
-and all nodes are retained for fork and replay. The individual ingredients
-(ContextVar call-stack tracking, graph forking) are common; the whole is not.</p>
+<p>Each Agent execution owns its DAG. Chat records user messages, model requests and directly dispatched tools; ordinary helpers create no durable nodes. Calling another Agent creates an independent DAG; the parent stores the invocation result and a child_session_id reference. Permission, cancellation and file-checkpoint ownership remain with the originating execution, independent of graph ownership.</p>
+<p>Context inheritance and persistence are separate responsibilities. Inheriting Context does not turn ordinary computation into history. Retain caller, predecessor, reads and seq within each graph. Child caller edges and history anchors do not reference parent nodes; metadata expresses cross-graph relationships.</p>
 <div id="alternatives-nearly-all-use-span"></div>
 <div id="conclusion"></div>
 <div id="distance-from-the-current-model"></div>
@@ -479,9 +464,9 @@ external reference for span structure is the <a href="https://opentelemetry.io/d
 </tbody>
 </table>
 <h3 id="costs-and-implementation-boundary">Costs and implementation boundary<a class="header-anchor" href="#costs-and-implementation-boundary">#</a></h3>
-<p>Recording each invocation increases storage and indexing work. Sampling away
-canonical nodes would remove history needed for context reconstruction, branching
-and replay; any sampled telemetry must be derived separately. The call tree and
+<p>Keep complete records of semantic operations. Ordinary helpers are outside the
+canonical record policy; excluding them is not sampling away required history.
+Optional diagnostics remain separate. The call tree and
 conversation chain also need independent validation. Token, cost and evaluation
 metadata require explicit definitions rather than being inferred from timing.</p>
 <p>The field mapping is <code>Call.id</code> for identity, <code>caller</code> for invocation ancestry,
@@ -555,17 +540,16 @@ these contracts; the implementation-status appendix records remaining work.</p>
 <td>current branch head (or <code>&quot;ROOT&quot;</code> at root level)</td>
 </tr>
 <tr>
-<td>Function calls an LLM / sub-function</td>
+<td>Agent requests a model / direct tool</td>
 <td>llm / code</td>
-<td>the enclosing code node</td>
+<td>owning operation in this graph</td>
 <td>—</td>
 </tr>
 </tbody>
 </table>
-<p>Loops are not nodes: a loop running N times is N siblings under the same parent
-(ordered by <code>seq</code>); visualization may fold repeats into ×N, but the data keeps
-all N nodes. A function call is exactly one code node — no anchor, placeholder,
-or auxiliary node ever accompanies it.</p>
+<p>Loops are not nodes. Actual model/tool operations in a loop are recorded;
+ordinary recursion adds no nodes. Another Agent records its internals in its
+own graph.</p>
 <h3 id="status-vocabulary">Status vocabulary<a class="header-anchor" href="#status-vocabulary">#</a></h3>
 <p>One set for all nodes: <code>running | completed | error | cancelled</code>. Chat and
 function paths use the same vocabulary; error nodes carry structured
@@ -902,7 +886,9 @@ SessionStore code subtree is the single source of truth for a function call;
 the real-time WebSocket frame and the refresh load are both projections of it
 and must produce the same card.</p>
 <h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
-<p>Every section of this document is implemented. The data model, edges,
+<p>Agent graph ownership and omission of ordinary helpers have source and regression coverage;
+see <a href="/docs/reference/design/runtime/dag/persistence-observability.html">execution recording</a> for implementation status.
+The existing data-model evidence below does not establish this change as released. The data model, edges,
 invariants, spawn primitive, edge-pure branch walks (§2–§5), §6 path-native
 membership, §7 (single assembler, <code>context/system_prompt</code> nodes,
 memory-prefetch relocation), and §8 (<code>covers_ids</code>-based summary nodes, the
@@ -939,7 +925,7 @@ spawn_branch, list_branches</li>
 <li><a href="/docs/reference/design/runtime/dag/rendering.html"><code>rendering.md</code></a> — visual rendering spec (authoritative
 for drawing)</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/name.html" data-href-en="/docs/reference/design/runtime/session/name.html" data-href-zh="/docs/reference/design/runtime/session/name.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="标题生成">Title generation</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-en="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-zh="/docs/reference/design/runtime/nested-llm-node-content.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="LLM 节点内容">LLM node content</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/name.html" data-href-en="/docs/reference/design/runtime/session/name.html" data-href-zh="/docs/reference/design/runtime/session/name.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="标题生成">Title generation</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-en="/docs/reference/design/runtime/nested-llm-node-content.html" data-href-zh="/docs/reference/design/runtime/nested-llm-node-content.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="LLM 节点内容">LLM node content</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

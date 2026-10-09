@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791187171" data-alt-lang-url="/docs/reference/design/ui/surface-system.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791563584" data-alt-lang-url="/docs/reference/design/ui/surface-system.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,7 +108,7 @@
 <a class="navlink" href="/docs/reference/design/runtime/dag/branch-collaboration.html" data-title-zh="分支协作" data-href-en="/docs/reference/design/runtime/dag/branch-collaboration.html" data-href-zh="/docs/reference/design/runtime/dag/branch-collaboration.zh.html">Branch collaboration</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/layout.html" data-title-zh="布局规范" data-href-en="/docs/reference/design/runtime/dag/layout.html" data-href-zh="/docs/reference/design/runtime/dag/layout.zh.html">Layout specification</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/external-program-run-node.html" data-title-zh="程序节点" data-href-en="/docs/reference/design/runtime/dag/external-program-run-node.html" data-href-zh="/docs/reference/design/runtime/dag/external-program-run-node.zh.html">Program nodes</a>
-<a class="navlink" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-title-zh="持久化诊断" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html">Persistence diagnostics</a>
+<a class="navlink" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-title-zh="Agent 图所有权" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html">Agent DAG ownership</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/rendering.html" data-title-zh="渲染规范" data-href-en="/docs/reference/design/runtime/dag/rendering.html" data-href-zh="/docs/reference/design/runtime/dag/rendering.zh.html">Rendering specification</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支命名" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Branch naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-title-zh="命名图解" data-href-en="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.viz.html">Naming diagram</a>
@@ -334,13 +334,18 @@
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">6</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">11</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
 <a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
-<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a>
+<a class="navlink" href="/docs/reference/design/runtime/unified-agent.html" data-title-zh="统一 Agent 执行" data-href-en="/docs/reference/design/runtime/unified-agent.html" data-href-zh="/docs/reference/design/runtime/unified-agent.zh.html">Unified Agent execution</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
+<a class="navlink" href="/docs/reference/design/ui/conversation-lifecycle.html">Conversation lifecycle and responsiveness</a>
+<a class="navlink" href="/docs/reference/design/ui/git-folder-pills.html" data-title-zh="文件夹 Git 胶囊" data-href-en="/docs/reference/design/ui/git-folder-pills.html" data-href-zh="/docs/reference/design/ui/git-folder-pills.zh.html">Git folder pills</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a>
+<a class="navlink" href="/docs/reference/design/ui/hover-tips.html" data-title-zh="输入框区域的悬停提示" data-href-en="/docs/reference/design/ui/hover-tips.html" data-href-zh="/docs/reference/design/ui/hover-tips.zh.html">Hover tips in the composer</a>
+<a class="navlink" href="/docs/reference/design/ui/icons.html" data-title-zh="图标体系" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html">Icon system</a></details>
 </details></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面与交互">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="基础">Foundations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="界面层次">UI surfaces</span></nav><h1 id="surface-system">Surface system<a class="header-anchor" href="#surface-system">#</a></h1>
@@ -433,34 +438,42 @@ row, slightly muted text. Not italic, not a different add-style.</p>
 <p>Implementation: <code>.ui-list-item</code> in <code>apps/web/app/styles/base.css</code>
 is the source. MCP <code>.serverItem</code> must match those metrics (prefer
 composing <code>.ui-list-item</code> over a parallel recipe).</p>
-<h2 id="size-system-two-sets-same-height">Size system — two sets, same height<a class="header-anchor" href="#size-system-two-sets-same-height">#</a></h2>
-<p>Every interactive primitive picks ONE of two size sets. There is
-no sm / md / lg ladder inside a set — once you choose list vs
-button, height and radius are locked. CSS variables in
+<h2 id="size-system-list-rows-and-buttons">Size system — list rows and Buttons<a class="header-anchor" href="#size-system-list-rows-and-buttons">#</a></h2>
+<p>List rows keep one fixed set. CSS variables in
 <code>apps/web/app/styles/base.css</code>:</p>
-<pre><code>set         height               radius             css tokens
+<pre><code>set         height    radius    css tokens
 ─────────────────────────────────────────────────────────────────
-list        30 px                10 px              --ui-list-h
-                                                    --ui-list-radius
-─────────────────────────────────────────────────────────────────
-button      30 px (same as       10 px              --ui-button-h
-            list)                                   --ui-button-radius
+list        30 px     10 px     --ui-list-h · --ui-list-radius
 ─────────────────────────────────────────────────────────────────
 </code></pre>
-<p>List used to be 32px and button 30px. That split is retired:
-sidebar rows, MCP tab pills, and MCP server rows must sit on the
-same 30px rhythm. <code>--ui-list-h: var(--ui-button-h)</code>.</p>
-<p>Both sets share the same 10 px radius — the Claude shape language
-puts list rows and small buttons at 10 px and reserves 12 px
-(<code>--radius-lg</code>) for cards and panels.</p>
-<p>Why no in-set variants: when the design lets one slot pick from
-sm / md / lg, every author negotiates with the design instead of
-following it, and the sizes drift apart. Two fixed sets is
-enforceable.</p>
-<p>Backward-compat for <code>Button</code>: <code>size=&quot;sm&quot; | &quot;lg&quot; | &quot;icon-sm&quot;</code> are
-kept as aliases for existing call sites, but they resolve to the
-same height as <code>default</code>. The token names are the source of
-truth.</p>
+<p>Sidebar rows, MCP tab pills, and MCP server rows all sit on this
+30px rhythm. There is no sm / md / lg ladder for list rows: when
+one slot may pick from several sizes, every author negotiates with
+the design and the sizes drift apart.</p>
+<p>Buttons are the shadcn/ui <code>Button</code> in the <strong>radix-luma</strong> style.
+<code>apps/web/components/ui/button.tsx</code> is copied verbatim from the
+official registry (<code>npx shadcn add button</code>, style <code>radix-luma</code>);
+the only local changes are its imports and a <code>forwardRef</code> wrapper
+for React 18. Every size is a pill (<code>rounded-4xl</code>); the call site
+picks one of the official sizes and never edits the classes.</p>
+<p>The sizes are rem-based and this app's root font size is 14px
+(<code>html { font-size: 14px }</code> in <code>base.css</code>, which ~560 existing
+utilities are tuned to), so every shadcn size renders at 7/8 of
+its nominal value:</p>
+<pre><code>size        app height  app text   use
+─────────────────────────────────────────────────────────────────
+xs          21 px       10.5 px    avoid — text is too small here
+sm          28 px       12.25 px   chips and compact control rows
+default     31.5 px     12.25 px   dialog and settings actions
+lg          35 px       12.25 px   hero / empty-state actions
+icon-sm/default/lg                 square = circle at those heights
+─────────────────────────────────────────────────────────────────
+</code></pre>
+<p>Elements that cannot be a <code>&lt;Button&gt;</code> (a span that hosts its own
+✕, a Radix trigger rendered as a span) take the same look through
+<code>cn(buttonVariants({ variant, size }))</code> on their <code>className</code> — the
+<code>cn()</code> merge matters: the raw class list carries both
+<code>border-transparent</code> and the variant's border colour.</p>
 <p>A header row (search + tab pills + icon buttons) must share one
 vertical center. A 1–2 px height mismatch between those controls
 is a bug, not a variant.</p>
@@ -493,51 +506,64 @@ above the input</li>
 their control, never mixed left/right across rows</li>
 </ul>
 <h2 id="button-variant-guidance">Button variant guidance<a class="header-anchor" href="#button-variant-guidance">#</a></h2>
-<p><code>apps/web/components/ui/button.tsx</code> already exposes the two main
-patterns:</p>
-<p><strong>No borders on Button-derived actions.</strong> Every Button variant is
-border-less in both idle and hover state. The surface lift
-between deep / panel already separates layers; an explicit
-<code>border-input</code> on top of that adds visual noise to dense rows.</p>
-<p>Form fields are not Buttons. They keep the 1px edge above.</p>
-<pre><code>variant     idle                              hover
+<p>The variants are shadcn's, plus one app-owned <code>elevated</code>; colours
+come from the shadcn tokens (<code>--primary</code>, <code>--secondary</code>, <code>--muted</code>, <code>--input</code>, <code>--ring</code>,
+…), which <code>apps/web/app/globals.css</code> bridges onto each theme's
+palette — so every theme restyles Buttons without touching them.</p>
+<pre><code>variant      idle                                 hover
 ─────────────────────────────────────────────────────────────────
-default     bg-background + text-primary      bg-primary +
-                                              text-primary-foreground
-─────────────────────────────────────────────────────────────────
-outline     bg-background + foreground        bg-accent +
-                                              text-accent-foreground
-─────────────────────────────────────────────────────────────────
-ghost       transparent                       bg-accent +
-                                              text-accent-foreground
-─────────────────────────────────────────────────────────────────
-secondary   subtle grey fill                  darkens slightly
-─────────────────────────────────────────────────────────────────
-destructive bg-background + text-destructive  bg-destructive +
-                                              text-destructive-foreground
+default      bg-primary + primary-foreground      bg-primary/80
+outline      1px border-border; transparent        bg-muted (light),
+             in dark, bg-background in light       bg-input/30 (dark)
+secondary    bg-secondary                         secondary + 5% ink
+elevated     --bg-input, no border, shadow-sm      shadow-md, + 5% ink
+ghost        transparent                          bg-muted (/50 dark)
+destructive  bg-destructive/10 + destructive text bg-destructive/20
+link         primary text                         underline
 ─────────────────────────────────────────────────────────────────
 </code></pre>
+<p>All variants press down 1px while active, show a 3px <code>ring/30</code>
+halo on keyboard focus, and drop to 50% opacity when disabled.</p>
+<p><code>elevated</code> is the one variant Luma's registry does not have: Luma
+ships no shadowed Button (only its Card carries <code>shadow-md</code>), and
+the composer's pills want the same borderless raised look as the
+input box. It reuses the per-theme composer shadow pair through
+the <code>shadow-raised</code> / <code>shadow-raised-hover</code> utilities declared in
+<code>app/globals.css</code> <code>@theme</code>, so the pills and the box lift together
+in every theme.</p>
 <p>Pick per surface:</p>
 <ul>
-<li><strong>Panel + primary action</strong> (Run, Save, Test, Apply, Check) →
-<code>variant=&quot;default&quot;</code>. Brand-coloured text by default, brand
-filled on hover. This is what most chat / settings / function
-dialog actions should use.</li>
-<li><strong>Panel + secondary action</strong> (Cancel, Close, Reset, Browse) →
-<code>variant=&quot;outline&quot;</code> (subtle grey hover) or <code>ghost</code>. When a
-header secondary action needs to read as a real control next
-to the search box, give it the same 1px <code>--border</code> as the
-search field (not a borderless outline that looks like naked
-text).</li>
+<li><strong>Primary action</strong> (Run, Save, Test, Apply, Send) → <code>default</code>.</li>
+<li><strong>Secondary action</strong> (Cancel, Close, Reset, Browse) → <code>outline</code>
+or <code>secondary</code>.</li>
+<li><strong>Controls in a dense row</strong> (the composer's model / effort /
+permission triggers, icon toggles, environment chips) →
+<code>elevated</code>: no border, lifted off the page by the same shadow as
+the input box, a step deeper on hover.</li>
+<li><strong>Purely incidental actions</strong> that should vanish until hovered →
+<code>ghost</code>.</li>
+<li><strong>Destructive</strong> (Delete, Remove, Stop) → <code>destructive</code>.</li>
 <li><strong>Deep surface — sidebar rows</strong> → don't use the Button
 primitive. Use <code>.ui-list-item</code> / <code>nav-classes.ts</code>.</li>
-<li><strong>Destructive</strong> (Delete, Remove, Force) →
-<code>variant=&quot;destructive&quot;</code>. Red-text default, red fill on hover.</li>
 </ul>
-<p>The failure mode to watch for is <code>outline</code> used where <code>default</code>
-belongs. <code>outline</code> is what shadcn looks like out of the box, so
-authors reach for it by reflex, and primary actions end up with
-the muted hover-accent treatment instead of the brand fill.</p>
+<h2 id="composer-controls">Composer controls<a class="header-anchor" href="#composer-controls">#</a></h2>
+<p>The chat composer is built from the same parts:</p>
+<ul>
+<li><strong>Environment chips</strong> above the box (channel, web surface,
+project, working folders, DAG HUD) → <code>elevated</code> <code>sm</code>; the
+add-folder chip is <code>elevated</code> <code>icon-sm</code>.</li>
+<li><strong>Bottom row</strong> (permission, chat / exec model, effort, plus,
+tool toggles, context ring) → <code>elevated</code>, <code>sm</code> / <code>icon-sm</code>. The
+composer CSS hands its older base rules back to the Button with
+<code>revert-layer</code> rather than drawing its own chip.</li>
+<li><strong>Send</strong> → <code>icon-sm</code>: <code>default</code> when there is something to
+send, <code>ghost</code> when empty, <code>destructive</code> while it stops a run.</li>
+<li><strong>Input box</strong> → the shadcn Luma Card look through the per-theme
+<code>--composer-*</code> tokens: <code>--bg-input</code> surface with no border,
+<code>shadow-sm</code> at rest and <code>shadow-md</code> on hover or focus (shadow
+alpha 0.1 on light themes, 0.25 on dark), no focus ring; 23px
+corners (a pill at one line).</li>
+</ul>
 <h2 id="donts">Don'ts<a class="header-anchor" href="#donts">#</a></h2>
 <ul>
 <li>Don't invent a new hover / selected / border treatment per
@@ -553,19 +579,31 @@ alert, not a click target.</li>
 or content-pane <strong>list rows</strong>. Light theme washes out.</li>
 <li>Don't give MCP server rows (or any other content-pane list) a
 different height, padding, or selected fill than sidebar nav.</li>
-<li>Don't add the SHIFT-on-hover (translate-y, scale-105) effect
-on either surface. We rely on background swap alone; motion
-inside dense rows reads as jitter, not feedback.</li>
-<li>Don't add <code>border</code> / <code>ring</code> / <code>outline</code> to Button-derived
-components. The surface lift already separates them from the
-background.</li>
+<li>Don't add hover motion (translate-y, scale-105) on either
+surface. Hover swaps the background; the only motion is the
+Button's own 1px press while active.</li>
+<li>Don't edit the official classes in <code>components/ui/button.tsx</code>
+(<code>elevated</code> is the one app-owned variant) or restate a Button
+lookalike in CSS. Pick a <code>variant</code> / <code>size</code>; if a legacy rule still overrides a Button, remove it or
+hand it back with <code>revert-layer</code>.</li>
 <li>Don't stack a 2px focus glow on a 1px input/select edge.</li>
 <li>Don't drop a control's 1px border on hover.</li>
 <li>Don't slide dialogs. Fade only.</li>
 <li>Don't let a settings description overflow into the right-hand
 control column, or stack label above control.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/invariants.html" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面不变量">UI invariants</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/state-layer.html" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="状态存储">State stores</span></a></div></article></main>
+<h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
+<ul>
+<li>Done: <code>Button</code> (radix-luma), the composer environment chips,
+bottom-row controls, send button, and input box.</li>
+<li>Not yet migrated: popover / menu panels (<code>MENU_PANEL</code>,
+<code>components/ui/popover.tsx</code>, <code>dropdown-menu.tsx</code>), tooltips,
+badges, and the hand-styled CSS-module popups — they still use
+the glass surface tokens (<code>--glass-*</code>). Form inputs and selects
+keep the 1px-edge rule above until they move to the shadcn input.
+Sidebar list rows stay on the list set above.</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/invariants.html" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面不变量">UI invariants</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/state-layer.html" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="状态存储">State stores</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -589,7 +627,7 @@ control column, or stack label above control.</li>
 <a class="lvl-2" href="#one-list-row-recipe">One list-row recipe</a>
 </li>
 <li>
-<a class="lvl-2" href="#size-system-two-sets-same-height">Size system — two sets, same height</a>
+<a class="lvl-2" href="#size-system-list-rows-and-buttons">Size system — list rows and Buttons</a>
 </li>
 <li>
 <a class="lvl-2" href="#inputs-selects-and-borders">Inputs, selects, and borders</a>
@@ -604,7 +642,13 @@ control column, or stack label above control.</li>
 <a class="lvl-2" href="#button-variant-guidance">Button variant guidance</a>
 </li>
 <li>
+<a class="lvl-2" href="#composer-controls">Composer controls</a>
+</li>
+<li>
 <a class="lvl-2" href="#donts">Don'ts</a>
+</li>
+<li>
+<a class="lvl-2" href="#implementation-status">Implementation status</a>
 </li>
 </ul></aside>
 </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791187171" data-alt-lang-url="/docs/reference/config-keys.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791563584" data-alt-lang-url="/docs/reference/config-keys.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -147,6 +147,12 @@
 <td><code>False</code></td>
 <td><code>live</code></td>
 <td>On macOS, prevent idle system sleep during active agent execution. Disabled by default. Read at the next execution; display sleep and explicit sleep remain available.</td>
+</tr>
+<tr>
+<td><code>execution.instant_steer</code></td>
+<td><code>True</code></td>
+<td><code>live</code></td>
+<td>On by default. A message sent while the agent is replying stops the response being generated (text, reasoning or a tool call still being written) and continues with your message. Tools that already started still finish first. Off: the message waits until the current response ends.</td>
 </tr>
 <tr>
 <td><code>execution.code_change_policy</code></td>

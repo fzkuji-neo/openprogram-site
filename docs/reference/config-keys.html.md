@@ -10,6 +10,7 @@ Every user-editable setting, from the single schema that the `setup` CLI, `openp
 | Key | Default | Apply | Description |
 |---|---|---|---|
 | `execution.prevent_idle_sleep` | `False` | `live` | On macOS, prevent idle system sleep during active agent execution. Disabled by default. Read at the next execution; display sleep and explicit sleep remain available. |
+| `execution.instant_steer` | `True` | `live` | On by default. A message sent while the agent is replying stops the response being generated (text, reasoning or a tool call still being written) and continues with your message. Tools that already started still finish first. Off: the message waits until the current response ends. |
 | `execution.code_change_policy` | `keep_original` | `live` | Durable functions keep their original code by default. use_latest resumes with current code and saved step results. Incompatible progress requires explicit recovery. An individual Continue command can override this choice. |
 | `execution.auto_resume_window_seconds` | `-1` | `live` | Automatically continue restart-owned checkpoints after interruption. Default: -1 (no time limit). Zero disables automatic restart; positive values set a deadline in seconds. Existing deadlines never extend; user pauses, cancellation and unconfirmed external operations require explicit recovery. |
 

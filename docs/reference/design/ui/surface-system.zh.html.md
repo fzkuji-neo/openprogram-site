@@ -66,28 +66,35 @@ panel 表面上的组件就是按钮 / 胶囊 / 卡片：
 
 实现：`apps/web/app/styles/base.css` 的 `.ui-list-item` 是唯一来源。MCP 的 `.serverItem` 必须对齐这些数（优先 compose `.ui-list-item`，不要平行再写一套）。
 
-## 尺寸系统——两套，高度相同
+## 尺寸系统——列表行与按钮
 
-每个交互原语在两套尺寸里选一套。套内没有 sm / md / lg——选定 list 或 button 之后，高度和圆角就锁死。CSS 变量在 `apps/web/app/styles/base.css`：
+列表行保留一套固定尺寸。CSS 变量在 `apps/web/app/styles/base.css`：
 
 ```
-set         height               radius             css tokens
+set         height    radius    css tokens
 ─────────────────────────────────────────────────────────────────
-list        30 px                10 px              --ui-list-h
-                                                    --ui-list-radius
-─────────────────────────────────────────────────────────────────
-button      30 px（与 list 相同） 10 px              --ui-button-h
-                                                    --ui-button-radius
+list        30 px     10 px     --ui-list-h · --ui-list-radius
 ─────────────────────────────────────────────────────────────────
 ```
 
-以前 list 32px、button 30px。这套高低差已废止：侧栏行、MCP tab 胶囊、MCP 服务器行都走 30px。`--ui-list-h: var(--ui-button-h)`。
+侧栏行、MCP tab 胶囊、MCP 服务器行都走这条 30px 节奏。列表行没有 sm / md / lg：一个位置能挑多种尺寸，每位作者都会跟设计讨价还价，尺寸跟着分叉。
 
-两套共用 10px 圆角。Claude 形状语言把列表行和小按钮放在 10px，12px（`--radius-lg`）留给卡片和面板。
+按钮是 shadcn/ui 的 `Button`，**radix-luma** 风格。`apps/web/components/ui/button.tsx` 从官方组件仓库原样复制（`npx shadcn add button`，style `radix-luma`），本地只改了 import 和一层给 React 18 用的 `forwardRef`。所有尺寸都是胶囊（`rounded-4xl`）；调用处从官方尺寸里挑一个，不改样式类。
 
-为什么套内无变体：允许 sm / md / lg 之后，每位作者都会跟设计讨价还价，尺寸跟着分叉。两套固定尺寸才能强制执行。
+这些尺寸按 rem 计算，而本 App 的根字号是 14px（`base.css` 里的 `html { font-size: 14px }`，现有约 560 处样式按它调过），所以 shadcn 每个尺寸实际显示为标称值的 7/8：
 
-`Button` 向后兼容：`size="sm" | "lg" | "icon-sm"` 仍指向 `default` 的同一高度。token 名称才是真相。
+```
+size        App 内高度  App 内字号  用途
+─────────────────────────────────────────────────────────────────
+xs          21 px       10.5 px    避免使用——字太小
+sm          28 px       12.25 px   标签、紧凑的控件行
+default     31.5 px     12.25 px   对话框和设置页的操作
+lg          35 px       12.25 px   首屏 / 空状态的大操作
+icon-sm/default/lg                 方形，在这些高度上就是圆形
+─────────────────────────────────────────────────────────────────
+```
+
+不能做成 `<Button>` 的元素（自带 ✕ 的 span、渲染成 span 的 Radix 触发器）在 `className` 上用 `cn(buttonVariants({ variant, size }))` 拿同一套外观——`cn()` 合并不能省：原始类名里同时有 `border-transparent` 和变体自己的边框色。
 
 页头那一行（搜索 + tab 胶囊 + 图标按钮）必须同一垂直中线。控件之间差 1–2px 高度是 bug，不是变体。
 
@@ -114,39 +121,43 @@ button      30 px（与 list 相同） 10 px              --ui-button-h
 
 ## 按钮变体指南
 
-`apps/web/components/ui/button.tsx` 已经暴露主要模式：
-
-**Button 派生动作无边框。** 每个 Button 变体在闲置和悬停时都没有边框。deep / panel 的表面抬升已经分层；再加 ``border-input`` 只会给密行添噪声。
-
-表单控件不是 Button。它们保留上面的 1px 边。
+变体是 shadcn 原版，外加一个本应用自有的 `elevated`；颜色取 shadcn 那组变量（`--primary`、`--secondary`、`--muted`、`--input`、`--ring` 等），`apps/web/app/globals.css` 把它们桥接到每套主题的配色上——换主题就换了按钮配色，按钮本身不用动。
 
 ```
-variant     idle                              hover
+variant      闲置                                 悬停
 ─────────────────────────────────────────────────────────────────
-default     bg-background + text-primary      bg-primary +
-                                              text-primary-foreground
-─────────────────────────────────────────────────────────────────
-outline     bg-background + foreground        bg-accent +
-                                              text-accent-foreground
-─────────────────────────────────────────────────────────────────
-ghost       transparent                       bg-accent +
-                                              text-accent-foreground
-─────────────────────────────────────────────────────────────────
-secondary   subtle grey fill                  darkens slightly
-─────────────────────────────────────────────────────────────────
-destructive bg-background + text-destructive  bg-destructive +
-                                              text-destructive-foreground
+default      bg-primary + primary-foreground      bg-primary/80
+outline      1px border-border；深色透明底，       bg-muted（浅色），
+             浅色 bg-background                    bg-input/30（深色）
+secondary    bg-secondary                         secondary + 5% 墨色
+elevated     --bg-input 底，无边框，shadow-sm       shadow-md，+ 5% 墨色
+ghost        透明                                 bg-muted（深色 /50）
+destructive  bg-destructive/10 + destructive 字   bg-destructive/20
+link         primary 字                           下划线
 ─────────────────────────────────────────────────────────────────
 ```
 
-按表面选择：
+所有变体按下时下沉 1px，键盘聚焦时有 3px 的 `ring/30` 光环，禁用时降到 50% 不透明度。
 
-- **Panel + 主操作**（Run、Save、Test、Apply、Check）→ `variant="default"`
-- **Panel + 次要操作**（Cancel、Close、Reset、Browse）→ `variant="outline"` 或 `ghost`。页头次要按钮要跟搜索框并排读得出来时，给它和搜索框一样的 1px `--border`，不要无边框、看起来像裸文字
-- **Deep 表面——侧栏行** → 不用 Button，用 `.ui-list-item` / `nav-classes.ts`
-- **破坏性操作** → `variant="destructive"`
+`elevated` 是 Luma 注册表里没有的那一个：Luma 的 Button 没有带阴影的变体（只有 Card 用 `shadow-md`），而输入框周围的胶囊要和输入框一样"无边框、浮起来"。它复用每套主题的 composer 阴影对——`app/globals.css` 的 `@theme` 把它们声明成 `shadow-raised` / `shadow-raised-hover` 工具类——所以胶囊和输入框在每套主题里一起浮起。
 
-要警惕的失效：该用 `default` 的地方用了 `outline`。
+按场景选择：
+
+- **主操作**（Run、Save、Test、Apply、发送）→ `default`。
+- **次要操作**（Cancel、Close、Reset、Browse）→ `outline` 或 `secondary`。
+- **密集行里的控件**（输入框下方的模型 / 思考档位 / 权限触发器、图标开关、环境标签）→ `elevated`：无边框，用和输入框一样的阴影浮在页面上，悬停时阴影加深一档。
+- **只在悬停时才需要出现的次要动作** → `ghost`。
+- **破坏性操作**（Delete、Remove、停止）→ `destructive`。
+- **Deep 表面——侧栏行** → 不用 Button，用 `.ui-list-item` / `nav-classes.ts`。
+
+## 输入框区域的控件
+
+聊天输入框用的是同一套零件：
+
+- 输入框上方的**环境标签**（渠道、网页、项目、工作目录、DAG 浮层按钮）→ `elevated` `sm`；添加目录按钮是 `elevated` `icon-sm`。
+- **底部控制栏**（权限、聊天 / 执行模型、思考档位、加号、工具开关、上下文圆环）→ `elevated`，`sm` / `icon-sm`。输入框的 CSS 用 `revert-layer` 把旧的基础规则让回给 Button，不再自己画一套标签。
+- **发送** → `icon-sm`：有内容可发时 `default`，空输入时 `ghost`，停止运行时 `destructive`。
+- **输入框本体** → 通过每套主题的 `--composer-*` 变量用 shadcn Luma Card 的外观：`--bg-input` 底色、无边框，平时 `shadow-sm`，鼠标悬停或聚焦时 `shadow-md`（阴影透明度浅色主题 0.1、深色 0.25），不加聚焦光环；圆角 23px（一行时是胶囊）。
 
 ## 禁止事项
 
@@ -155,9 +166,14 @@ destructive bg-background + text-destructive  bg-destructive +
 - 不要在 deep 表面用品牌色填充。
 - 不要用白色 / `--bg-input` 做侧栏或内容区**列表行**的选中底。浅色主题会发白。
 - 不要给 MCP 服务器行（或任何内容区列表）另一套高度、内边距或选中底。
-- 不要加悬停位移（translate-y、scale-105）。只换背景。
-- 不要给 Button 派生组件加 ``border`` / ``ring`` / ``outline``。
+- 不要加悬停位移（translate-y、scale-105）。悬停只换背景；唯一的动效是 Button 自带的按下 1px。
+- 不要改 `components/ui/button.tsx` 里的官方样式类（`elevated` 是唯一的自有变体），也不要在 CSS 里再写一份仿 Button 的样式。挑一个 `variant` / `size`；旧规则还压着 Button 时，删掉它或用 `revert-layer` 让回去。
 - 不要在 1px 输入/下拉边上再叠 2px 聚焦光晕。
 - 不要在悬停时丢掉控件的 1px 边。
 - 不要让对话框滑动。只淡入淡出。
 - 不要让设置说明伸进右侧控件列，也不要把标签堆在控件上面。
+
+## 实现状态
+
+- 已完成：`Button`（radix-luma）、输入框上方的环境标签、底部控制栏、发送按钮、输入框本体。
+- 尚未迁移：弹出层 / 菜单面板（`MENU_PANEL`、`components/ui/popover.tsx`、`dropdown-menu.tsx`）、提示框、徽标，以及手写样式的 CSS module 弹窗——它们仍用玻璃材质变量（`--glass-*`）。表单输入框和下拉在换成 shadcn input 之前继续遵守上面的 1px 边规则。侧栏列表行继续用上面的列表尺寸。

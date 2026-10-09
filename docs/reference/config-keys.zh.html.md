@@ -10,6 +10,7 @@
 | 配置键 | 默认值 | 生效方式 | 说明 |
 |---|---|---|---|
 | `execution.prevent_idle_sleep` | `False` | `live` | 在 macOS 上于 Agent 执行期间阻止空闲系统休眠。默认关闭；下一次执行时读取设置，显示器休眠与主动休眠仍然可用。 |
+| `execution.instant_steer` | `True` | `live` | 默认开启。Agent 回复过程中发送的补充指令会立即结束正在生成的回复（文本、思考，或仍在写参数的工具调用），并按你的指令继续。已开始运行的工具仍会先执行完。关闭后，指令会等当前回复结束再生效。 |
 | `execution.code_change_policy` | `keep_original` | `live` | 持久化函数默认保留原代码。use_latest 使用当前代码和已保存的步骤结果继续执行。进度不兼容时需要显式恢复。单次 Continue 命令可覆盖此选择。 |
 | `execution.auto_resume_window_seconds` | `-1` | `live` | 中断后自动继续由重启流程管理的检查点。默认 -1 表示不限时间，0 禁用自动重启，正数指定截止时间（秒）。已有截止时间不会延长；用户暂停、取消及未确认的外部操作必须显式恢复。 |
 

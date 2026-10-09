@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791187171" data-alt-lang-url="/docs/reference/api/agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791563584" data-alt-lang-url="/docs/reference/api/agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -409,7 +409,11 @@
 <p>此功能在显式步骤处恢复，不保存任意 Python 调用栈。步骤外的外部调用和状态修改、异步编排、生成器、活动句柄及非 JSON 结果不支持此恢复约定。外部操作已经开始、但结果尚未保存时进程退出，必须先核对操作结果。函数运行界面显示是否声明可恢复步骤，普通函数中断后需要重新运行。</p>
 <p>步骤之间不得依赖可变的 Python 全局变量、闭包或默认参数。需要持续保存的状态应通过步骤的 JSON 输入和结果传递，进程内变量修改不能作为恢复依据。</p>
 <p>步骤依赖需要在模块级导入；辅助函数内部导入、动态导入 API 和动态生成代码会在执行步骤前被拒绝。Python 辅助函数源码递归保存。模块和类对象目前仅支持固定的标准库身份，第三方及用户包对象会被拒绝，因为只保存包初始化文件无法确定完整实现。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="模型服务 API">Provider API</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="CLI 参考">CLI reference</span></a></div></article></main>
+<h2 id="会话轮次与恢复">会话轮次与恢复<a class="header-anchor" href="#会话轮次与恢复">#</a></h2>
+<p><code>Agent.run_turn(request, *, context=None, on_event=None, cancel_event=None, execution_context=None)</code> 返回 <code>TurnResult</code>。从 <code>openprogram</code> 导入 <code>TurnRequest</code> 和 <code>TurnResult</code>。新轮次执行前应用实例配置；<code>Context.for_session(store, session_id, head_id=..., blocks=..., providers=...)</code> 绑定持久化存储和分支。请求与 Context 的会话不一致时拒绝执行。<code>Context.session_id</code> 返回所选图的标识。</p>
+<p><code>arun_turn(request, **options)</code> 提供协作式取消的异步执行。<code>resume_turn(continuation, **options)</code> 与 <code>aresume_turn(...)</code> 复用断点请求，不重复执行准入。事件回调在执行线程接收现有运行时事件字典。持久化暂停和执行中追加输入沿用已有执行控制及安全点协议。</p>
+<p><code>ChatAgent</code> 继承这套契约，是实际聊天使用的类型。子类重写轮次入口时，不会将其自动包装为普通函数调用。旧 <code>openprogram.agent.dispatcher</code> 导入与共享 <code>openprogram.agent.turn_runtime</code> 指向同一模块，不再维护另一份执行循环。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/api/providers.html" data-href-en="/docs/reference/api/providers.html" data-href-zh="/docs/reference/api/providers.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="模型服务 API">Provider API</span></a><a class="pn-link pn-next" href="/docs/reference/cli.html" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="CLI 参考">CLI reference</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -455,6 +459,9 @@
 </li>
 </ul>
 </details>
+</li>
+<li>
+<a class="lvl-2" href="#会话轮次与恢复">会话轮次与恢复</a>
 </li>
 </ul></aside>
 </div>

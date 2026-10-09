@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791187171" data-alt-lang-url="/docs/reference/design/ui/surface-system.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791563584" data-alt-lang-url="/docs/reference/design/ui/surface-system.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -108,7 +108,7 @@
 <a class="navlink" href="/docs/reference/design/runtime/dag/branch-collaboration.html" data-title-zh="分支协作" data-href-en="/docs/reference/design/runtime/dag/branch-collaboration.html" data-href-zh="/docs/reference/design/runtime/dag/branch-collaboration.zh.html">Branch collaboration</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/layout.html" data-title-zh="布局规范" data-href-en="/docs/reference/design/runtime/dag/layout.html" data-href-zh="/docs/reference/design/runtime/dag/layout.zh.html">Layout specification</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/external-program-run-node.html" data-title-zh="程序节点" data-href-en="/docs/reference/design/runtime/dag/external-program-run-node.html" data-href-zh="/docs/reference/design/runtime/dag/external-program-run-node.zh.html">Program nodes</a>
-<a class="navlink" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-title-zh="持久化诊断" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html">Persistence diagnostics</a>
+<a class="navlink" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-title-zh="Agent 图所有权" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html">Agent DAG ownership</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/rendering.html" data-title-zh="渲染规范" data-href-en="/docs/reference/design/runtime/dag/rendering.html" data-href-zh="/docs/reference/design/runtime/dag/rendering.zh.html">Rendering specification</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.html" data-title-zh="分支命名" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html">Branch naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-title-zh="命名图解" data-href-en="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.viz.html">Naming diagram</a>
@@ -334,13 +334,18 @@
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">6</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">11</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
 <a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
-<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a>
+<a class="navlink" href="/docs/reference/design/runtime/unified-agent.html" data-title-zh="统一 Agent 执行" data-href-en="/docs/reference/design/runtime/unified-agent.html" data-href-zh="/docs/reference/design/runtime/unified-agent.zh.html">Unified Agent execution</a></details>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
+<a class="navlink" href="/docs/reference/design/ui/conversation-lifecycle.html">Conversation lifecycle and responsiveness</a>
+<a class="navlink" href="/docs/reference/design/ui/git-folder-pills.html" data-title-zh="文件夹 Git 胶囊" data-href-en="/docs/reference/design/ui/git-folder-pills.html" data-href-zh="/docs/reference/design/ui/git-folder-pills.zh.html">Git folder pills</a>
+<a class="navlink" href="/docs/reference/design/ui/chat-recovery-copy.html">History rendering and conversation links</a>
+<a class="navlink" href="/docs/reference/design/ui/hover-tips.html" data-title-zh="输入框区域的悬停提示" data-href-en="/docs/reference/design/ui/hover-tips.html" data-href-zh="/docs/reference/design/ui/hover-tips.zh.html">Hover tips in the composer</a>
+<a class="navlink" href="/docs/reference/design/ui/icons.html" data-title-zh="图标体系" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html">Icon system</a></details>
 </details></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面与交互">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="基础">Foundations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="界面层次">UI surfaces</span></nav><h1 id="表面系统">表面系统<a class="header-anchor" href="#表面系统">#</a></h1>
@@ -393,21 +398,26 @@ panel          略抬升的                  聊天流、设置页、对话框�
 </code></pre>
 <p><code>+ Add server</code> 跟 <code>+ New chat</code> 是同一种行：普通列表行，字略淡。不要斜体，不要另做一种&quot;添加&quot;样式。</p>
 <p>实现：<code>apps/web/app/styles/base.css</code> 的 <code>.ui-list-item</code> 是唯一来源。MCP 的 <code>.serverItem</code> 必须对齐这些数（优先 compose <code>.ui-list-item</code>，不要平行再写一套）。</p>
-<h2 id="尺寸系统两套高度相同">尺寸系统——两套，高度相同<a class="header-anchor" href="#尺寸系统两套高度相同">#</a></h2>
-<p>每个交互原语在两套尺寸里选一套。套内没有 sm / md / lg——选定 list 或 button 之后，高度和圆角就锁死。CSS 变量在 <code>apps/web/app/styles/base.css</code>：</p>
-<pre><code>set         height               radius             css tokens
+<h2 id="尺寸系统列表行与按钮">尺寸系统——列表行与按钮<a class="header-anchor" href="#尺寸系统列表行与按钮">#</a></h2>
+<p>列表行保留一套固定尺寸。CSS 变量在 <code>apps/web/app/styles/base.css</code>：</p>
+<pre><code>set         height    radius    css tokens
 ─────────────────────────────────────────────────────────────────
-list        30 px                10 px              --ui-list-h
-                                                    --ui-list-radius
-─────────────────────────────────────────────────────────────────
-button      30 px（与 list 相同） 10 px              --ui-button-h
-                                                    --ui-button-radius
+list        30 px     10 px     --ui-list-h · --ui-list-radius
 ─────────────────────────────────────────────────────────────────
 </code></pre>
-<p>以前 list 32px、button 30px。这套高低差已废止：侧栏行、MCP tab 胶囊、MCP 服务器行都走 30px。<code>--ui-list-h: var(--ui-button-h)</code>。</p>
-<p>两套共用 10px 圆角。Claude 形状语言把列表行和小按钮放在 10px，12px（<code>--radius-lg</code>）留给卡片和面板。</p>
-<p>为什么套内无变体：允许 sm / md / lg 之后，每位作者都会跟设计讨价还价，尺寸跟着分叉。两套固定尺寸才能强制执行。</p>
-<p><code>Button</code> 向后兼容：<code>size=&quot;sm&quot; | &quot;lg&quot; | &quot;icon-sm&quot;</code> 仍指向 <code>default</code> 的同一高度。token 名称才是真相。</p>
+<p>侧栏行、MCP tab 胶囊、MCP 服务器行都走这条 30px 节奏。列表行没有 sm / md / lg：一个位置能挑多种尺寸，每位作者都会跟设计讨价还价，尺寸跟着分叉。</p>
+<p>按钮是 shadcn/ui 的 <code>Button</code>，<strong>radix-luma</strong> 风格。<code>apps/web/components/ui/button.tsx</code> 从官方组件仓库原样复制（<code>npx shadcn add button</code>，style <code>radix-luma</code>），本地只改了 import 和一层给 React 18 用的 <code>forwardRef</code>。所有尺寸都是胶囊（<code>rounded-4xl</code>）；调用处从官方尺寸里挑一个，不改样式类。</p>
+<p>这些尺寸按 rem 计算，而本 App 的根字号是 14px（<code>base.css</code> 里的 <code>html { font-size: 14px }</code>，现有约 560 处样式按它调过），所以 shadcn 每个尺寸实际显示为标称值的 7/8：</p>
+<pre><code>size        App 内高度  App 内字号  用途
+─────────────────────────────────────────────────────────────────
+xs          21 px       10.5 px    避免使用——字太小
+sm          28 px       12.25 px   标签、紧凑的控件行
+default     31.5 px     12.25 px   对话框和设置页的操作
+lg          35 px       12.25 px   首屏 / 空状态的大操作
+icon-sm/default/lg                 方形，在这些高度上就是圆形
+─────────────────────────────────────────────────────────────────
+</code></pre>
+<p>不能做成 <code>&lt;Button&gt;</code> 的元素（自带 ✕ 的 span、渲染成 span 的 Radix 触发器）在 <code>className</code> 上用 <code>cn(buttonVariants({ variant, size }))</code> 拿同一套外观——<code>cn()</code> 合并不能省：原始类名里同时有 <code>border-transparent</code> 和变体自己的边框色。</p>
 <p>页头那一行（搜索 + tab 胶囊 + 图标按钮）必须同一垂直中线。控件之间差 1–2px 高度是 bug，不是变体。</p>
 <h2 id="输入框下拉边框">输入框、下拉、边框<a class="header-anchor" href="#输入框下拉边框">#</a></h2>
 <p>输入框和下拉共用<strong>一层 1px</strong> 边（<code>border: 1px solid var(--border)</code>，底 <code>--bg-input</code>）。</p>
@@ -427,34 +437,38 @@ button      30 px（与 list 相同） 10 px              --ui-button-h
 <li>状态标签（<code>LIVE</code>、<code>NEXT START</code> 等）放在对应控件的<strong>左边</strong>，不要一行左一行右</li>
 </ul>
 <h2 id="按钮变体指南">按钮变体指南<a class="header-anchor" href="#按钮变体指南">#</a></h2>
-<p><code>apps/web/components/ui/button.tsx</code> 已经暴露主要模式：</p>
-<p><strong>Button 派生动作无边框。</strong> 每个 Button 变体在闲置和悬停时都没有边框。deep / panel 的表面抬升已经分层；再加 <code>border-input</code> 只会给密行添噪声。</p>
-<p>表单控件不是 Button。它们保留上面的 1px 边。</p>
-<pre><code>variant     idle                              hover
+<p>变体是 shadcn 原版，外加一个本应用自有的 <code>elevated</code>；颜色取 shadcn 那组变量（<code>--primary</code>、<code>--secondary</code>、<code>--muted</code>、<code>--input</code>、<code>--ring</code> 等），<code>apps/web/app/globals.css</code> 把它们桥接到每套主题的配色上——换主题就换了按钮配色，按钮本身不用动。</p>
+<pre><code>variant      闲置                                 悬停
 ─────────────────────────────────────────────────────────────────
-default     bg-background + text-primary      bg-primary +
-                                              text-primary-foreground
-─────────────────────────────────────────────────────────────────
-outline     bg-background + foreground        bg-accent +
-                                              text-accent-foreground
-─────────────────────────────────────────────────────────────────
-ghost       transparent                       bg-accent +
-                                              text-accent-foreground
-─────────────────────────────────────────────────────────────────
-secondary   subtle grey fill                  darkens slightly
-─────────────────────────────────────────────────────────────────
-destructive bg-background + text-destructive  bg-destructive +
-                                              text-destructive-foreground
+default      bg-primary + primary-foreground      bg-primary/80
+outline      1px border-border；深色透明底，       bg-muted（浅色），
+             浅色 bg-background                    bg-input/30（深色）
+secondary    bg-secondary                         secondary + 5% 墨色
+elevated     --bg-input 底，无边框，shadow-sm       shadow-md，+ 5% 墨色
+ghost        透明                                 bg-muted（深色 /50）
+destructive  bg-destructive/10 + destructive 字   bg-destructive/20
+link         primary 字                           下划线
 ─────────────────────────────────────────────────────────────────
 </code></pre>
-<p>按表面选择：</p>
+<p>所有变体按下时下沉 1px，键盘聚焦时有 3px 的 <code>ring/30</code> 光环，禁用时降到 50% 不透明度。</p>
+<p><code>elevated</code> 是 Luma 注册表里没有的那一个：Luma 的 Button 没有带阴影的变体（只有 Card 用 <code>shadow-md</code>），而输入框周围的胶囊要和输入框一样&quot;无边框、浮起来&quot;。它复用每套主题的 composer 阴影对——<code>app/globals.css</code> 的 <code>@theme</code> 把它们声明成 <code>shadow-raised</code> / <code>shadow-raised-hover</code> 工具类——所以胶囊和输入框在每套主题里一起浮起。</p>
+<p>按场景选择：</p>
 <ul>
-<li><strong>Panel + 主操作</strong>（Run、Save、Test、Apply、Check）→ <code>variant=&quot;default&quot;</code></li>
-<li><strong>Panel + 次要操作</strong>（Cancel、Close、Reset、Browse）→ <code>variant=&quot;outline&quot;</code> 或 <code>ghost</code>。页头次要按钮要跟搜索框并排读得出来时，给它和搜索框一样的 1px <code>--border</code>，不要无边框、看起来像裸文字</li>
-<li><strong>Deep 表面——侧栏行</strong> → 不用 Button，用 <code>.ui-list-item</code> / <code>nav-classes.ts</code></li>
-<li><strong>破坏性操作</strong> → <code>variant=&quot;destructive&quot;</code></li>
+<li><strong>主操作</strong>（Run、Save、Test、Apply、发送）→ <code>default</code>。</li>
+<li><strong>次要操作</strong>（Cancel、Close、Reset、Browse）→ <code>outline</code> 或 <code>secondary</code>。</li>
+<li><strong>密集行里的控件</strong>（输入框下方的模型 / 思考档位 / 权限触发器、图标开关、环境标签）→ <code>elevated</code>：无边框，用和输入框一样的阴影浮在页面上，悬停时阴影加深一档。</li>
+<li><strong>只在悬停时才需要出现的次要动作</strong> → <code>ghost</code>。</li>
+<li><strong>破坏性操作</strong>（Delete、Remove、停止）→ <code>destructive</code>。</li>
+<li><strong>Deep 表面——侧栏行</strong> → 不用 Button，用 <code>.ui-list-item</code> / <code>nav-classes.ts</code>。</li>
 </ul>
-<p>要警惕的失效：该用 <code>default</code> 的地方用了 <code>outline</code>。</p>
+<h2 id="输入框区域的控件">输入框区域的控件<a class="header-anchor" href="#输入框区域的控件">#</a></h2>
+<p>聊天输入框用的是同一套零件：</p>
+<ul>
+<li>输入框上方的<strong>环境标签</strong>（渠道、网页、项目、工作目录、DAG 浮层按钮）→ <code>elevated</code> <code>sm</code>；添加目录按钮是 <code>elevated</code> <code>icon-sm</code>。</li>
+<li><strong>底部控制栏</strong>（权限、聊天 / 执行模型、思考档位、加号、工具开关、上下文圆环）→ <code>elevated</code>，<code>sm</code> / <code>icon-sm</code>。输入框的 CSS 用 <code>revert-layer</code> 把旧的基础规则让回给 Button，不再自己画一套标签。</li>
+<li><strong>发送</strong> → <code>icon-sm</code>：有内容可发时 <code>default</code>，空输入时 <code>ghost</code>，停止运行时 <code>destructive</code>。</li>
+<li><strong>输入框本体</strong> → 通过每套主题的 <code>--composer-*</code> 变量用 shadcn Luma Card 的外观：<code>--bg-input</code> 底色、无边框，平时 <code>shadow-sm</code>，鼠标悬停或聚焦时 <code>shadow-md</code>（阴影透明度浅色主题 0.1、深色 0.25），不加聚焦光环；圆角 23px（一行时是胶囊）。</li>
+</ul>
 <h2 id="禁止事项">禁止事项<a class="header-anchor" href="#禁止事项">#</a></h2>
 <ul>
 <li>不要每个页面另起一套悬停 / 选中 / 边框。一套配方，反复用。新样子先写进这份文件。</li>
@@ -462,14 +476,19 @@ destructive bg-background + text-destructive  bg-destructive +
 <li>不要在 deep 表面用品牌色填充。</li>
 <li>不要用白色 / <code>--bg-input</code> 做侧栏或内容区<strong>列表行</strong>的选中底。浅色主题会发白。</li>
 <li>不要给 MCP 服务器行（或任何内容区列表）另一套高度、内边距或选中底。</li>
-<li>不要加悬停位移（translate-y、scale-105）。只换背景。</li>
-<li>不要给 Button 派生组件加 <code>border</code> / <code>ring</code> / <code>outline</code>。</li>
+<li>不要加悬停位移（translate-y、scale-105）。悬停只换背景；唯一的动效是 Button 自带的按下 1px。</li>
+<li>不要改 <code>components/ui/button.tsx</code> 里的官方样式类（<code>elevated</code> 是唯一的自有变体），也不要在 CSS 里再写一份仿 Button 的样式。挑一个 <code>variant</code> / <code>size</code>；旧规则还压着 Button 时，删掉它或用 <code>revert-layer</code> 让回去。</li>
 <li>不要在 1px 输入/下拉边上再叠 2px 聚焦光晕。</li>
 <li>不要在悬停时丢掉控件的 1px 边。</li>
 <li>不要让对话框滑动。只淡入淡出。</li>
 <li>不要让设置说明伸进右侧控件列，也不要把标签堆在控件上面。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/invariants.html" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面不变量">UI invariants</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/state-layer.html" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="状态存储">State stores</span></a></div></article></main>
+<h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
+<ul>
+<li>已完成：<code>Button</code>（radix-luma）、输入框上方的环境标签、底部控制栏、发送按钮、输入框本体。</li>
+<li>尚未迁移：弹出层 / 菜单面板（<code>MENU_PANEL</code>、<code>components/ui/popover.tsx</code>、<code>dropdown-menu.tsx</code>）、提示框、徽标，以及手写样式的 CSS module 弹窗——它们仍用玻璃材质变量（<code>--glass-*</code>）。表单输入框和下拉在换成 shadcn input 之前继续遵守上面的 1px 边规则。侧栏列表行继续用上面的列表尺寸。</li>
+</ul>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/invariants.html" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面不变量">UI invariants</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/state-layer.html" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="状态存储">State stores</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -493,7 +512,7 @@ destructive bg-background + text-destructive  bg-destructive +
 <a class="lvl-2" href="#列表行只有一套尺寸">列表行只有一套尺寸</a>
 </li>
 <li>
-<a class="lvl-2" href="#尺寸系统两套高度相同">尺寸系统——两套，高度相同</a>
+<a class="lvl-2" href="#尺寸系统列表行与按钮">尺寸系统——列表行与按钮</a>
 </li>
 <li>
 <a class="lvl-2" href="#输入框下拉边框">输入框、下拉、边框</a>
@@ -508,7 +527,13 @@ destructive bg-background + text-destructive  bg-destructive +
 <a class="lvl-2" href="#按钮变体指南">按钮变体指南</a>
 </li>
 <li>
+<a class="lvl-2" href="#输入框区域的控件">输入框区域的控件</a>
+</li>
+<li>
 <a class="lvl-2" href="#禁止事项">禁止事项</a>
+</li>
+<li>
+<a class="lvl-2" href="#实现状态">实现状态</a>
 </li>
 </ul></aside>
 </div>

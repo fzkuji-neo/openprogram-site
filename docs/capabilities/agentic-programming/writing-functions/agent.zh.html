@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791187171" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791563584" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>智能体函数 · OpenProgram Docs</title>
-<meta name="description" content="Agent 调用与普通方法 # 单次模型请求使用 agent() 。多个方法共用模型设置和指令时，定义 Agent 子类。框架自动建立调用作用域并管理 Context。 普通方法 # from openprogram import Agent class ReviewAgent ( Agent ): tools =">
+<meta name="description" content="Agent 调用与普通方法 # 单次模型请求使用 agent() 。多个方法共用模型设置和指令时，定义 Agent 子类。框架自动建立调用作用域并管理 Context。 每个 Agent 执行分别管理自己的 DAG。聊天只记录用户消息、模型请求和直接工具调用；普通辅助函数不产生持久化节点。调用另一个 Agent">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/agent.zh.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/agent.zh.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-programming/writing-functions/agent.zh.html">
 <meta property="og:title" content="智能体函数 · OpenProgram Docs">
-<meta property="og:description" content="Agent 调用与普通方法 # 单次模型请求使用 agent() 。多个方法共用模型设置和指令时，定义 Agent 子类。框架自动建立调用作用域并管理 Context。 普通方法 # from openprogram import Agent class ReviewAgent ( Agent ): tools =">
+<meta property="og:description" content="Agent 调用与普通方法 # 单次模型请求使用 agent() 。多个方法共用模型设置和指令时，定义 Agent 子类。框架自动建立调用作用域并管理 Context。 每个 Agent 执行分别管理自己的 DAG。聊天只记录用户消息、模型请求和直接工具调用；普通辅助函数不产生持久化节点。调用另一个 Agent">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="智能体函数 · OpenProgram Docs">
-<meta name="twitter:description" content="Agent 调用与普通方法 # 单次模型请求使用 agent() 。多个方法共用模型设置和指令时，定义 Agent 子类。框架自动建立调用作用域并管理 Context。 普通方法 # from openprogram import Agent class ReviewAgent ( Agent ): tools =">
+<meta name="twitter:description" content="Agent 调用与普通方法 # 单次模型请求使用 agent() 。多个方法共用模型设置和指令时，定义 Agent 子类。框架自动建立调用作用域并管理 Context。 每个 Agent 执行分别管理自己的 DAG。聊天只记录用户消息、模型请求和直接工具调用；普通辅助函数不产生持久化节点。调用另一个 Agent">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -107,6 +107,7 @@
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="编写函数">Writing functions</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="智能体函数">Agentic functions</span></nav><h1 id="agent-调用与普通方法">Agent 调用与普通方法<a class="header-anchor" href="#agent-调用与普通方法">#</a></h1>
 <p>单次模型请求使用 <code>agent()</code>。多个方法共用模型设置和指令时，定义 <code>Agent</code> 子类。框架自动建立调用作用域并管理 Context。</p>
+<p>每个 Agent 执行分别管理自己的 DAG。聊天只记录用户消息、模型请求和直接工具调用；普通辅助函数不产生持久化节点。调用另一个 Agent 时创建独立 DAG，父图只保存调用结果和 child_session_id 引用。权限、取消与文件修改备份仍由原执行负责，不依赖图所有权。</p>
 <h2 id="普通方法">普通方法<a class="header-anchor" href="#普通方法">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
 
@@ -160,7 +161,25 @@
 <p>确定性编排直接调用 Python 方法或函数。模型选择调用时，提供显式登记的工具，见 <a href="/docs/capabilities/agentic-programming/choosing-the-next-step/tool-calling.zh.html">工具调用</a>。</p>
 <h2 id="方法功能">方法功能<a class="header-anchor" href="#方法功能">#</a></h2>
 <p>Agent 方法通过 <code>method_options</code> 承担输入元数据、工具登记、权限与持久步骤。<a href="/docs/reference/api/agent.zh.html">API 参考</a> 说明 Context、方法选项和方法配置。各字段见 <a href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">函数元数据</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-05</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Python 函数">Python functions</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="函数元数据">Function metadata</span></a></div></article></main>
+<h2 id="持续会话">持续会话<a class="header-anchor" href="#持续会话">#</a></h2>
+<p><code>Agent.run_turn()</code> 执行持久化会话轮次。<code>ChatAgent</code> 是 App、Web、TUI 和渠道入口使用的聊天子类，两者共用历史、权限、工具、流式事件、压缩和持久化运行时。</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">Context</span><span class="p">,</span> <span class="n">TurnRequest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agent.session_db</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_db</span>
+
+<span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="o">.</span><span class="n">for_session</span><span class="p">(</span><span class="n">default_db</span><span class="p">(),</span> <span class="s2">"example-conversation"</span><span class="p">,</span>
+                              <span class="n">blocks</span><span class="o">=</span><span class="p">{</span><span class="s2">"reference"</span><span class="p">:</span> <span class="s2">"用户提供的参考内容"</span><span class="p">})</span>
+<span class="n">worker</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">worker</span><span class="o">.</span><span class="n">run_turn</span><span class="p">(</span>
+    <span class="n">TurnRequest</span><span class="p">(</span><span class="n">session_id</span><span class="o">=</span><span class="s2">"example-conversation"</span><span class="p">,</span> <span class="n">user_text</span><span class="o">=</span><span class="s2">"总结参考内容"</span><span class="p">,</span>
+                <span class="n">agent_id</span><span class="o">=</span><span class="s2">"main"</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">"python"</span><span class="p">),</span>
+    <span class="n">on_event</span><span class="o">=</span><span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]),</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">final_text</span><span class="p">)</span>
+</code></pre>
+<p>后续轮次使用同一个 session ID。<code>Context.for_session</code> 选择存储，不创建模型客户端。可选的 <code>head_id</code> 指定分支前驱；<code>Context(history_filter=False)</code> 排除历史图内容，保留当前输入。具名内容和 provider 以用户内容参与请求，不改变系统指令或工具权限。</p>
+<p><code>arun_turn()</code> 和 <code>aresume_turn()</code> 是异步入口。事件回调在执行线程运行，与 asyncio 消费者通信时使用线程安全的传递方式。取消等待任务会通知执行轮次，并等待协作式清理；同步调用可通过 <code>cancel_event</code> 传入 <code>threading.Event</code>。</p>
+<p><code>resume_turn(continuation)</code> 使用已有断点和冻结请求，不重复追加用户消息，也不重新应用实例中改变的设置。持久化暂停、执行中追加输入和恢复准入仍由现有执行驱动及控制服务负责，不创建第二套任务管理。普通函数不记录节点，嵌套 Agent 保持独立 DAG，工具超时不取消父聊天。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Python 函数">Python functions</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="函数元数据">Function metadata</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -177,6 +196,9 @@
 </li>
 <li>
 <a class="lvl-2" href="#方法功能">方法功能</a>
+</li>
+<li>
+<a class="lvl-2" href="#持续会话">持续会话</a>
 </li>
 </ul></aside>
 </div>
