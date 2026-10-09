@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791565540" data-alt-lang-url="/docs/reference/design/ui/hover-tips.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791565615" data-alt-lang-url="/docs/reference/design/ui/hover-tips.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -450,6 +450,44 @@ and is wider than the chip (up to 320 px, paths wrap anywhere).</p>
 </tr>
 </tbody>
 </table>
+<h2 id="web-page-preview-header">Web page preview header<a class="header-anchor" href="#web-page-preview-header">#</a></h2>
+<p>The floating page preview over chat (<code>components/center-tabs/web-tab-pip.tsx</code>)
+uses the same <code>HoverTip</code> + <code>TipBody</code> on its header buttons. The eight
+resize handles keep their <code>aria-label</code>s but show no tip: a bubble popping
+up over the page while the pointer skims the edge is noise. The title and
+status text are labels, not controls; they keep a native <code>title</code> with the
+full text for when they truncate.</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Title</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open page</td>
+<td>Open page</td>
+<td>Switch to this tab in the centre</td>
+</tr>
+<tr>
+<td>Review request (while the agent waits for approval)</td>
+<td>Review request</td>
+<td>The agent is waiting for your confirmation</td>
+</tr>
+<tr>
+<td>More (⋮)</td>
+<td>More</td>
+<td>Auto-follow, action markers and operation history</td>
+</tr>
+<tr>
+<td>Close (✕)</td>
+<td>Close preview</td>
+<td>Hides the preview; the agent keeps working</td>
+</tr>
+</tbody>
+</table>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
 <ul>
 <li>All rows above: <strong>implemented</strong>.</li>
@@ -461,6 +499,9 @@ button fires no pointer events for <code>HoverTip</code>. <strong>Not migrated.<
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-recovery-copy.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">History rendering and conversation links</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/icons.html" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="图标体系">Icon system</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
+<li>
+<a class="lvl-2" href="#web-page-preview-header">Web page preview header</a>
+</li>
 <li>
 <a class="lvl-2" href="#implementation-status">Implementation status</a>
 </li>

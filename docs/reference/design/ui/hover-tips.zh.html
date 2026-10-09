@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791565540" data-alt-lang-url="/docs/reference/design/ui/hover-tips.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791565615" data-alt-lang-url="/docs/reference/design/ui/hover-tips.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -442,6 +442,39 @@
 </tr>
 </tbody>
 </table>
+<h2 id="网页预览标题栏">网页预览标题栏<a class="header-anchor" href="#网页预览标题栏">#</a></h2>
+<p>聊天上方的网页预览小窗（<code>components/center-tabs/web-tab-pip.tsx</code>）标题栏按钮用同一套 <code>HoverTip</code> + <code>TipBody</code>。四边四角的八个调整大小把手保留 <code>aria-label</code>，但不再冒提示：指针扫过边缘时在网页上方弹气泡只是干扰。标题和状态文字是标签不是控件，保留原生 <code>title</code> 以便截断时看到全文。</p>
+<table>
+<thead>
+<tr>
+<th>控件</th>
+<th>标题</th>
+<th>细节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>打开页面</td>
+<td>打开页面</td>
+<td>在中间区域切换到这个标签</td>
+</tr>
+<tr>
+<td>查看请求（Agent 等待确认时）</td>
+<td>查看请求</td>
+<td>Agent 正在等待你的确认</td>
+</tr>
+<tr>
+<td>更多（⋮）</td>
+<td>更多</td>
+<td>自动跟随、操作标记与操作历史</td>
+</tr>
+<tr>
+<td>关闭（✕）</td>
+<td>关闭小窗</td>
+<td>只隐藏小窗；Agent 继续工作</td>
+</tr>
+</tbody>
+</table>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <ul>
 <li>上表全部：<strong>已实现</strong>。</li>
@@ -451,6 +484,9 @@
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/chat-recovery-copy.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title">History rendering and conversation links</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/icons.html" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="图标体系">Icon system</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
+<li>
+<a class="lvl-2" href="#网页预览标题栏">网页预览标题栏</a>
+</li>
 <li>
 <a class="lvl-2" href="#实现状态">实现状态</a>
 </li>
