@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791581953" data-alt-lang-url="/docs/install/upgrade.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791600762" data-alt-lang-url="/docs/install/upgrade.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -449,7 +449,7 @@ runtime validation and controller resumption. The saved
 runtime, script and evidence remain. Missing or damaged trusted recovery files
 require manual intervention rather than reconstruction from an unverified App.</p>
 <h2 id="development-checkout">Development checkout<a class="header-anchor" href="#development-checkout">#</a></h2>
-<p>For the locally installed macOS App, run <code>scripts/refresh-local-app.sh</code> from the current checkout after committing a change. The script rebuilds the wheel and Desktop assets, updates both the PATH and embedded Python installations, and refreshes bundled Node and Ink resources. It probes the complete embedded runtime before regenerating its capability manifest and restarting the default worker. This also upgrades older App runtime manifests when a newly required capability is introduced; a failed probe stops the refresh instead of declaring the capability verified.</p>
+<p>For the locally installed macOS App, run <code>scripts/refresh-local-app.sh</code> from the current checkout after committing a change. The script rebuilds the wheel and Desktop assets, builds the GUI, Research and Wiki Program wheels before the App is quit (a failed source build leaves the installed App unchanged), updates both the PATH and embedded Python installations, and refreshes bundled Node and Ink resources. It probes the complete embedded runtime before regenerating its capability manifest and restarting the default worker. This also upgrades older App runtime manifests when a newly required capability is introduced; a failed probe stops the refresh instead of declaring the capability verified.</p>
 <p>The refreshed worker uses the embedded App Python with <code>-I -B</code>; an existing launchd service is rebound to that same interpreter, and detached startup uses it as well. The script verifies the actual worker process executable and flags after the health check. A matching package revision alone does not prove interpreter identity. Existing checkpoints retain their strict tool implementation contract; switching Python installation paths can invalidate implementation fingerprints.</p>
 <p>The copied Node executable must work outside its original installation. The script checks this before modifying the App. If your PATH selects a Node build that needs adjacent libraries, set <code>OPENPROGRAM_NODE_BIN</code> to a standalone Node executable when running the refresh script.</p>
 <p>In a source checkout, <code>openprogram upgrade</code> uses the development pipeline instead of the release installer. It validates a Git target, updates dependencies and built assets when their source files changed, probes the new checkout, and restarts the worker only after the probe succeeds:</p>
