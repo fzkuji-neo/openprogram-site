@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791630609" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791637138" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -175,7 +175,7 @@
 <p>持久 Terminal 环境关联到会话后，与网页一起显示在 Resources 列表中。点击终端可在会话旁打开交互视图；用户和 Agent 操作的是同一个 shell，工作目录、环境变量与输出保持一致。隐藏视图和切换会话不会终止进程。“终止终端”需要确认；请求已接收不代表进程已经退出。“共享终端”允许本机其他会话发现它；改为私有会撤销当前 Agent 绑定。</p>
 <p>输入已送达不代表命令成功。输入结果不确定时不会自动重发。“重新连接视图”仅重新读取输出。用户尚未提交的输入片段或输入版本变化会阻止 Agent 继续冲突操作，Agent 必须重新观察。</p>
 <h3 id="agent-统一资源接口">Agent 统一资源接口<a class="header-anchor" href="#agent-统一资源接口">#</a></h3>
-<p><code>resource</code> 工具通过 <code>describe</code> 返回 provider 及其支持的操作和参数结构。先调用 <code>resource(action=&quot;describe&quot;)</code>，再按返回的结构调用。内置 <code>web</code> 和 <code>terminal</code> 保留原有资源标识和检查；现有 <code>web_use</code>、<code>terminal_use</code> 继续兼容。例如 <code>resource(provider=&quot;terminal&quot;, action=&quot;list&quot;)</code> 列出可用 shell，<code>observe</code> 返回后续操作需要的 generation、binding、input revision 和输出 cursor。</p>
+<p><code>resource</code> 工具通过 <code>describe</code> 返回 provider 及其支持的操作和参数结构。先调用 <code>resource(action=&quot;describe&quot;)</code>，再按返回的结构调用。内置 <code>web</code> 和 <code>terminal</code> 保留原有资源标识和检查；现有 <code>web_use</code>、<code>terminal_use</code> 继续兼容。对网页 Page，<code>release</code> 只结束 Agent 的控制会话，网页保持打开；<code>resource</code> 和 <code>web_use</code> 里的 <code>close</code> 会关闭这个网页标签并返回 <code>page_closed</code>，App 没有确认关闭时返回错误。例如 <code>resource(provider=&quot;terminal&quot;, action=&quot;list&quot;)</code> 列出可用 shell，<code>observe</code> 返回后续操作需要的 generation、binding、input revision 和输出 cursor。</p>
 <p>只允许调用 provider 声明的操作。网页 <code>release</code> 释放控制会话而保留网页，<code>close</code> 使用已观察实例的控制绑定关闭准确的网页；终端 <code>release</code> 保留进程，<code>close</code> 请求终止进程。Terminal 需要来自对应 Desktop 窗口的有效执行，不能绕过任务 sandbox。</p>
 <p>可信 Python 集成可以通过 <code>openprogram.resource_interface.registry.register(...)</code> 注册 <code>ResourceProvider</code>，为每种操作声明 JSON Schema 和调用适配器。适配器负责自身的授权和生命周期。重复名称会被拒绝，参数在调用前验证。这是可信集成 API，不接受 Agent 或网页提供任意代码。集成可以通过已有 <code>openprogram.session_resources.resource_use(...)</code> 在 Resources 上报会话使用情况；已启用的安装应用根据操作清单自动注册 <code>application.&lt;id&gt;</code>。关联当前会话的实例显示在 Resources，并复用现有隔离应用视图。</p>
 <p>浏览器任务复用明确选中的 Page，不因任务携带网址而重载或另开页面。每个动作完成后返回浏览器工作流，继续观察和验证。执行达到安全上限时停止任务，不重试已经完成的动作；清理时保留调用会话身份。</p>
