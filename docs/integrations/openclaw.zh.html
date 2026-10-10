@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/integrations/openclaw.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/integrations/openclaw.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -125,47 +125,39 @@ uv<span class="w"> </span>sync<span class="w"> </span>--locked
         <span class="s1">'plan'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">decompose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decompose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""把复杂任务拆解成可执行的步骤。"""</span>
         <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
             <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"把这个任务拆解成 3-5 个具体、可执行的步骤：</span><span class="se">\n</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">编号，要具体。"</span><span class="p">},</span>
         <span class="p">])</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">assess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""评估一个步骤的难度和时间。"""</span>
         <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
             <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"对这个步骤给出：难度（简单/中等/困难）和时间估计。</span><span class="se">\n</span><span class="s2">格式：[难度] ~X小时</span><span class="se">\n\n</span><span class="s2">步骤：</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
         <span class="p">])</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""为任务创建详细计划。"""</span>
-        <span class="n">steps_text</span> <span class="o">=</span> <span class="n">decompose</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+        <span class="n">steps_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decompose</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
 
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">steps_text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
         <span class="n">assessments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">assess</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assess</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="n">line</span><span class="p">)</span>
             <span class="n">assessments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="se">\n</span><span class="s2">   → </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">assessments</span><span class="p">)</span>
 
-<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">(</span><span class="n">runtime</span><span class="o">=</span><span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">))</span>
 <span class="n">decompose</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">decompose</span>
 <span class="n">assess</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">assess</span>
 <span class="n">plan</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">plan</span>
 
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">)</span>
-
-
-
-
-
-
-
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">task</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">"构建一个带认证的 REST API"</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">plan</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">plan</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre>
 <p><strong><code>SKILL.md</code></strong>（OpenClaw 要求 YAML front matter——agent 靠 <code>name</code> 和 <code>description</code> 匹配技能）：</p>
@@ -203,35 +195,28 @@ Python 不包含 OpenProgram 的依赖。</p>
         <span class="s1">'code_analysis'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">review_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">review_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""审查代码的 bug、风格问题和改进建议。"""</span>
         <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
             <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"审查这段 </span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="s2"> 代码。列出：</span><span class="se">\n</span><span class="s2">1. Bug（如果有）</span><span class="se">\n</span><span class="s2">2. 风格问题</span><span class="se">\n</span><span class="s2">3. 改进建议</span><span class="se">\n\n</span><span class="s2">```</span><span class="si">{</span><span class="n">language</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span><span class="p">},</span>
         <span class="p">])</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">suggest_tests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">suggest_tests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""为代码建议测试用例。"""</span>
         <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
             <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"为这段代码建议 3 个测试用例。每个给出：测试名称、输入、期望输出。</span><span class="se">\n\n</span><span class="s2">```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span><span class="p">},</span>
         <span class="p">])</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">code_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">code_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""完整代码分析：审查 + 测试建议。"""</span>
-        <span class="n">review</span> <span class="o">=</span> <span class="n">review_code</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="n">tests</span> <span class="o">=</span> <span class="n">suggest_tests</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">review_code</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">)</span>
+        <span class="n">tests</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">suggest_tests</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">)</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">"## 代码审查</span><span class="se">\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">## 建议测试</span><span class="se">\n</span><span class="si">{</span><span class="n">tests</span><span class="si">}</span><span class="s2">"</span>
 
-<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">(</span><span class="n">runtime</span><span class="o">=</span><span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">))</span>
 <span class="n">review_code</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">review_code</span>
 <span class="n">suggest_tests</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">suggest_tests</span>
 <span class="n">code_analysis</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">code_analysis</span>
-
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">)</span>
-
-
-
-
-
 </code></pre>
 <h2 id="用法-3mcp-tool-封装">用法 3：MCP Tool 封装<a class="header-anchor" href="#用法-3mcp-tool-封装">#</a></h2>
 <p>把 agentic function 封装为 OpenClaw 可以调用的 MCP tool：</p>
@@ -251,7 +236,7 @@ Python 不包含 OpenProgram 的依赖。</p>
         <span class="s1">'summarize_text'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">summarize_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">"bullet_points"</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">summarize_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">"bullet_points"</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""按指定风格总结文本。"""</span>
         <span class="n">style_instructions</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">"bullet_points"</span><span class="p">:</span> <span class="s2">"用 3-5 个要点总结。"</span><span class="p">,</span>
@@ -264,12 +249,8 @@ Python 不包含 OpenProgram 的依赖。</p>
             <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">instruction</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">文本：</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">},</span>
         <span class="p">])</span>
 
-<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
+<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">(</span><span class="n">runtime</span><span class="o">=</span><span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">))</span>
 <span class="n">summarize_text</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">summarize_text</span>
-
-<span class="n">runtime</span> <span class="o">=</span> <span class="n">create_runtime</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-4-5"</span><span class="p">)</span>
-
-
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
@@ -278,7 +259,7 @@ Python 不包含 OpenProgram 的依赖。</p>
     <span class="n">args</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"args"</span><span class="p">,</span> <span class="p">{})</span>
 
     <span class="k">if</span> <span class="n">tool</span> <span class="o">==</span> <span class="s2">"summarize"</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">summarize_text</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">summarize_text</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"result"</span><span class="p">:</span> <span class="n">result</span><span class="p">}))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"未知工具: </span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2">"</span><span class="p">}))</span>

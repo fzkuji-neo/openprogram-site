@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -135,7 +135,7 @@
 <td>函数名、何时选用的描述、参数 name / type / description / enum，以及每个参数是否由系统填充</td>
 </tr>
 <tr>
-<td><code>parse_args(reply, options, runtime, ...)</code>（决策抽取 + 派发 + 重试）</td>
+<td><code>parse_args(reply, options, ...)</code>（决策抽取 + 派发 + 重试）</td>
 <td>参数名 + 类型 + enum + hidden 标志，以及 <code>runtime</code> 式的自动注入白名单</td>
 </tr>
 <tr>
@@ -347,7 +347,7 @@
         <span class="s1">'polish'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'input'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'text'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Text to polish.'</span><span class="p">},</span> <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Output style.'</span><span class="p">,</span> <span class="s1">'options'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'academic'</span><span class="p">,</span> <span class="s1">'casual'</span><span class="p">]}}},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Polish a text in the given style."""</span>
         <span class="o">...</span>
 
@@ -368,7 +368,6 @@
         <span class="n">max_score</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">show_rubric_internals</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>           <span class="c1"># 由 Python 通过上下文填充，而非 LLM</span>
-        <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">,</span>          <span class="c1"># 自动注入</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Score an essay against a named rubric and return a structured report."""</span>
         <span class="o">...</span>
@@ -385,13 +384,12 @@
         <span class="s1">'polish'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Polish a text in the given style.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            text: Text to polish.</span>
 <span class="sd">            style: Output style.</span>
-<span class="sd">            runtime: LLM runtime.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Polished text.</span>
@@ -467,6 +465,7 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 </tr>
 </tbody>
 </table>
+<p>新写的 Agent method 不声明这些参数：method 运行在所属 Agent 的 Runtime（<code>Agent(runtime=...)</code>）或调用方的 Runtime 上，嵌套调用会自动沿用。注入机制只为仍声明这些参数的已有函数保留。</p>
 <p>这些名字存放在两个文件中的两个常量里：<code>agentic_programming/call_state.py</code> 中的 <code>_RUNTIME_PARAMS</code>（运行时注入 + 从 tool spec 中过滤）和 <code>agentic_programming/decision.py</code> 中的 <code>_AUTO_PARAMS</code>（从决策菜单中隐藏 + 派发）。要新增一个自动注入的名字，需同时改这两处。不要在单个调用处用 <code>input={&quot;x&quot;: {&quot;hidden&quot;: True}}</code> 来标记它们。</p>
 <h2 id="8-webui-渲染行为">8. WebUI 渲染行为<a class="header-anchor" href="#8-webui-渲染行为">#</a></h2>
 <p>WebUI 不会反射运行中的 Python 对象：它对源文件（<code>openprogram/webui/_functions.py</code>）做 AST/正则解析。因此 <code>input=</code> 必须在方法配置调用中写成字面量字典，才能在表单中显示出来——动态构建的元数据（变量、辅助函数调用）对 WebUI 是不可见的。</p>
@@ -569,7 +568,7 @@ fn.input_meta[name][&quot;placeholder&quot;]  (渲染为 &quot;e.g. {placeholder
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 每个对 LLM 可见的参数在 <code>input=</code> 中都有 <code>description</code></li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 枚举参数在 <code>input=</code> 中使用 <code>options</code>（而非埋在描述文本里）</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 由系统填充的参数（DB session、当前用户等）标记 <code>hidden: True</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 框架自动注入的参数（<code>runtime</code> 等）无需注解；框架会自行检测它们</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 不声明 <code>runtime</code> 参数：method 运行在所属 Agent 的 Runtime 上</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> 函数名清晰（<code>fn.__name__</code> 就是 LLM 看到的动作名）</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> docstring 中没有角色扮演、没有空洞指令、没有比喻</li>
 </ul>

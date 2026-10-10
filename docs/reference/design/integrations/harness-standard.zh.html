@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/reference/design/integrations/harness-standard.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -312,11 +312,12 @@
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">22</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">23</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-prototype.html" data-title-zh="输入框原型" data-href-en="/docs/reference/design/ui/composer-interaction-prototype.html" data-href-zh="/docs/reference/design/ui/composer-interaction-prototype.zh.html">Composer prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html" data-title-zh="工作区原型" data-href-en="/docs/reference/design/ui/project-workspace-prototype.html" data-href-zh="/docs/reference/design/ui/project-workspace-prototype.zh.html">Workspace prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-title-zh="侧栏原型" data-href-en="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-hierarchy-prototype.zh.html">Sidebar prototype</a>
+<a class="navlink" href="/docs/reference/design/ui/sidebar-luma-prototype.html" data-title-zh="Sidebar Luma draft" data-href-en="/docs/reference/design/ui/sidebar-luma-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-luma-prototype.zh.html">Sidebar Luma prototype</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/live-layout.html" data-title-zh="实时布局" data-href-en="/docs/reference/design/runtime/dag/live-layout.html" data-href-zh="/docs/reference/design/runtime/dag/live-layout.zh.html">Live layout</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="实施记录">Implementation records</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="界面同步" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">Interface synchronization</a>
 <a class="navlink" href="/docs/reference/design/repository-structure-implementation.html" data-title-zh="仓库迁移" data-href-en="/docs/reference/design/repository-structure-implementation.html" data-href-zh="/docs/reference/design/repository-structure-implementation.zh.html">Repository migration</a>
@@ -424,12 +425,14 @@ vault 路径；GUI：vision 模型 + 平台 backend）。<strong>标准规定的
 <span class="k">class</span><span class="w"> </span><span class="nc">HarnessAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
     <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"foo_agent"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"tool"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"foo_agent"</span><span class="p">}}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">foo_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">foo_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="o">...</span>
 </code></pre>
 </li>
-<li><strong>runtime 是被注入的，绝不自行构造。</strong> 需要 LLM 的 harness 函数声明一个
-<code>runtime</code> 参数；host 会注入当前活跃的 runtime。对于 in-host 路径，harness
+<li><strong>runtime 来自 host，绝不自行构造。</strong> harness 方法在到达它的那次调用的
+Runtime（即 host 的）上运行，用 <code>llm()</code> / <code>agent()</code> 发起模型请求，不声明
+<code>runtime</code> 参数。第二个模型（比如评审）是在运行入口配置的第二个 Agent
+实例。对于 in-host 路径，harness
 <strong>绝不能</strong> 自己构建 provider / 自己读取 <code>ANTHROPIC_API_KEY</code> —— provider
 选择与鉴权归 host 管。（harness <em>可以</em> 保留一个独立的 CLI，调用
 <code>create_runtime(...)</code> 以便在 host 之外使用；那与 in-host 入口点是分开的。）</li>

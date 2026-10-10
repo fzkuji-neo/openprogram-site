@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/reference/design/runtime/execution/next-step-decision.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/reference/design/runtime/execution/next-step-decision.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -312,11 +312,12 @@
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">22</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">23</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-prototype.html" data-title-zh="输入框原型" data-href-en="/docs/reference/design/ui/composer-interaction-prototype.html" data-href-zh="/docs/reference/design/ui/composer-interaction-prototype.zh.html">Composer prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html" data-title-zh="工作区原型" data-href-en="/docs/reference/design/ui/project-workspace-prototype.html" data-href-zh="/docs/reference/design/ui/project-workspace-prototype.zh.html">Workspace prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-title-zh="侧栏原型" data-href-en="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-hierarchy-prototype.zh.html">Sidebar prototype</a>
+<a class="navlink" href="/docs/reference/design/ui/sidebar-luma-prototype.html" data-title-zh="Sidebar Luma draft" data-href-en="/docs/reference/design/ui/sidebar-luma-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-luma-prototype.zh.html">Sidebar Luma prototype</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/live-layout.html" data-title-zh="实时布局" data-href-en="/docs/reference/design/runtime/dag/live-layout.html" data-href-zh="/docs/reference/design/runtime/dag/live-layout.zh.html">Live layout</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="实施记录">Implementation records</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="界面同步" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">Interface synchronization</a>
 <a class="navlink" href="/docs/reference/design/repository-structure-implementation.html" data-title-zh="仓库迁移" data-href-en="/docs/reference/design/repository-structure-implementation.html" data-href-zh="/docs/reference/design/repository-structure-implementation.zh.html">Repository migration</a>
@@ -351,15 +352,15 @@
 <a class="navlink" href="/docs/reference/design/ui/icons.html" data-title-zh="图标体系" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html">Icon system</a></details>
 </details></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="执行与控制">Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="下一步决策">Next-step decisions</span></nav><div id="next-step-decision-makingdecisionmake-execchoices"></div>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="执行与控制">Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="下一步决策">Next-step decisions</span></nav><div id="next-step-decision-makingdecisionmake-agentchoices"></div>
 <h1 id="下一步决策">下一步决策<a class="header-anchor" href="#下一步决策">#</a></h1>
 <p>本文档描述 OpenProgram 里的<strong>下一步决策</strong>机制:agentic 函数把&quot;下一步做什么&quot;交给 LLM 决定——给它一组选项,它选一个,框架把这个选择直接解析成&quot;下一步的结果&quot;。这套机制和 provider 原生的 tool call 是两条独立的路。</p>
 <p>实现在框架内的 <code>openprogram/agentic_programming/decision.py</code>。两个入口,共用同一套选项形态和解析:</p>
 <ul>
 <li><code>decision.make(prompt, options)</code> —— 纯决策,模型不干活、直接挑。</li>
-<li><code>runtime.exec(..., choices=options)</code> —— 模型先跑一个完整 turn(推理、调工具),收尾才是一个决策。</li>
+<li><code>agent(prompt, choices=options)</code> —— 模型先跑一个完整 turn(推理、调工具),收尾才是一个决策。</li>
 </ul>
-<p><code>decision.make</code> 需要 runtime 去发模型调用,但 runtime 从 <code>Agent</code> method 装饰器设好的 <code>_current_runtime</code> ContextVar 自动取,所以在 agentic 函数内部调它不用传 runtime;在 agentic 函数外面调才需要显式传 <code>runtime=</code>。</p>
+<p>两个入口都在外层调用的 Runtime 上发模型调用。每次 <code>Agent</code> method 调用都会在 <code>_current_runtime</code> ContextVar 里绑定一个——Agent 配置的 Runtime,或调用方的——所以在 <code>Agent</code> method 里两个入口都不传 runtime;只有在任何 Agent 调用之外才需要显式传 <code>runtime=</code>。</p>
 <h2 id="和原生-tool-call-的区别">和原生 tool call 的区别<a class="header-anchor" href="#和原生-tool-call-的区别">#</a></h2>
 <table>
 <thead>
@@ -423,9 +424,9 @@
 <li>LLM 选了值 → 该值原样返回。</li>
 </ul>
 <p>两种情况都返回&quot;下一步的结果&quot;本身。调用方不检查&quot;选的是哪个&quot;、不按类型分支——决策本身就是分支,所以没有 <code>if</code> 要写。</p>
-<h2 id="入口二runtimeexecchoices-先干活再决策">入口二:<code>runtime.exec(choices=...)</code> —— 先干活、再决策<a class="header-anchor" href="#入口二runtimeexecchoices-先干活再决策">#</a></h2>
-<p>更常见的需求是:模型先跑一个完整 turn(推理、调工具、该干什么干什么),<strong>收尾时</strong>的 return 才是一个决策。用 <code>exec</code> 的 <code>choices=</code> 参数:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+<h2 id="入口二agentchoices-先干活再决策">入口二:<code>agent(choices=...)</code> —— 先干活、再决策<a class="header-anchor" href="#入口二agentchoices-先干活再决策">#</a></h2>
+<p>更常见的需求是:模型先跑一个完整 turn(推理、调工具、该干什么干什么),<strong>收尾时</strong>的 return 才是一个决策。用 <code>agent</code> 的 <code>choices=</code> 参数:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">agent</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
     <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
@@ -434,7 +435,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">handle_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticket</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""读工单、查资料、然后决定派给哪个流程。"""</span>
-        <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">"处理这个工单:</span><span class="si">{</span><span class="n">ticket</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
             <span class="n">toolset</span><span class="o">=</span><span class="s2">"default"</span><span class="p">,</span>          <span class="c1"># 前面:模型用工具查资料、跑命令</span>
             <span class="n">choices</span><span class="o">=</span><span class="p">{</span>                   <span class="c1"># 收尾:return 必须是这里选一个</span>
@@ -447,8 +448,8 @@
 <span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
 <span class="n">handle_ticket</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">handle_ticket</span>
 </code></pre>
-<p><code>exec(choices=...)</code> 做的事:把选项菜单和一句&quot;先干活、最后用 JSON 挑一个收尾&quot;的指令(<code>DECISION_FINISH_INSTRUCTION</code>)拼进 prompt,然后跑正常的 exec turn——<code>tools</code> / <code>toolset</code> 给的工具该调调、模型该推理推理。turn 结束时模型的最终回复必须是一个 <code>{&quot;call&quot;: ...}</code> JSON,<code>exec</code> 用 <code>resolve_decision</code> 把它解析掉:选了函数就执行返回结果,选了值就返回值。</p>
-<p><code>exec</code> 不带 <code>choices</code> 时返回原始回复文本;带 <code>choices</code> 时返回解析后的决策结果。<code>decision.make(prompt, options)</code> 等价于&quot;没有前置工作&quot;的 <code>exec(choices=options)</code>。</p>
+<p><code>agent(choices=...)</code> 做的事:把 <code>choices</code> 交给 Runtime 的 <code>exec</code>,由它把选项菜单和一句&quot;先干活、最后用 JSON 挑一个收尾&quot;的指令(<code>DECISION_FINISH_INSTRUCTION</code>)拼进 prompt,然后跑正常的 exec turn——<code>tools</code> / <code>toolset</code> 给的工具该调调、模型该推理推理。turn 结束时模型的最终回复必须是一个 <code>{&quot;call&quot;: ...}</code> JSON,<code>exec</code> 用 <code>resolve_decision</code> 把它解析掉:选了函数就执行返回结果,选了值就返回值。</p>
+<p><code>exec</code> 不带 <code>choices</code> 时返回原始回复文本;带 <code>choices</code> 时返回解析后的决策结果。<code>agent</code> 此时原样返回这个结果。<code>decision.make(prompt, options)</code> 等价于&quot;没有前置工作&quot;的 <code>agent(..., choices=options)</code>。</p>
 <h2 id="选项容器">选项容器<a class="header-anchor" href="#选项容器">#</a></h2>
 <p>每个选项像一个 tool:有名字、描述,以及一份<strong>负载 schema</strong>。三种选项:</p>
 <table>
@@ -527,7 +528,7 @@
 <h3 id="1-render_options-渲染菜单">1. <code>render_options</code> 渲染菜单<a class="header-anchor" href="#1-render_options-渲染菜单">#</a></h3>
 <p>对每个选项输出:签名 <code>name(参数: 类型, ...)</code>、描述、逐参数明细、一行 <code>Call:</code> JSON 示例。只显示 <code>source=&quot;llm&quot;</code> 的参数——<code>runtime</code> / <code>context</code> 注入的参数对 LLM 隐藏。参数若声明了 <code>options</code>(枚举),明细里列出可选值。<code>Call:</code> 示例的占位值是 JSON 原生字面量(<code>0</code> / <code>false</code> / <code>[]</code> / <code>{}</code> / <code>&quot;&lt;str&gt;&quot;</code>)。</p>
 <h3 id="2-调模型">2. 调模型<a class="header-anchor" href="#2-调模型">#</a></h3>
-<p><code>decision.make</code> 直接 <code>runtime.exec(prompt + 菜单)</code>;<code>exec(choices=)</code> 是把菜单拼进本来就要发的那次 turn。</p>
+<p><code>decision.make</code> 直接 <code>runtime.exec(prompt + 菜单)</code>;<code>agent(choices=)</code> 是把菜单拼进本来就要发的那次 turn。</p>
 <h3 id="3-parse_args-解析与校验">3. <code>parse_args</code> 解析与校验<a class="header-anchor" href="#3-parse_args-解析与校验">#</a></h3>
 <ul>
 <li><code>extract_action</code> 从 <code>```json</code> 代码块或裸文本里抠出带 <code>call</code> 键的 JSON。<code>call</code> 键有别名 <code>action</code> / <code>function</code> / <code>tool</code>,任一都接受。</li>
@@ -554,7 +555,7 @@
 <a class="lvl-2" href="#入口一decisionmake-纯决策">入口一:decision.make —— 纯决策</a>
 </li>
 <li>
-<a class="lvl-2" href="#入口二runtimeexecchoices-先干活再决策">入口二:runtime.exec(choices=...) —— 先干活、再决策</a>
+<a class="lvl-2" href="#入口二agentchoices-先干活再决策">入口二:agent(choices=...) —— 先干活、再决策</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>

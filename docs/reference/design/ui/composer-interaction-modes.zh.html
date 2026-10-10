@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -312,11 +312,12 @@
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">22</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">23</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-prototype.html" data-title-zh="输入框原型" data-href-en="/docs/reference/design/ui/composer-interaction-prototype.html" data-href-zh="/docs/reference/design/ui/composer-interaction-prototype.zh.html">Composer prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html" data-title-zh="工作区原型" data-href-en="/docs/reference/design/ui/project-workspace-prototype.html" data-href-zh="/docs/reference/design/ui/project-workspace-prototype.zh.html">Workspace prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-title-zh="侧栏原型" data-href-en="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-hierarchy-prototype.zh.html">Sidebar prototype</a>
+<a class="navlink" href="/docs/reference/design/ui/sidebar-luma-prototype.html" data-title-zh="Sidebar Luma draft" data-href-en="/docs/reference/design/ui/sidebar-luma-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-luma-prototype.zh.html">Sidebar Luma prototype</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/live-layout.html" data-title-zh="实时布局" data-href-en="/docs/reference/design/runtime/dag/live-layout.html" data-href-zh="/docs/reference/design/runtime/dag/live-layout.zh.html">Live layout</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="实施记录">Implementation records</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="界面同步" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">Interface synchronization</a>
 <a class="navlink" href="/docs/reference/design/repository-structure-implementation.html" data-title-zh="仓库迁移" data-href-en="/docs/reference/design/repository-structure-implementation.html" data-href-zh="/docs/reference/design/repository-structure-implementation.zh.html">Repository migration</a>
@@ -355,7 +356,7 @@
 <p>输入框用于普通消息与用户主动打开的函数表单。待处理的运行时提问、确认、表单和权限批准在输入框上方的独立面板显示，完成回执保留在对话中。待回答问题不会替换输入框、清空草稿、关闭函数表单、改变发送语义或抢占焦点。</p>
 <h2 id="普通消息与函数表单">普通消息与函数表单<a class="header-anchor" href="#普通消息与函数表单">#</a></h2>
 <p>输入框只有 <code>idle</code> 与 <code>fn-form</code> 两种状态。选择注册函数打开 <code>FunctionForm</code>，字段校验、关闭与切换动画仍由输入框管理。出现问题不取消函数表单。</p>
-<p>输入完整的注册函数 <code>name(parameter=literal, ...)</code> 表达式时使用相同调用分发与校验。说明文字、不完整表达式和代码块仍是普通聊天内容。执行中发送消息遵循原排队或注入设置；空输入保留停止操作。</p>
+<p>输入完整的注册函数 <code>name(parameter=literal, ...)</code> 表达式时使用相同调用分发与校验。说明文字、不完整表达式和代码块仍是普通聊天内容。执行中按回车或发送按钮把消息插入当前轮（steer），按 Cmd/Ctrl+回车排到下一轮；空输入保留停止操作。</p>
 <h2 id="决定输出卡片">决定输出卡片<a class="header-anchor" href="#决定输出卡片">#</a></h2>
 <p><code>PendingDecisionPanels</code> 在当前会话与分屏的输入框上方显示 <code>PendingDecision</code>，<code>DecisionOutputs</code> 在消息区显示终态回执。每张卡片复用 <code>QuestionMode</code> 处理 <code>ask</code>、<code>confirm</code>、<code>ask_many</code>、<code>form</code> 和 <code>approval</code>，回答字段与提交控件属于卡片。新问题不自动聚焦，并发问题保持稳定显示顺序。</p>
 <p>每次显示一道问题，顶部显示题号和标题，选项占满一行并显示说明、数字键和 Other 输入。Next 只切换题目，Back 保留草稿，最后 Submit 提交有序答案；表单保留纵向字段并提交字段对象。提交回执继续按问题和答案逐项显示，使用字段标题与可读值，不显示 JSON。权限批准保留允许范围、操作详情和明确同意/拒绝行为。问题出现本身不授权操作。</p>

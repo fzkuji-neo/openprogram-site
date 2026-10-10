@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/reference/api/agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/reference/api/agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -153,7 +153,7 @@
 <span class="c1"># 异步代码：answer = await researcher.arun("A question")</span>
 <span class="c1"># 或：answer = await agent_async("A question", tools=[])</span>
 </code></pre>
-<p><code>agent()</code> 接收字符串或内容块，可指定 <code>model</code>、<code>effort</code>、<code>tools</code> 和 <code>runtime</code>。工具执行选项见 <a href="/docs/reference/api/runtime.zh.html">Runtime</a>。<code>tools=None</code> 选择可用工具，<code>tools=[]</code> 禁用工具。<code>agent_async()</code> 使用同样的选项。</p>
+<p><code>agent()</code> 接收字符串或内容块，可指定 <code>model</code>、<code>effort</code>、<code>tools</code>、<code>choices</code> 和 <code>runtime</code>。<code>choices</code> 让收尾回复成为一次<a href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html">下一步决策</a>，并返回解析后的选择结果。工具执行选项见 <a href="/docs/reference/api/runtime.zh.html">Runtime</a>。<code>tools=None</code> 选择可用工具，<code>tools=[]</code> 禁用工具。<code>agent_async()</code> 使用同样的选项。</p>
 <p><code>Agent(model=..., instructions=..., context=..., tools=..., runtime=..., effort=..., **options)</code> 用实例设置覆盖类默认值，调用参数再覆盖实例设置。<code>Agent.from_spec(spec, **overrides)</code> 使用现有 AgentSpec 配置，不创建已保存 Agent 条目。</p>
 <p>构造对象不请求模型，也不创建执行会话。调用继承当前执行；没有外层执行时创建独立执行，并在结束时释放资源。复用实例不自动续接上一次独立会话。</p>
 <p>普通实例方法、静态方法与类方法自动建立调用作用域，包括单下划线帮助方法。双下划线特殊方法与生成器不采集。方法记录不会注册模型工具。在对应 <code>method_options</code> 设置 <code>&quot;tool&quot;: True</code> 可显式登记工具。 <code>method_options = {&quot;method_name&quot;: {&quot;expose&quot;: &quot;io&quot;, &quot;render_range&quot;: {...}}}</code> 无需装饰器即可设置方法元数据。</p>
@@ -205,7 +205,7 @@
         <span class="s1">'f'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""One-line summary of what f does."""</span>
         <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">..."</span><span class="p">}])</span>
 
@@ -386,8 +386,10 @@
 </tbody>
 </table>
 <p>函数名、参数名 / 类型 / 默认值、一句话摘要都从函数签名和 docstring 自动读取,不在 method_options 中重复。</p>
+<h3 id="选择-runtime">选择 Runtime<a class="header-anchor" href="#选择-runtime">#</a></h3>
+<p>方法在它所属 Agent 配置的 Runtime 上运行;Agent 没有配置时用调用方的:<code>ExampleAgent(runtime=rt).f(&quot;x&quot;)</code> 让 <code>f</code> 及其中每次模型请求都在 <code>rt</code> 上运行,它调用的 Agent 方法也继承 <code>rt</code>。Runtime 在程序入口(CLI、脚本、测试)配置,不通过方法参数往下传。一个工作流要用两个模型时——比如作者和评审——给第二个角色一个自带 Runtime 的 Agent 实例。</p>
 <h3 id="runtime-注入">Runtime 注入<a class="header-anchor" href="#runtime-注入">#</a></h3>
-<p>名为 <code>runtime</code>、<code>exec_runtime</code> 或 <code>review_runtime</code> 的参数会自动注入:调用方没传(或传 <code>None</code>)时,先从当前调用链取 runtime;作为入口调用时经 <code>create_runtime()</code>(自动检测)新建,函数返回时再关闭。一个函数可以声明多个 runtime 参数,全部填同一个 runtime。这些参数不会出现在 LLM 工具 schema 和 WebUI 表单里。</p>
+<p>旧函数仍可能声明名为 <code>runtime</code>、<code>exec_runtime</code> 或 <code>review_runtime</code> 的参数,它们会自动注入:调用方没传(或传 <code>None</code>)时,先从当前调用链取 runtime;作为入口调用时经 <code>create_runtime()</code>(自动检测)新建,函数返回时再关闭。一个函数可以声明多个 runtime 参数,全部填同一个 runtime。这些参数不会出现在 LLM 工具 schema 和 WebUI 表单里。新写的方法不声明这些参数。</p>
 <h3 id="自省与安全">自省与安全<a class="header-anchor" href="#自省与安全">#</a></h3>
 <ul>
 <li><code>fn.spec</code> — 自动生成的 JSON-schema 工具 spec(<code>{&quot;name&quot;, &quot;description&quot;, &quot;parameters&quot;}</code>);<code>fn.execute(**kwargs)</code> 用 LLM 提供的 kwargs 调用 wrapper。</li>
@@ -444,6 +446,9 @@
 </li>
 <li>
 <a class="lvl-3" href="#工具注册参数">工具注册参数</a>
+</li>
+<li>
+<a class="lvl-3" href="#选择-runtime">选择 Runtime</a>
 </li>
 <li>
 <a class="lvl-3" href="#runtime-注入">Runtime 注入</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791601969" data-alt-lang-url="/docs/reference/design/ui/surface-system.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791621686" data-alt-lang-url="/docs/reference/design/ui/surface-system.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -312,11 +312,12 @@
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">22</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">23</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-prototype.html" data-title-zh="输入框原型" data-href-en="/docs/reference/design/ui/composer-interaction-prototype.html" data-href-zh="/docs/reference/design/ui/composer-interaction-prototype.zh.html">Composer prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html" data-title-zh="工作区原型" data-href-en="/docs/reference/design/ui/project-workspace-prototype.html" data-href-zh="/docs/reference/design/ui/project-workspace-prototype.zh.html">Workspace prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-title-zh="侧栏原型" data-href-en="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-hierarchy-prototype.zh.html">Sidebar prototype</a>
+<a class="navlink" href="/docs/reference/design/ui/sidebar-luma-prototype.html" data-title-zh="Sidebar Luma draft" data-href-en="/docs/reference/design/ui/sidebar-luma-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-luma-prototype.zh.html">Sidebar Luma prototype</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/live-layout.html" data-title-zh="实时布局" data-href-en="/docs/reference/design/runtime/dag/live-layout.html" data-href-zh="/docs/reference/design/runtime/dag/live-layout.zh.html">Live layout</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="实施记录">Implementation records</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="界面同步" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">Interface synchronization</a>
 <a class="navlink" href="/docs/reference/design/repository-structure-implementation.html" data-title-zh="仓库迁移" data-href-en="/docs/reference/design/repository-structure-implementation.html" data-href-zh="/docs/reference/design/repository-structure-implementation.zh.html">Repository migration</a>
@@ -361,21 +362,38 @@ the ones that usually go wrong (white fill on a pale rail).</p>
 <pre><code>─────────────────────────────────────────────────────────────────
 surface        background tone           where it lives
 ─────────────────────────────────────────────────────────────────
-deep           `--bg` /                  left sidebar, right
-               `--bg-secondary`          sidebar (branches /
-                                         worktrees / mini-DAG)
+deep           `--bg-secondary`          the page behind the
+                                         three columns (`.app`)
 ─────────────────────────────────────────────────────────────────
-panel          slightly lifted           chat stream, settings
-               `--bg-surface` /          panes, dialog content,
-               `--bg-tertiary`           function-card grid,
-                                         attach card, runtime
-                                         blocks
+panel          raised cards:             the left and right rails
+               `--bg-input` (rails),     (`--bg-input`, same
+               `--bg-primary` (centre)   material as the input
+                                         box) and the centre
+                                         column (`--bg-primary`:
+                                         chat stream, settings
+                                         and every other page)
 ─────────────────────────────────────────────────────────────────
 </code></pre>
-<p>The lift between <strong>deep</strong> and <strong>panel</strong> is intentional — it
-substitutes for an explicit border / shadow on the chat content
-column, so the bubble area reads as a separate sheet floating
-above the navigation.</p>
+<p>The window is three floating cards on one page — the shadcn
+Sidebar <code>floating</code> shell for both rails (<code>components/ui/sidebar.tsx</code>,
+the registry's shell only) and its <code>inset</code> idea for the centre
+column at once. Each card has 14px corners (<code>rounded-2xl</code>) and the
+per-theme raised shadow (<code>--composer-shadow</code>), no border and no
+ring; the rails keep a 7px gutter on every side (<code>p-2</code>), the
+centre card sits 7px off the top and bottom edges and takes its
+side gaps from the rails' gutters. The rails are white
+(<code>--bg-input</code>) so they share a material with the input box and
+the user bubble; the centre card stays <code>--bg-primary</code> so those
+white raised elements keep their contrast on it.</p>
+<p>In a split layout the centre card dissolves and every pane is its
+own card of the same material (<code>.center-col[data-split]</code>): each
+pane keeps 7px to the rail cards and the window edges, and the
+panes sit 8px apart. Empty panes draw the same card themselves.</p>
+<p>Collapsed, a rail is <code>--rail-collapsed-w</code> (63px: the 49px icon
+rail inside the card plus the two gutters);
+<code>components/layout/use-resizable-rail.ts</code> carries the same number.
+Everything inside the cards — rows, section headers, the footer —
+is unchanged by the shell and keeps the recipes below.</p>
 <h2 id="interaction-language-per-surface">Interaction language per surface<a class="header-anchor" href="#interaction-language-per-surface">#</a></h2>
 <p>Mouse interaction never draws an outer focus ring on buttons. Keyboard focus
 on buttons uses a small brightness change without an outline or box-shadow.
@@ -391,9 +409,8 @@ They should NOT behave like buttons:</p>
 <li>hover / selected → switch background to a <strong>visible grey</strong>
 (<code>--bg-hover</code> / <code>--bg-selected</code>), text stays in
 <code>--text-primary</code> or <code>--text-secondary</code></li>
-<li>never fill selected rows with <code>--bg-input</code>. In light theme
-that token is white; on a light-grey rail the selected row
-washes out and looks faded</li>
+<li>never fill selected rows with <code>--bg-input</code>. The rail card is
+already that white; a white row on it disappears</li>
 <li>avoid the brand-coloured glyph treatment except for the very
 small status / activity indicators (<code>.indicator-dot</code>)</li>
 </ul>

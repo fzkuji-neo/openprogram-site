@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791601969" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791621686" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -135,7 +135,7 @@
 <td>function name, when-to-pick description, parameter name / type / description / enum, whether each parameter is system-filled</td>
 </tr>
 <tr>
-<td><code>parse_args(reply, options, runtime, ...)</code> (decision extract + dispatch + retry)</td>
+<td><code>parse_args(reply, options, ...)</code> (decision extract + dispatch + retry)</td>
 <td>parameter names + types + enum + hidden flag, <code>runtime</code>-style auto-inject allowlist</td>
 </tr>
 <tr>
@@ -347,7 +347,7 @@
         <span class="s1">'polish'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'input'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'text'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Text to polish.'</span><span class="p">},</span> <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Output style.'</span><span class="p">,</span> <span class="s1">'options'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'academic'</span><span class="p">,</span> <span class="s1">'casual'</span><span class="p">]}}},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Polish a text in the given style."""</span>
         <span class="o">...</span>
 
@@ -368,7 +368,6 @@
         <span class="n">max_score</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">show_rubric_internals</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>           <span class="c1"># filled by Python via context, not LLM</span>
-        <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">,</span>          <span class="c1"># auto-injected</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Score an essay against a named rubric and return a structured report."""</span>
         <span class="o">...</span>
@@ -385,13 +384,12 @@
         <span class="s1">'polish'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">:</span> <span class="n">Runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">polish</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Polish a text in the given style.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            text: Text to polish.</span>
 <span class="sd">            style: Output style.</span>
-<span class="sd">            runtime: LLM runtime.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Polished text.</span>
@@ -467,6 +465,7 @@ no description; only parameter name + type
 </tr>
 </tbody>
 </table>
+<p>New Agent methods do not declare these parameters: a method runs on its Agent's Runtime (<code>Agent(runtime=...)</code>) or the caller's, and nested calls inherit it. Injection remains for existing functions that still declare them.</p>
 <p>These names live in two constants in two files: <code>_RUNTIME_PARAMS</code> in <code>agentic_programming/call_state.py</code> (runtime injection + filtering from tool specs) and <code>_AUTO_PARAMS</code> in <code>agentic_programming/decision.py</code> (hiding from decision menus + dispatch). To add a new auto-injected name, edit both. Do not mark them per-callsite via <code>input={&quot;x&quot;: {&quot;hidden&quot;: True}}</code>.</p>
 <h2 id="8-webui-rendering-behavior">8. WebUI rendering behavior<a class="header-anchor" href="#8-webui-rendering-behavior">#</a></h2>
 <p>The WebUI does not introspect live Python objects: it AST/regex-parses the source files (<code>openprogram/webui/_functions.py</code>). Consequently <code>input=</code> must be written as a literal dict in the method configuration call to show up in the form — metadata built dynamically (variables, helper calls) is invisible to the WebUI.</p>
@@ -569,7 +568,7 @@ no description; only parameter name + type
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> Every LLM-visible parameter has a <code>description</code> in <code>input=</code></li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> Enum parameters use <code>options</code> in <code>input=</code> (not buried in the description text)</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> System-filled parameters (DB session, current user, etc.) are marked <code>hidden: True</code></li>
-<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> Framework auto-injected parameters (<code>runtime</code>, etc.) need no annotation; the framework detects them</li>
+<li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> No <code>runtime</code> parameter: the method runs on its Agent's Runtime</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> The function name is clear (<code>fn.__name__</code> is what the LLM sees as the action name)</li>
 <li class="task-list-item enabled"><input class="task-list-item-checkbox"  type="checkbox"> No role-play, no empty directives, no metaphors in the docstring</li>
 </ul>

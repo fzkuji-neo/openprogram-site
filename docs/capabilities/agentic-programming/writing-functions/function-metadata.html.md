@@ -22,7 +22,7 @@ This spec defines a single source-of-truth so every consumer reads metadata by t
 |---|---|
 | `runtime.exec(tools=[fn])` (provider-native tool_use) | function name, overall description, parameter JSON schema (type / required / enum / description) |
 | `render_options(options)` (decision menu) | function name, when-to-pick description, parameter name / type / description / enum, whether each parameter is system-filled |
-| `parse_args(reply, options, runtime, ...)` (decision extract + dispatch + retry) | parameter names + types + enum + hidden flag, `runtime`-style auto-inject allowlist |
+| `parse_args(reply, options, ...)` (decision extract + dispatch + retry) | parameter names + types + enum + hidden flag, `runtime`-style auto-inject allowlist |
 | WebUI parameter form | description / placeholder / multiline / options / hidden |
 | `llm()` rendered context | docstring — carried as `metadata.doc` and prefixed into the rendered context text. The default system prompt comes from the ambient runtime (plus the skills block), not from the docstring. |
 | Session-DAG rendering (`render_context`) | `expose` mode + `render_range` |
@@ -114,7 +114,7 @@ class ExampleAgent(Agent):
         'polish': {'tool': True, 'input': {'text': {'description': 'Text to polish.'}, 'style': {'description': 'Output style.', 'options': ['academic', 'casual']}}},
     }
 
-    def polish(self, text: str, style: str, runtime: Runtime) -> str:
+    def polish(self, text: str, style: str) -> str:
         """Polish a text in the given style."""
         ...
 
@@ -138,7 +138,6 @@ class ExampleAgent(Agent):
         max_score: int,
         show_rubric_internals: bool,
         session_id: str,           # filled by Python via context, not LLM
-        runtime: Runtime,          # auto-injected
     ) -> dict:
         """Score an essay against a named rubric and return a structured report."""
         ...
@@ -159,13 +158,12 @@ class ExampleAgent(Agent):
         'polish': {'tool': True},
     }
 
-    def polish(self, text: str, style: str, runtime: Runtime) -> str:
+    def polish(self, text: str, style: str) -> str:
         """Polish a text in the given style.
 
         Args:
             text: Text to polish.
             style: Output style.
-            runtime: LLM runtime.
 
         Returns:
             Polished text.
@@ -210,6 +208,8 @@ The following parameter names are reserved by convention: if a function's signat
 | `runtime` | The current Runtime instance |
 | `exec_runtime` | The runtime used for execution (multi-runtime setups) |
 | `review_runtime` | The runtime used for review (multi-runtime setups) |
+
+New Agent methods do not declare these parameters: a method runs on its Agent's Runtime (`Agent(runtime=...)`) or the caller's, and nested calls inherit it. Injection remains for existing functions that still declare them.
 
 These names live in two constants in two files: `_RUNTIME_PARAMS` in `agentic_programming/call_state.py` (runtime injection + filtering from tool specs) and `_AUTO_PARAMS` in `agentic_programming/decision.py` (hiding from decision menus + dispatch). To add a new auto-injected name, edit both. Do not mark them per-callsite via `input={"x": {"hidden": True}}`.
 
@@ -264,7 +264,7 @@ When writing a new `Agent` method:
 - [ ] Every LLM-visible parameter has a `description` in `input=`
 - [ ] Enum parameters use `options` in `input=` (not buried in the description text)
 - [ ] System-filled parameters (DB session, current user, etc.) are marked `hidden: True`
-- [ ] Framework auto-injected parameters (`runtime`, etc.) need no annotation; the framework detects them
+- [ ] No `runtime` parameter: the method runs on its Agent's Runtime
 - [ ] The function name is clear (`fn.__name__` is what the LLM sees as the action name)
 - [ ] No role-play, no empty directives, no metaphors in the docstring
 

@@ -22,7 +22,7 @@
 |---|---|
 | `runtime.exec(tools=[fn])`（provider 原生 tool_use） | 函数名、整体描述、参数 JSON schema（type / required / enum / description） |
 | `render_options(options)`（决策菜单） | 函数名、何时选用的描述、参数 name / type / description / enum，以及每个参数是否由系统填充 |
-| `parse_args(reply, options, runtime, ...)`（决策抽取 + 派发 + 重试） | 参数名 + 类型 + enum + hidden 标志，以及 `runtime` 式的自动注入白名单 |
+| `parse_args(reply, options, ...)`（决策抽取 + 派发 + 重试） | 参数名 + 类型 + enum + hidden 标志，以及 `runtime` 式的自动注入白名单 |
 | WebUI 参数表单 | description / placeholder / multiline / options / hidden |
 | `llm()` 渲染出的上下文 | docstring——以 `metadata.doc` 携带，并作为前缀拼入渲染出的上下文文本。默认 system prompt 来自环境 runtime（外加 skills 区块），而非来自 docstring。 |
 | 会话 DAG 渲染（`render_context`） | `expose` 模式 + `render_range` |
@@ -114,7 +114,7 @@ class ExampleAgent(Agent):
         'polish': {'tool': True, 'input': {'text': {'description': 'Text to polish.'}, 'style': {'description': 'Output style.', 'options': ['academic', 'casual']}}},
     }
 
-    def polish(self, text: str, style: str, runtime: Runtime) -> str:
+    def polish(self, text: str, style: str) -> str:
         """Polish a text in the given style."""
         ...
 
@@ -138,7 +138,6 @@ class ExampleAgent(Agent):
         max_score: int,
         show_rubric_internals: bool,
         session_id: str,           # 由 Python 通过上下文填充，而非 LLM
-        runtime: Runtime,          # 自动注入
     ) -> dict:
         """Score an essay against a named rubric and return a structured report."""
         ...
@@ -159,13 +158,12 @@ class ExampleAgent(Agent):
         'polish': {'tool': True},
     }
 
-    def polish(self, text: str, style: str, runtime: Runtime) -> str:
+    def polish(self, text: str, style: str) -> str:
         """Polish a text in the given style.
 
         Args:
             text: Text to polish.
             style: Output style.
-            runtime: LLM runtime.
 
         Returns:
             Polished text.
@@ -210,6 +208,8 @@ fn.input_meta[name]["placeholder"]  (渲染为 "e.g. {placeholder}")
 | `runtime` | 当前的 Runtime 实例 |
 | `exec_runtime` | 用于执行的运行时（多运行时设置） |
 | `review_runtime` | 用于评审的运行时（多运行时设置） |
+
+新写的 Agent method 不声明这些参数：method 运行在所属 Agent 的 Runtime（`Agent(runtime=...)`）或调用方的 Runtime 上，嵌套调用会自动沿用。注入机制只为仍声明这些参数的已有函数保留。
 
 这些名字存放在两个文件中的两个常量里：`agentic_programming/call_state.py` 中的 `_RUNTIME_PARAMS`（运行时注入 + 从 tool spec 中过滤）和 `agentic_programming/decision.py` 中的 `_AUTO_PARAMS`（从决策菜单中隐藏 + 派发）。要新增一个自动注入的名字，需同时改这两处。不要在单个调用处用 `input={"x": {"hidden": True}}` 来标记它们。
 
@@ -264,7 +264,7 @@ WebUI 表单按下列规则渲染每个参数（实现见 `apps/web/components/c
 - [ ] 每个对 LLM 可见的参数在 `input=` 中都有 `description`
 - [ ] 枚举参数在 `input=` 中使用 `options`（而非埋在描述文本里）
 - [ ] 由系统填充的参数（DB session、当前用户等）标记 `hidden: True`
-- [ ] 框架自动注入的参数（`runtime` 等）无需注解；框架会自行检测它们
+- [ ] 不声明 `runtime` 参数：method 运行在所属 Agent 的 Runtime 上
 - [ ] 函数名清晰（`fn.__name__` 就是 LLM 看到的动作名）
 - [ ] docstring 中没有角色扮演、没有空洞指令、没有比喻
 

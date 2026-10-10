@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791601969" data-alt-lang-url="/docs/reference/api/agent.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791621686" data-alt-lang-url="/docs/reference/api/agent.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -153,7 +153,7 @@
 <span class="c1"># In async code: answer = await researcher.arun("A question")</span>
 <span class="c1"># Or: answer = await agent_async("A question", tools=[])</span>
 </code></pre>
-<p><code>agent()</code> accepts a string or content blocks. Common keyword options are <code>model</code>, <code>effort</code>, <code>tools</code>, and <code>runtime</code>. See <a href="/docs/reference/api/runtime.html">Runtime</a> for tool execution options. <code>tools=None</code> resolves available tools. <code>tools=[]</code> requests no tools. <code>agent_async()</code> accepts the same options.</p>
+<p><code>agent()</code> accepts a string or content blocks. Common keyword options are <code>model</code>, <code>effort</code>, <code>tools</code>, <code>choices</code>, and <code>runtime</code>. <code>choices</code> makes the closing reply a <a href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html">next-step decision</a> and returns the resolved pick. See <a href="/docs/reference/api/runtime.html">Runtime</a> for tool execution options. <code>tools=None</code> resolves available tools. <code>tools=[]</code> requests no tools. <code>agent_async()</code> accepts the same options.</p>
 <p><code>Agent(model=..., instructions=..., context=..., tools=..., runtime=..., effort=..., **options)</code> uses instance settings over class defaults. Per-call options override instance settings. <code>Agent.from_spec(spec, **overrides)</code> uses an existing AgentSpec configuration without creating a saved Agent entry.</p>
 <p>Construction makes no model request and creates no execution session. An invocation inherits an active execution. Otherwise, it owns a separate execution and releases its resources. Reusing an instance does not continue a previous independent conversation.</p>
 <p>Ordinary instance, static, and class methods receive automatic call scopes, including single-underscore helpers. Dunder methods and generators are excluded. Method recording does not register a model tool. Set <code>&quot;tool&quot;: True</code> in that method's <code>method_options</code> to request explicit registration. <code>method_options = {&quot;method_name&quot;: {&quot;expose&quot;: &quot;io&quot;, &quot;render_range&quot;: {...}}}</code> supplies method metadata without a decorator.</p>
@@ -205,7 +205,7 @@
         <span class="s1">'f'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""One-line summary of what f does."""</span>
         <span class="k">return</span> <span class="n">llm</span><span class="p">([{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"...</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">..."</span><span class="p">}])</span>
 
@@ -398,8 +398,10 @@
 </tbody>
 </table>
 <p>The signature and docstring supply method names, parameter types, defaults, and summaries. <code>method_options</code> supplies fields that the signature does not represent.</p>
+<h3 id="choosing-the-runtime">Choosing the Runtime<a class="header-anchor" href="#choosing-the-runtime">#</a></h3>
+<p>A method runs on its Agent's configured Runtime, or on the caller's when the Agent has none: <code>ExampleAgent(runtime=rt).f(&quot;x&quot;)</code> runs <code>f</code> and every model request inside it on <code>rt</code>, and Agent methods it calls inherit <code>rt</code>. Configure Runtimes where the program starts (CLI, script, test), not by passing them through method arguments. For two models in one workflow — an author and a reviewer, say — give the second role its own Agent instance with its own Runtime.</p>
 <h3 id="runtime-injection">Runtime injection<a class="header-anchor" href="#runtime-injection">#</a></h3>
-<p>Parameters named <code>runtime</code>, <code>exec_runtime</code>, or <code>review_runtime</code> are auto-injected: if the caller passes none (or <code>None</code>), the runtime is taken from the current call chain, or — for an entry-point call — created via <code>create_runtime()</code> (auto-detection) and closed again when the function returns. A function may declare more than one runtime parameter; all of them are filled with the same runtime. These parameters never appear in the LLM tool schema or the WebUI form.</p>
+<p>Older functions may still declare parameters named <code>runtime</code>, <code>exec_runtime</code>, or <code>review_runtime</code>; they are auto-injected: if the caller passes none (or <code>None</code>), the runtime is taken from the current call chain, or — for an entry-point call — created via <code>create_runtime()</code> (auto-detection) and closed again when the function returns. A function may declare more than one runtime parameter; all of them are filled with the same runtime. These parameters never appear in the LLM tool schema or the WebUI form. New methods do not declare them.</p>
 <h3 id="introspection-and-safety">Introspection and safety<a class="header-anchor" href="#introspection-and-safety">#</a></h3>
 <ul>
 <li><code>fn.spec</code> — the auto-generated JSON-schema tool spec (<code>{&quot;name&quot;, &quot;description&quot;, &quot;parameters&quot;}</code>); <code>fn.execute(**kwargs)</code> invokes the wrapper with LLM-provided kwargs.</li>
@@ -471,6 +473,9 @@
 </li>
 <li>
 <a class="lvl-3" href="#tool-registration-parameters">Tool-registration parameters</a>
+</li>
+<li>
+<a class="lvl-3" href="#choosing-the-runtime">Choosing the Runtime</a>
 </li>
 <li>
 <a class="lvl-3" href="#runtime-injection">Runtime injection</a>

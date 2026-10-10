@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/reference/design/ui/surface-system.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/reference/design/ui/surface-system.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -312,11 +312,12 @@
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">22</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">23</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-prototype.html" data-title-zh="输入框原型" data-href-en="/docs/reference/design/ui/composer-interaction-prototype.html" data-href-zh="/docs/reference/design/ui/composer-interaction-prototype.zh.html">Composer prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html" data-title-zh="工作区原型" data-href-en="/docs/reference/design/ui/project-workspace-prototype.html" data-href-zh="/docs/reference/design/ui/project-workspace-prototype.zh.html">Workspace prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-title-zh="侧栏原型" data-href-en="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-hierarchy-prototype.zh.html">Sidebar prototype</a>
+<a class="navlink" href="/docs/reference/design/ui/sidebar-luma-prototype.html" data-title-zh="Sidebar Luma draft" data-href-en="/docs/reference/design/ui/sidebar-luma-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-luma-prototype.zh.html">Sidebar Luma prototype</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/live-layout.html" data-title-zh="实时布局" data-href-en="/docs/reference/design/runtime/dag/live-layout.html" data-href-zh="/docs/reference/design/runtime/dag/live-layout.zh.html">Live layout</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="实施记录">Implementation records</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="界面同步" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">Interface synchronization</a>
 <a class="navlink" href="/docs/reference/design/repository-structure-implementation.html" data-title-zh="仓库迁移" data-href-en="/docs/reference/design/repository-structure-implementation.html" data-href-zh="/docs/reference/design/repository-structure-implementation.zh.html">Repository migration</a>
@@ -357,16 +358,17 @@
 <pre><code>─────────────────────────────────────────────────────────────────
 surface        background tone           where it lives
 ─────────────────────────────────────────────────────────────────
-deep           `--bg` /                  左侧栏、右侧栏
-               `--bg-secondary`          （branches / worktrees /
-                                         mini-DAG）
+deep           `--bg-secondary`          三栏背后的页面（`.app`）
 ─────────────────────────────────────────────────────────────────
-panel          略抬升的                  聊天流、设置页、对话框、
-               `--bg-surface` /          function-card 网格、
-               `--bg-tertiary`           attach 卡片、runtime 块
+panel          浮起的卡片：               左右两条侧栏（`--bg-input`，
+               `--bg-input`（侧栏）、     和输入框同一种材质）和中间
+               `--bg-primary`（中栏）     一栏（`--bg-primary`：聊天
+                                         流、设置页和其他所有页面）
 ─────────────────────────────────────────────────────────────────
 </code></pre>
-<p><strong>deep</strong> 与 <strong>panel</strong> 之间的抬升是有意的——它替代聊天内容列上显式的边框 / 阴影，让气泡区读起来像一张浮在导航之上的纸。</p>
+<p>整个窗口是一张页面上的三张浮起卡片——左右栏用 shadcn Sidebar 的 <code>floating</code> 壳（<code>components/ui/sidebar.tsx</code>，只取注册表的壳），中栏同时用它 <code>inset</code> 的思路。每张卡片 14px 圆角（<code>rounded-2xl</code>）、每套主题自己的浮起阴影（<code>--composer-shadow</code>），无边框、无描边；侧栏四周各留 7px（<code>p-2</code>），中栏上下各离边 7px，左右的缝由侧栏的留白提供。侧栏用白色（<code>--bg-input</code>），和输入框、用户气泡同一种材质；中栏保持 <code>--bg-primary</code>，这样白色的浮起元素在它上面仍有对比。</p>
+<p>分屏时中栏这张卡片消失，每个窗格各自是一张同材质的卡片（<code>.center-col[data-split]</code>）：每个窗格离侧栏卡片和窗口边缘 7px，窗格之间相隔 8px。空窗格自己画同样的卡片。</p>
+<p>收起时一条侧栏宽 <code>--rail-collapsed-w</code>（63px：卡片里 49px 的图标轨加两侧留白），<code>components/layout/use-resizable-rail.ts</code> 用同一个数。卡片里的东西——行、分组标题、页脚——不受壳子影响，继续用下面的配方。</p>
 <h2 id="各表面的交互语言">各表面的交互语言<a class="header-anchor" href="#各表面的交互语言">#</a></h2>
 <p>鼠标点按钮不画外圈焦点环。键盘聚焦普通按钮只轻微提高亮度，不用 outline 或 box-shadow。顶部 <code>role=&quot;tab&quot;</code> 是唯一例外：用当前主题的 <code>--focus-ring</code>，深色更亮，浅色更深。</p>
 <h3 id="deep-表面侧边栏">Deep 表面（侧边栏）<a class="header-anchor" href="#deep-表面侧边栏">#</a></h3>
@@ -374,7 +376,7 @@ panel          略抬升的                  聊天流、设置页、对话框�
 <ul>
 <li>闲置：无边框、无描边、无填充</li>
 <li>悬停 / 选中：背景换成<strong>看得出的灰色</strong>（<code>--bg-hover</code> / <code>--bg-selected</code>），文字仍是 <code>--text-primary</code> 或 <code>--text-secondary</code></li>
-<li>选中行<strong>禁止</strong>用 <code>--bg-input</code> 填充。浅色主题里这个 token 是白的，铺在浅灰侧栏上会发白、发淡</li>
+<li>选中行<strong>禁止</strong>用 <code>--bg-input</code> 填充。侧栏卡片本身就是这个白，白行铺上去会消失</li>
 <li>不用品牌色字形，唯一例外是极小的状态点（<code>.indicator-dot</code>）</li>
 </ul>
 <p>理由：侧栏密、扫得勤。一片品牌色胶囊会吵，还会跟内容列抢视线。悬停变灰让这一层安静，点击目标仍有反馈。</p>

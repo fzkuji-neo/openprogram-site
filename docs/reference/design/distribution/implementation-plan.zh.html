@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/reference/design/distribution/implementation-plan.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/reference/design/distribution/implementation-plan.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -312,11 +312,12 @@
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
-<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">22</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
+<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">23</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-prototype.html" data-title-zh="输入框原型" data-href-en="/docs/reference/design/ui/composer-interaction-prototype.html" data-href-zh="/docs/reference/design/ui/composer-interaction-prototype.zh.html">Composer prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html" data-title-zh="工作区原型" data-href-en="/docs/reference/design/ui/project-workspace-prototype.html" data-href-zh="/docs/reference/design/ui/project-workspace-prototype.zh.html">Workspace prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-title-zh="侧栏原型" data-href-en="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-hierarchy-prototype.zh.html">Sidebar prototype</a>
+<a class="navlink" href="/docs/reference/design/ui/sidebar-luma-prototype.html" data-title-zh="Sidebar Luma draft" data-href-en="/docs/reference/design/ui/sidebar-luma-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-luma-prototype.zh.html">Sidebar Luma prototype</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/live-layout.html" data-title-zh="实时布局" data-href-en="/docs/reference/design/runtime/dag/live-layout.html" data-href-zh="/docs/reference/design/runtime/dag/live-layout.zh.html">Live layout</a></details>
 <details class="nav-sec nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="实施记录">Implementation records</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="界面同步" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">Interface synchronization</a>
 <a class="navlink" href="/docs/reference/design/repository-structure-implementation.html" data-title-zh="仓库迁移" data-href-en="/docs/reference/design/repository-structure-implementation.html" data-href-zh="/docs/reference/design/repository-structure-implementation.zh.html">Repository migration</a>
@@ -388,7 +389,7 @@
 <ul>
 <li>基线提交：<code>9477273e</code>。</li>
 <li>公开入口：<code>npm --prefix apps/desktop run dist</code> 构建并验证一个完整的临时 <code>OpenProgram.app</code>，只替换 <code>/Applications/OpenProgram.app</code>。</li>
-<li>图标合同：<code>apps/desktop/build/AppIcon.icon</code> 是 Apple 分层设计源，其四个 1024 x 1024 SVG 图层不预先裁剪系统轮廓，并保留已批准的品牌圆环与三个节点。受支持的 macOS 15 构建机缺少完整 Xcode <code>actool</code> 流程，因此已审查的 <code>apps/desktop/build/icon.icns</code> 提交为 Electron 打包输入。检查同时验证两个资产、全部旧格式表示及安装后的系统轮廓；已删除的手绘外形 SVG 不得恢复。</li>
+<li>图标合同：<code>apps/desktop/build/AppIcon.icon</code> 是 Apple 分层设计源，其四个 1024 x 1024 SVG 图层不预先裁剪系统轮廓，并保留已批准的细胞与三个扁平圆片。受支持的 macOS 15 构建机缺少完整 Xcode <code>actool</code> 流程，因此已审查的 <code>apps/desktop/build/icon.icns</code> 提交为 Electron 打包输入。检查同时验证两个资产、全部旧格式表示及安装后的系统轮廓；已删除的手绘外形 SVG 不得恢复。</li>
 <li>事务合同：激活失败不得删除旧 App 唯一可恢复副本。真实 launchd 卸载失败在修改 App 前停止；已经卸载的过期 plist 可替换。Launch Services 注册后的失败恢复并重新注册旧规范 App，且不覆盖最初安装错误。组装后的 App 在安装前通过现有完整打包运行时冒烟检查。</li>
 <li>并发合同：跨 worktree 打包共用一个稳定的用户级锁；安装在目标 Applications 目录使用覆盖完整事务的原子锁。竞争安装器在 App 或服务修改前失败，不能创建嵌套 bundle。</li>
 <li>清理边界：打包清理随机 App 目录、暂存运行时、Python wheel 构建、生成的 Web 构建/输出、复制的 Web 前端和锁。不删除已安装 App 数据、源码、包依赖或用户状态。</li>

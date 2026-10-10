@@ -12,22 +12,41 @@ the ones that usually go wrong (white fill on a pale rail).
 ─────────────────────────────────────────────────────────────────
 surface        background tone           where it lives
 ─────────────────────────────────────────────────────────────────
-deep           `--bg` /                  left sidebar, right
-               `--bg-secondary`          sidebar (branches /
-                                         worktrees / mini-DAG)
+deep           `--bg-secondary`          the page behind the
+                                         three columns (`.app`)
 ─────────────────────────────────────────────────────────────────
-panel          slightly lifted           chat stream, settings
-               `--bg-surface` /          panes, dialog content,
-               `--bg-tertiary`           function-card grid,
-                                         attach card, runtime
-                                         blocks
+panel          raised cards:             the left and right rails
+               `--bg-input` (rails),     (`--bg-input`, same
+               `--bg-primary` (centre)   material as the input
+                                         box) and the centre
+                                         column (`--bg-primary`:
+                                         chat stream, settings
+                                         and every other page)
 ─────────────────────────────────────────────────────────────────
 ```
 
-The lift between **deep** and **panel** is intentional — it
-substitutes for an explicit border / shadow on the chat content
-column, so the bubble area reads as a separate sheet floating
-above the navigation.
+The window is three floating cards on one page — the shadcn
+Sidebar `floating` shell for both rails (`components/ui/sidebar.tsx`,
+the registry's shell only) and its `inset` idea for the centre
+column at once. Each card has 14px corners (`rounded-2xl`) and the
+per-theme raised shadow (`--composer-shadow`), no border and no
+ring; the rails keep a 7px gutter on every side (`p-2`), the
+centre card sits 7px off the top and bottom edges and takes its
+side gaps from the rails' gutters. The rails are white
+(`--bg-input`) so they share a material with the input box and
+the user bubble; the centre card stays `--bg-primary` so those
+white raised elements keep their contrast on it.
+
+In a split layout the centre card dissolves and every pane is its
+own card of the same material (`.center-col[data-split]`): each
+pane keeps 7px to the rail cards and the window edges, and the
+panes sit 8px apart. Empty panes draw the same card themselves.
+
+Collapsed, a rail is `--rail-collapsed-w` (63px: the 49px icon
+rail inside the card plus the two gutters);
+`components/layout/use-resizable-rail.ts` carries the same number.
+Everything inside the cards — rows, section headers, the footer —
+is unchanged by the shell and keeps the recipes below.
 
 ## Interaction language per surface
 
@@ -47,9 +66,8 @@ They should NOT behave like buttons:
 - hover / selected → switch background to a **visible grey**
   (``--bg-hover`` / ``--bg-selected``), text stays in
   ``--text-primary`` or ``--text-secondary``
-- never fill selected rows with ``--bg-input``. In light theme
-  that token is white; on a light-grey rail the selected row
-  washes out and looks faded
+- never fill selected rows with ``--bg-input``. The rail card is
+  already that white; a white row on it disappears
 - avoid the brand-coloured glyph treatment except for the very
   small status / activity indicators (``.indicator-dot``)
 

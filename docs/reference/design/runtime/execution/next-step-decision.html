@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791601969" data-alt-lang-url="/docs/reference/design/runtime/execution/next-step-decision.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791621686" data-alt-lang-url="/docs/reference/design/runtime/execution/next-step-decision.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Next-step decisions · OpenProgram Docs</title>
-<meta name="description" content="Next-step decision making(decision.make / exec(choices=)) # This document describes the next-step decision mechanism in OpenProgram: an agentic function hands">
+<meta name="description" content="Next-step decision making(decision.make / agent(choices=)) # This document describes the next-step decision mechanism in OpenProgram: an agentic function hands">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/execution/next-step-decision.html">
 <meta property="og:title" content="Next-step decisions · OpenProgram Docs">
-<meta property="og:description" content="Next-step decision making(decision.make / exec(choices=)) # This document describes the next-step decision mechanism in OpenProgram: an agentic function hands">
+<meta property="og:description" content="Next-step decision making(decision.make / agent(choices=)) # This document describes the next-step decision mechanism in OpenProgram: an agentic function hands">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Next-step decisions · OpenProgram Docs">
-<meta name="twitter:description" content="Next-step decision making(decision.make / exec(choices=)) # This document describes the next-step decision mechanism in OpenProgram: an agentic function hands">
+<meta name="twitter:description" content="Next-step decision making(decision.make / agent(choices=)) # This document describes the next-step decision mechanism in OpenProgram: an agentic function hands">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -312,11 +312,12 @@
 <a class="navlink" href="/docs/reference/design/site-indexnow-discovery.html" data-title-zh="IndexNow 检索" data-href-en="/docs/reference/design/site-indexnow-discovery.html" data-href-zh="/docs/reference/design/site-indexnow-discovery.zh.html">IndexNow discovery</a>
 <a class="navlink" href="/docs/reference/design/community-discoverability.html" data-title-zh="社区检索" data-href-en="/docs/reference/design/community-discoverability.html" data-href-zh="/docs/reference/design/community-discoverability.zh.html">Community discovery</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">22</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">5</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="补充材料">Supporting material</span><span class="nav-count">23</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="交互原型">Prototypes</span><span class="nav-count">6</span></summary><a class="navlink" href="/docs/reference/design/ui/layout-density-prototype.html" data-title-zh="密度原型" data-href-en="/docs/reference/design/ui/layout-density-prototype.html" data-href-zh="/docs/reference/design/ui/layout-density-prototype.zh.html">Density prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-prototype.html" data-title-zh="输入框原型" data-href-en="/docs/reference/design/ui/composer-interaction-prototype.html" data-href-zh="/docs/reference/design/ui/composer-interaction-prototype.zh.html">Composer prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/project-workspace-prototype.html" data-title-zh="工作区原型" data-href-en="/docs/reference/design/ui/project-workspace-prototype.html" data-href-zh="/docs/reference/design/ui/project-workspace-prototype.zh.html">Workspace prototype</a>
 <a class="navlink" href="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-title-zh="侧栏原型" data-href-en="/docs/reference/design/ui/sidebar-hierarchy-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-hierarchy-prototype.zh.html">Sidebar prototype</a>
+<a class="navlink" href="/docs/reference/design/ui/sidebar-luma-prototype.html" data-title-zh="Sidebar Luma draft" data-href-en="/docs/reference/design/ui/sidebar-luma-prototype.html" data-href-zh="/docs/reference/design/ui/sidebar-luma-prototype.zh.html">Sidebar Luma prototype</a>
 <a class="navlink" href="/docs/reference/design/runtime/dag/live-layout.html" data-title-zh="实时布局" data-href-en="/docs/reference/design/runtime/dag/live-layout.html" data-href-zh="/docs/reference/design/runtime/dag/live-layout.zh.html">Live layout</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="实施记录">Implementation records</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/p3-three-surface-sync.html" data-title-zh="界面同步" data-href-en="/docs/reference/design/runtime/p3-three-surface-sync.html" data-href-zh="/docs/reference/design/runtime/p3-three-surface-sync.zh.html">Interface synchronization</a>
 <a class="navlink" href="/docs/reference/design/repository-structure-implementation.html" data-title-zh="仓库迁移" data-href-en="/docs/reference/design/repository-structure-implementation.html" data-href-zh="/docs/reference/design/repository-structure-implementation.zh.html">Repository migration</a>
@@ -351,14 +352,14 @@
 <a class="navlink" href="/docs/reference/design/ui/icons.html" data-title-zh="图标体系" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html">Icon system</a></details>
 </details></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="执行与控制">Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="下一步决策">Next-step decisions</span></nav><h1 id="next-step-decision-makingdecisionmake-execchoices">Next-step decision making(decision.make / exec(choices=))<a class="header-anchor" href="#next-step-decision-makingdecisionmake-execchoices">#</a></h1>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="执行与控制">Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="下一步决策">Next-step decisions</span></nav><h1 id="next-step-decision-makingdecisionmake-agentchoices">Next-step decision making(decision.make / agent(choices=))<a class="header-anchor" href="#next-step-decision-makingdecisionmake-agentchoices">#</a></h1>
 <p>This document describes the <strong>next-step decision</strong> mechanism in OpenProgram: an agentic function hands the decision of &quot;what to do next&quot; to the LLM — you give it a set of options, it picks one, and the framework resolves that choice directly into &quot;the result of the next step&quot;. This mechanism and the provider's native tool call are two independent paths.</p>
 <p>The implementation lives in <code>openprogram/agentic_programming/decision.py</code> inside the framework. There are two entry points that share the same option shapes and parsing:</p>
 <ul>
 <li><code>decision.make(prompt, options)</code> — pure decision; the model does no work, it just picks.</li>
-<li><code>runtime.exec(..., choices=options)</code> — the model first runs a full turn (reasoning, calling tools), and only the wrap-up is a decision.</li>
+<li><code>agent(prompt, choices=options)</code> — the model first runs a full turn (reasoning, calling tools), and only the wrap-up is a decision.</li>
 </ul>
-<p><code>decision.make</code> needs the runtime to issue the model call, but the runtime is taken automatically from the <code>_current_runtime</code> ContextVar set up by the Agent method execution, so calling it inside an agentic function does not require passing the runtime; you only need to pass <code>runtime=</code> explicitly when calling it outside an agentic function.</p>
+<p>Both issue their model call on the Runtime of the enclosing call. Every <code>Agent</code> method call binds one in the <code>_current_runtime</code> ContextVar — the Agent's configured Runtime, or the caller's — so inside an <code>Agent</code> method neither entry takes a runtime argument; you only pass <code>runtime=</code> explicitly outside any Agent call.</p>
 <h2 id="difference-from-native-tool-call">Difference from native tool call<a class="header-anchor" href="#difference-from-native-tool-call">#</a></h2>
 <table>
 <thead>
@@ -422,9 +423,9 @@
 <li>The LLM picked a value → that value is returned as-is.</li>
 </ul>
 <p>In both cases what's returned is &quot;the result of the next step&quot; itself. The caller does not check &quot;which one was picked&quot; and does not branch by type — the decision is itself the branch, so there is no <code>if</code> to write.</p>
-<h2 id="entry-point-two-runtimeexecchoices-work-first-then-decide">Entry point two: <code>runtime.exec(choices=...)</code> — work first, then decide<a class="header-anchor" href="#entry-point-two-runtimeexecchoices-work-first-then-decide">#</a></h2>
-<p>A more common need is: the model first runs a full turn (reasoning, calling tools, doing whatever needs doing), and only the <strong>wrap-up</strong> return is a decision. Use the <code>choices=</code> parameter of <code>exec</code>:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+<h2 id="entry-point-two-agentchoices-work-first-then-decide">Entry point two: <code>agent(choices=...)</code> — work first, then decide<a class="header-anchor" href="#entry-point-two-agentchoices-work-first-then-decide">#</a></h2>
+<p>A more common need is: the model first runs a full turn (reasoning, calling tools, doing whatever needs doing), and only the <strong>wrap-up</strong> return is a decision. Use the <code>choices=</code> parameter of <code>agent</code>:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">agent</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
     <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
@@ -433,7 +434,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">handle_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticket</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Read the ticket, look up references, then decide which flow to route it to."""</span>
-        <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">"Handle this ticket: </span><span class="si">{</span><span class="n">ticket</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
             <span class="n">toolset</span><span class="o">=</span><span class="s2">"default"</span><span class="p">,</span>          <span class="c1"># earlier: the model uses tools to look up references and run commands</span>
             <span class="n">choices</span><span class="o">=</span><span class="p">{</span>                   <span class="c1"># wrap-up: the return must pick one from here</span>
@@ -446,8 +447,8 @@
 <span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
 <span class="n">handle_ticket</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">handle_ticket</span>
 </code></pre>
-<p>What <code>exec(choices=...)</code> does: it splices the option menu and an instruction to &quot;work first, then pick one in JSON to wrap up&quot; (<code>DECISION_FINISH_INSTRUCTION</code>) into the prompt, then runs a normal exec turn — the tools given via <code>tools</code> / <code>toolset</code> get called as needed, and the model reasons as needed. When the turn ends, the model's final reply must be a <code>{&quot;call&quot;: ...}</code> JSON, which <code>exec</code> resolves with <code>resolve_decision</code>: if a function was picked it is executed and its result returned, if a value was picked the value is returned.</p>
-<p>When <code>exec</code> is called without <code>choices</code> it returns the raw reply text; with <code>choices</code> it returns the resolved decision result. <code>decision.make(prompt, options)</code> is equivalent to an <code>exec(choices=options)</code> with &quot;no preceding work&quot;.</p>
+<p>What <code>agent(choices=...)</code> does: it hands <code>choices</code> to the Runtime's <code>exec</code>, which splices the option menu and an instruction to &quot;work first, then pick one in JSON to wrap up&quot; (<code>DECISION_FINISH_INSTRUCTION</code>) into the prompt, then runs a normal exec turn — the tools given via <code>tools</code> / <code>toolset</code> get called as needed, and the model reasons as needed. When the turn ends, the model's final reply must be a <code>{&quot;call&quot;: ...}</code> JSON, which <code>exec</code> resolves with <code>resolve_decision</code>: if a function was picked it is executed and its result returned, if a value was picked the value is returned.</p>
+<p>When <code>exec</code> is called without <code>choices</code> it returns the raw reply text; with <code>choices</code> it returns the resolved decision result. <code>agent</code> returns the resolved result as-is in that case. <code>decision.make(prompt, options)</code> is equivalent to an <code>agent(..., choices=options)</code> with &quot;no preceding work&quot;.</p>
 <h2 id="option-containers">Option containers<a class="header-anchor" href="#option-containers">#</a></h2>
 <p>Each option is like a tool: it has a name, a description, and a <strong>payload schema</strong>. Three kinds of options:</p>
 <table>
@@ -526,7 +527,7 @@
 <h3 id="1-render_options-renders-the-menu">1. <code>render_options</code> renders the menu<a class="header-anchor" href="#1-render_options-renders-the-menu">#</a></h3>
 <p>For each option it outputs: the signature <code>name(arg: type, ...)</code>, the description, a per-argument breakdown, and a one-line <code>Call:</code> JSON example. It only shows arguments with <code>source=&quot;llm&quot;</code> — arguments injected by <code>runtime</code> / <code>context</code> are hidden from the LLM. If an argument declares <code>options</code> (an enum), the breakdown lists the allowed values. The placeholder values in the <code>Call:</code> example are JSON native literals (<code>0</code> / <code>false</code> / <code>[]</code> / <code>{}</code> / <code>&quot;&lt;str&gt;&quot;</code>).</p>
 <h3 id="2-call-the-model">2. Call the model<a class="header-anchor" href="#2-call-the-model">#</a></h3>
-<p><code>decision.make</code> directly calls <code>runtime.exec(prompt + menu)</code>; <code>exec(choices=)</code> splices the menu into the turn it was going to send anyway.</p>
+<p><code>decision.make</code> directly calls <code>runtime.exec(prompt + menu)</code>; <code>agent(choices=)</code> splices the menu into the turn it was going to send anyway.</p>
 <h3 id="3-parse_args-parses-and-validates">3. <code>parse_args</code> parses and validates<a class="header-anchor" href="#3-parse_args-parses-and-validates">#</a></h3>
 <ul>
 <li><code>extract_action</code> extracts the JSON carrying a <code>call</code> key from a <code>```json</code> code block or from raw text. The <code>call</code> key has aliases <code>action</code> / <code>function</code> / <code>tool</code>, any of which is accepted.</li>
@@ -553,7 +554,7 @@
 <a class="lvl-2" href="#entry-point-one-decisionmake-pure-decision">Entry point one: decision.make — pure decision</a>
 </li>
 <li>
-<a class="lvl-2" href="#entry-point-two-runtimeexecchoices-work-first-then-decide">Entry point two: runtime.exec(choices=...) — work first, then decide</a>
+<a class="lvl-2" href="#entry-point-two-agentchoices-work-first-then-decide">Entry point two: agent(choices=...) — work first, then decide</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>

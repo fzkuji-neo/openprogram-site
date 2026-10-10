@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791601969" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791621686" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>顺序调用 · OpenProgram Docs</title>
-<meta name="description" content="固定顺序调用 # 在按 Python 中硬编码的顺序调用多个子函数的同时，（可选地）调用 LLM。 适用场景 # 研究流水线：调研 → 找差距 → 生成想法 论文流水线：起草 → 评审 → 修改 数据流水线：采集 → 清洗 → 分析 任何步骤顺序事先已知的多步任务 设计要点 # 使用 Agent method 装饰器">
+<meta name="description" content="固定顺序调用 # 在按 Python 中硬编码的顺序调用多个子函数的同时，（可选地）调用 LLM。 适用场景 # 研究流水线：调研 → 找差距 → 生成想法 论文流水线：起草 → 评审 → 修改 数据流水线：采集 → 清洗 → 分析 任何步骤顺序事先已知的多步任务 设计要点 # 编排函数写成普通的 Agent">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-programming/choosing-the-next-step/fixed-order-calls.zh.html">
 <meta property="og:title" content="顺序调用 · OpenProgram Docs">
-<meta property="og:description" content="固定顺序调用 # 在按 Python 中硬编码的顺序调用多个子函数的同时，（可选地）调用 LLM。 适用场景 # 研究流水线：调研 → 找差距 → 生成想法 论文流水线：起草 → 评审 → 修改 数据流水线：采集 → 清洗 → 分析 任何步骤顺序事先已知的多步任务 设计要点 # 使用 Agent method 装饰器">
+<meta property="og:description" content="固定顺序调用 # 在按 Python 中硬编码的顺序调用多个子函数的同时，（可选地）调用 LLM。 适用场景 # 研究流水线：调研 → 找差距 → 生成想法 论文流水线：起草 → 评审 → 修改 数据流水线：采集 → 清洗 → 分析 任何步骤顺序事先已知的多步任务 设计要点 # 编排函数写成普通的 Agent">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="顺序调用 · OpenProgram Docs">
-<meta name="twitter:description" content="固定顺序调用 # 在按 Python 中硬编码的顺序调用多个子函数的同时，（可选地）调用 LLM。 适用场景 # 研究流水线：调研 → 找差距 → 生成想法 论文流水线：起草 → 评审 → 修改 数据流水线：采集 → 清洗 → 分析 任何步骤顺序事先已知的多步任务 设计要点 # 使用 Agent method 装饰器">
+<meta name="twitter:description" content="固定顺序调用 # 在按 Python 中硬编码的顺序调用多个子函数的同时，（可选地）调用 LLM。 适用场景 # 研究流水线：调研 → 找差距 → 生成想法 论文流水线：起草 → 评审 → 修改 数据流水线：采集 → 清洗 → 分析 任何步骤顺序事先已知的多步任务 设计要点 # 编排函数写成普通的 Agent">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -116,11 +116,12 @@
 </ul>
 <h2 id="设计要点">设计要点<a class="header-anchor" href="#设计要点">#</a></h2>
 <ul>
-<li>使用 <code>Agent</code> method 装饰器</li>
+<li>编排函数写成普通的 <code>Agent</code> method</li>
 <li>按固定顺序调用多个子 <code>Agent</code> method</li>
 <li><code>llm()</code> 是可选的：可以跳过它（纯链式调用），也可以多次调用它
 （每次调用都会创建一个 <code>llm</code> 子节点）</li>
 <li>数据通过普通 Python 变量在子函数之间流动</li>
+<li>子 method 沿用调用方的 Runtime，步骤之间不传 <code>runtime</code> 参数</li>
 <li>一个函数既可以多次调用 <code>llm()</code>，也可以调用任意多个其他
 <code>Agent</code> method</li>
 </ul>
@@ -133,11 +134,11 @@
         <span class="s1">'research_pipeline'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'input'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'task'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Research topic.'</span><span class="p">}}},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">research_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">research_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Run the full research pipeline: survey, find gaps, generate ideas."""</span>
-        <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_ideas</span><span class="p">(</span><span class="n">gaps</span><span class="o">=</span><span class="n">gaps</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+        <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
+        <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">)</span>
+        <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_ideas</span><span class="p">(</span><span class="n">gaps</span><span class="o">=</span><span class="n">gaps</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="p">{</span><span class="s2">"survey"</span><span class="p">:</span> <span class="n">survey</span><span class="p">,</span> <span class="s2">"gaps"</span><span class="p">:</span> <span class="n">gaps</span><span class="p">,</span> <span class="s2">"ideas"</span><span class="p">:</span> <span class="n">ideas</span><span class="p">}</span>
 
@@ -146,17 +147,18 @@
 </code></pre>
 <h2 id="示例用一次-llm-调用做汇总">示例：用一次 <code>llm()</code> 调用做汇总<a class="header-anchor" href="#示例用一次-llm-调用做汇总">#</a></h2>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.agentic_programming</span><span class="w"> </span><span class="kn">import</span> <span class="n">llm</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
     <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">'research_pipeline'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">'input'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'task'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'description'</span><span class="p">:</span> <span class="s1">'Research topic.'</span><span class="p">}}},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">research_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">research_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Run the full research pipeline and summarise the results."""</span>
-        <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-        <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_ideas</span><span class="p">(</span><span class="n">gaps</span><span class="o">=</span><span class="n">gaps</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+        <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
+        <span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">)</span>
+        <span class="n">ideas</span> <span class="o">=</span> <span class="n">generate_ideas</span><span class="p">(</span><span class="n">gaps</span><span class="o">=</span><span class="n">gaps</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">llm</span><span class="p">([</span>
             <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"text"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="p">(</span>
@@ -178,37 +180,37 @@
 </code></pre>
 <h2 id="在步骤之间传递数据">在步骤之间传递数据<a class="header-anchor" href="#在步骤之间传递数据">#</a></h2>
 <p>子函数通过 Python 变量彼此交接数据 —— 不涉及任何 LLM：</p>
-<pre><code class="language-python"><span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
-<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
+<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">)</span>
 </code></pre>
 <p><code>survey_topic</code> 的返回值直接作为 <code>identify_gaps</code> 的输入参数传入。</p>
 <h2 id="在步骤之间插入-python-处理逻辑">在步骤之间插入 Python 处理逻辑<a class="header-anchor" href="#在步骤之间插入-python-处理逻辑">#</a></h2>
-<pre><code class="language-python"><span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
 
 <span class="c1"># 中间穿插普通的 Python 处理</span>
 <span class="n">key_points</span> <span class="o">=</span> <span class="n">extract_key_points</span><span class="p">(</span><span class="n">survey</span><span class="p">)</span>
 <span class="n">filtered</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">key_points</span> <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="s2">"relevance"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]</span>
 
-<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">),</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">))</span>
 </code></pre>
 <h2 id="错误处理">错误处理<a class="header-anchor" href="#错误处理">#</a></h2>
 <p>主要机制是异常传播：当子函数抛出异常时，其 DAG 节点会以
 <code>status='error'</code> 记录，异常重新抛回到编排器中。在那里用普通的
 <code>try/except</code> 捕获它：</p>
 <pre><code class="language-python"><span class="k">try</span><span class="p">:</span>
-    <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+    <span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Survey failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">}</span>
 
-<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">)</span>
 </code></pre>
 <p>或者，如果子函数以带内方式上报失败（返回错误字符串而非抛出异常），
 则检查其返回值：</p>
-<pre><code class="language-python"><span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<pre><code class="language-python"><span class="n">survey</span> <span class="o">=</span> <span class="n">survey_topic</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">task</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">survey</span> <span class="ow">or</span> <span class="s2">"error"</span> <span class="ow">in</span> <span class="n">survey</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Survey failed"</span><span class="p">,</span> <span class="s2">"survey"</span><span class="p">:</span> <span class="n">survey</span><span class="p">}</span>
 
-<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">)</span>
+<span class="n">gaps</span> <span class="o">=</span> <span class="n">identify_gaps</span><span class="p">(</span><span class="n">survey</span><span class="o">=</span><span class="n">survey</span><span class="p">)</span>
 </code></pre>
 <h2 id="与由-llm-选择调用的对比">与“由 LLM 选择调用”的对比<a class="header-anchor" href="#与由-llm-选择调用的对比">#</a></h2>
 <table>

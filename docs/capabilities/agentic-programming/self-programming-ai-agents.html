@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791601969" data-alt-lang-url="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791621686" data-alt-lang-url="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,20 +119,15 @@ execution, and normal source control.</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">'review_then_revise'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">review_then_revise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">draft</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">review_then_revise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">draft</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Review a draft, then revise it against the review."""</span>
-        <span class="n">review</span> <span class="o">=</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-            <span class="n">content</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Identify concrete defects in this draft:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-            <span class="n">toolset</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
-            <span class="n">content</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Revise the draft using this review:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-            <span class="n">toolset</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Identify concrete defects in this draft:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Revise the draft using this review:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
 <span class="n">review_then_revise</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">review_then_revise</span>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791601969" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791621686" data-alt-lang-url="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,16 +116,14 @@ Two entry points share the same option shapes and parsing:</p>
 <ul>
 <li><code>decision.make(prompt, options)</code> — pure decision; the model does no work,
 it just picks.</li>
-<li><code>runtime.exec(..., choices=options)</code> — the model first runs a full turn
+<li><code>agent(prompt, choices=options)</code> — the model first runs a full turn
 (reasoning, tool calls), and only the closing move is a decision.</li>
 </ul>
-<p><code>decision.make</code> needs a runtime to issue the model call, but the runtime is
-taken automatically from the <code>_current_runtime</code> ContextVar. That ContextVar
-is only set when a function on the call chain declares a runtime-class
-parameter (<code>runtime</code> / <code>exec_runtime</code> / <code>review_runtime</code>) — an entry-point
-<code>Agent</code> method without one makes <code>decision.make</code> raise <code>RuntimeError</code>.
-So declare <code>runtime=None</code> on the function and you do not pass it on; only
-outside an agentic function do you pass <code>runtime=</code> explicitly.</p>
+<p>Both issue their model call on the Runtime of the enclosing call. Every
+<code>Agent</code> method call binds one — the Agent's configured Runtime, or the
+caller's — so inside an <code>Agent</code> method neither entry takes a runtime
+argument. Only outside any Agent call do you pass <code>runtime=</code> explicitly;
+without one there, <code>decision.make</code> raises <code>RuntimeError</code>.</p>
 <h2 id="versus-native-tool-calls">Versus native tool calls<a class="header-anchor" href="#versus-native-tool-calls">#</a></h2>
 <table>
 <thead>
@@ -177,7 +175,7 @@ no <code>if</code> written:</p>
         <span class="s1">'route_message'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">route_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">route_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">decision</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">"Pick one way to handle this message."</span><span class="p">,</span> <span class="p">{</span>
             <span class="s2">"analyze"</span><span class="p">:</span>  <span class="n">analyze_sentiment</span><span class="p">,</span>        <span class="c1"># a function</span>
             <span class="s2">"fallback"</span><span class="p">:</span> <span class="n">fallback_reply</span><span class="p">,</span>           <span class="c1"># a function</span>
@@ -197,20 +195,20 @@ arguments) and its return value is returned.</li>
 <p>Both cases return &quot;the result of the next step&quot; itself. The caller never
 checks &quot;which one was picked&quot; and never branches by type — the decision IS
 the branch, so there is no <code>if</code> to write.</p>
-<h2 id="entry-two-runtimeexecchoices-work-first-decide-last">Entry two: <code>runtime.exec(choices=...)</code> — work first, decide last<a class="header-anchor" href="#entry-two-runtimeexecchoices-work-first-decide-last">#</a></h2>
+<h2 id="entry-two-agentchoices-work-first-decide-last">Entry two: <code>agent(choices=...)</code> — work first, decide last<a class="header-anchor" href="#entry-two-agentchoices-work-first-decide-last">#</a></h2>
 <p>The more common need: the model first runs a full turn (reasoning, tool
 calls, whatever the job takes), and the <strong>closing</strong> return must be a
-decision. Use <code>exec</code>'s <code>choices=</code> parameter:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+decision. Use <code>agent</code>'s <code>choices=</code> parameter:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">agent</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
     <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">'handle_ticket'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">handle_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticket</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticket</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Read the ticket, look things up, then decide which flow to route to."""</span>
-        <span class="k">return</span> <span class="n">runtime</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">agent</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">"Handle this ticket: </span><span class="si">{</span><span class="n">ticket</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
             <span class="n">toolset</span><span class="o">=</span><span class="s2">"default"</span><span class="p">,</span>          <span class="c1"># before: the model uses tools to research, run commands</span>
             <span class="n">choices</span><span class="o">=</span><span class="p">{</span>                   <span class="c1"># closing: the return must be one of these</span>
@@ -223,16 +221,17 @@ decision. Use <code>exec</code>'s <code>choices=</code> parameter:</p>
 <span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
 <span class="n">handle_ticket</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">handle_ticket</span>
 </code></pre>
-<p>What <code>exec(choices=...)</code> does: it splices the option menu plus a &quot;work
-first, close with a JSON pick&quot; instruction (<code>DECISION_FINISH_INSTRUCTION</code>)
-into the prompt, then runs a normal exec turn — tools from <code>tools</code> /
+<p>What <code>agent(choices=...)</code> does: it hands <code>choices</code> to the Runtime's
+<code>exec</code>, which splices the option menu plus a &quot;work first, close with a JSON
+pick&quot; instruction (<code>DECISION_FINISH_INSTRUCTION</code>) into the prompt, then runs
+a normal exec turn — tools from <code>tools</code> /
 <code>toolset</code> get called as usual, the model reasons as usual. At the end of the
 turn, the model's final reply must be one <code>{&quot;call&quot;: ...}</code> JSON, and <code>exec</code>
 resolves it with <code>resolve_decision</code>: a picked function executes and returns
 its result, a picked value is returned.</p>
-<p><code>exec</code> without <code>choices</code> returns the raw reply text; with <code>choices</code> it
+<p><code>agent</code> without <code>choices</code> returns the reply text; with <code>choices</code> it
 returns the resolved decision result. <code>decision.make(prompt, options)</code> is
-equivalent to an <code>exec(choices=options)</code> with no preceding work — with one
+equivalent to an <code>agent(..., choices=options)</code> with no preceding work — with one
 nuance: only <code>exec(choices=)</code> appends the <code>DECISION_FINISH_INSTRUCTION</code>;
 <code>decision.make</code> sends just your prompt plus the menu, so your own prompt
 must tell the model to pick.</p>
@@ -395,7 +394,7 @@ decision and retry should be a traceable DAG node.</p>
 <a class="lvl-2" href="#entry-one-decisionmake-pure-decision">Entry one: decision.make — pure decision</a>
 </li>
 <li>
-<a class="lvl-2" href="#entry-two-runtimeexecchoices-work-first-decide-last">Entry two: runtime.exec(choices=...) — work first, decide last</a>
+<a class="lvl-2" href="#entry-two-agentchoices-work-first-decide-last">Entry two: agent(choices=...) — work first, decide last</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
