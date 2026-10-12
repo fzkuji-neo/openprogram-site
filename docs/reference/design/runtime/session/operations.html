@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791637138" data-alt-lang-url="/docs/reference/design/runtime/session/operations.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791824552" data-alt-lang-url="/docs/reference/design/runtime/session/operations.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -431,6 +431,7 @@ and is not exposed as a session.</li>
     application state/projects/&lt;project_id&gt;/&lt;session_id&gt;
   → chat_ack sends the idempotent set_session_project (label + reverse index)
 </code></pre>
+<p>Settings picked while the chat is a draft (a model, for example) are stored before the session is created, so its repository can already exist at the default location without an <code>id</code>. <code>handle_chat</code> therefore asks <code>is_created</code> (meta has an <code>id</code>, or the repo has history) rather than whether the repository exists, and <code>create_session</code> moves such a settings-only repository to the project's placement, keeping those settings.</p>
 <p><code>set_session_project</code> accepts a bind naming the project the session already has, at any age — that is what the post-ack idempotent bind above sends, and it arrives after the first turn is committed. A bind naming a <strong>different</strong> project on a session that already has turns is rejected with <code>project is frozen after the first turn</code> (<code>ws_actions/project.py:FROZEN_ERROR</code>). The composer chip matches: for a session with an id it renders the bound project read-only instead of the picker.</p>
 <h3 id="repairing-a-missing-directory">Repairing a missing directory<a class="header-anchor" href="#repairing-a-missing-directory">#</a></h3>
 <p>A frozen main directory can still be <strong>relocated</strong>, and only for repair: the folder was moved or renamed on disk and the project now points at nothing. <code>project_workdir_for</code> returns <code>None</code> in that state — it never silently substitutes the default project's home directory. New bound-project work is blocked while the project is missing, replaced, pending, migrating, or otherwise unavailable; the UI receives the location state and missing path so it can offer repair. The session repository remains readable while repair is pending.</p>
@@ -752,7 +753,7 @@ the default listing and remain available until explicitly deleted.</p>
   → os.rename(index.json.tmp, index.json)
 </code></pre>
 <p>This prevents file corruption caused by crashes.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/storage.html" data-href-en="/docs/reference/design/runtime/session/storage.html" data-href-zh="/docs/reference/design/runtime/session/storage.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="数据模型">Data model</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/context.html" data-href-en="/docs/reference/design/runtime/session/context.html" data-href-zh="/docs/reference/design/runtime/session/context.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="上下文">Context</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/storage.html" data-href-en="/docs/reference/design/runtime/session/storage.html" data-href-zh="/docs/reference/design/runtime/session/storage.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="数据模型">Data model</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/context.html" data-href-en="/docs/reference/design/runtime/session/context.html" data-href-zh="/docs/reference/design/runtime/session/context.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="上下文">Context</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

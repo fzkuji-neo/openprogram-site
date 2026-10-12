@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791637138" data-alt-lang-url="/docs/reference/design/runtime/session/operations.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791824552" data-alt-lang-url="/docs/reference/design/runtime/session/operations.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -426,6 +426,7 @@ session 会一直保留，直到所有者删除。</p>
     projects/&lt;project_id&gt;/&lt;session_id&gt;
   → chat_ack 再补一次幂等的 set_session_project（标签 + 反向索引）
 </code></pre>
+<p>草稿阶段选的设置（比如模型）会在会话创建前就落盘，所以会话仓库可能已经以无 <code>id</code> 的形式存在于默认位置。因此 <code>handle_chat</code> 判断的是 <code>is_created</code>（meta 有 <code>id</code>，或仓库已有历史），而不是仓库目录是否存在；<code>create_session</code> 会把这种只有设置的仓库挪到项目对应的位置，并保留这些设置。</p>
 <p><code>set_session_project</code> 在任何时候都接受&quot;绑到会话已有的那个项目&quot;——上面那条 ack 后的幂等 bind 走的就是这条路，它到达时第一轮已经提交。而在已有轮次的会话上绑<strong>另一个</strong>项目会被拒，理由为 <code>project is frozen after the first turn</code>（<code>ws_actions/project.py:FROZEN_ERROR</code>）。composer chip 与之对齐：已有 session id 的会话只读展示已绑项目，不再给选择器。</p>
 <h3 id="附件与恢复">附件与恢复<a class="header-anchor" href="#附件与恢复">#</a></h3>
 <p>浏览器上传的文件在 dispatch 前解码并保存到
@@ -715,7 +716,7 @@ updated_at 只在追加消息路径推进；rename、pin、archive 和 read/unre
   → os.rename(index.json.tmp, index.json)
 </code></pre>
 <p>防止崩溃导致文件损坏。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/storage.html" data-href-en="/docs/reference/design/runtime/session/storage.html" data-href-zh="/docs/reference/design/runtime/session/storage.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="数据模型">Data model</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/context.html" data-href-en="/docs/reference/design/runtime/session/context.html" data-href-zh="/docs/reference/design/runtime/session/context.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="上下文">Context</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/storage.html" data-href-en="/docs/reference/design/runtime/session/storage.html" data-href-zh="/docs/reference/design/runtime/session/storage.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="数据模型">Data model</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/context.html" data-href-en="/docs/reference/design/runtime/session/context.html" data-href-zh="/docs/reference/design/runtime/session/context.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="上下文">Context</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

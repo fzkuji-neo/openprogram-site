@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791637138" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791824552" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -82,6 +82,7 @@
 <p>本地 App 刷新会保留解包原生依赖的文件权限，并在此前刷新丢失执行权限时恢复 node-pty 终端辅助程序的执行权限。</p>
 <p>每个标签独立保存后退和前进历史，默认入口页是该标签的初始页面。后退和前进只恢复当前标签中的页面，切换标签不增加历史。从另一个入口页打开相同目的地时，两个标签各自保留。后退后选择新目的地，只替换当前标签的前进记录。历史随标签保存；网页内部的 URL 导航由浏览器控件处理。</p>
 <p>macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。</p>
+<p>把标签向下拖出标签栏，或者拖动格子顶部的「•••」把手，中间区域会变成类似调度中心的窗口总览：每个窗口缩成一张卡片，显示它最近一次的画面，分屏的窗口在卡片里也保持分屏。拖到卡片左右各 1/4 宽的位置，就放到这个窗口的左边或右边；拖到中间一列的上半或下半，就放到它上面或下面；高亮的那一半和底部提示会说明放到哪里。拖到卡片之间的空白处单独打开，拖出 App 窗口新开一个窗口，按 Esc 取消。不拖动也能查看所有窗口：点标签栏右端主菜单左边的网格按钮，或者在中间区域双指捏合（网页在正常大小时捏合也会打开总览，双指张开则像 Safari 一样放大网页）；点卡片切换过去，按 Esc 或双指张开关闭。指针移到「•••」把手上，它会变成 macOS 的红黄绿窗口按钮：红色关闭这个标签，黄色把格子收回标签栏，绿色单独打开它。三个按钮都像 macOS 一样带动画：关闭的格子淡出，其余格子展开填满它的位置；收回标签栏的格子向上折叠进它的标签；绿色让格子放大到占满窗口。贴靠和填满也会让格子平滑移到新位置。系统开启「减少动态效果」时，布局直接切换。停在绿灯上展开贴靠菜单：<strong>移动与调整大小</strong>（半边；按住 Option 是四分之一）、<strong>填满与排列</strong>（填满、左右、左 + 右侧上下、四宫格）、<strong>还原上次布局</strong>、<strong>均分大小</strong>和<strong>更多布局</strong>（上下、单屏、九宫格、十六宫格和已保存布局）。在 macOS 上，Control+Option+方向键把焦点格移到对应半边，再加 Shift 排成左右或上下两格，Control+Option+F 填满或退出填满，Control+Option+R 还原上次布局。拖动分隔线到 1/3、1/2、2/3 附近会吸住，格子太小时停住。</p>
 <p>关闭最后一个标签后，标签栏和中间内容区域都保持为空，不会自动创建标签或显示默认入口。点击顶部加号可打开新标签。</p>
 <p>后退和前进按钮也包含初始新标签页。从初始页打开应用或内置页面后，可以后退回到初始页，再前进回到原页面，始终使用同一个标签。后退后选择其他页面会替换原来的前进记录。</p>
 <p>macOS 从 <a href="https://github.com/fzkuji-neo/OpenProgram/releases">GitHub Releases</a> 下载对应架构的 DMG，把 <code>OpenProgram.app</code> 复制到 <code>/Applications</code>；当前 macOS 发行版使用 Developer ID 签名和 Apple 公证。Windows 只安装已发布 release 附带的带签名 <code>win-x64.exe</code> 或 <code>win-arm64.exe</code>；某个版本没有带签名 Windows EXE 时，使用该版本的 CLI/server 与浏览器 UI。完整步骤见<a href="/docs/install/install.zh.html">安装</a>。</p>
@@ -91,7 +92,7 @@
 <h2 id="打开-browser">打开 Browser<a class="header-anchor" href="#打开-browser">#</a></h2>
 <p>新建 Pane 后选择 <strong>Browser</strong>，或从应用 tab 栏新建浏览器 tab。Browser home 与已加载网页使用同一套浏览器控件：</p>
 <ul>
-<li>Back、Forward、Reload/Stop、Home、地址/搜索输入、收藏当前页、Bookmarks、外部打开和 Browser 菜单。</li>
+<li>Back、Forward、Reload/Stop、Home、地址/搜索输入（右端是收藏当前页的星标）、Bookmarks、外部打开和 Browser 菜单。不在编辑时，地址栏高亮显示网站域名、其余部分变淡；HTTPS 页面前面显示锁图标。</li>
 <li>默认可见的书签栏；可以从 Browser 菜单或 Browser settings 隐藏。</li>
 <li>响应式控件：Pane 变窄时，低频动作移入 Browser 菜单；地址输入、Back、Reload/Stop、收藏当前页和菜单仍然可用。</li>
 </ul>
@@ -99,7 +100,8 @@
 <p>普通网页标签和分栏标签都显示网站 favicon。图标加载中、不可用、无效或完全透明时，桌面 App 显示统一的浏览器图标。重新打开保留的页面时会恢复其当前图标，不需要重新加载页面。</p>
 <p>网页在刷新、后退、前进或导航时要求确认离开，App 会显示确认框。默认按钮及取消操作都是 <strong>Stay on page（留在页面）</strong>。选择 <strong>Leave page（离开页面）</strong> 才会继续刚才的操作，未保存的修改可能丢失。</p>
 <p>网页加载时，刷新按钮会变为 <strong>Stop loading（停止加载）</strong>，显示 X 图标，浏览器工具栏下方显示动态细线。点击停止加载即可取消；加载结束或停止后细线消失。启用减少动态效果时，细线保持静态。</p>
-<p>书签栏将放不下的条目放入双箭头菜单，最右侧用分隔线隔开“所有书签”入口，点击后进入书签管理页。“其他书签”和“移动端书签”仍保留原文件夹、顺序和内容。书签栏、文件夹菜单和管理页依次使用已保存的网站图标、网站自身 <code>/favicon.ico</code>、浏览器默认图标。添加书签会保留当前网页图标，再次访问相同书签 URL 时按网页提供的新图标更新；图标请求不发送 referrer，不使用第三方图标服务。</p>
+<p>键盘快捷键作用于当前聚焦窗格里的浏览器标签页（Windows 上用 Ctrl 代替 ⌘）：⌘R 刷新页面，⇧⌘R 忽略缓存刷新；⌘L 选中地址栏；⌘[ 和 ⌘] 后退、前进；⌘F 页内查找；⌘+、⌘− 和 ⌘0 缩放页面；⌘P 打印。聚焦窗格不是浏览器标签页时，⌘R 刷新 App 窗口，其中打开的网页也会重新加载。</p>
+<p>书签栏将放不下的条目放入双箭头菜单，最右侧用分隔线隔开“所有书签”入口，点击后进入书签管理页。“其他书签”和“移动端书签”仍保留原文件夹、顺序和内容。书签栏、文件夹菜单和管理页依次使用已保存的网站图标、网站自身 <code>/favicon.ico</code>、浏览器默认图标。添加书签会保留当前网页图标，再次访问相同书签 URL 时按网页提供的新图标更新；图标请求不发送 referrer，不使用第三方图标服务。浏览器主页的快捷入口显示网站自身的 <code>/favicon.ico</code>，网站没有图标时显示首字母。</p>
 <p>使用期间，同一渲染进程中的书签栏、文件夹菜单和标签页组件共用已解码的图标。再次打开书签菜单会复用菜单页面和图标缓存，不会每次都从加载占位图标开始。缓存有容量限制，失败来源在五分钟后允许重试，成功来源在三十分钟后再次使用时更新。关闭窗口会释放保留的书签菜单；重启 App 后可以通过浏览器缓存重新加载图标。</p>
 <h2 id="页面跳转popup-与右键操作">页面跳转、popup 与右键操作<a class="header-anchor" href="#页面跳转popup-与右键操作">#</a></h2>
 <p>网页决定一次操作是在当前页面跳转，还是请求新的浏览上下文。普通链接、表单提交和页内导航保留在当前 Browser tab；带 <code>target=&quot;_blank&quot;</code> 的链接和调用 <code>window.open()</code> 的脚本会创建独立 Browser tab，并立即激活新 tab。</p>
@@ -134,7 +136,7 @@
 <p>OpenProgram 不导入密码、支付或地址自动填充数据、下载记录、缓存、localStorage、Service Workers、浏览器扩展或扩展存储，也不修改来源 profile。</p>
 <h2 id="agent-访问分屏-browser-pane">Agent 访问分屏 Browser Pane<a class="header-anchor" href="#agent-访问分屏-browser-pane">#</a></h2>
 <p>当一个聊天轮次所在应用窗口中存在可见的内置 Browser Pane 时，OpenProgram 会在模型首次回复前附加该精确 WebTab 的有限页面描述。Agent 会获得页面标题、origin、可见文本、ARIA landmarks 与浏览器控制工具。Browser Pane 在左侧、右侧或聊天上的画中画预览中都不影响访问，也不要求应用窗口或 Browser Pane 获得操作系统焦点。</p>
-<p>若 Agent 在你停留在聊天时打开页面，桌面端会把该实时 WebTab 显示为角落小窗。点击小窗标题栏的 <strong>关闭小窗（X）</strong> 只隐藏小窗，页面仍可从右侧栏的 <strong>会话资源</strong> 中重新打开；点击 <strong>打开页面</strong> 可显示完整网页。网页版（普通浏览器里的 UI，不是桌面 App）没有原生 BrowserView，同一预览降级为 iframe 或「在新标签打开」。</p>
+<p>若 Agent 在你停留在聊天时打开页面，桌面端会把该实时 WebTab 显示为角落小窗。在分屏窗口里操作另一个窗格时，小窗仍留在它所属的聊天上。点击小窗标题栏的 <strong>关闭小窗（X）</strong> 只隐藏小窗，页面仍可从右侧栏的 <strong>会话资源</strong> 中重新打开；点击 <strong>打开页面</strong> 可显示完整网页。网页版（普通浏览器里的 UI，不是桌面 App）没有原生 BrowserView，同一预览降级为 iframe 或「在新标签打开」。</p>
 <p>动作始终绑定发起聊天的窗口与 WebTab。默认使用 DOM、ARIA、页面文本和 element refs；只有视觉任务或结构化方式无法定位页面时，才使用一张当前 viewport screenshot。该路径不增加 OCR、object detector、多轮裁剪、component memory、vision memory 或 workflow replay。</p>
 <p>每个预览都绑定实际会话，即使在同一个聊天标签内切换会话也不会改变归属。切换会话时隐藏原预览，并恢复当前会话自己的预览。仅保留在会话中的网页对其他 Agent 不可见、不可操作。点击 <strong>打开页面</strong> 将同一个网页显示为独立标签页，其他会话可以发现它，并在当前 Agent 释放排他控制后接管。打开标签页不会转移原会话的预览归属。</p>
 <p>预览标题旁显示“自动预览”或“固定预览”。自动预览跟踪 Agent 正在操作的页面。在 <strong>更多</strong> 菜单中勾选 <strong>自动显示 Agent 正在操作的网页</strong> 开启自动预览，取消勾选则保持当前网页。桌面端和网页端均使用应用自己的菜单，选项有明确的复选框，下方独立显示解释文字。勾选或取消时即时生效，菜单保持打开；按 Escape 或点击外部关闭。输入区的网页标记只显示网页标题，不显示左侧、右侧或中间的位置文字。此选项不表示窗口置顶。标题栏没有图钉或放大／缩小按钮。该选择不改变 Agent 的操作目标，也不会恢复或启动 Agent，也不改变页面生命周期或顶部标签。会话资源没有单独的固定控件。默认聊天预览为 300×198.75（300×168.75 画面加标题栏）。拖动标题栏移动小窗；从四边或四角调整大小。小窗保持画面比例（默认 16:9），没有可见的边角拖块，指针在外框变为调整大小光标。调整预览不会缩放或改写底层页面。资源面板每个分组标题是整行控件，右侧为与左侧边栏项目行相同的箭头。</p>
@@ -183,7 +185,7 @@
 <p>离开再返回“能力 → Programs”时，目录树、选中的 Program 和已加载的调用图保持显示。页面可见时每五秒后台检测展开目录和所选调用图，重新聚焦也会检测；未变化的文件复用分析结果。点击刷新不会重置选择或已展开目录。检测失败时保留已有内容，便于重试。</p>
 <p>浏览器任务可以通过 <code>upload</code>、最新文件输入框的 <code>ref</code> 和 <code>path</code> 选择用户批准的本地文件（最大 50 MiB）。即使已经选定页面，上传仍经过正常权限检查，因为选择文件可能立即发送内容。沙箱读取限制仍然生效。观察结果只展示所选文件名，不展示内容或本地路径。<code>file_selected</code> 只验证选中文件；上传被网站接受需要根据网站响应另行验证。结果不确定时不会自动重传。</p>
 <p>验证使用 <code>assertion</code> 和非空的 <code>value</code>；<code>text</code> 用于输入文字或报告阻碍。同一观察上连续三次操作失败或断言不成立会停止并返回实际原因。权限或执行拒绝后停止，不重复动作。报告阻碍不代表完成，实际操作步数统计页面修改，不统计模型调用。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页界面">Web UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页界面">Web UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

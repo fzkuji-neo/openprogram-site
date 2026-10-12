@@ -9,6 +9,8 @@ Each tab keeps its own Back and Forward history, beginning with its default laun
 
 The macOS and Windows Desktop Apps present OpenProgram as a multi-pane workspace. Each pane can hold Files, a chat, the built-in Browser, or a Terminal, and panes can be split or moved between app windows without changing the underlying session or browser tab.
 
+Drag a tab down out of the tab strip, or drag a pane's ••• handle, and the center area turns into a window overview like Mission Control: every window becomes a card showing how it last looked, and a split window keeps its split in its card. Drop on the left or right quarter of a card to put the tab beside that window, or on the upper or lower half of its middle to put it above or below; the highlighted half and the hint name where it goes. Drop on empty space between cards to open the tab on its own, outside the App window to open it in a new window, or press Escape to cancel. To see all windows without dragging, click the grid button beside the main menu at the right end of the tab strip, or pinch in on the center area with two fingers (on a web page, pinching in at its normal size opens it, and pinching out magnifies the page as in Safari); click a card to switch to it, and press Escape or pinch out to close. Point at a pane's ••• handle and it turns into the macOS window buttons: red closes the tab, yellow moves the pane back to the tab strip, and green opens the tab on its own. Each one animates as on macOS: a closed pane fades away while the others grow into its space, a pane moved to the tab strip folds up into its tab, and green grows the pane to fill the window; tiling and Fill slide the panes into place the same way. With Reduce Motion turned on, layouts change at once. Rest on green to unfold the tiling menu: **Move and resize** (halves; hold Option for quarters), **Fill and arrange** (Fill, left and right, left and stacked right, quarters), **Return to previous layout**, **Equalize sizes** and **More layouts** (top and bottom, single, 9, 16 and saved layouts). On macOS, Control+Option+arrow keys move the focused pane to a half, adding Shift arranges two panes side by side or stacked, Control+Option+F toggles Fill, and Control+Option+R returns to the previous layout. Dividers stick at a third, a half and two thirds, and stop before a pane gets too small to use.
+
 Closing the last tab leaves both the tab bar and center content area empty. No tab or launcher is created automatically. Use the plus button to open a new tab.
 
 The Back and Forward buttons also include the initial New tab page. After opening an application or built-in page from it, use Back to return to the initial page and Forward to restore the destination in the same tab. Choosing another destination after going back replaces the forward history.
@@ -25,7 +27,7 @@ Opening a conversation from a session tab reuses that tab, even when another tab
 
 Create a pane and select **Browser**, or open a new browser tab from the app tab bar. The Browser home shows the same browser chrome used by loaded webpages:
 
-- Back, Forward, Reload/Stop, Home, address/search field, bookmark-current-page, Bookmarks, open externally, and the Browser menu.
+- Back, Forward, Reload/Stop, Home, the address/search field with its bookmark-current-page star at the right end, Bookmarks, open externally, and the Browser menu. While you are not editing it, the address field shows the site's host in full contrast and the rest of the address dimmed; a lock marks HTTPS pages.
 - A bookmarks bar that is visible by default and can be hidden from the Browser menu or Browser settings.
 - Responsive controls: less frequent actions move into the Browser menu when the pane is narrow; the address field, Back, Reload/Stop, bookmark-current-page, and menu remain available.
 
@@ -36,6 +38,8 @@ Web tabs display the site favicon in both ordinary and split tabs. While an icon
 If a webpage asks to confirm leaving during Reload, Back, Forward, or navigation, the App displays a confirmation. **Stay on page** is the default and cancellation action. Choose **Leave page** to continue the pending operation; unsaved changes may be lost.
 
 While a page loads, Reload becomes **Stop loading** (an X icon), and an animated line appears below the browser toolbar. Click Stop loading to cancel. The line disappears when loading finishes or stops; reduced-motion settings keep it static.
+
+Keyboard shortcuts apply to the Browser tab in the focused pane (Ctrl replaces ⌘ on Windows): ⌘R reloads the page and ⇧⌘R reloads it bypassing the cache; ⌘L selects the address field; ⌘[ and ⌘] go back and forward; ⌘F finds in the page; ⌘+, ⌘− and ⌘0 zoom the page; ⌘P prints it. When the focused pane is not a Browser tab, ⌘R reloads the App window, which also reloads its open webpages.
 
 
 ## Page navigation, popups, and right-click actions
@@ -48,7 +52,7 @@ Right-click a link inside a webpage to open it in a new Browser tab or copy its 
 
 The bookmarks bar shows the direct contents of the imported or locally maintained Bookmarks bar. Items that do not fit appear in the double-chevron overflow menu. The separated **All bookmarks** button on the right opens the Bookmarks manager, including the original Other bookmarks and Mobile bookmarks folders. Folder names, order, and contents remain unchanged. Nested menus open one level at a time and remain scrollable within the current window.
 
-Website bookmarks display their saved favicon, falling back to the website’s own `/favicon.ico` and then a browser icon if unavailable. This applies to the bar, folder menus, and manager. Adding a bookmark preserves the current page icon; reopening a bookmarked URL updates it when the page provides a new icon. Icon requests do not send a referrer or use a third-party favicon service.
+Website bookmarks display their saved favicon, falling back to the website’s own `/favicon.ico` and then a browser icon if unavailable. This applies to the bar, folder menus, and manager. Adding a bookmark preserves the current page icon; reopening a bookmarked URL updates it when the page provides a new icon. Icon requests do not send a referrer or use a third-party favicon service. Shortcuts on the Browser home page show the website's own `/favicon.ico`, or the site's initial when it has none.
 
 During use, decoded icons are shared across the bar, folder menus, and tab components in each renderer. Reopening a bookmark menu reuses its document and icon cache; icons do not restart from the loading placeholder on every opening. The cache is bounded, retries failed sources after five minutes, and refreshes reused sources after thirty minutes when requested again. Closing the window releases its retained bookmark menu. Restarting the App can load icons again through the browser cache.
 
@@ -70,7 +74,7 @@ OpenProgram does not import passwords, payment or address autofill data, downloa
 
 When a chat turn has a visible built-in Browser pane in the same app window, OpenProgram attaches a bounded description of that exact WebTab to the turn before the first model response. The Agent receives the page title, origin, visible text, ARIA landmarks, and a browser-control tool. This works whether the Browser pane is on the left or right, in a picture-in-picture preview over chat, and does not require the app window or Browser pane to have operating-system focus.
 
-If the Agent opens a page while you stay in chat, Desktop shows that live WebTab as a small corner preview. Click **Close preview (X)** in its header to hide the small window; the page remains available to reopen from **Session resources** in the right sidebar. **Open page** displays the full page. The web UI (a browser tab, not the Desktop App) has no native BrowserView, so the same preview falls back to an iframe or an Open-in-new-tab control.
+If the Agent opens a page while you stay in chat, Desktop shows that live WebTab as a small corner preview. In a split window the preview stays over its chat while you work in another pane. Click **Close preview (X)** in its header to hide the small window; the page remains available to reopen from **Session resources** in the right sidebar. **Open page** displays the full page. The web UI (a browser tab, not the Desktop App) has no native BrowserView, so the same preview falls back to an iframe or an Open-in-new-tab control.
 
 Actions remain bound to the originating window and WebTab. The default path uses DOM, ARIA, page text, and element references. A single current-viewport screenshot is used only for a visual task or when the page cannot be located structurally. The product does not add OCR, object detection, iterative crops, component memory, vision memory, or workflow replay to this path.
 

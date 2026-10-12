@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791637138" data-alt-lang-url="/docs/capabilities/permissions.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791824552" data-alt-lang-url="/docs/capabilities/permissions.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -140,9 +140,15 @@
 <p>Bypass does not override explicit deny or ask rules, mandatory plan-exit or self-update approval, plugin restrictions, identity capabilities, or Sandbox.</p>
 <p>Questions and approvals appear as independent cards in the conversation. Each question appears above its answer control. Multiple questions and form fields are listed together; fill them in and click Submit answers once. Submitted answers remain paired with their questions. The main message box remains available for ordinary messages. The card shows the submitted answer, delivery progress and a confirmation or retry state. Confirmed receipts remain visible until the page is reloaded; pending requests are restored on reconnect.</p>
 <p>Tool approvals show the current operation and two actions: Allow once and Deny.
-Clicking either submits that decision directly. The request closes only after
-server confirmation; an unconfirmed answer can retry the same decision.
-Persistent rules remain available in History project settings.</p>
+Clicking either submits that decision directly. The note button beside Deny
+opens <strong>Deny with a note</strong>: write what the agent should do instead and send it
+with Ctrl+Enter. The request closes only after
+server confirmation; an unconfirmed answer can retry the same decision. A
+confirmed approval leaves the conversation; the tool row shows what happened.
+Deny does not end the task: the model receives the refusal as that tool's
+result, the operation does not run, and the model is told to stop and ask you
+how to proceed. With a note, the model receives your note instead and follows
+it. Skipping a question likewise tells the model it went unanswered. Persistent rules remain available in History project settings.</p>
 <p>Human tool approvals have no default time limit. Waiting saves execution progress
 and releases the active execution attempt; reopening the App restores the pending
 request. Resuming uses the context saved for that turn, so later memory or date updates do not invalidate the approval. Tool, permission and working-directory checks still apply. If execution cannot resume, the conversation reports that the pending operation did not run. Cancelling the task withdraws its approval. Expired older requests are not
@@ -154,7 +160,7 @@ reading the current contents before proposing another operation. The UI shows
 only the current proposal, without a before/after history. Arbitrary shell
 commands do not declare all their file targets, so this file-specific check does
 not cover arbitrary command side effects.</p>
-<p>Ordinary questions retain their answer controls and Discuss entry. Tool approval does not include a discussion editor.</p>
+<p>Ordinary questions retain their answer controls and Discuss entry. What you write under Discuss goes to the model in place of an answer, and it responds to it within the same turn; the card keeps your text.</p>
 <p>A new owner turn in Auto or Bypass does not inherit approval requirements solely from an unrelated earlier interrupted turn. Nested browser and Program calls use the same scope when their owner origin is verified. Unknown outcomes within the current execution still require exact approval; old operation records remain intact. This does not change macOS access or make a read-only volume writable.</p>
 <h2 id="change-permissions-during-a-task">Change permissions during a task<a class="header-anchor" href="#change-permissions-during-a-task">#</a></h2>
 <p>An existing session's selection is sent to the server and confirmed before the interface displays it as effective. The interface sends the change immediately when it already knows the confirmed session version. Once the server confirms Bypass, subsequent ordinary tool calls do not ask for approval, even if the model is still reasoning, streaming text or generating tool arguments. This also applies to later tools in the same response. You do not need to stop generation or send another message. The new mode is included in subsequent model requests; text already being generated is not rewritten. A tool already authorized for execution keeps that authorization. Switching into Plan mode prevents pending write calls from being authorized.</p>
@@ -208,7 +214,7 @@ openprogram<span class="w"> </span>permissions<span class="w"> </span><span clas
 <p>A new interactive owner turn uses its selected Auto or Bypass mode even when an older turn has an unknown external result. Old effects remain recorded as unknown and are not replayed. Resuming the same interrupted execution still requires reconciliation or exact approval. Explicit deny/ask rules and mandatory approvals continue to apply.</p>
 <p>When offered, <strong>Always allow</strong> saves the exact supported operation rule in the current project. <strong>Always allow this path</strong> applies only to a Sandbox path approval. One-shot-only requests do not offer persistent approval.</p>
 <p>Stop interrupts pending model and asynchronous tool work. Once the producer exits, the turn is stopped even if an external operation has an unknown outcome; that outcome remains visible in Activity. Pause instead waits for the current operation to reach a resumable boundary. The interface reports the pending request; use Stop when an immediate interruption is needed.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-10</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/commit-push-pr.html" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="提交与拉取请求">Commits and PRs</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-en="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-zh="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="自编程智能体">Self-programming agents</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/commit-push-pr.html" data-href-en="/docs/capabilities/commit-push-pr.html" data-href-zh="/docs/capabilities/commit-push-pr.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="提交与拉取请求">Commits and PRs</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-en="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-zh="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="自编程智能体">Self-programming agents</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
