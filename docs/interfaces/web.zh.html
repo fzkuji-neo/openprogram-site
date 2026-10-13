@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791824552" data-alt-lang-url="/docs/interfaces/web.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/interfaces/web.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,7 +89,7 @@
 <p><strong>操作历史</strong>在桌面 App 和浏览器中都通过当前页面的菜单显示。聚焦按钮后按 Enter 或空格打开；Escape 关闭菜单，并将焦点返回按钮。</p>
 <p>打开当前窗口已经显示的会话时，直接选中已有标签，从入口页或另一会话打开时也如此。目标尚未打开时，复用当前会话标签或入口页。后退和前进的目标会话若已打开，也会选中已有标签，并保留来源标签的历史。唯一性按会话 ID 判断，同名会话不会合并。重新加载旧的重复标签时，保留当前激活的一份；没有激活项则保留第一份，并保留它的历史和分组，移除其他重复标签。草稿输入和后台更新的标题在导航和重新加载后保留，已删除会话会从全部历史中移除。</p>
 <p>在 Files 或文件标签页中，后退和前进会依次返回当前项目中浏览过的文件夹与文件。返回 Files 时恢复文件夹展开状态和滚动位置；后退后打开新位置会替换原有前进记录。文件位置属于当前标签保存的页面历史，与文档版本 History 分开。目录列表快照失效时，重新读取已加载范围期间保留已有文件行。</p>
-<p>Markdown 文件以渲染后的文档打开。<code>figures/a.png</code> 这类相对图片路径从文档所在文件夹加载；相对链接会在新标签中打开对应文件。文件里的原始 HTML 显示为文本，不会执行。</p>
+<p>Markdown 文件以渲染后的文档打开。<code>figures/a.png</code> 这类相对图片路径从文档所在文件夹加载；相对链接会在新标签中打开对应文件。文件里的原始 HTML 显示为文本，不会执行。<code>#installation</code> 这类链接只在当前文档内滚动；<code>guide.md#installation</code> 打开目标文件，并在内容加载后滚动。标题键使用小写可见文本，保留 Unicode 字母与数字，将空格替换为连字符，并为重复标题添加数字后缀。章节请求是临时状态，重开 App 后不会恢复；导航保留未保存文本。此导航功能不包含双链、文档嵌入或大纲。</p>
 <p>PDF 文件支持连续阅读、页码跳转、缩略图、文档目录、适合宽度或页面的缩放、正文选字、搜索高亮和下载原文件。复制选中文字时默认清除排版换行，保留段落分隔和正常连字符；关闭该选项可保留原换行。项目中的文件支持高亮和文字批注，并通过文档保存与 History 写入标准 PDF 批注。附件与历史版本保持只读。PDF 解码器随程序本地安装，兼容 App 内置运行时；打开 PDF 不会将文件上传至外部查看器。预览文件大小上限为 64 MiB。</p>
 <p>项目菜单还支持在系统文件管理器中显示文件夹、创建持久 Git worktree、归档该项目聊天，以及移除侧边栏项目入口。Worktree 从当前提交创建新分支，使用源 Git 仓库外的新绝对路径；未提交改动保留在原目录。移除项目保留文件、聊天及项目归属，可在项目页面恢复或重新打开文件夹。默认主目录项目不可移除。已归档聊天可通过“已归档”筛选查看；隐藏项目的聊天仍保留在日期或平铺历史中。</p>
 <p>项目目录或额外工作目录位于 Git 仓库中时，输入框里该目录的胶囊会多出一个 git 半边，显示分支，以及用绿红小块表示的未提交行数。这一行放不下时，名字先截短，再收起分支名，最后小块变成左绿右红的圆点。它的菜单可以在 Review 中打开这些修改、切换或新建分支，以及把目录换到另一个 worktree 或在仓库旁新建的 worktree。已开始会话的主目录是固定的，在那里选的 worktree 会作为额外工作目录加入。<strong>创建 PR</strong> 会推送分支并执行 <code>gh pr create --fill</code>，需要已登录的 GitHub CLI，且当前不在默认分支。有未提交修改时，<strong>让 agent 提交并创建 PR</strong> 会把一段指令填进输入框，但不发送。同一仓库里的多个目录只显示一个 git 半边。</p>
@@ -122,6 +122,7 @@
 <p>点击输入框中的 <strong>Cancel execution</strong> 停止当前执行。刷新或重新打开会话时，会恢复正在执行的任务及其停止控制，包括审批等待后恢复的执行。没有新输出不代表执行已经结束；系统不会仅因一段时间没有输出就移除运行状态。已经结束的执行不会因为残留的线程注册继续显示为运行中。</p>
 <p>回复生成期间，思考、已有正文和工具步骤会持续保存，刷新后可以恢复。回复失败时，已有过程与错误提示同时保留；手动停止也会保留已经收到的过程。</p>
 <p>本地 shell 命令会先结束其进程组，再报告取消。恢复执行的会话会将原助手消息持久化为已取消，并将会话恢复为空闲，刷新后仍保持停止状态。</p>
+<p>网页动作等待页面操作锁后，会在派发前再次检查取消状态。取消可以阻止待执行动作，不会撤销已经发送到浏览器的动作。</p>
 <p>等待首段回复时，原有“思考中…”提示使用新版双环加载标识。执行摘要、函数步骤和回复正文不额外添加双环。颜色跟随主题，减少动态效果设置下显示静态图形。</p>
 <h3 id="thinking-折叠">thinking 折叠<a class="header-anchor" href="#thinking-折叠">#</a></h3>
 <p>模型的思考过程渲染为可折叠块，默认收起，流式期间只显示最新一行，点击展开完整内容。</p>
@@ -130,10 +131,13 @@
 <h3 id="附件">附件<a class="header-anchor" href="#附件">#</a></h3>
 <p>可以粘贴截图、拖入文件，也可以通过输入框菜单选择文件。图片和文件按添加顺序紧凑排列，每项显示名称、格式和大小。点击附件查看预览或详情，点击 × 移除。</p>
 <p>输入框会边输入边显示 Markdown 格式：粗体、斜体、删除线、<code>行内代码</code>、链接、标题、引用、列表和代码块直接显示为对应样式，标记符号只在光标靠近时才出现。发送的仍是原始 Markdown。粘贴超过 2,000 个字符时，输入框里插入一个 <strong>Pasted · N lines</strong> 标签，而不是整段文字；悬停可预览内容，按一次退格整块删除。输入完成的 <code>@路径</code> 引用同样显示为标签。模型收到的是完整的粘贴内容；发送后的消息里，粘贴部分折叠成同样的标签，点击即可展开。标签显示为 <strong>lost</strong> 表示粘贴内容已丢失，发送前请删除后重新粘贴。</p>
+<p><code>@file</code> 查询等待响应时，不带 Shift 的 Enter 和 Tab 保持编辑，不选择旧结果或发送。Escape 关闭当前查询，即使响应稍后返回也不会重新打开；修改 token 后可重新搜索。查询无结果或失败后，Enter 正常发送，Tab 移动焦点；查询期间 Shift+Enter 和输入法确认保持编辑行为。</p>
 <p>已发送消息里的访问令牌和私钥会被遮住：只显示开头几个字符，后面是圆点，点旁边的眼睛按钮可以显示或隐藏完整内容。识别范围是带固定前缀的令牌，例如 GitHub（<code>github_pat_</code>、<code>ghp_</code>）、OpenAI 和 Anthropic（<code>sk-</code>）、AWS（<code>AKIA</code>）、Slack、Stripe、Google、Hugging Face、npm 和 GitLab，以及 JWT 和 PEM 私钥块。这只改变显示，模型仍会收到完整消息；不想再共享的令牌请及时作废。</p>
+<p>消息、会话或显示文本变化后，已经展开的密钥会重新隐藏。折叠粘贴内容的预览先遮蔽完整的已识别密钥，再缩短预览文本。复制和编辑操作仍使用原文。</p>
 <p>图片直接提供给支持看图的模型，同时在聊天中保存原图副本。应用接受最多 32 MiB 的原图，发送版本过大时等比缩小到不超过 5 MiB。所选模型不支持看图时会明确报错，不会悄悄忽略图片。</p>
 <p>桌面 App 中的文本、代码、数据、PDF 和 Office 文件引用原路径，由助手根据任务调用工具读取，不自动把文件正文加入提示词。拖入文件夹时只提供第一层目录，最多 200 项或 8 KiB，不扫描子文件夹。浏览器选入且没有原路径的文件由后端保存，再引用保存位置。</p>
 <p>读取完成的草稿附件随所属聊天保留，刷新后可以恢复。发送后只在后端确认接收时清除本次提交的项目。读取失败或发送被拒绝时，文字和附件继续保留。如果连接在确认前断开，应用不会自动重新发送。</p>
+<p>消息正在准备文件提及时，重复提交相同草稿不会发送两次。如果在准备期间修改草稿并再次提交，应用会明确提示更改后的草稿尚未发送，并保留文字和附件。请在准备完成后再次发送该草稿。其他会话可以独立发送。</p>
 <h3 id="无头或远程-linux-上的项目目录">无头或远程 Linux 上的项目目录<a class="header-anchor" href="#无头或远程-linux-上的项目目录">#</a></h3>
 <p>Project 文件夹和额外工作目录都指向运行 worker 的机器上的路径。通常
 OpenProgram 会打开这台机器的原生文件夹选择器；如果 Linux 没有 X11 或
@@ -206,6 +210,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 </tr>
 </tbody>
 </table>
+<p>消息导航预览和技能详情将原始 HTML 按文本显示，同时保留 Markdown 格式。技能链接不授予本地文件访问权限。</p>
 <p><code>/settings</code> 直接打开会跳到 <code>/settings/general</code>。模型凭据仍在 <code>/settings/providers</code>，见<a href="/docs/models/README.zh.html">配置模型</a>。</p>
 <p>窗口较窄（宽度不超过 900px）时，左侧栏默认收起为图标栏，直到你展开它；展开后导航到其他页面会再次收起。宽度低于 760px 时，设置导航同样默认显示为图标栏，窗口缩小到该宽度时也会自动收起。你手动展开或收起侧栏的选择会被保留。</p>
 <h3 id="标签拖动外观">标签拖动外观<a class="header-anchor" href="#标签拖动外观">#</a></h3>
@@ -240,6 +245,8 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 <p>同一项目文件的标签共享编辑器和草稿。关闭一个标签后，其他标签仍可使用。如果同一文件在两栏中同时可见，可点击“在此显示”将编辑器移到这一栏。</p>
 <p>关闭已关联会话的网页标签，只隐藏显示入口；同一个页面及其导航状态继续保留在 <strong>Resources</strong>，包括手动打开后关联到会话的页面。通过“在标签中打开”可重新打开同一个页面；在 Resources 点击“关闭网页”才会真正关闭。没有关联任何会话的独立网页，关闭标签时仍会真正关闭。</p>
 <p>回复失败时，已生成的正文和函数记录会保留，失败提示显示在该回复末尾。展开<strong>错误详情</strong>可查看原始报错；刷新对话后仍可查看提示和详情。</p>
+<p>在输入框第一行按 ↑ 可查看历史消息；在最新历史消息上按 ↓ 会恢复尚未发送的草稿。编辑历史文本后开始新的历史查看周期；Ctrl/⌘/Alt/Shift 加方向键以及选中文本时保持正常编辑行为。</p>
+<p>Markdown 文件预览把原始 HTML 显示为文本。文档链接支持本地文件、页内片段、HTTP(S) 和 mailto；协议相对链接使用 HTTPS。图片支持经权限检查的本地文件与 HTTP(S)，并保留 SVG 片段。data 图片地址、可执行或不支持的协议不会加载；本地 URL 的查询参数不改变文件权限。数学内容在排版前保持文本，行内与围栏代码中的数学分隔符保持字面形式。</p>
 <div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="桌面应用">Desktop App</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="终端界面">Terminal UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791824552" data-alt-lang-url="/docs/interfaces/desktop.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791905658" data-alt-lang-url="/docs/interfaces/desktop.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,6 +107,7 @@
 <h2 id="bookmarks-and-history">Bookmarks and History<a class="header-anchor" href="#bookmarks-and-history">#</a></h2>
 <p>The bookmarks bar shows the direct contents of the imported or locally maintained Bookmarks bar. Items that do not fit appear in the double-chevron overflow menu. The separated <strong>All bookmarks</strong> button on the right opens the Bookmarks manager, including the original Other bookmarks and Mobile bookmarks folders. Folder names, order, and contents remain unchanged. Nested menus open one level at a time and remain scrollable within the current window.</p>
 <p>Website bookmarks display their saved favicon, falling back to the website’s own <code>/favicon.ico</code> and then a browser icon if unavailable. This applies to the bar, folder menus, and manager. Adding a bookmark preserves the current page icon; reopening a bookmarked URL updates it when the page provides a new icon. Icon requests do not send a referrer or use a third-party favicon service. Shortcuts on the Browser home page show the website's own <code>/favicon.ico</code>, or the site's initial when it has none.</p>
+<p>To add a homepage shortcut, select <strong>Add</strong>, enter an address and an optional name, then select <strong>Add</strong> or press Enter. The compact editor follows your interface theme and font. Cancel, Close, Escape, clicking outside, or selecting the Add tile again dismisses it and clears the unfinished entry.</p>
 <p>During use, decoded icons are shared across the bar, folder menus, and tab components in each renderer. Reopening a bookmark menu reuses its document and icon cache; icons do not restart from the loading placeholder on every opening. The cache is bounded, retries failed sources after five minutes, and refreshes reused sources after thirty minutes when requested again. Closing the window releases its retained bookmark menu. Restarting the App can load icons again through the browser cache.</p>
 <p>The Bookmarks manager has a folder tree, current-folder list, search, favicon display, and item menus. History is grouped by local date and uses compact rows with time, favicon, title, and domain. Desktop Browser data is separate from backend state: History and the persistent <code>webtabs</code> partition live in Electron's per-user application-data directory, while chats, projects, Programs, and worker configuration remain under <code>~/.openprogram/</code>. Clearing browser data does not delete that backend state.</p>
 <h2 id="importing-an-existing-browser-profile">Importing an existing browser profile<a class="header-anchor" href="#importing-an-existing-browser-profile">#</a></h2>
@@ -175,6 +176,39 @@
 <h3 id="shared-terminal-environments">Shared Terminal environments<a class="header-anchor" href="#shared-terminal-environments">#</a></h3>
 <p>Select a Terminal resource to attach its interactive view beside the conversation. The Agent and the user share the same shell, working directory, environment and output. Hiding the view or switching sessions does not terminate the shell. <strong>Terminate terminal</strong> explicitly requests process termination and requires confirmation; an acknowledged request is not evidence that the process has exited. <strong>Share terminal</strong> makes it discoverable to other sessions on that Desktop host; making it private revokes the current Agent binding.</p>
 <p>Terminal input delivery does not indicate command success. After an uncertain input result, OpenProgram does not resend it. <strong>Reconnect view</strong> reads the current output again without replaying input. An unfinished human input fragment or changed input revision prevents conflicting Agent input until the Agent observes the terminal again.</p>
+<p>For ordinary macOS zsh and compatible Bash 3.2 login shells, <code>terminal_use(action=&quot;observe&quot;, ...)</code> and <code>resource(provider=&quot;terminal&quot;, action=&quot;observe&quot;, ...)</code> also return optional <code>shell_integration</code> metadata reported by the shell:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td><code>starting</code>, <code>ready</code>, <code>unavailable</code>, or <code>ended</code>.</td>
+</tr>
+<tr>
+<td><code>mode</code>, <code>reason</code></td>
+<td>The selected integration (<code>zsh-hooks</code> or <code>bash-debug</code>) and an unavailable reason, when present.</td>
+</tr>
+<tr>
+<td><code>event_sequence</code></td>
+<td>Sequence of the latest accepted shell report.</td>
+</tr>
+<tr>
+<td><code>cwd</code></td>
+<td>Latest reported directory in <code>value</code>, with its <code>event_sequence</code>; <code>null</code> before a report.</td>
+</tr>
+<tr>
+<td><code>cycle</code></td>
+<td>Foreground command cycle <code>id</code>, <code>phase</code> (<code>running</code>, <code>finished</code>, or <code>unknown</code>), and <code>exit_code</code>; <code>null</code> before the first command.</td>
+</tr>
+</tbody>
+</table>
+<p><code>start_cwd</code> remains the starting directory, and the top-level <code>exit_code</code> belongs to the terminal process. A cycle's exit code is reported only after its matching foreground completion; background jobs can still be running. Input receipts retain <code>command_complete=null</code>: input delivery, shell completion, and successful external effects are separate facts. Reports do not grant permissions and can become stale if shell hooks are changed.</p>
+<p>Existing bash-preexec, custom DEBUG traps, existing or replaced prompt commands, readonly prompt configuration, and incompatible tracing settings fall back to <code>unavailable</code> without replacing the user's hooks. Unsupported shells and presets retain normal terminal input/output. Missing metadata from older hosts or <code>unavailable</code> metadata means the command state is unknown; do not infer success from a prompt or quiet output. These fields are tool observations, not additional terminal controls.</p>
 <h3 id="common-agent-resource-interface">Common Agent resource interface<a class="header-anchor" href="#common-agent-resource-interface">#</a></h3>
 <p>The <code>resource</code> tool provides <code>describe</code> plus provider-declared operations. Start with <code>resource(action=&quot;describe&quot;)</code>, then use the returned provider name and argument schema. The built-in <code>web</code> and <code>terminal</code> providers preserve their native identities and checks. For example, <code>resource(provider=&quot;terminal&quot;, action=&quot;list&quot;)</code> discovers available shells; <code>observe</code> returns the exact generation, binding, input revision and output cursor required for subsequent operations. Existing <code>web_use</code> and <code>terminal_use</code> remain available. For a web Page, <code>release</code> ends the Agent's control session and leaves the Page open; <code>close</code>, in <code>resource</code> and in <code>web_use</code>, closes the Page's tab and reports <code>page_closed</code>. A close that the App does not confirm returns an error instead.</p>
 <p>Providers only expose supported operations. Web <code>release</code> releases a control session and leaves the Page open; <code>close</code> closes the exact observed Page using its owned control binding. Terminal <code>release</code> releases Agent control and leaves its process running; <code>close</code> requests termination. Local Terminal operations require a live execution in the originating Desktop window and cannot bypass a task sandbox.</p>

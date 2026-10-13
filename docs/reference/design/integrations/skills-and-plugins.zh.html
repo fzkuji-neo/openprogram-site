@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791824552" data-alt-lang-url="/docs/reference/design/integrations/skills-and-plugins.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/reference/design/integrations/skills-and-plugins.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -699,6 +699,7 @@ apps/web/components/plugins/
   validate-plugin.tsx, plugin-detail.tsx, plugin-host.tsx (iframe / dynamic mount)
 </code></pre>
 <div id="store"></div>
+<p>两个技能详情视图均将 SKILL.md 正文作为不可信 Markdown 渲染。原始 HTML 及数学内容中的 HTML 文本按字面显示。详情视图不添加本地资源读取解析器，技能链接不授予文件系统访问权限。</p>
 <h3 id="存储">存储<a class="header-anchor" href="#存储">#</a></h3>
 <p><code>lib/skills-store.ts</code>、<code>lib/plugins-store.ts</code>，WS 订阅 <code>skills:changed</code> / <code>plugins:changed</code> / <code>plugins:error</code>。</p>
 <hr />

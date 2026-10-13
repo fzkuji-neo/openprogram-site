@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791824552" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791905658" data-alt-lang-url="/docs/reference/design/ui/composer-interaction-modes.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -363,7 +363,7 @@
 <p>Submission immediately displays the actual answer and a sending state inside the card. Only a matching applied command confirms delivery. Unknown outcomes retain the original command identifier and payload for retry, show the available error code, and never imply success. Explicit rejections reconcile the current request before another answer. A closed request is not displayed as an accepted answer. Confirmed answers and declines remain as session UI receipts; the normal composer draft is unaffected.</p>
 <p>Receipts are in-memory presentation state, not Workflow checkpoints. Refresh reloads canonical pending questions; this change does not add historical receipt persistence. Requests remain bound to their original session, execution, generation and version even when the user changes tabs.</p>
 <h2 id="discussion-and-events">Discussion and events<a class="header-anchor" href="#discussion-and-events">#</a></h2>
-<p>An explicit discussion action retains its own feedback input. It first confirms decline of the pending request, then queues the contextual discussion in the owning conversation. An unconfirmed decline cannot send discussion or permit execution. Ordinary composer messages do not implicitly decline a question or become its answer.</p>
+<p>An explicit discussion action retains its own feedback input. It sends the feedback as the reason on the exact canonical decline command. The model receives it within the same turn; no separate ordinary chat message is queued. Only a matching applied receipt confirms delivery, and an unconfirmed decline never authorizes execution. Ordinary composer messages do not implicitly decline a question or become its answer.</p>
 <p>UI-only settings use direct store updates. A one-shot user action uses a correlated request and response. Runtime questions are broadcast events projected into the pending-decision store; command acknowledgement remains authoritative. Event arrival alone is not a receipt for the user's answer.</p>
 <p><code>question.asked</code> and reconnect snapshots supply canonical targets. <code>useWaitAnswer</code> submits execution commands and owns acknowledgement state; <code>QuestionMode</code> owns answer fields and navigation, with request-scoped in-memory drafts; <code>PendingDecisionPanels</code> owns pending placement and <code>DecisionOutputs</code> owns terminal receipts. Backend live Workflow questions continue in the original process. Existing predeclared Agent waits retain their continuation contract.</p>
 <h2 id="acceptance">Acceptance<a class="header-anchor" href="#acceptance">#</a></h2>

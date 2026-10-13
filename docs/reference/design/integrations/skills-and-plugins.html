@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791824552" data-alt-lang-url="/docs/reference/design/integrations/skills-and-plugins.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791905658" data-alt-lang-url="/docs/reference/design/integrations/skills-and-plugins.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -696,6 +696,7 @@ apps/web/components/plugins/
   plugin-options-dialog.tsx, plugin-trust-warning.tsx, plugin-errors.tsx,
   validate-plugin.tsx, plugin-detail.tsx, plugin-host.tsx (iframe / dynamic mount)
 </code></pre>
+<p>Both skill detail views render SKILL.md bodies as untrusted Markdown. Raw HTML and HTML-like math are displayed as text. These views do not add local-resource resolvers or grant filesystem access through skill links.</p>
 <h3 id="store">Store<a class="header-anchor" href="#store">#</a></h3>
 <p><code>lib/skills-store.ts</code>, <code>lib/plugins-store.ts</code>, subscribing over WS to <code>skills:changed</code> / <code>plugins:changed</code> / <code>plugins:error</code>.</p>
 <hr />

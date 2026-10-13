@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791824552" data-alt-lang-url="/docs/reference/api/agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/reference/api/agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -333,7 +333,7 @@
 <td><code>persist_full</code></td>
 <td><code>bool</code></td>
 <td><code>False</code></td>
-<td>把未截断的完整结果落盘,供 agent 回读</td>
+<td>把未截断的完整结果保存到状态目录中的独立路径，供 agent 回读；后续保存不覆盖旧引用。仅在写入成功后返回路径</td>
 </tr>
 <tr>
 <td><code>head_ratio</code></td>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791824552" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/reference/design/runtime/agent-collaboration.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -738,7 +738,7 @@ runner worker）都在 finally 里成对注册/注销 cancel token，token 在�
 <p>子/目标分支失败（崩溃 / 超时 / 模型报错）：<strong>也回送</strong>，回送内容带 <code>is_error</code> + 原因
 （&quot;B 失败了：&lt;原因&gt;&quot;），发起方模型读到后自行决定重发/换路/放弃。不据此自动重派任务；新派发仍须满足授权与剩余限制，provider 传输重试沿用自身独立策略。</p>
 <h3 id="56-结果截断与全文存储">5.6 结果截断与全文存储<a class="header-anchor" href="#56-结果截断与全文存储">#</a></h3>
-<p>当前通用字符串/<code>ToolReturn</code> 规范化器默认上限为 30,000 字符，可按上下文容量进一步降低，保留头尾摘要，并可将 UTF-8 全文写入 <code>&lt;state_dir&gt;/tool_results/&lt;sanitized-call-id&gt;.txt</code>。默认 profile 对应 <code>~/.openprogram/tool_results/...</code>，它是状态目录文件，不是系统临时文件。只有写入成功才返回路径，写失败不能虚构路径。</p>
+<p>当前通用字符串/<code>ToolReturn</code> 规范化器默认上限为 30,000 字符，可按上下文容量进一步降低，保留头尾摘要，并可将 UTF-8 全文写入 <code>&lt;state_dir&gt;/tool_results/</code>，采用既有归属身份摘要与排他创建后缀组成的不透明独立 <code>.txt</code> 文件名。Provider 原始 call ID 可以重复；新保存不会覆盖旧 receipt 引用的文件。已有 receipt 路径保持可读，不改写旧文件。默认 profile 对应 <code>~/.openprogram/tool_results/...</code>，它是状态目录文件，不是系统临时文件。只有写入成功才返回路径，写失败不能虚构路径。</p>
 <p>这还不是所有 Job 结果的统一保证：<code>job_output</code> 返回 <code>AgentToolResult</code>，共享规范化器直接传递而不截断；follow-up helper 也可能内联完整 <code>result_text</code>。从检查的 helper 无法确认自动 TTL/清理策略，也没有目标 session 文件 ACL。</p>
 <p>目标结果契约让 <code>job_output</code> 与内联 follow-up 使用同一受限摘要，完整 canonical 结果仍保存在执行/session 存储。全文 artifact 记录执行 ID、所属 session/project、媒体类型、字节数与内容散列；读取使用与结果相同的可见范围检查。不展示路径不等于限制了通用文件系统访问。artifact 保留期跟随所属执行配置，归档本身不删除它。在资源与保留策略接入之前，只报告现有路径和未确认生命周期，不声称会自动过期或已隔离。测试覆盖结构化结果限长、落盘失败、授权后重读及保留文件清理。</p>
 <h3 id="57-配置上下文与授权">5.7 配置、上下文与授权<a class="header-anchor" href="#57-配置上下文与授权">#</a></h3>
