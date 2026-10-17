@@ -71,6 +71,12 @@ delta 调校。鼠标滚轮按滚轮速率缩放：鼠标没有捏合。macOS �
 视野拖走。平移与缩放按会话存在 `apps/web/lib/runtime-bridge/dag/store/globals.ts` 里，只有进入另一个会话才重新
 fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的。
 
+**进入会话时可读，Fit 按钮才看全图。** 打开时的视野就是 fit，但下限 80%：长会话
+整张塞进来会缩成一根细线上的小点（40 轮的聊天打开时是 37%）。图在这个下限下
+仍比可视条带大时，溢出的那个方向跟着 HEAD——放在条带靠下处，就像会话记录打开
+时停在最新一条。HUD 的 Fit 按钮保持原来的 fit，最低到 25%：要求看全图就是要的
+这个（`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts` 的 `fitCanvas(opening)`）。
+
 **HUD。** 输入框右上角——env chip 行的右端：一个 fit 按钮、一组缩放控件、
 图例弹层，由 `dag-view.tsx` portal 进输入框的 `#dagHudSlot`，跟着输入框走、
 随它长高，只在 DAG 视角显示。缩放控件是一颗胶囊里的 − · 读数 · +：−/+ 每次
@@ -257,7 +263,7 @@ lane 色；**绝不给某类线固定颜色**。类型只靠线型：
 |---|---|---|---|
 | 同分支父→子 | 实线 | 本分支色 | 显示 |
 | retry 分叉桥（起点 → 分支 lane 的脊线顶端，同行） | 虚线 `6 4` 横线；行错开时才走肘线 | 本分支色 | 显示 |
-| 调用线程（锚点 → 它的条目，第十二节） | 实线——主干模式下探一层：锚点自己的列一根竖线，每个条目一根右伸横杆（先下后右，和链上连线同构） | 注文灰 | 展开时显示 |
+| 调用线程（锚点 → 它的条目，第十二节） | 1.4px 实线——主干模式下探一层：锚点自己的列一根竖线，每个条目一根右伸横杆（先下后右，和链上连线同构） | 锚点的分支色 | 展开时显示 |
 | merge 汇入（peer tip → merge 节点） | 粗实线 2.4px | peer 分支色 | 显示 |
 | attach 回流（源 tip → 嵌入位置） | 长虚线 `4 4` | 源分支色 | 两端都可见才画——agent 内部 tip 归并进三角形后不画线，spawn 头在线程上的位置就是返回关系 |
 | 分支间通信（send_message） | 点线 `1 5` | 目标分支色 | **hover 才显示**（量大，常驻会糊） |
@@ -378,16 +384,26 @@ caller/predecessor），`graph_layout/` 做 lane/tier/depth 标注——**tier �
 `graph_layout/tier.py`**。验证工具：
 `python scripts/dag_dump.py <session_id>` 打印 lane/tier/depth + ASCII 网格。
 
-## 八、白点 = 上下文覆盖
+## 八、填充 = 上下文覆盖
 
-节点的白色填充表示它**属于下一次 LLM 调用会携带的内容**。没有模式可选，也没
+节点的填充表示它**属于下一次 LLM 调用会携带的内容**。深色画布上填充是主题
+最亮的墨色，接近白；浅色画布上那个墨色接近黑，一列黑色字形读起来像一块块墨
+团，所以浅色主题改用节点自己分支色 30% 混进画布色的浅底
+（`apps/web/lib/runtime-bridge/dag/render/visibility.ts` 里的 `light-dark()`；图例色块
+用同一个表达式）。两种都和空心字形分得开——空心字形填的是画布色。下文的"白色
+填充""白点"都指这个填充。没有模式可选，也没
 有开关要找：只要图在显示，它就独占面板。单个会话 tab 得到聊天外壳加这张图；
 两个会话 tab 分屏时两侧都是 `PeerSessionPane`，外壳——以及这张图——根本不
 渲染。所以图旁边永远不会有会话记录，"哪些气泡在视口内"给不出任何读数，白点
 就只是覆盖这一个意思。
 
 覆盖集由 `GET /api/sessions/{id}/context-range` 提供：从 head 回溯活跃分支，
-止于最近一次压缩摘要。集合外的节点变暗。宿主调
+止于最近一次压缩摘要，再加上每个被覆盖的轮做过的调用。前驱回溯只看得到轮——
+调用是通过 `caller` 挂在它的回复下面的——所以路由补上 `render_context` 会读、
+且对话层归属在集合里的 code 节点，每个紧跟在它的归属轮后面
+（`apps/server/openprogram_server/_webui/routes/files/tree.py` 的 `_with_code_nodes`）。
+没有这一步，每个展开的调用都画成"不在下一次请求里"，而 `aged` 这个 code 节点
+才有的事实永远不会被置上。集合外的节点变暗。宿主调
 `enterExclusiveCoverageMode`（`apps/web/lib/runtime-bridge/dag/index.ts`）拉取并
 应用它。
 
@@ -540,9 +556,12 @@ tooltip 和检查器里。
 上面。
 
 **悬停 → 简略卡**。快速一瞥：角色（spawn 头标题写 `子 agent · <名字>`——
-名字就住在这里，第十二节）、model/tokens、一段短内容预览、折叠调用数。token
+名字就住在这里，第十二节）、model/tokens、一段短内容预览、折叠调用数，节点在
+运行中、已取消或失败时再加一行状态（完成是默认状态，不占一行）。token
 数字在节点带实测值时用 `llm.output_tokens`，没有时用 `chars/4`；卡片明说是
-哪一种（`tokens` / `tokens（估）`）。悬停稍候出现、移开即走。
+哪一种（`tokens` / `tokens（估）`），没有文字的节点不给估算。键名共用一列固定
+宽度，值因此对齐。悬停稍候出现、移开即走。展开后的卡片显示节点完整 id：派生
+id（`<回复>_t_<调用>`）前十几个字符都一样。
 
 **单击 → 节点自己的动作**。折叠/展开它的调用线程（第十二节）。没有别的——
 没有窗口和展开抢画面。右栏 Details 仍然静默填充，用户想看随时打开。
@@ -588,7 +607,7 @@ tooltip 和检查器里。
 徽标形状、不是药丸、不是线上的小方块——任何带轮廓的东西都会被读成节点，而幻影
 节点正是折叠最不能引发的误读。没有线程线、没有条目、没有别的。
 
-**展开就是纯展开**。点节点把线程插进布局：一根注文灰实线沿锚点自己的列竖直
+**展开就是纯展开**。点节点把线程插进布局：一根锚点分支色的实线沿锚点自己的列竖直
 向下，每个事件用一根右伸横杆挂在线上——先下后右，主干模式下探一层。每个事件
 都是线上的真节点——每次调用一个方块（锚轮 lane 色），spawn
 的 agent 也是方块——一行一个事件，从上到下按调用顺序。后面的 user / assistant
@@ -622,6 +641,62 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 上方整条线程链都展开时可见；它的条目同理——可见性属于整条祖先链，不属于节点
 自己的开关。
 
+## 十三、工具、选择与删除节点
+
+画布像画板一样有"当前工具"。工具只决定两件事：单击节点是什么意思，在空白处拖动做
+什么。滚轮与捏合、右键卡片、HUD、分支标签在任何工具下都一样。工具排成画布左缘的一列
+竖条：
+
+| 工具 | 快捷键 | 单击节点 | 在空白处拖动 |
+|---|---|---|---|
+| 浏览（抓手，默认） | H | 节点自己的动作（第十一、十二节） | 平移 |
+| 选择（指针） | V | 选中它；Shift/⌘ 增减 | 画矩形，碰到的节点全部选中 |
+| 套索 | L | 同选择 | 画任意形状，碰到的节点全部选中 |
+
+点选和框选是同一个工具，和各种画图软件一样：按在节点上是选它，按在空白处是开始拉框。
+所以选择类工具下在空白处拖动不平移。按住空格时任何工具的拖动都是平移，鼠标中键始终
+平移，触控板滚动在任何工具下都是平移。单击空白处清空选择；按住 Shift
+单击保留选择，Shift 拖动则追加选择。选择类工具下双击不做任何事，fork 并编辑仍是浏览
+手势。这些是设计定死的，不是设置项：碰到即选（没有"必须全包住"模式），单击用户圆点只
+选这一个圆点。
+
+工具放在注册表里（`apps/web/lib/runtime-bridge/dag/interaction/selection.ts` 的
+`registerTool`）：一个 id、一个快捷键、单击是否选择、拖动做什么。竖条渲染所有已注册
+的工具，以后加工具（便签、批注）只需注册一次再配一个图标。
+
+**选择。** 选择是当前会话画布的视图状态。每个被选节点的字形外侧画一圈强调色虚线框。
+每次重绘后重新套用，并裁剪到画布仍画着的节点，所以被删除或被折叠掉的节点会自动离开
+选择；切会话时清空。在画布上做选择会把键盘焦点从输入框拿走，于是 Delete 和 Esc 作用
+于选择，不作用于草稿。
+
+**操作条。** 有选择时，画布左上角出现一条操作条：`已选 N | 复制 ID · 删除 · ✕`，
+"删除"用危险色。删除后几秒内它显示 `已删除 N 个节点 | 撤销`。它和工具竖条左边对齐，
+不放右上角——那里是窗格的视角切换按钮。竖条和操作条用同一种低调的表面：输入框的底色、
+发丝边和很轻的接触阴影；当前工具用中性灰底标出。
+
+**删除。** Delete 或 ⌫ 立即删除选择，不弹确认，⌘Z 撤销。store
+（`openprogram/store/session/session_store/node_deletion.py`）按以下规则执行：
+
+- 只删被选节点，以及它们经 `caller` 拥有的东西：回复的工具调用、调用的子调用、调用
+  派生的 agent 分支。只是在对话里排在后面的节点保留。前驱被删的存活节点改指向最近的
+  存活前驱，所以删一个节点会把缺口接上，就像在流程图里删一个方框。
+- 一个字形代表它显示的所有行。归并进锚点的 followup 回复（第十二节）随锚点一起删；
+  选中 spawn 方块删的是派生它的调度调用，agent 分支随之一起删。
+- 结构节点不能删：根节点、单独的 spawn 分支根、压缩摘要、attach/merge 机制节点。
+  画布不把它们放进请求，store 也会拒绝。
+- HEAD 被删时移到最近的存活前驱。被删分支尖上的分支名也随之移过去。
+- 不直接删除文件。节点文件移到 `<sessions 根>/.deleted-nodes/<session>/<op_id>/`
+  （在会话 git 仓库之外），同时写一份日志，记下每条边、HEAD 和分支名的变化。超过
+  24 小时的回收内容在下次删除时清理。
+- 撤销按日志倒放。此后被别的操作改动过的边或 HEAD 保留新值。
+- 有轮次在运行时两个动作都拒绝执行：正在跑的轮次可能正往要删的节点下面写。
+
+线上格式：`delete_nodes {session_id, node_ids}` → `nodes_deleted
+{ok, op_id, deleted, error}`；`restore_deleted_nodes {session_id, op_id}` →
+`nodes_restored`（`apps/server/openprogram_server/_webui/ws_actions/dag_nodes.py`）。
+成功时还会广播 `session_reload`，聊天记录和图一起重绘。撤销栈按会话分开，页面存在期间
+一直有效。
+
 ## 附录：实现状态
 
 本规范已全部实现。各部分的落点：
@@ -652,3 +727,4 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 | 第十一节 图例 | `apps/web/components/chat/dag-view.tsx` 的 `DagLegend`（挂在画布 HUD 里），`apps/web/app/styles/dag/hud.css` 的 `.dag-legend` |
 | 第十二节 调用线程 + agent spawn | `apps/web/lib/runtime-bridge/dag/render/shapes.ts`（spawn → 方块）、`apps/web/lib/runtime-bridge/dag/passes/thread.ts`（模型）、`apps/web/lib/runtime-bridge/dag/layout/geometry.ts`（递归安放）、`apps/web/lib/runtime-bridge/dag/render/edges.ts`（线程点线、中心连线、场景3横桥）、`apps/web/lib/runtime-bridge/dag/render/nodes.ts`（`data-thread*`、肩上折叠数）、`apps/web/lib/runtime-bridge/dag/interaction/nodes.ts`（`toggleThreadOpen`）；由 `apps/web/scripts/runtime/check-dag-subagent.mjs` 实跑 |
 | 第十二节 名字上线 | `task/runner.py::_update_attach_card` 从 task 戳出 `attach.label`；`ws_actions/session.py::_annotate_spawn_origin` 把它带到 spawn 根的 `spawned_from.label`；测试见 `tests/unit/test_task_attach_integration.py` |
+| 第十三节 工具、选择、删除 / 撤销 | 工具注册表、选择状态、命中判定和橡皮筋在 `apps/web/lib/runtime-bridge/dag/interaction/selection.ts`；拖动在 `canvas.ts`，单击在 `nodes.ts`，快捷键在 `keys.ts`；扩展选择与撤销栈在 `node-delete.ts`；竖条与操作条在 `apps/web/components/chat/dag-tools.tsx` + `apps/web/app/styles/dag/tools.css`；store 拼接与日志在 `openprogram/store/session/session_store/node_deletion.py`；测试见 `tests/component/store/test_node_deletion.py` 与 `apps/web/tests/execution/dag-selection.test.mjs` |

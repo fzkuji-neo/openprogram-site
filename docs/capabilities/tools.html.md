@@ -98,6 +98,14 @@ Search keys take effect on subsequent calls without restarting. An unavailable s
 
 `combine="race"` returns the first nonempty successful response. Named `providers` that cannot run are skipped; if none can run, the error lists each one with its reason. `combine="rrf"` retains results completed before the deadline. Total failure is reported as an error, distinct from a successful empty search. Already running requests finish under their transport timeouts.
 
+## Desktop
+
+| Tool | What it does | Requires |
+|---|---|---|
+| `computer_use` | Read an application's window (screenshot + Accessibility tree) and click, type, scroll, drag, paste, copy or use its menu bar in the background, one step or a batch at a time; one approval per application | macOS with Accessibility and Screen Recording for the runtime, Linux under X11 with AT-SPI and xdotool, or Windows with UI Automation |
+
+[Computer use](computer-use.md) lists the actions and the approval scopes.
+
 ## Images and PDF
 
 | Tool | What it does | Requires |
@@ -115,7 +123,7 @@ Collaboration splits into four domains, one word each — see
 
 | Domain | Tool | What it does | Requires |
 |---|---|---|---|
-| Planning | `todo_create` / `todo_update` / `todo_list` | The session planning board — a written checklist of intent (create entries, set status / owner / dependencies, list them grouped by status). Writing an entry starts nothing | Nothing |
+| Planning | `todo_create` / `todo_update` / `todo_list` | The session planning board — a written checklist of intent (create entries, set status / owner / dependencies, list them grouped by status). Writing an entry starts nothing; the Web UI shows the current plan as a [task list](../interfaces/web.md#task-list) | Nothing |
 | Execution | `list_jobs` / `job_output` | List this session's background tasks and wait for or inspect a result. Result access checks the dispatching session and ancestor ownership | Nothing |
 | Entity | `agent` | Spawn a new agent and collect its reply, or with `to=` hand a tracked task to an agent that already exists. `run_in_background=true` returns a task id instead of blocking; `start_from` picks where a new agent begins (`clean` / `inherit` / `SID:MSG_ID`); `archive_when_done=true` archives it once its task ends and the result has come back | Nothing |
 | Entity | `list_agents` | The agent list: which agents exist, their names, addresses, sizes and busy state (`scope="archived"` shows the archived ones) | Nothing |
@@ -130,6 +138,7 @@ Collaboration splits into four domains, one word each — see
 | `program` | Invoke any registered `Agent` method | Nothing |
 | `mixture_of_agents` | Ask N models in parallel, then synthesize; defaults picked from the model registry, one per provider | At least 2 providers in the model registry |
 | `ask_user_question` | Ask the user 1-N questions with options | An interactive frontend; missing input infrastructure, invalid question arrays, and noninteractive contexts return tool errors |
+| `chat_send` | Post a message into the chat the conversation came from. In an [ambient group](../integrations/channels.md#group-behavior) it is the only way the agent speaks; elsewhere it sends a short note before long work, and the final reply is still posted. At most 5 per turn | A chat-channel conversation (Telegram, Discord, Slack or WeChat); hidden everywhere else |
 | `enter_plan_mode` / `exit_plan_mode` | Enter / exit plan mode | Nothing |
 | `canvas` | Incrementally write into named blocks of a markdown file; `set` with `content=""` clears a block, while omitted content is an error | Nothing |
 | `memory_*` | Read the persistent memory workspace — `memory_search` (by meaning), `memory_grep` (exact string), `memory_get` (one file, section or block), `memory_browse` (what exists), `memory_status` (size and revision), and `memory_update` to correct one thing. Recording the conversation is not among them: that happens in the background. There is one workspace per instance, shared by every agent and every conversation including chat channels ([Chat Channels](../integrations/channels.md#who-can-talk-to-your-bot)). | Nothing |

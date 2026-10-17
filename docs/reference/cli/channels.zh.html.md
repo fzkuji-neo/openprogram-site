@@ -54,7 +54,7 @@ usage: openprogram channels [-h] verb ...
 
 ### `channels accounts set`
 
-设置账号行为，例如 Telegram 群聊的 group_sessions=shared|per-user、require_mention=on|off。重启 worker 后生效。
+设置账号行为：require_mention=on|off 和 ack_reaction=on|off（telegram、discord、slack，下一条消息起生效），group_sessions=shared|per-user（telegram，重启 worker 后生效），sender_access=owner|paired（所有渠道；owner 为默认，通过准入的发信人拥有本机 owner 的工具和审批，群聊会话开沙盒；paired 只能回复和使用记忆）。
 
 | 参数 | 说明 |
 |---|---|

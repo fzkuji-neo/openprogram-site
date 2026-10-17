@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791905658" data-alt-lang-url="/docs/reference/config.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/reference/config.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,6 +98,7 @@
 <a class="navlink" href="/docs/reference/cli/cron-worker.html" data-title-zh="定时任务" data-href-en="/docs/reference/cli/cron-worker.html" data-href-zh="/docs/reference/cli/cron-worker.zh.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html" data-title-zh="诊断包" data-href-en="/docs/reference/cli/diagnostics.html" data-href-zh="/docs/reference/cli/diagnostics.zh.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html" data-title-zh="环境诊断" data-href-en="/docs/reference/cli/doctor.html" data-href-zh="/docs/reference/cli/doctor.zh.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/environments.html" data-title-zh="运行环境" data-href-en="/docs/reference/cli/environments.html" data-href-zh="/docs/reference/cli/environments.zh.html">environments</a>
 <a class="navlink" href="/docs/reference/cli/execution.html" data-title-zh="执行控制" data-href-en="/docs/reference/cli/execution.html" data-href-zh="/docs/reference/cli/execution.zh.html">execution</a>
 <a class="navlink" href="/docs/reference/cli/jobs.html" data-title-zh="后台任务" data-href-en="/docs/reference/cli/jobs.html" data-href-zh="/docs/reference/cli/jobs.zh.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html" data-title-zh="日志" data-href-en="/docs/reference/cli/logs.html" data-href-zh="/docs/reference/cli/logs.zh.html">logs</a>
@@ -293,14 +294,9 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 <td><code>openprogram/sandbox/__init__.py</code>, <code>openprogram/config_schema.py</code></td>
 </tr>
 <tr>
-<td><code>default_provider</code></td>
-<td>Default LLM provider (written by the setup wizard)</td>
-<td><code>openprogram/setup.py</code></td>
-</tr>
-<tr>
-<td><code>default_model</code></td>
-<td>Default model (written by the setup wizard)</td>
-<td><code>openprogram/setup.py</code></td>
+<td><code>last_used_model</code></td>
+<td><code>{provider, model}</code> a new conversation starts on: the model last picked or sent with. Empty on a fresh install</td>
+<td><code>openprogram/providers/last_used.py</code></td>
 </tr>
 <tr>
 <td><code>default_workdir</code></td>
@@ -518,7 +514,7 @@ openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb
 </table>
 <h3 id="others">Others<a class="header-anchor" href="#others">#</a></h3>
 <p>The code holds a further batch of more internal variables (HTTP/SSE timeout tuning <code>OPENPROGRAM_HTTPX_*</code> / <code>OPENPROGRAM_SSE_*</code>, TCP keepalive <code>OPENPROGRAM_TCP_*</code>, per-provider retry counts <code>OPENPROGRAM_&lt;PROVIDER&gt;_MAX_RETRIES</code>, <code>OPENPROGRAM_JOB_WORKERS</code>, <code>OPENPROGRAM_IMAGE_DIR</code>, <code>OPENPROGRAM_BROWSER_CDP_URL</code>, etc.). <code>grep -rn &quot;OPENPROGRAM_&quot; openprogram/</code> lists the full set; every variable is commented where it is defined.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="CLI 参考">CLI reference</span></a><a class="pn-link pn-next" href="/docs/reference/diagnostics.html" data-href-en="/docs/reference/diagnostics.html" data-href-zh="/docs/reference/diagnostics.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="诊断">Diagnostics</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli.html" data-href-en="/docs/reference/cli.html" data-href-zh="/docs/reference/cli.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="CLI 参考">CLI reference</span></a><a class="pn-link pn-next" href="/docs/reference/diagnostics.html" data-href-en="/docs/reference/diagnostics.html" data-href-zh="/docs/reference/diagnostics.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="诊断">Diagnostics</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

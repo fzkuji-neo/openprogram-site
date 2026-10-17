@@ -19,7 +19,7 @@ usage: openprogram worker [-h] verb ...
 
 ## `worker stop`
 
-停止运行中的 worker，先发送 SIGTERM，必要时升级为 SIGKILL。
+停止运行中的 worker；已安装的服务会一直停着，直到下次 start 或登录。
 
 ## `worker restart`
 

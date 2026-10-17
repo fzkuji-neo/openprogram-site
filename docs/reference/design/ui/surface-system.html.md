@@ -107,7 +107,7 @@ or selected fill for the rail on the right.
 ```
 property     token / value
 ─────────────────────────────────────────────────────────────────
-height       `--ui-list-h` → `--ui-button-h` → 30px
+height       `--ui-list-h` → 30px
 padding      6px 8px
 gap          12px
 radius       `--ui-list-radius` (10px)
@@ -141,47 +141,118 @@ Sidebar rows, MCP tab pills, and MCP server rows all sit on this
 one slot may pick from several sizes, every author negotiates with
 the design and the sizes drift apart.
 
-Buttons are the shadcn/ui `Button` in the **radix-luma** style.
+Buttons are the shadcn/ui `Button` in the **radix-nova** style,
+the style ui.shadcn.com's own docs use.
 `apps/web/components/ui/button.tsx` is copied verbatim from the
-official registry (`npx shadcn add button`, style `radix-luma`);
-the only local changes are its imports and a `forwardRef` wrapper
-for React 18. Every size is a pill (`rounded-4xl`); the call site
-picks one of the official sizes and never edits the classes.
+official registry (`/r/styles/radix-nova/button.json`); the only
+local changes are its imports, a `forwardRef` wrapper for React 18,
+and the app-owned `elevated` variant. The radius is `rounded-lg`
+(`sm` and the small icon sizes use `rounded-[min(var(--radius-md),12px)]`);
+the call site picks one of the official sizes and never edits the
+classes.
 
 The sizes are rem-based and this app's root font size is 14px
 (`html { font-size: 14px }` in `base.css`, which ~560 existing
-utilities are tuned to), so every shadcn size renders at 7/8 of
-its nominal value:
+utilities are tuned to), so in the chat, the rails and other dense
+surfaces every shadcn size renders at 7/8 of its nominal value:
 
 ```
 size        app height  app text   use
 ─────────────────────────────────────────────────────────────────
 xs          21 px       10.5 px    avoid — text is too small here
-sm          28 px       12.25 px   chips and compact control rows
-default     31.5 px     12.25 px   dialog and settings actions
-lg          35 px       12.25 px   hero / empty-state actions
-icon-sm/default/lg                 square = circle at those heights
+sm          24.5 px     11.2 px    chips and compact control rows
+default     28 px       12.25 px   dialog and page actions
+lg          31.5 px     12.25 px   hero / empty-state actions
+icon-sm     24.5 px                composer icon chips
 ─────────────────────────────────────────────────────────────────
 ```
+
+Surfaces built entirely from the official components render them at
+the docs' scale instead: they carry `.shadcn-scale`
+(`app/globals.css`), which resets the Tailwind theme variables
+(`--spacing: 4px`, `--text-sm: 14px`, … and the shadcn radius ladder
+`--radius-sm/md/lg/xl` = 6 / 8 / 10 / 14 px) inside it, so `h-8` is
+32px and `text-sm` 14px there. The Settings content column, every
+menu panel (`MENU_PANEL`) and the Select popup carry it.
 
 Elements that cannot be a `<Button>` (a span that hosts its own
 ✕, a Radix trigger rendered as a span) take the same look through
 `cn(buttonVariants({ variant, size }))` on their `className` — the
 `cn()` merge matters: the raw class list carries both
-`border-transparent` and the variant's border colour.
+`border-transparent` and the variant's border colour. A component
+whose geometry must not move when the Button is restyled (the
+composer's mic and send) takes its size from its own tokens and only
+its colours from the variant (see Composer controls).
 
-A header row (search + tab pills + icon buttons) must share one
-vertical center. A 1–2 px height mismatch between those controls
-is a bug, not a variant.
+Controls that sit beside Buttons — inputs, search fields, header
+tab pills — take `--ui-button-h`, which is `2rem` (28 px here):
+the `default` / `icon` height. Page-header actions
+(`ManageActionButton`) use `default` for the same reason. A header
+row (search + tab pills + icon buttons) must share one vertical
+center. A 1–2 px height mismatch between those controls is a bug,
+not a variant.
 
-## Inputs, selects, and borders
+## Selects and menus
 
-Inputs and dropdowns share **one single-layer 1px** edge
+Every choice from a fixed list is the shadcn **radix-nova**
+`Select` (`apps/web/components/ui/select.tsx`); the app has no
+native `<select>` and no hand-rolled listbox. `SimpleSelect` is the
+one-line form (`value`, `onValueChange`, `options`, optional
+`label`, `placeholder`, `size`) and covers almost every call site;
+grouped options pass `{label, options}` entries.
+
+- Trigger: the registry's Nova trigger — a plain bordered field
+  (`rounded-lg`, `border-input`, `bg-transparent`,
+  `dark:bg-input/30`, `h-8` default / `h-7` `sm`). `SimpleSelect`
+  defaults to `w-full max-w-48`; call sites only add width or an
+  error border, never their own chrome.
+- Popup: solid `bg-popover`, `ring-1 ring-foreground/10`,
+  `shadow-md`, in the registry's `item-aligned` position — it opens
+  over the trigger with the chosen row where the trigger was — above
+  dialogs (`z-[130]`), at the docs' scale (`.shadcn-scale`). Its
+  first line is a muted group heading naming the choice (the
+  `label`, else the `aria-label`); grouped options get one heading
+  per group. The chosen row shows a plain check.
+- Radix reserves `""` for "nothing chosen": an option whose value
+  is `""` travels under a sentinel inside `SimpleSelect`; without
+  such an option, `""` shows the placeholder.
+
+All other menu popups — Radix `DropdownMenu`, the popover pickers,
+the sidebar footer menu, the tab context menu and the function
+context menu — share one frame and one row, taken from
+`MENU_PANEL`, `itemCls`, `GROUP_LABEL` and `MENU_SEPARATOR` in
+`apps/web/components/chat/top-bar/menu-styles.ts`. A CSS-module
+menu keeps only its placement (position, z-index, width) in the
+module and takes the frame and rows from those classes; it never
+restates their values.
+
+```
+part        geometry (Nova, docs scale)           material (ours)
+─────────────────────────────────────────────────────────────────
+panel       rounded-lg · p-1 · min-w-32 ·          --glass-surface,
+            .shadcn-scale                          blur, 0.5px
+                                                   --glass-ring,
+                                                   --glass-shadow
+row         min-h-7 (28px) · rounded-md ·
+            px-1.5 py-1 · text-sm (14px) ·
+            gap-1.5 · size-4 icons
+label       px-1.5 py-1 · text-xs · font-medium · muted
+separator   -mx-1 my-1 · 1px · --border
+shortcut    text-xs · tracking-widest · muted
+chosen      accent check (MenuCheck), never a fill
+─────────────────────────────────────────────────────────────────
+```
+
+The geometry is Nova's; the glass material and the accent check
+are the app's own.
+
+## Inputs and borders
+
+Inputs share **one single-layer 1px** edge
 (`border: 1px solid var(--border)`, fill `--bg-input`).
 
-- Do not stack a 2px `:focus-visible` halo on that 1px edge.
-  After a native `<select>` closes and focus remains, the stacked
-  ring reads as a double frame.
+- Do not stack a 2px `:focus-visible` halo on that 1px edge; the
+  stacked ring reads as a double frame.
 - Hover must **keep** the 1px border. Setting `border-color:
   transparent` on hover makes the box look like it vanished
   (MCP catalog buttons had this).
@@ -196,16 +267,23 @@ the top, no snap-close. Motion is opacity, not translate.
 
 ## Settings rows
 
-Settings pages (General, Memory, System, and the rest) use one
-two-column row:
+Settings pages are built from three blocks in
+`apps/web/components/settings/settings-ui.tsx`, composed only from
+the official components (Card, Field) inside `.shadcn-scale`:
 
-- **left**: name, left-aligned. Description stays in this column
-  and does not run into the control
-- **right**: the control / value, right-aligned
-- left and right are isolated columns. Do not stack the label
-  above the input
-- status chips (`LIVE`, `NEXT START`, …) sit to the **left** of
-  their control, never mixed left/right across rows
+- `SettingsPage` — the page title and description, then a
+  scrolling body.
+- `SettingsSection` — a titled group of rows on one `Card`, rows
+  divided by hairlines.
+- `SettingsRow` — one setting as a horizontal `Field`: name and
+  description on the left, the control on the right (a lone Select
+  is 12rem wide). `stacked` puts a wide control (editor, grid, list)
+  under the name instead.
+
+Controls inside are the official components: `Switch`, `Input`,
+`Textarea`, `Slider`, `RadioGroup` (choice cards), `ToggleGroup`,
+`Checkbox`, `Button`, `SimpleSelect`. A tab carries no row, label or
+card CSS of its own.
 
 ## Button variant guidance
 
@@ -218,8 +296,8 @@ palette — so every theme restyles Buttons without touching them.
 variant      idle                                 hover
 ─────────────────────────────────────────────────────────────────
 default      bg-primary + primary-foreground      bg-primary/80
-outline      1px border-border; transparent        bg-muted (light),
-             in dark, bg-background in light       bg-input/30 (dark)
+outline      1px border-border, bg-background;       bg-muted (light),
+             border-input, bg-input/30 in dark     bg-input/50 (dark)
 secondary    bg-secondary                         secondary + 5% ink
 elevated     --bg-input, no border, shadow-sm      shadow-md, + 5% ink
 ghost        transparent                          bg-muted (/50 dark)
@@ -228,11 +306,11 @@ link         primary text                         underline
 ─────────────────────────────────────────────────────────────────
 ```
 
-All variants press down 1px while active, show a 3px `ring/30`
+All variants press down 1px while active, show a 3px `ring/50`
 halo on keyboard focus, and drop to 50% opacity when disabled.
 
-`elevated` is the one variant Luma's registry does not have: Luma
-ships no shadowed Button (only its Card carries `shadow-md`), and
+`elevated` is the one variant the registry does not have: Nova
+ships no shadowed Button, and
 the composer's pills want the same borderless raised look as the
 input box. It reuses the per-theme composer shadow pair through
 the `shadow-raised` / `shadow-raised-hover` utilities declared in
@@ -265,13 +343,25 @@ The chat composer is built from the same parts:
   tool toggles, context ring) → `elevated`, `sm` / `icon-sm`. The
   composer CSS hands its older base rules back to the Button with
   `revert-layer` rather than drawing its own chip.
-- **Send** → `icon-sm`: `default` when there is something to
-  send, `ghost` when empty, `destructive` while it stops a run.
-- **Input box** → the shadcn Luma Card look through the per-theme
-  `--composer-*` tokens: `--bg-input` surface with no border,
-  `shadow-sm` at rest and `shadow-md` on hover or focus (shadow
-  alpha 0.1 on light themes, 0.25 on dark), no focus ring; 23px
-  corners (a pill at one line).
+  The control row has no fixed height: it is as tall as its chips,
+  10px under the box, the same distance the environment chips keep
+  above it.
+- **Send and voice mic** → colours from the Button variants (send:
+  `default` when there is something to send, `ghost` when empty,
+  `destructive` while it stops a run; mic: `ghost`). Their size and
+  place do not come from the Button size classes but from the
+  composer tokens in `app/styles/base.css`: `--composer-action-size`
+  (28px) centred in the last `--composer-line-h` (46px) text line,
+  `--composer-action-inset` from the box edge. The text gutters, the
+  attachment column and the voice level strip are computed from the
+  same tokens, so a Button restyle cannot move them. The mic's hover
+  fill is `--composer-action-hover`, because the ghost fill
+  (`--muted`) is the box's own colour.
+- **Input box** → the per-theme `--composer-*` tokens: `--bg-input`
+  surface with no border, `shadow-sm` at rest and `shadow-md` on
+  hover or focus (shadow alpha 0.1 on light themes, 0.25 on dark),
+  no focus ring; `--radius-lg` corners, the same rounded-rectangle
+  family as the chips around it.
 
 ## Web page preview and browser toolbar
 
@@ -329,13 +419,16 @@ carries geometry only, so the 40px row keeps its rhythm.
 
 ## Implementation status
 
-- Done: `Button` (radix-luma), the composer environment chips,
-  bottom-row controls, send button, input box, the web page preview
-  (frame, header, icon buttons), and the browser toolbar's icon
-  buttons.
-- Not yet migrated: popover / menu panels (`MENU_PANEL`,
-  `components/ui/popover.tsx`, `dropdown-menu.tsx`), tooltips,
-  badges, and the hand-styled CSS-module popups — they still use
-  the glass surface tokens (`--glass-*`). Form inputs and selects
-  keep the 1px-edge rule above until they move to the shadcn input.
-  Sidebar list rows stay on the list set above.
+- Done: `Button`, `Select`, `Input`, `Textarea`, `Switch`,
+  `Slider`, `Card`, `Badge`, `Label`, `Separator` (radix-nova, every
+  former `<select>` and custom dropdown included), plus `Checkbox`,
+  `RadioGroup`, `Field`, `Toggle` and `ToggleGroup`; menu panels and
+  rows in Nova geometry on the glass material; the Settings General
+  page and desktop attention section on the Settings blocks; the
+  composer environment chips, bottom-row controls, send and mic
+  buttons, input box, the web page preview (frame, header, icon
+  buttons), and the browser toolbar's icon buttons.
+- Not yet migrated: the other Settings pages (still on
+  `settings-page.module.css` rows) and tooltips. Form inputs outside
+  Settings keep the 1px-edge rule above until they move to the
+  shadcn input. Sidebar list rows stay on the list set above.

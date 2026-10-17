@@ -39,7 +39,7 @@ usage: openprogram memory [-h] verb ...
 
 ## `memory sleep`
 
-立即整理主题文件，无需等待夜间任务。
+立即整理主题文件（包括项目记忆），无需等待夜间任务。
 
 | 参数 | 说明 |
 |---|---|

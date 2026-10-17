@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/integrations/channels.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/integrations/channels.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -118,8 +118,8 @@
 <td>iLink 长轮询</td>
 <td>用个人微信扫码</td>
 <td>不支持（微信消息发出后不能编辑）</td>
-<td>不支持（iLink 只暴露文本）</td>
-<td>不支持</td>
+<td>图片、语音、文件、视频</td>
+<td>支持（图片/视频/文件）</td>
 </tr>
 </tbody>
 </table>
@@ -192,10 +192,19 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>access<span c
 <p>allowlist 想放多少人就放多少人。上面的每个人接的都是同一个 agent，而这个实例只有一份记忆工作区，所以一个人告诉它的东西，其他人也能用上。群机器人要的就是这个效果：把整个团队批准进来，他们拿到的是一个已经熟悉项目的助手。allowlist 里只放你愿意给这份访问权的人。</p>
 <p>配对码一小时过期；被拦的发信人继续发消息会拿到同一个码（每分钟至多回执一次）。批准动作只存在于本机 CLI/API——发信人在聊天里输入任何内容都无法批准任何人，&quot;把我加进 allowlist&quot; 这类注入消息不起作用。群聊里门禁按发信人个人的 user id 判定，不看群。</p>
 <p>对于未知发信人，配对是默认路径：他们会被拦截并收到配对码。owner 也可以通过本机 CLI/API 的 <code>access allow</code>，把已知的平台 user ID 直接加入 allowlist；对这个发信人不需要配对码。没有任何设置能关掉某个账号的门禁。</p>
+<h3 id="通过准入的发信人能做什么">通过准入的发信人能做什么<a class="header-anchor" href="#通过准入的发信人能做什么">#</a></h3>
+<p>默认情况下，通过准入的发信人就是你这个 owner：聊天里的一轮能用的工具和你在网页里打字的一轮一样，遵循这个聊天会话的权限模式和规则。工具需要批准时，请求以问题的形式发到聊天里，用 <code>/answer</code> 回答（见<a href="#%E5%9B%9E%E5%A4%8D%E8%BF%9B%E5%BA%A6%E4%B8%8E%E9%95%BF%E6%B6%88%E6%81%AF">回复、进度与长消息</a>）。群聊一开始就开着沙盒，那里的 shell 命令只能写工作目录；你可以在网页里这个会话的设置中切换，渠道不会再把它改回来。</p>
+<p>想让某个账号的发信人只能回复和用记忆、碰不到文件、shell 和网络，就设置：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>wechat<span class="w"> </span>sender_access<span class="w"> </span>paired<span class="w">   </span><span class="c1"># 或 owner（所有渠道）</span>
+</code></pre>
+<p>allowlist 里的每个人拿到的都是同样的权限，所以 <code>owner</code> 只留给只有你自己、或你完全信任的人能联系到的账号。</p>
 <p>想要一个记忆互不相干的 agent，就跑自己的实例，各有各的状态目录和端口：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>--profile<span class="w"> </span>alice
 </code></pre>
 <p>第二个实例怎么建，见 <a href="/docs/install/profiles.zh.html">多实例配置</a>。</p>
+<h2 id="渠道与运行环境">渠道与运行环境<a class="header-anchor" href="#渠道与运行环境">#</a></h2>
+<p>渠道决定会话的消息同步到哪里，不决定 agent 的工具在哪里运行；后者是会话的<a href="/docs/capabilities/environments.zh.html">运行环境</a>。从渠道进来的会话使用默认环境。</p>
+<p>在 Web 和 App 里，输入框上方环境 chip 旁边的渠道 chip 显示会话的渠道，没绑定时显示 <strong>未连接</strong>。点它可以绑定账号、切换账号或断开。输入框下方 <strong>+</strong> 菜单里的 <strong>渠道</strong> 提供同样的选择。</p>
 <h2 id="聊天如何映射到会话">聊天如何映射到会话<a class="header-anchor" href="#聊天如何映射到会话">#</a></h2>
 <p>路由先决定哪个 <strong>agent</strong> 处理消息（bindings），再由 <strong>session key</strong> 决定落进哪通对话：</p>
 <ul>
@@ -203,39 +212,79 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>access<span c
 <li><strong>Discord 和 Slack</strong>：每个 <em>(channel, user)</em> 组合一个会话。同一个频道里的两个发信人各有各的对话，也看不到、答不了对方的待答问题。对话是分开的，背后的记忆工作区是整个实例共用的一份（见<a href="#%E8%B0%81%E8%83%BD%E5%92%8C%E4%BD%A0%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%AF%B4%E8%AF%9D">谁能和你的机器人说话</a>）。</li>
 <li><strong>微信</strong>：每个 peer 一个会话（私聊）。</li>
 </ul>
-<p>默认还按账号隔离（<code>session_scope: per-account-channel-peer</code>）。agent 可以放宽（<code>per-channel-peer</code>、<code>per-peer</code> 或单一 <code>main</code> 会话），也可以按天轮换会话（<code>session_daily_reset: &quot;HH:MM&quot;</code>）或按空闲时间轮换（<code>session_idle_minutes</code>）。</p>
+<p>默认还按账号隔离（<code>session_scope: per-account-channel-peer</code>）。agent 可以放宽（<code>per-channel-peer</code>、<code>per-peer</code> 或单一 <code>main</code> 会话），也可以按天轮换会话（<code>session_daily_reset: &quot;HH:MM&quot;</code>）或按空闲时间轮换（<code>session_idle_minutes</code>）。在聊天里发 <code>/new</code>（或 <code>/reset</code>）会立刻为这个聊天开一通新对话；之前那通留在网页侧栏里。</p>
 <h3 id="谁说的">谁说的<a class="header-anchor" href="#谁说的">#</a></h3>
-<p>好几个人共用一通对话时（Telegram 群聊默认的 <code>shared</code>，或者 agent 配成 <code>session_scope: main</code>），每条进来的消息前面都带着发信人的名字：</p>
-<pre><code>[Ada (7391)] 预算定 5 万
-[Bo (8022)] 改成 8 万
+<p>好几个人共用一通对话时（Telegram 群聊默认的 <code>shared</code>，或者 agent 配成 <code>session_scope: main</code>），每条进来的消息都在正文旁边带着发信人：</p>
+<pre><code>{&quot;speaker_kind&quot;:&quot;human&quot;,&quot;speaker_id&quot;:&quot;7391&quot;,&quot;speaker_display&quot;:&quot;Ada&quot;,&quot;content&quot;:&quot;预算定 5 万&quot;}
+{&quot;speaker_kind&quot;:&quot;human&quot;,&quot;speaker_id&quot;:&quot;8022&quot;,&quot;speaker_display&quot;:&quot;Bo&quot;,&quot;content&quot;:&quot;改成 8 万&quot;}
 </code></pre>
-<p>显示名是平台上看到的那个名字，数字是发信人的平台 id：id 在改名之后不变，也能把两个取了同一个名字的人分开。agent 把这个标签当消息的一部分读，所以它回的是对的那个人，记忆也把每条事实记在说这话的人名下，而不是统统记成一个匿名&quot;用户&quot;。显示名是它的主人在平台上随手填的任何东西，所以拼进去之前会压成一行、截到 64 字符、方括号换成圆括号。</p>
-<p>标签只加在聊天渠道的消息上，而且每一条都加，私聊也加，因为 <code>session_scope: main</code> 会把私聊 peer 也放进同一通会话。网页、命令行、TUI 的对话不受影响。标签是消息正文的一部分，所以网页记录里回看自己那条消息时也能看到它。</p>
-<h3 id="telegram-群聊行为">Telegram 群聊行为<a class="header-anchor" href="#telegram-群聊行为">#</a></h3>
-<p>两个账号级设置把 Telegram 的群聊语义变成显式配置（改完重启 worker 生效）：</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>telegram<span class="w"> </span>group_sessions<span class="w"> </span>per-user<span class="w">   </span><span class="c1"># 或 shared</span>
-openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>telegram<span class="w"> </span>require_mention<span class="w"> </span>on<span class="w">       </span><span class="c1"># 或 off</span>
-</code></pre>
+<p>显示名是平台上看到的那个名字，id 是发信人的平台 id：id 在改名之后不变，也能把两个取了同一个名字的人分开。agent 两个都读，所以它回的是对的那个人，记忆也把每条事实记在说这话的人名下，而不是统统记成一个匿名&quot;用户&quot;。显示名是它的主人在平台上随手填的任何东西，所以会压成一行、截到 64 字符、方括号换成圆括号。消息正文原样保留；发信人在正文里打一个带方括号的名字，也不会被当成那个人。</p>
+<p>聊天渠道的每条消息都带发信人，私聊也带，因为 <code>session_scope: main</code> 会把私聊 peer 也放进同一通会话。网页、命令行、TUI 的对话没有发信人字段。网页记录里，渠道消息在气泡上方用一行小字标出平台和发信人，例如 <code>微信 · Ada</code>；微信发信人没有昵称可显示，这一行把 id 缩成首尾各四个字符。</p>
+<h3 id="群聊行为">群聊行为<a class="header-anchor" href="#群聊行为">#</a></h3>
+<p>群里（Telegram 群、Discord 服务器频道、Slack 频道）大多数消息是人和人在聊。每个群处在三种模式之一：</p>
 <ul>
-<li><code>group_sessions</code>——<code>shared</code>（默认）：全群对着同一通对话说话。<code>per-user</code>：群里每个成员各占一个会话，行为与 Discord/Slack 一致。</li>
-<li><code>require_mention</code>——<code>on</code>：群聊里只有 @机器人 或回复机器人消息时才响应（提及在进 agent 前被剥掉）。<code>off</code>（默认）：响应群里的每条消息。私聊永远不设门槛。</li>
+<li><code>always</code>：每条消息都开启一轮。</li>
+<li><code>mention</code>：只有 @机器人 或回复机器人消息的那条才开启一轮，提及在进 agent 前被剥掉。其余消息会留着，下一轮把最近 50 条连同发信人放在触发消息上方一起交给 agent，让它知道问题之前聊了什么。网页记录里，它们收在这一轮气泡顶部一个&quot;群里之前的消息&quot;小开关后面。</li>
+<li><code>ambient</code>：agent 看每一条消息，自己决定要不要开口。没点名机器人的消息也开启一轮，标记为房间事件；agent 对它的回复只留在网页记录里（标着&quot;旁听&quot;），不发进群。agent 有值得说的话时，用 <code>chat_send</code> 工具发到群里。这类轮次不显示&quot;正在输入&quot;，也不加确认表情。点名机器人的消息照常回复。这个模式下每条消息都要调用一次模型。</li>
 </ul>
+<p>账号设置 <code>require_mention</code> 决定它下面各群的默认模式（<code>on</code> 即 <code>mention</code>，默认的 <code>off</code> 即 <code>always</code>）；群里任何人都可以用 <code>/activation mention</code>、<code>/activation always</code> 或 <code>/activation ambient</code> 切换这个群，单发 <code>/activation</code> 查看当前模式。私聊永远不设门槛。</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>telegram<span class="w"> </span>require_mention<span class="w"> </span>on<span class="w">       </span><span class="c1"># 或 off（discord、slack 同样可用）</span>
+openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>telegram<span class="w"> </span>group_sessions<span class="w"> </span>per-user<span class="w">  </span><span class="c1"># 或 shared（仅 telegram）</span>
+</code></pre>
+<p>群成员能接触到 agent 的记忆：agent 会调出记得的内容来回答他们，也会记下他们说的话。<code>/memory read</code> 让这个群不写入记忆，<code>/memory off</code> 让记忆完全不进这个群，<code>/memory on</code>（默认）沿用 agent 自己的记忆设置。私聊总是沿用 agent 的设置。</p>
+<p><code>group_sessions</code>（Telegram，改完重启 worker 生效）——<code>shared</code>（默认）：全群对着同一通对话说话。<code>per-user</code>：群里每个成员各占一个会话，行为与 Discord/Slack 一致。</p>
+<p>其他机器人发的消息会被忽略，所以同一个群里的两个机器人不会没完没了地互相回复；平台把同一条消息投递两次，也只开启一轮。一个群每分钟最多开启 10 轮，超出的消息作为&quot;之前的消息&quot;等下一轮。</p>
+<h3 id="聊天命令">聊天命令<a class="header-anchor" href="#聊天命令">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/new</code>、<code>/reset</code></td>
+<td>为这个聊天开一通新对话</td>
+</tr>
+<tr>
+<td><code>/activation [mention|always|ambient]</code></td>
+<td>查看或切换这个群的模式</td>
+</tr>
+<tr>
+<td><code>/memory [on|read|off]</code></td>
+<td>查看或收窄这个群对 agent 记忆的访问</td>
+</tr>
+<tr>
+<td><code>/answer &lt;question_id&gt; &lt;选项&gt;</code></td>
+<td>回答函数提出的问题（见下）</td>
+</tr>
+<tr>
+<td><code>/decline &lt;question_id&gt;</code></td>
+<td>拒绝这个问题</td>
+</tr>
+</tbody>
+</table>
+<p>在群里用命令不需要 @机器人。Telegram 群里写成 <code>/new@你的机器人</code> 也可以。</p>
 <h2 id="回复进度与长消息">回复、进度与长消息<a class="header-anchor" href="#回复进度与长消息">#</a></h2>
-<p>agent 工作期间，机器人先发一条 <code>⏳ working...</code> 占位消息，随工具执行实时编辑（<code>⚙ bash</code> → <code>✓ bash</code> → …），最终替换成完整回复。微信不能编辑消息，完整回复以普通消息送达。</p>
+<p>agent 工作期间，聊天里会显示机器人&quot;正在输入&quot;（Telegram、Discord、微信；Slack 没有给机器人用的输入提示）。在 Telegram、Discord、Slack 上，机器人还会先发一条 <code>⏳ working...</code> 占位消息，随工具执行实时编辑（<code>⚙ bash</code> → <code>✓ bash</code> → …），最终替换成完整回复。微信不能编辑消息，所以回复边写边按段落发出：一段攒到约 200 字就发，agent 调用工具之前写的那句话（&quot;我查一下……&quot;）会在工具运行前先发出去。</p>
+<p>账号设置 <code>ack_reaction on</code>（Telegram、Discord、Slack）打开后，机器人一接手消息就给它加一个 👀。Slack 需要 <code>reactions:write</code> 权限。</p>
 <p>agent 输出是 markdown，发送时按平台渲染：Telegram 收到 HTML（<code>**bold**</code> → 粗体，代码围栏 → <code>&lt;pre&gt;</code> 块），Slack 收到 mrkdwn，Discord 原生渲染 markdown，微信拿到剥掉记号的纯文本。超长回复按各平台上限自动切分：Telegram 4,000 字符、Discord 1,800、Slack 39,000、微信 1,800。</p>
 <p>出站发送遇到平台限流会自动退避重试——平台给了 <code>Retry-After</code> 就按它等，至多尝试三次——最终仍失败会落一条结构化错误日志。adapter 连接循环崩溃（断网、gateway 掉线）时自动指数退避重连（5 秒起翻倍，封顶 5 分钟）；因凭据失效而自行停止的 adapter 不会被重启，worker 日志会说明。</p>
 <p>函数停在提问（<code>runtime.ask</code>）时，问题会推送到聊天里，用文本命令回答：</p>
 <pre><code>/answer &lt;question_id&gt; &lt;选项或自由文本&gt;
 /decline &lt;question_id&gt;
 </code></pre>
-<p>只有属于该聊天会话的问题才能在这里回答。</p>
+<p>只有属于该聊天会话的问题才能在这里回答。在群里，只有发起这一轮的人能回答它停下来问的问题。工具审批也这样发过来，标着需要批准。</p>
 <h2 id="附件">附件<a class="header-anchor" href="#附件">#</a></h2>
-<p>入站的图片和文件下载到 <code>&lt;state&gt;/channels/&lt;channel&gt;/accounts/&lt;account&gt;/attachments/</code>（单文件上限 20 MB）。4 MB 以内的图片还会作为图像输入直达模型；每个落盘文件都以 <code>[attachment: &lt;路径&gt; (&lt;类型&gt;, &lt;大小&gt;)]</code> 的形式列在消息里，agent 用文件工具打开。有人回复早先的消息时（Telegram/Discord 回复、Slack thread），被引用的文本会以 <code>&gt; 引用</code> 块的形式附在新消息上方。</p>
+<p>入站的图片和文件下载到 <code>&lt;state&gt;/channels/&lt;channel&gt;/accounts/&lt;account&gt;/attachments/</code>（单文件上限 20 MB）。4 MB 以内的图片还会作为图像输入直达模型；每个落盘文件都以 <code>[attachment: &lt;路径&gt; (&lt;类型&gt;, &lt;大小&gt;)]</code> 的形式列在消息里，agent 用文件工具打开。</p>
+<p>微信的媒体从腾讯 CDN 加密下发，下载时解密。语音消息带有微信自己的转写时，agent 收到的就是这段文字；没有转写的语音存成 <code>.silk</code> 文件，这种音频格式模型没法直接听。</p>
+<p>有人回复早先的消息时（Telegram/Discord 回复、Slack thread），被引用的文本会以 <code>&gt; 引用</code> 块的形式附在新消息上方。</p>
 <p>从代码或 agent 里发文件走 outbound API：</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.channels.outbound</span><span class="w"> </span><span class="kn">import</span> <span class="n">send_file</span>
 <span class="n">send_file</span><span class="p">(</span><span class="s2">"telegram"</span><span class="p">,</span> <span class="s2">"default"</span><span class="p">,</span> <span class="s2">"123456"</span><span class="p">,</span> <span class="s2">"/path/to/report.pdf"</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s2">"周报"</span><span class="p">)</span>
 </code></pre>
-<p>Telegram 图片走 photo、其余走 document；Discord 把文件连同 caption 一起上传；Slack 走 external-upload 流程（需 <code>files:write</code>）。微信 iLink 机器人收不了文件——<code>send_file</code> 返回 <code>not_supported</code>，请改发带文件路径的文本。</p>
+<p>Telegram 图片走 photo、其余走 document；Discord 把文件连同 caption 一起上传；Slack 走 external-upload 流程（需 <code>files:write</code>）。微信把文件加密后上传到腾讯 CDN，按类型发成图片、视频或文件消息（上限 100 MB）；caption 随后作为一条单独的文字消息发出。</p>
 <h2 id="常见错误">常见错误<a class="header-anchor" href="#常见错误">#</a></h2>
 <table>
 <thead>
@@ -287,8 +336,9 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
 <ul>
 <li><a href="/docs/reference/design/channels/design.zh.html">设计笔记：channel 子系统</a>——架构与消息流</li>
 <li><a href="/docs/interfaces/README.zh.html">界面总览</a>——渠道对话同样出现在 Web UI / TUI</li>
+<li><a href="/docs/capabilities/always-on-agents.zh.html">常驻 Agent</a>——把常驻 Agent 的报告发到渠道会话</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/openclaw.html" data-href-en="/docs/integrations/openclaw.html" data-href-zh="/docs/integrations/openclaw.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="OpenClaw">OpenClaw</span></a><a class="pn-link pn-next" href="/docs/server/README.html" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="概览">Overview</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/openclaw.html" data-href-en="/docs/integrations/openclaw.html" data-href-zh="/docs/integrations/openclaw.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="OpenClaw">OpenClaw</span></a><a class="pn-link pn-next" href="/docs/server/README.html" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="概览">Overview</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -321,7 +371,18 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
 <a class="lvl-2" href="#两条配置路径">两条配置路径</a>
 </li>
 <li>
+<details class="toc-disclosure" open=""><summary>
 <a class="lvl-2" href="#谁能和你的机器人说话">谁能和你的机器人说话</a>
+</summary>
+<ul class="toc-list">
+<li>
+<a class="lvl-3" href="#通过准入的发信人能做什么">通过准入的发信人能做什么</a>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<a class="lvl-2" href="#渠道与运行环境">渠道与运行环境</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
@@ -332,7 +393,10 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
 <a class="lvl-3" href="#谁说的">谁说的</a>
 </li>
 <li>
-<a class="lvl-3" href="#telegram-群聊行为">Telegram 群聊行为</a>
+<a class="lvl-3" href="#群聊行为">群聊行为</a>
+</li>
+<li>
+<a class="lvl-3" href="#聊天命令">聊天命令</a>
 </li>
 </ul>
 </details>

@@ -28,14 +28,20 @@
   <url><loc>https://openprogram.io/docs/capabilities/agentic-workflow.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agents.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/agents.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/always-on-agents.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/always-on-agents.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/applications.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/applications.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/commit-push-pr.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/commit-push-pr.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/computer-use.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/computer-use.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/distill.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/distill.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/docs-question.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/docs-question.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/environments.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/environments.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/framework-control.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/framework-control.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/goal.html</loc></url>
@@ -46,6 +52,8 @@
   <url><loc>https://openprogram.io/docs/capabilities/lsp.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/mcp.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/mcp.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/memory-settings.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/memory-settings.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/memory.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/memory.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/permissions.html</loc></url>
@@ -97,6 +105,8 @@
   <url><loc>https://openprogram.io/docs/interfaces/desktop.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/interfaces/tui.html</loc></url>
   <url><loc>https://openprogram.io/docs/interfaces/tui.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/interfaces/voice-input.html</loc></url>
+  <url><loc>https://openprogram.io/docs/interfaces/voice-input.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/interfaces/web.html</loc></url>
   <url><loc>https://openprogram.io/docs/interfaces/web.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/models/README.html</loc></url>
@@ -151,6 +161,8 @@
   <url><loc>https://openprogram.io/docs/reference/cli/diagnostics.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/doctor.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/doctor.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/environments.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/cli/environments.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/execution.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/execution.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/cli/jobs.html</loc></url>
@@ -221,6 +233,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/channels/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/channels/audit.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/channels/audit.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/channels/chat-bots.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/channels/chat-bots.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/channels/design.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/channels/design.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/cli/README.html</loc></url>
@@ -307,6 +321,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/implementation-status.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/README.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-and-browser-use.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/integrations/computer-and-browser-use.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/editor-integration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/editor-integration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/integrations/extension-management.html</loc></url>
@@ -472,6 +488,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agent-tool-configuration-ui.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agentic-llm-streaming.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/agentic-llm-streaming.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/always-on-agents.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/always-on-agents.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/application-runtime.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/application-runtime.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/chat-search-settings.html</loc></url>
@@ -496,6 +514,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/dag/rendering.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/durable-tool-results.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/durable-tool-results.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/environments.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/environments.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agent-action-lifecycle.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agent-call-flow.html</loc></url>
@@ -613,6 +633,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/testing/windows-ci.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/README.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/README.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/activity-panel.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/activity-panel.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/agent-control-overlay.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/agent-control-overlay.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/app-icon.html</loc></url>
@@ -721,6 +743,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/slash-and-compact.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/state-layer.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/sub-agents-card.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/sub-agents-card.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/surface-system.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/theme-system.html</loc></url>

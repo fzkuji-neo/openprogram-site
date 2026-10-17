@@ -76,7 +76,7 @@
 2. _handle_update(update) 内部:
    a. 抽 text = "帮我看下当前目录有什么 Python 文件"
       (另抽附件 → Attachment 条目、reply_to_message 文本 → quoted_text;
-      群聊里 require_mention 设置可以在这里做 @提及 门槛并剥掉提及)
+      @机器人 或回复机器人时置 mentioned=True 并剥掉提及)
    b. 构造 ChannelMessage {
         text=..., chat_id="123", user_id="456",
         user_display="zhangsan", chat_type="direct",
@@ -208,7 +208,7 @@ def dispatch_inbound(*, channel, account_id, peer_kind, peer_id,
 
 ### 4.3 平台差异封到底层
 
-`_transport.py` 是**唯一**调 HTTP 往外发的地方。Telegram 的 `editMessageText`、Discord 的 `PATCH /messages/{id}`、Slack 的 `chat.update`、WeChat 的 iLink 协议、各平台文件上传（`post_file`：Telegram sendPhoto/sendDocument、Discord multipart、Slack external-upload；WeChat 缺席 → `not_supported`）——全都在这里。per-platform 消息长度上限（`MAX_CHARS`）、chunking、markdown 渲染（经 `_format`）、渲染后硬上限二次切分（`HARD_CAPS`）、限流重试都单点收敛在同一条流水线里。
+`_transport.py` 是**唯一**调 HTTP 往外发的地方。Telegram 的 `editMessageText`、Discord 的 `PATCH /messages/{id}`、Slack 的 `chat.update`、WeChat 的 iLink 协议、各平台文件上传（`post_file`：Telegram sendPhoto/sendDocument、Discord multipart、Slack external-upload、WeChat iLink CDN 上传）——全都在这里。per-platform 消息长度上限（`MAX_CHARS`）、chunking、markdown 渲染（经 `_format`）、渲染后硬上限二次切分（`HARD_CAPS`）、限流重试都单点收敛在同一条流水线里。
 
 `_format.py` 是出站格式化单点：agent markdown → Telegram HTML（全量转义，任意输入都合法；API 仍拒绝时 Telegram poster 剥标签降级纯文本重发）、Slack mrkdwn、Discord 透传、WeChat 纯文本。代码围栏与 inline code 用占位符保护，行内转换永远不碰代码体。
 
@@ -285,6 +285,7 @@ openprogram/channels/
 ├── _attachments.py      入站附件下载 + turn 输入转换
 │                        (image block + 路径注记)
 ├── _message.py          ChannelMessage + Attachment 中性结构 dataclass
+├── _wechat_media.py     微信 iLink 媒体条目 + CDN AES-128-ECB 加解密
 ├── outbound.py          入口 A: send / send_full / send_file (薄包装)
 ├── _conversation.py     dispatch_inbound 主流程 + per-session 锁
 │                        + progress streaming
@@ -294,11 +295,13 @@ openprogram/channels/
 │                        webui 订阅后原样广播 — channels 不 import webui)
 ├── _question_bridge.py  把待答的 runtime.ask 问题推进聊天
 ├── _question_commands.py /answer · /decline 文本命令处理
+├── _room.py             群聊房间: 回应模式、记忆模式、待处理历史、限流、重复投递去重
+├── _active_turns.py     每个会话正在跑的渠道轮次 (chat_send 目标、只许提问者 /answer)
 ├── _heartbeats.py       adapter 心跳注册表
 ├── __init__.py          CHANNEL_CLASSES proxy + register_channel + entry_points
 ├── implementations/
-│   ├── telegram.py      Telegram bot 长轮询入站 (group_sessions /
-│   │                    require_mention 账号设置)
+│   ├── telegram.py      Telegram bot 长轮询入站 (group_sessions
+│   │                    账号设置、提及判定)
 │   ├── discord.py       Discord bot Gateway 入站
 │   ├── slack.py         Slack Socket Mode 入站
 │   └── wechat.py        WeChat iLink 长轮询入站 (含 QR 登录)
@@ -315,8 +318,11 @@ openprogram/channels/
 | `_transport.py` | 唯一往外发字节: chunk → render → 硬上限二次切分 → 限流重试, 4 个平台 HTTP (文本/编辑/文件) | outbound + base.send_text/send_file |
 | `_format.py` | markdown → 各平台线上格式 | _transport |
 | `_access.py` | allowlist + 配对门禁 (`access.json`) | base.handle_inbound (判定), CLI / loopback Web UI (写操作) |
+| `_room.py` | 群聊房间: 回应模式和记忆模式 (`rooms.json`)、待处理历史、限流、重复投递去重 | base.handle_inbound |
+| `_active_turns.py` | 每个会话正在跑的轮次: 聊天、发言人、是否 ambient | _conversation (登记)、`chat_send` 工具、/answer 门禁 |
 | `_attachments.py` | 入站附件下载 + turn 输入转换 | base.handle_inbound |
 | `_message.py` | ChannelMessage + Attachment 中性结构 | adapter 入口 |
+| `_wechat_media.py` | iLink 媒体条目 → 附件、CDN 密钥解码、AES-128-ECB 加解密、出站媒体条目 | wechat adapter、_attachments、_transport |
 | `base.py` | Channel ABC + MessageHandle + handle_inbound + run_forever | adapter 子类、worker、dispatch_inbound |
 | `outbound.py` | 入口 A (一次性发 / send_file) | cron 脚本、jupyter、Agent method |
 | `_conversation.py` | dispatch_inbound 主流程 + per-session 锁 | base.handle_inbound |
@@ -335,7 +341,7 @@ openprogram/channels/
 | **Telegram** | 长轮询 `getUpdates` (无 webhook 依赖) | bot API `sendMessage` (HTML) / `editMessageText` / `sendPhoto`+`sendDocument` | ✓ | photo + document (file_id → getFile) | ✓ | bot token, public Bot API; group_sessions / require_mention 设置 |
 | **Discord** | discord.py Gateway WS | REST `POST /messages` / `PATCH /messages/{id}` / multipart 上传 | ✓ | ✓ (CDN URL) | ✓ | bot token, intents.message_content |
 | **Slack** | Socket Mode (slack_sdk) | `chat.postMessage` (mrkdwn) / `chat.update` / external-upload | ✓ | ✓ (`url_private` + bearer) | ✓ | bot_token (xoxb-) + app_token (xapp-) |
-| **WeChat** | iLink `getupdates` 长轮询 | iLink `sendmessage` (纯文本) | ✗ (iLink 不支持 edit) | ✗ (协议只有文本) | ✗ (`not_supported`) | 个微扫码登录, 无企业认证门槛 |
+| **WeChat** | iLink `getupdates` 长轮询 | iLink `sendmessage` (纯文本) | ✗ (iLink 不支持 edit) | ✓ (图片/语音/文件/视频, 从 CDN 解密) | ✓ (`getuploadurl` + CDN 加密上传) | 个微扫码登录, 无企业认证门槛 |
 
 平台差异以本表和各 adapter 顶部 docstring 为准。
 
@@ -356,7 +362,9 @@ openprogram channels accounts
   │     - telegram/discord/slack: getpass 粘贴 token
   │     - wechat: 启动 iLink QR 扫码流程
   ├── set <channel> <key> <value> --id <name>      行为设置
-  │     (telegram: group_sessions=shared|per-user, require_mention=on|off)
+  │     (telegram/discord/slack: require_mention=on|off, ack_reaction=on|off;
+  │      telegram: group_sessions=shared|per-user;
+  │      全部: sender_access=owner|paired)
   └── rm <channel> <account_id>                    删账号 + 关联 bindings
 
 openprogram channels access
@@ -386,7 +394,7 @@ openprogram channels bindings
 
 | 入口 | 实现 |
 |---|---|
-| Topbar channel popover | `apps/web/components/chat/top-bar/channel-menu.tsx` |
+| 输入框渠道 chip（始终显示）与 "+" 菜单的渠道子菜单 | `apps/web/components/chat/composer/environment-row/chips/channel-chip.tsx`、`apps/web/components/chat/composer/controls/channel-submenu.tsx`；两者都读 `apps/web/components/chat/top-bar/channel-choices.ts` |
 | Health badge status API | `/api/channels/{platform}/{account_id}/status` 返回 alive/stale/unknown |
 | 本地 access 管理 | `apps/web/components/settings/channels/access-list.tsx` 调用仅限 loopback 的 `/api/channels/access` 查询、批准和撤销路由 |
 

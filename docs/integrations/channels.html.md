@@ -9,7 +9,7 @@ Channels connect chat platforms — **Telegram, Discord, Slack, and WeChat** —
 | Telegram | Bot API long-polling | bot token (from BotFather) | yes | photos + documents | yes (photo/document) |
 | Discord | discord.py Gateway | bot token | yes | yes | yes |
 | Slack | Socket Mode (`slack_sdk`) | bot token (`xoxb-`) **and** app-level token (`xapp-`) | yes | yes (`files:read` scope) | yes (`files:write` scope) |
-| WeChat | iLink long-polling | QR scan with your personal WeChat | no (WeChat cannot edit sent messages) | no (iLink exposes text only) | no |
+| WeChat | iLink long-polling | QR scan with your personal WeChat | no (WeChat cannot edit sent messages) | images, voice, files, video | yes (image/video/file) |
 
 Supported releases include the Discord and Slack dependencies. Developers building from source receive the same channel dependencies through the complete development install.
 
@@ -112,6 +112,18 @@ Pairing codes expire after one hour; a blocked sender who keeps writing gets the
 
 Pairing is the default path for unknown senders: they are blocked and receive a code. The owner can also use the local CLI/API `access allow` command to add a known platform user ID directly to the allowlist; it bypasses the pairing code for that sender. There is no setting that turns the access gate off for an account.
 
+### What Approved Senders May Do
+
+By default an approved sender acts as you, the owner: a chat turn can use the same tools as a turn you type in the web UI, under that chat session's permission mode and rules. When a tool needs approval, the request arrives in the chat as a question and you answer it with `/answer` (see [Replies, Progress, and Long Messages](#replies-progress-and-long-messages)). Group chats start with the sandbox on, so shell commands there can write only inside the working directory; you can switch it in that session's settings in the web UI, and the channel will not switch it back.
+
+To limit an account's senders to replies and memory, with no access to files, shell or network, set:
+
+```bash
+openprogram channels accounts set wechat sender_access paired   # or: owner (all channels)
+```
+
+Since everyone on the allowlist gets the same access, keep `owner` for accounts that only you, or people you fully trust, can reach.
+
 Someone who wants an agent with separate memory runs their own instance instead, with its own state directory and port:
 
 ```bash
@@ -119,6 +131,12 @@ openprogram --profile alice
 ```
 
 See [Profiles](../install/profiles.md) for how a second instance is set up.
+
+## Channels and Environments
+
+A channel decides where a conversation's messages are mirrored. It does not decide where the agent's tools run; that is the conversation's [environment](../capabilities/environments.md). A conversation that arrives from a channel runs in the default environment.
+
+In Web and the App, the channel chip above the message box, next to the environment chip, shows the conversation's channel, or **Not connected**. Click it to bind an account, switch account, or disconnect. The **Channel** item in the **+** menu below the message box offers the same choice.
 
 ## How Chats Map to Sessions
 
@@ -128,36 +146,59 @@ Routing decides which **agent** handles a message (bindings), then a **session k
 - **Discord and Slack**: one session per *(channel, user)* pair. Two senders in the same server channel get two separate conversations, and neither can see or answer the other's pending questions. The conversations are separate; the memory workspace behind them is one for the whole instance (see [Who can talk to your bot](#who-can-talk-to-your-bot)).
 - **WeChat**: one session per peer (direct messages).
 
-By default sessions are also scoped per account (`session_scope: per-account-channel-peer`). Agents can loosen this (`per-channel-peer`, `per-peer`, or a single `main` session) and can rotate sessions daily (`session_daily_reset: "HH:MM"`) or after idle time (`session_idle_minutes`).
+By default sessions are also scoped per account (`session_scope: per-account-channel-peer`). Agents can loosen this (`per-channel-peer`, `per-peer`, or a single `main` session) and can rotate sessions daily (`session_daily_reset: "HH:MM"`) or after idle time (`session_idle_minutes`). Sending `/new` (or `/reset`) in a chat starts a fresh conversation for that chat right away; the previous one stays in the web sidebar.
 
 ### Who Said It
 
-When several people share one conversation — a Telegram group on the default `shared` setting, or any agent set to `session_scope: main` — every incoming message reaches the agent with its sender's name in front of it:
+When several people share one conversation — a Telegram group on the default `shared` setting, or any agent set to `session_scope: main` — every incoming message reaches the agent with its sender attached beside the text:
 
 ```
-[Ada (7391)] the budget is 50k
-[Bo (8022)] make it 80k
+{"speaker_kind":"human","speaker_id":"7391","speaker_display":"Ada","content":"the budget is 50k"}
+{"speaker_kind":"human","speaker_id":"8022","speaker_display":"Bo","content":"make it 80k"}
 ```
 
-The display name is what the platform shows, the number is the sender's platform id, which stays the same when someone renames themselves and separates two people who picked the same name. The agent reads the label as part of the message, so it answers the right person, and memory records each fact under the person who said it instead of under one anonymous "user". A display name is whatever its owner typed into the platform, so it is put on one line, capped at 64 characters, and its square brackets become round ones before it goes in front of the message.
+The display name is what the platform shows, the id is the sender's platform id, which stays the same when someone renames themselves and separates two people who picked the same name. The agent reads both, so it answers the right person, and memory records each fact under the person who said it instead of under one anonymous "user". A display name is whatever its owner typed into the platform, so it is put on one line, capped at 64 characters, and its square brackets become round ones. The message text itself is kept exactly as sent; a sender who types a name in brackets is not taken for that person.
 
-The label is added to messages from chat channels only, and it is on every one of them, direct messages included, because `session_scope: main` puts direct peers in a shared conversation too. Web, CLI and TUI turns are untouched. It is part of the message text, so you will see it quoted back in the web transcript.
+Every chat-channel message carries its sender, direct messages included, because `session_scope: main` puts direct peers in a shared conversation too. Web, CLI and TUI turns have none. In the web transcript a channel message shows its platform and sender on a small line above the bubble, such as `WeChat · Ada`; a WeChat sender has no nickname to show, so the line shortens the id to its first and last four characters.
 
-### Telegram Group Behavior
+### Group Behavior
 
-Two per-account settings make Telegram's group semantics explicit (restart the worker to apply):
+In a group (a Telegram group, a Discord server channel, a Slack channel) most messages are people talking to each other. Each group is in one of three modes:
+
+- `always`: every message starts a turn.
+- `mention`: only a message that @mentions the bot, or replies to one of its messages, starts a turn. The mention is stripped before the agent sees the text. Every other message is kept, and the next turn receives the most recent 50 of them above the triggering message, each with its sender, so the agent knows what led up to the question. In the web transcript they sit behind a small "earlier messages in the chat" toggle at the top of that turn's bubble.
+- `ambient`: the agent reads every message and decides for itself whether to speak. A message that does not address the bot still starts a turn, marked as a room event; the agent's reply to it stays in the web transcript (labelled "overheard") and is not posted. When the agent has something worth adding, it posts with its `chat_send` tool. No typing indicator or ack reaction appears for these turns. A message that does address the bot is answered as usual. Every message costs a model call in this mode.
+
+The account setting `require_mention` picks the default mode for its groups (`on` is `mention`, `off`, the default, is `always`); anyone in a group can switch that group with `/activation mention`, `/activation always` or `/activation ambient`, and `/activation` alone shows the current mode. Direct messages are never gated.
 
 ```bash
-openprogram channels accounts set telegram group_sessions per-user   # or: shared
-openprogram channels accounts set telegram require_mention on       # or: off
+openprogram channels accounts set telegram require_mention on       # or: off (also discord, slack)
+openprogram channels accounts set telegram group_sessions per-user  # or: shared (telegram only)
 ```
 
-- `group_sessions` — `shared` (default): the whole group talks to one conversation. `per-user`: each member of a group gets their own session, like Discord/Slack.
-- `require_mention` — `on`: in groups the bot only responds when it is @mentioned or when someone replies to one of its messages (the mention is stripped before the agent sees the text). `off` (default): the bot responds to every group message. Direct messages are never gated.
+Group members reach the agent's memory: the agent recalls what it remembers to answer them, and can save what they tell it. `/memory read` keeps a group from writing to memory, `/memory off` keeps memory out of the group entirely, and `/memory on` (the default) follows the agent's own memory setting. Direct messages always follow the agent's setting.
+
+`group_sessions` (Telegram, restart the worker to apply) — `shared` (default): the whole group talks to one conversation. `per-user`: each member of a group gets their own session, like Discord/Slack.
+
+Messages from other bots are ignored, so two bots in one group cannot keep answering each other, and a platform delivering the same message twice starts one turn. A group starts at most 10 turns a minute; messages past that wait as earlier messages for the next turn.
+
+### Chat Commands
+
+| Command | What it does |
+|---|---|
+| `/new`, `/reset` | Start a fresh conversation for this chat |
+| `/activation [mention\|always\|ambient]` | Show or switch this group's mode |
+| `/memory [on\|read\|off]` | Show or narrow this group's access to the agent's memory |
+| `/answer <question_id> <choice>` | Answer a question a function asked (below) |
+| `/decline <question_id>` | Decline that question |
+
+Commands work in a group without mentioning the bot. In a Telegram group, `/new@yourbot` is accepted too.
 
 ## Replies, Progress, and Long Messages
 
-While the agent works, the bot posts a `⏳ working...` placeholder and edits it live as tools run (`⚙ bash` → `✓ bash` → …), finally replacing it with the reply. On WeChat, which cannot edit messages, the full reply arrives as a normal message instead.
+While the agent works, the chat shows the bot as typing (Telegram, Discord and WeChat; Slack has no typing indicator for bots). On Telegram, Discord and Slack the bot also posts a `⏳ working...` placeholder and edits it live as tools run (`⚙ bash` → `✓ bash` → …), finally replacing it with the reply. WeChat cannot edit messages, so there the reply arrives paragraph by paragraph as it is written: a paragraph is sent once it has about 200 characters, and whatever the agent wrote before calling a tool ("let me check…") is sent before the tool runs.
+
+With the account setting `ack_reaction on` (Telegram, Discord, Slack), the bot adds 👀 to a message as soon as it picks it up. Slack needs the `reactions:write` scope for this.
 
 Agent output is markdown, rendered per platform at send time: Telegram receives HTML (`**bold**` → bold text, fenced code → `<pre>` blocks), Slack receives mrkdwn, Discord renders markdown natively, and WeChat gets plain text with the markers stripped. Long replies are split automatically at each platform's size cap: Telegram 4,000 characters, Discord 1,800, Slack 39,000, WeChat 1,800.
 
@@ -170,11 +211,15 @@ When a function pauses on a question (`runtime.ask`), the question is pushed int
 /decline <question_id>
 ```
 
-Only questions belonging to that chat's session can be answered from it.
+Only questions belonging to that chat's session can be answered from it. In a group, only the person whose message started the waiting turn can answer its question. Tool approvals arrive the same way, marked as needing approval.
 
 ## Attachments
 
-Incoming photos and files are downloaded to `<state>/channels/<channel>/accounts/<account>/attachments/` (20 MB cap per file). Images up to 4 MB additionally reach the model as image input; every saved file is listed in the message as `[attachment: <path> (<type>, <size>)]` so the agent can open it with its file tools. If someone replies to an earlier message (Telegram/Discord reply, Slack thread), the quoted text is included above the new message as a `> quoted` block.
+Incoming photos and files are downloaded to `<state>/channels/<channel>/accounts/<account>/attachments/` (20 MB cap per file). Images up to 4 MB additionally reach the model as image input; every saved file is listed in the message as `[attachment: <path> (<type>, <size>)]` so the agent can open it with its file tools.
+
+WeChat media arrives encrypted from Tencent's CDN and is decrypted on download. A voice message reaches the agent as WeChat's own transcription when the message carries one. A voice message without a transcription is saved as a `.silk` file, an audio format the model cannot listen to directly.
+
+If someone replies to an earlier message (Telegram/Discord reply, Slack thread), the quoted text is included above the new message as a `> quoted` block.
 
 Sending files works from code and from agents through the outbound API:
 
@@ -183,7 +228,7 @@ from openprogram.channels.outbound import send_file
 send_file("telegram", "default", "123456", "/path/to/report.pdf", caption="Weekly report")
 ```
 
-Telegram sends images as photos and everything else as documents; Discord uploads the file with the caption as the message; Slack uses its external-upload flow (`files:write`). WeChat cannot receive files from iLink bots — `send_file` returns `not_supported`, so send a text message with the file path instead.
+Telegram sends images as photos and everything else as documents; Discord uploads the file with the caption as the message; Slack uses its external-upload flow (`files:write`). WeChat encrypts the file, uploads it to Tencent's CDN and sends it as an image, video or file message by its type (100 MB cap); a caption follows as a separate text message.
 
 ## Common Errors
 
@@ -203,3 +248,4 @@ Telegram sends images as photos and everything else as documents; Discord upload
 
 - [Design notes: channel subsystem](../reference/design/channels/design.md) — architecture and message flow
 - [Interfaces overview](../interfaces/README.md) — Web UI / TUI, where channel conversations also show up
+- [Always-on Agents](../capabilities/always-on-agents.md) — send an always-on Agent's reports to a channel conversation

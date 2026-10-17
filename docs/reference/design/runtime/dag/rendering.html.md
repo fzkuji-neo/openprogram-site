@@ -89,6 +89,14 @@ and zoom live in `apps/web/lib/runtime-bridge/dag/store/globals.ts` keyed by ses
 different session re-fits. Resizing the pane never re-fits — the user's angle on
 the graph is theirs to keep.
 
+**Arriving opens readable; the Fit button shows everything.** The opening view
+is the fit, floored at 80%: a long session fitted whole shrank to a hairline
+column of specks (a 40-turn chat opened at 37%). When the graph is larger than
+the strip at that floor, the overflowing axis follows HEAD — near the bottom of
+the strip, the way a transcript opens on its latest message. The HUD's Fit
+button keeps the plain fit down to 25%: asking to see everything is a request
+for exactly that (`fitCanvas(opening)` in `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts`).
+
 **HUD.** At the composer's TOP-RIGHT — the right end of its env-chip row: a
 fit button, a zoom cluster, and the legend popover, portaled into the
 composer's `#dagHudSlot` (`dag-view.tsx`) so they ride the composer wherever
@@ -320,7 +328,7 @@ is conveyed only by line style:
 |---|---|---|---|
 | same-branch parent→child | solid | this branch's color | shown |
 | retry fork bridge (origin → the branch lane's spine top, shared row) | dashed `6 4` horizontal; an elbow only when rows diverged | branch's color | shown |
-| call thread (anchor → its items, §12) | solid — the trunk pattern one level down: a vertical in the anchor's column, a horizontal stub per item (down first, then right, like every chain edge) | annotation grey | shown while open |
+| call thread (anchor → its items, §12) | solid, 1.4px — the trunk pattern one level down: a vertical in the anchor's column, a horizontal stub per item (down first, then right, like every chain edge) | anchor's branch color | shown while open |
 | merge convergence (peer tip → merge node) | thick solid 2.4px | peer branch's color | shown |
 | attach merge-back (source tip → embed position) | long dashes `4 4` | source branch's color | shown when both ends are visible — an agent-internal tip merged into its triangle draws no line; the spawn head's position ON the thread is the return relationship |
 | inter-branch communication (send_message) | dotted `1 5` | target branch's color | **shown only on hover** (numerous; always-on would smear) |
@@ -467,9 +475,16 @@ The backend `apps/server/openprogram_server/_webui/graph_builder.py` produces th
 annotation — **tier specifically in `graph_layout/tier.py`**. Verification tool: `python scripts/dag_dump.py <session_id>` prints
 lane/tier/depth + an ASCII grid.
 
-## 8. The white fill means context coverage
+## 8. The fill means context coverage
 
-A node's white fill marks it as **part of what the next LLM call will carry**.
+A node's fill marks it as **part of what the next LLM call will carry**. On a
+dark canvas the fill is the theme's brightest ink, near-white; on a light
+canvas that ink is near-black, and a column of black glyphs reads as heavy
+blots, so light themes fill with a 30% wash of the node's own branch colour
+over the canvas (`light-dark()` in `apps/web/lib/runtime-bridge/dag/render/visibility.ts`;
+the legend swatch uses the same expression). Either way it parts from the
+hollow glyph, which is filled with the canvas colour. "White fill" below means
+this fill.
 There is no mode to choose and no switch to find: whenever the graph is
 showing, it owns its pane. A lone session tab gets the chat shell plus this
 graph; two session tabs split into two `PeerSessionPane`s where the shell — and
@@ -478,7 +493,14 @@ beside the graph, "which bubbles are on screen" has no reading to give, and
 coverage is simply what the fill means.
 
 The covered set is served by `GET /api/sessions/{id}/context-range`: the active
-branch walked back from head, stopping at the most recent compaction summary.
+branch walked back from head, stopping at the most recent compaction summary,
+plus the calls each covered turn made. The predecessor walk sees turns only —
+a call hangs off its reply by `caller` — so the route adds the code nodes
+`render_context` reads whose conversation owner is in the set, each listed
+right after its owner (`_with_code_nodes` in
+`apps/server/openprogram_server/_webui/routes/files/tree.py`). Without them every
+opened call drew as outside the next request, and `aged`, a code-node fact,
+could never be set.
 Nodes outside it draw dimmed. `enterExclusiveCoverageMode`
 (`apps/web/lib/runtime-bridge/dag/index.ts`) is what the host calls to fetch and
 apply it.
@@ -670,10 +692,15 @@ just triggered.
 
 **Hover → the brief card.** The quick cut: role (a spawn head titles itself
 `Subagent · <name>` — this is where the name lives, §12), model/tokens, a
-short content preview, folded call count. The token figure is
+short content preview, folded call count, and a status row when the node is
+running, cancelled or failed (a finished node's status is the default and gets
+no row). The token figure is
 `llm.output_tokens` when the node carries a measurement and `chars/4` when it
-does not; the card says which (`tokens` vs `tokens (estimated)`). Appears after a
-short hover delay, gone when the cursor leaves.
+does not; the card says which (`tokens` vs `tokens (estimated)`), and a node
+with no text gets no estimate at all. Keys share one fixed column, so the
+values line up. Appears after a short hover delay, gone when the cursor leaves.
+The expanded card shows the node's whole id: derived ids (`<reply>_t_<call>`)
+share their first dozen characters.
 
 **Click → the node's own action.** Fold or unfold its call thread (§12).
 Nothing else — no window competes with the expansion. The right rail's
@@ -732,7 +759,7 @@ a phantom node is exactly the misreading the fold must not invite. No thread
 line, no items, nothing else.
 
 **Open is open.** Clicking the node inserts the thread into the layout: a
-solid annotation-grey line drops the anchor's own column and every event
+solid line in the anchor's branch colour drops the anchor's own column and every event
 hangs off it on a horizontal stub — down first, then right, the trunk
 pattern one level down. Every event is a real node on that line — a square per call
 in the anchor's lane colour — spawned agents included — one row
@@ -778,6 +805,84 @@ switch, exactly as in §9. A spawn head is visible only while every thread
 above it is open; its items likewise — visibility is the whole ancestor
 chain's, not the node's own flag.
 
+## 13. Tools, selection and deleting nodes
+
+The canvas has a tool, the way a drawing board does. A tool decides two
+things and nothing else: what a click on a node means and what a drag on empty
+canvas does. Wheel and pinch, the right-click card, the HUD and the branch tags
+behave the same under every tool. The tools sit in a vertical rail on the
+canvas's left edge:
+
+| Tool | Key | Click on a node | Drag on empty canvas |
+|---|---|---|---|
+| Browse (hand, the default) | H | the node's own action (§11, §12) | pan |
+| Select (pointer) | V | select it; Shift/⌘ adds or removes | a rectangle; every node it touches is selected |
+| Lasso | L | as Select | a free shape; every node it touches is selected |
+
+Clicking and box-selecting are one tool, as in every drawing app: a press on
+a node picks it, a press on empty canvas starts a box. Under the selecting
+tools a drag on empty canvas therefore does not pan. Space held turns any tool
+into the hand for the drag, the middle mouse button always pans, and a
+trackpad scroll pans under every tool. A click on empty canvas clears the selection; Shift keeps
+it, and a Shift-drag adds to it. Under a selecting tool a double click does
+nothing, so fork & edit stays a browse gesture. These are fixed by design, not
+settings: touching selects (no enclose-only mode), and clicking a user circle
+selects that circle alone.
+
+Tools live in a registry (`registerTool` in
+`apps/web/lib/runtime-bridge/dag/interaction/selection.ts`): an id, a key,
+whether a click selects, and what a drag does. The rail renders whatever is
+registered, so a later tool (notes, annotations) is one registration plus its
+icon.
+
+**Selection.** View state of the current session's canvas. Each selected node
+gets a dashed accent box just outside its glyph. The set is re-applied after
+every repaint and pruned to the nodes the canvas still draws, so a node that is
+deleted or folded away leaves the selection. A session switch drops it.
+Selecting on the canvas takes keyboard focus from the composer, so Delete and
+Esc reach the selection rather than the draft.
+
+**The action bar.** While something is selected, a bar at the canvas's top
+left reads `N selected | Copy ID · Delete · ✕`, with Delete in the danger
+colour. After a delete it reads `Deleted N nodes | Undo` for a few seconds.
+It sits on the rail's left edge rather than at the top right, which belongs to
+the pane's perspective controls. Rail and bar share one quiet surface: the
+input box's fill, a hairline edge and a light contact shadow. The current tool
+is marked with a neutral grey fill.
+
+**Deleting.** Delete or ⌫ deletes the selection at once, with no
+confirmation, and ⌘Z undoes it. The store
+(`openprogram/store/session/session_store/node_deletion.py`) applies these
+rules:
+
+- Only the selected nodes go, plus what they own through `caller`: a reply's
+  tool calls, a call's sub-calls, the agent branch a call spawned. What merely
+  followed in the conversation stays. Each surviving node whose predecessor was
+  deleted is re-pointed at the nearest surviving predecessor, so deleting a
+  node closes the gap the way deleting a box in a diagram does.
+- A glyph stands for every row it shows. A followup reply merged into its
+  anchor (§12) is deleted with the anchor, and selecting a spawn square deletes
+  the dispatch call that opened it, which takes the agent branch with it.
+- Structure cannot be deleted: the root, a spawn-branch root on its own, a
+  compaction summary, attach/merge machinery. The canvas leaves these out of
+  the request and the store refuses them.
+- If HEAD was deleted it moves to the nearest surviving predecessor. A branch
+  name on a deleted tip moves there too.
+- Nothing is unlinked. The node files move to
+  `<sessions root>/.deleted-nodes/<session>/<op_id>/`, outside the session's
+  git repository, together with a journal of every edge, HEAD and branch-name
+  change. Trash older than 24 hours is purged on the next delete.
+- Undo replays the journal backwards. An edge or a HEAD that something else
+  has moved since keeps its newer value.
+- Both actions are refused while a turn runs. The in-flight turn may be
+  writing under the nodes being removed.
+
+The wire format is `delete_nodes {session_id, node_ids}` → `nodes_deleted
+{ok, op_id, deleted, error}` and `restore_deleted_nodes {session_id, op_id}` →
+`nodes_restored` (`apps/server/openprogram_server/_webui/ws_actions/dag_nodes.py`).
+A success also broadcasts `session_reload`, so the transcript and the graph
+both redraw. The undo stack is per session and lasts as long as the page.
+
 ## Appendix: Implementation Status
 
 The whole spec is implemented. Where each part lives:
@@ -808,3 +913,4 @@ The whole spec is implemented. Where each part lives:
 | §11 legend | `DagLegend` in `apps/web/components/chat/dag-view.tsx` (inside the canvas HUD), `.dag-legend` in `apps/web/app/styles/dag/hud.css` |
 | §12 call thread + agent spawn | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` (spawn → square), `apps/web/lib/runtime-bridge/dag/passes/thread.ts` (model), `apps/web/lib/runtime-bridge/dag/layout/geometry.ts` (recursive placement), `apps/web/lib/runtime-bridge/dag/render/edges.ts` (dotted thread line, centre-to-centre chain edges, scene-3 bridge), `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (`data-thread*`, shoulder count), `apps/web/lib/runtime-bridge/dag/interaction/nodes.ts` (`toggleThreadOpen`); executed by `apps/web/scripts/runtime/check-dag-subagent.mjs` |
 | §12 the name on the wire | `task/runner.py::_update_attach_card` stamps `attach.label` from the task; `ws_actions/session.py::_annotate_spawn_origin` carries it to the spawn root as `spawned_from.label`; tested in `tests/unit/test_task_attach_integration.py` |
+| §13 tools, selection, delete / undo | tool registry, selection state, hit-testing and the rubber band in `apps/web/lib/runtime-bridge/dag/interaction/selection.ts`; drags in `canvas.ts`, clicks in `nodes.ts`, keys in `keys.ts`; widening and the undo stack in `node-delete.ts`; rail and action bar in `apps/web/components/chat/dag-tools.tsx` + `apps/web/app/styles/dag/tools.css`; store splice and journal in `openprogram/store/session/session_store/node_deletion.py`; tested in `tests/component/store/test_node_deletion.py` and `apps/web/tests/execution/dag-selection.test.mjs` |

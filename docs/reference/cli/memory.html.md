@@ -39,7 +39,7 @@ Open a memory file in $EDITOR; the edit lands only if it validates.
 
 ## `memory sleep`
 
-Reorganise topic files now, instead of waiting for tonight.
+Reorganise topic files now, project memory included, instead of waiting for tonight.
 
 | Option | Description |
 |---|---|

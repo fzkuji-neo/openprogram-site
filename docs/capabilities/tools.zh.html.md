@@ -96,6 +96,14 @@ SSH 和 Docker 在后端文件系统中按 POSIX 路径解释显式目录，不�
 
 新增搜索 key 在后续调用中生效，无需重启。默认后端不可用时使用其他可用后端；显式指定不可用后端则报错，错误说明原因（例如缺少的 key）并列出当前可用的后端。Jina 搜索需要 `JINA_API_KEY`。DuckDuckGo 读取其无 JavaScript 结果页，返回第一页结果（约十条）；遇到机器人验证或无法解析的页面时报错，而不是返回空结果。`combine="race"` 返回首个非空成功结果；`providers` 中无法运行的后端会被跳过，全部无法运行时错误逐个列出原因；`combine="rrf"` 保留截止时间前完成的结果。全部失败返回错误，与成功但无结果区分；已开始的请求按各自传输超时结束。
 
+## 桌面
+
+| 工具 | 做什么 | 需要什么 |
+|---|---|---|
+| `computer_use` | 读取应用窗口（截图 + Accessibility 树），在后台点击、输入、滚动、拖拽、粘贴、拷贝或使用菜单栏，可单步也可批量；每个应用审批一次 | macOS（运行时需有辅助功能与屏幕录制权限），X11 下装有 AT-SPI 和 xdotool 的 Linux，或带 UI Automation 的 Windows |
+
+[操控电脑](computer-use.zh.md)列出了全部动作和审批范围。
+
 ## 图像与 PDF
 
 | 工具 | 做什么 | 需要什么 |
@@ -113,7 +121,7 @@ SSH 和 Docker 在后端文件系统中按 POSIX 路径解释显式目录，不�
 
 | 域 | 工具 | 做什么 | 需要什么 |
 |---|---|---|---|
-| 计划 | `todo_create` / `todo_update` / `todo_list` | 会话规划清单：手写的计划清单（建条目、设状态/负责人/依赖、按状态分组列出）。写一条不会启动任何东西 | 无 |
+| 计划 | `todo_create` / `todo_update` / `todo_list` | 会话规划清单：手写的计划清单（建条目、设状态/负责人/依赖、按状态分组列出）。写一条不会启动任何东西；网页界面把当前计划显示为[任务清单](../interfaces/web.zh.md#任务清单) | 无 |
 | 执行 | `list_jobs` / `job_output` | 列出本会话的后台任务，等待或查看结果。结果读取检查派发会话和祖先任务的所有权 | 无 |
 | 实体 | `agent` | 新建一个 agent 并取回回复，或用 `to=` 给已存在的 agent 派受管任务。`run_in_background=true` 不阻塞、直接返回 job_id；`start_from` 决定新 agent 从哪起（`clean` / `inherit` / `SID:MSG_ID`）；`archive_when_done=true` 让它在任务结束、结果回流之后自动归档 | 无 |
 | 实体 | `list_agents` | agent 列表：有哪些 agent、它们的名字、地址、体量和忙闲（`scope="archived"` 看已归档的） | 无 |
@@ -128,6 +136,7 @@ SSH 和 Docker 在后端文件系统中按 POSIX 路径解释显式目录，不�
 | `program` | 调用任意已注册的 `Agent` method | 无 |
 | `mixture_of_agents` | 并行问N个模型再综合;默认从模型注册表选,每个provider取一个 | 模型注册表里至少2个provider |
 | `ask_user_question` | 向用户提 1–N 个带选项的问题 | 需要交互前端；输入基础设施不可用、问题数组无效或无交互上下文时返回工具错误 |
+| `chat_send` | 往这通对话所在的聊天里发一条消息。在 [ambient 群](../integrations/channels.zh.md#群聊行为)里，这是 agent 开口的唯一方式；其他时候用来在长时间干活前发一句短话，最终回复照常发出。一轮最多 5 条 | 聊天渠道的对话（Telegram、Discord、Slack 或微信）；其他地方不提供 |
 | `enter_plan_mode` / `exit_plan_mode` | 进入 / 退出计划模式 | 无 |
 | `canvas` | 往 markdown 文件的具名块里增量写入；`set` 的 `content=""` 清空正文，省略内容则返回错误 | 无 |
 | `memory_*` | 读取持久记忆工作区——`memory_search`（按语义找）、`memory_grep`（找确切字符串）、`memory_get`（读一个文件、章节或段落）、`memory_browse`（看有什么）、`memory_status`（规模与版本），以及 `memory_update` 用来更正某一处。没有记录对话的工具：那件事在后台完成。每个实例只有一份工作区，所有agent、所有对话（含聊天渠道）共用（见[聊天渠道](../integrations/channels.zh.md#谁能和你的机器人说话)）。 | 无 |

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/models/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/models/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -141,7 +141,7 @@
 <li>机制：注册表（<code>openprogram/providers/enabled_models.py</code>）在启动时从配置文件读取每个 provider 下的模型行，构建运行时模型清单；改配置后重载生效。</li>
 <li>配置文件：<code>~/.openprogram/config.json</code>（使用 <code>--profile &lt;name&gt;</code> 时为 <code>~/.openprogram-&lt;name&gt;/config.json</code>）。每个 provider 记在 <code>providers.&lt;id&gt;</code> 下：<code>enabled</code> 开关和 <code>models</code> 下启用的模型行（含上下文窗口、价格等 spec）。手动添加的模型也存在同一清单里，标记 <code>source: &quot;manual&quot;</code>。</li>
 <li>启用途径：setup 向导勾选；Web UI 的 Settings → Providers 里浏览该 provider 的模型列表后勾选（Fetch 按钮重新拉取官方模型目录）；订阅类 provider 登录时自动启用默认模型集。一般不需要手改 config.json。</li>
-<li>默认模型：<code>default_provider</code> 和 <code>default_model</code> 两个顶层配置项决定新会话用哪个模型；界面里切换模型即更新。</li>
+<li>新会话的模型：没有默认模型。新会话使用你上一次选择或发送消息时用的模型，记录在顶层配置项 <code>last_used_model</code>。全新安装时没有记录，第一个会话需要先选择模型。禁用该模型会清除记录。没有所属会话的后台任务（命名、记忆写入、MCP sampling、Auto 权限审核）也使用这个模型。</li>
 </ul>
 <h2 id="本节其他页面">本节其他页面<a class="header-anchor" href="#本节其他页面">#</a></h2>
 <ul>
@@ -155,7 +155,7 @@
 <p>可以取消一个 provider 的全部模型，包括最后一个已启用模型。空选择会在刷新和重启后保留。</p>
 <p>打开 Provider 设置时先显示已保存的模型和缓存目录，不等待 provider 的远程模型接口。点击“获取模型”更新远程目录。</p>
 <p>Provider 品牌图标随 App 本地提供，不依赖外部图片服务。自定义或没有匹配图标的 provider 显示首字母。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/acp.html" data-href-en="/docs/interfaces/acp.html" data-href-zh="/docs/interfaces/acp.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="编辑器集成">Editor integration</span></a><a class="pn-link pn-next" href="/docs/models/providers.html" data-href-en="/docs/models/providers.html" data-href-zh="/docs/models/providers.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="模型服务">Providers</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/voice-input.html" data-href-en="/docs/interfaces/voice-input.html" data-href-zh="/docs/interfaces/voice-input.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="语音输入">Voice input</span></a><a class="pn-link pn-next" href="/docs/models/providers.html" data-href-en="/docs/models/providers.html" data-href-zh="/docs/models/providers.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="模型服务">Providers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

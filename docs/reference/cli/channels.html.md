@@ -54,7 +54,7 @@ Re-run the login flow for an account (e.g. WeChat QR)
 
 ### `channels accounts set`
 
-Set an account behavior setting (e.g. telegram group semantics: group_sessions=shared|per-user, require_mention=on|off). Restart the worker to apply.
+Set an account behavior setting: require_mention=on|off and ack_reaction=on|off (telegram, discord, slack; apply to the next message), group_sessions=shared|per-user (telegram; restart the worker to apply), sender_access=owner|paired (all channels; owner, the default, gives approved senders the local owner's tools and approvals and sandboxes group sessions, paired limits them to replies and memory).
 
 | Option | Description |
 |---|---|

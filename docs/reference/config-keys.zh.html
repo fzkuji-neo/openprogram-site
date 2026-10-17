@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/reference/config-keys.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/reference/config-keys.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,6 +98,7 @@
 <a class="navlink" href="/docs/reference/cli/cron-worker.html" data-title-zh="定时任务" data-href-en="/docs/reference/cli/cron-worker.html" data-href-zh="/docs/reference/cli/cron-worker.zh.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html" data-title-zh="诊断包" data-href-en="/docs/reference/cli/diagnostics.html" data-href-zh="/docs/reference/cli/diagnostics.zh.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html" data-title-zh="环境诊断" data-href-en="/docs/reference/cli/doctor.html" data-href-zh="/docs/reference/cli/doctor.zh.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/environments.html" data-title-zh="运行环境" data-href-en="/docs/reference/cli/environments.html" data-href-zh="/docs/reference/cli/environments.zh.html">environments</a>
 <a class="navlink" href="/docs/reference/cli/execution.html" data-title-zh="执行控制" data-href-en="/docs/reference/cli/execution.html" data-href-zh="/docs/reference/cli/execution.zh.html">execution</a>
 <a class="navlink" href="/docs/reference/cli/jobs.html" data-title-zh="后台任务" data-href-en="/docs/reference/cli/jobs.html" data-href-zh="/docs/reference/cli/jobs.zh.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html" data-title-zh="日志" data-href-en="/docs/reference/cli/logs.html" data-href-zh="/docs/reference/cli/logs.zh.html">logs</a>
@@ -243,6 +244,37 @@
 </tr>
 </tbody>
 </table>
+<h2 id="语音">语音<a class="header-anchor" href="#语音">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>配置键</th>
+<th>默认值</th>
+<th>生效方式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>voice.engine</code></td>
+<td><code>auto</code></td>
+<td><code>live</code></td>
+<td>把输入框麦克风的录音转成文字。<code>auto</code> 在本机 whisper.cpp 模型已下载时用它，否则依次用 OpenAI、Groq。<code>local</code> 让音频留在这台电脑上（需要 <code>brew install whisper-cpp</code>）。</td>
+</tr>
+<tr>
+<td><code>voice.language</code></td>
+<td><code>auto</code></td>
+<td><code>live</code></td>
+<td><code>auto</code> 让识别服务自动识别每句话的语言。</td>
+</tr>
+<tr>
+<td><code>voice.model</code></td>
+<td>``</td>
+<td><code>live</code></td>
+<td>留空使用识别服务的默认模型：gpt-4o-mini-transcribe（OpenAI）、whisper-large-v3-turbo（Groq）、large-v3-turbo-q5_0（本机）。只在选定了识别服务时生效。</td>
+</tr>
+</tbody>
+</table>
 <h2 id="搜索">搜索<a class="header-anchor" href="#搜索">#</a></h2>
 <table>
 <thead>
@@ -283,13 +315,19 @@
 <td><code>memory.writer.model</code></td>
 <td>``</td>
 <td><code>live</code></td>
-<td>空值使用默认聊天 Agent 的模型服务和模型。设置 provider/model 仅覆盖后台记忆写入使用的模型。</td>
+<td>空值使用默认 Agent 的模型；该 Agent 没有模型时使用上次使用的模型。设置 provider/model 可指定后台记忆写入和整理使用的模型。</td>
 </tr>
 <tr>
 <td><code>memory.writer.enabled</code></td>
 <td><code>True</code></td>
 <td><code>live</code></td>
 <td>在后台将已完成对话整理为主题记录。</td>
+</tr>
+<tr>
+<td><code>memory.writer.verify</code></td>
+<td><code>False</code></td>
+<td><code>live</code></td>
+<td>后台写入后，针对这次记下的一条事实提一个问题，在 Memory 中检索答案；找不到时修复 Topic。每次写入会多花几次模型调用。</td>
 </tr>
 <tr>
 <td><code>memory.writer.trigger_tokens</code></td>
@@ -304,6 +342,18 @@
 <td>自动回忆和记忆搜索使用的检索方式。</td>
 </tr>
 <tr>
+<td><code>memory.retrieval.hybrid.weighting</code></td>
+<td><code>auto</code></td>
+<td><code>live</code></td>
+<td>混合检索中关键词与语义的权重。<code>auto</code> 在查询含日期、引号短语或人名时偏向关键词，其余情况两者均衡。</td>
+</tr>
+<tr>
+<td><code>memory.retrieval.hybrid.file_boost</code></td>
+<td><code>True</code></td>
+<td><code>live</code></td>
+<td>混合检索时，若多条匹配来自同一个 Topic，提升该 Topic 中最匹配的段落。</td>
+</tr>
+<tr>
 <td><code>memory.retrieval.top_k</code></td>
 <td><code>5</code></td>
 <td><code>live</code></td>
@@ -314,6 +364,18 @@
 <td><code>True</code></td>
 <td><code>live</code></td>
 <td>在整理后的主题记录之外，同时检索归档证据。</td>
+</tr>
+<tr>
+<td><code>memory.layers.project</code></td>
+<td><code>True</code></td>
+<td><code>live</code></td>
+<td>项目中的对话还会读取该项目自己的 Memory，存放在 ~/.openprogram/projects/&lt;project&gt;/memory。</td>
+</tr>
+<tr>
+<td><code>memory.layers.project_writes</code></td>
+<td><code>True</code></td>
+<td><code>live</code></td>
+<td>开启项目记忆时，把项目对话记下的内容写入该项目的 Memory，而不是个人 Memory。</td>
 </tr>
 <tr>
 <td><code>memory.core.inject</code></td>
@@ -615,6 +677,9 @@
 </li>
 <li>
 <a class="lvl-2" href="#安全">安全</a>
+</li>
+<li>
+<a class="lvl-2" href="#语音">语音</a>
 </li>
 <li>
 <a class="lvl-2" href="#搜索">搜索</a>

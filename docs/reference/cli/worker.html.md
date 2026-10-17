@@ -19,7 +19,7 @@ Spawn a detached worker in the background and return.
 
 ## `worker stop`
 
-Stop the running worker (SIGTERM, escalates to SIGKILL).
+Stop the running worker; an installed service stays stopped until the next start or login.
 
 ## `worker restart`
 

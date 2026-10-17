@@ -30,7 +30,7 @@
 
 | 类型 | 粒度 | 存储位置 |
 |------|------|----------|
-| **Session-Git** | 每次对话，每 turn 一 commit | `<state>/sessions/<id>/` 或 `<project>/.openprogram/sessions/<id>/` |
+| **Session-Git** | 每次对话，每 turn 一 commit | `<state>/projects/<project_id>/chats/<id>/` 或 `<project>/.openprogram/sessions/<id>/` |
 | **Project-Git** | 绑定的用户工作目录 | `<user-workdir>/.git/`（复用已有） |
 
 Session-Git 记录对话过程（user → LLM → tool 调用链）。Project-Git 记录 agent 对用户代码/文档的实际修改。两者互补：session 存"说了什么"，project 存"改了什么"。
@@ -145,7 +145,7 @@ Session title 是用户在列表中识别对话的主要标识。
 
 列举所有 session 时，来源有两个：
 
-1. **全局目录扫描**：遍历 `<state>/sessions/` 下所有子目录，逐一做合法性校验
+1. **全局目录扫描**：遍历每个 `<state>/projects/<project_id>/chats/` 文件夹，逐一做合法性校验
 2. **locations.json 索引**：记录了落在项目目录内的 session 路径，逐一做合法性校验
 
 两个来源合并去重后，按 `updated_at` 降序排列。
@@ -391,6 +391,7 @@ session 可以独立存在 (没 project). 有 project 时, agent 修改文件触
 3. **Project-git 干净优先**: 用户 working tree 不能被 agent 污染. 有未提交改动时 agent 跳过 commit.
 4. **回溯不破坏 DAG**: checkout 是只读视图, 用户发新消息会基于该 commit 在 DAG 上 fork 新分支.
 5. **抽象记忆建立在实体记忆之上**, 而不是反过来.
+6. **项目注册表不会因读取失败或并发写入而丢失**. worker、CLI 和 agent 子进程都会读改写 `projects.json`, 所以每次修改在整个读改写期间持有跨进程文件锁 (`<state>/projects/.locks/.projects-registry.lock`). 写入先写到唯一的临时文件, 再用 rename 发布, 读的一方看到的要么是完整的旧文件, 要么是完整的新文件. 读取出错时直接报错, 不返回空注册表, 因为下一次写入会抹掉所有项目和会话绑定. 内容不是 JSON 对象的文件会被移到 `projects.json.unreadable-<时间>-<id>` 留作恢复, 注册表从空开始.
 
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791905658" data-alt-lang-url="/docs/reference/config-keys.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/reference/config-keys.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,6 +98,7 @@
 <a class="navlink" href="/docs/reference/cli/cron-worker.html" data-title-zh="定时任务" data-href-en="/docs/reference/cli/cron-worker.html" data-href-zh="/docs/reference/cli/cron-worker.zh.html">cron-worker</a>
 <a class="navlink" href="/docs/reference/cli/diagnostics.html" data-title-zh="诊断包" data-href-en="/docs/reference/cli/diagnostics.html" data-href-zh="/docs/reference/cli/diagnostics.zh.html">diagnostics</a>
 <a class="navlink" href="/docs/reference/cli/doctor.html" data-title-zh="环境诊断" data-href-en="/docs/reference/cli/doctor.html" data-href-zh="/docs/reference/cli/doctor.zh.html">doctor</a>
+<a class="navlink" href="/docs/reference/cli/environments.html" data-title-zh="运行环境" data-href-en="/docs/reference/cli/environments.html" data-href-zh="/docs/reference/cli/environments.zh.html">environments</a>
 <a class="navlink" href="/docs/reference/cli/execution.html" data-title-zh="执行控制" data-href-en="/docs/reference/cli/execution.html" data-href-zh="/docs/reference/cli/execution.zh.html">execution</a>
 <a class="navlink" href="/docs/reference/cli/jobs.html" data-title-zh="后台任务" data-href-en="/docs/reference/cli/jobs.html" data-href-zh="/docs/reference/cli/jobs.zh.html">jobs</a>
 <a class="navlink" href="/docs/reference/cli/logs.html" data-title-zh="日志" data-href-en="/docs/reference/cli/logs.html" data-href-zh="/docs/reference/cli/logs.zh.html">logs</a>
@@ -243,6 +244,37 @@
 </tr>
 </tbody>
 </table>
+<h2 id="voice">Voice<a class="header-anchor" href="#voice">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Apply</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>voice.engine</code></td>
+<td><code>auto</code></td>
+<td><code>live</code></td>
+<td>Turns the composer microphone's recording into text. <code>auto</code> uses local whisper.cpp when its model is downloaded, then OpenAI, then Groq. <code>local</code> keeps audio on this computer (needs <code>brew install whisper-cpp</code>).</td>
+</tr>
+<tr>
+<td><code>voice.language</code></td>
+<td><code>auto</code></td>
+<td><code>live</code></td>
+<td><code>auto</code> lets the engine detect the language of each phrase.</td>
+</tr>
+<tr>
+<td><code>voice.model</code></td>
+<td>``</td>
+<td><code>live</code></td>
+<td>Empty uses the engine's default: gpt-4o-mini-transcribe (OpenAI), whisper-large-v3-turbo (Groq), large-v3-turbo-q5_0 (local). Applies only when an engine is chosen.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="search">Search<a class="header-anchor" href="#search">#</a></h2>
 <table>
 <thead>
@@ -283,13 +315,19 @@
 <td><code>memory.writer.model</code></td>
 <td>``</td>
 <td><code>live</code></td>
-<td>Empty uses the default chat agent's provider and model. Set provider/model to override only background memory writing.</td>
+<td>Empty uses the default Agent's model, or the last used model when that Agent has none. Set provider/model to choose the model for background memory writing and organizing.</td>
 </tr>
 <tr>
 <td><code>memory.writer.enabled</code></td>
 <td><code>True</code></td>
 <td><code>live</code></td>
 <td>Turn completed conversations into Topic records in the background.</td>
+</tr>
+<tr>
+<td><code>memory.writer.verify</code></td>
+<td><code>False</code></td>
+<td><code>live</code></td>
+<td>After a background write, ask a question about one fact it recorded, search Memory for the answer, and repair the Topics when the answer cannot be found. Costs several extra model calls per write.</td>
 </tr>
 <tr>
 <td><code>memory.writer.trigger_tokens</code></td>
@@ -304,6 +342,18 @@
 <td>Retrieval used for automatic recall and Memory search.</td>
 </tr>
 <tr>
+<td><code>memory.retrieval.hybrid.weighting</code></td>
+<td><code>auto</code></td>
+<td><code>live</code></td>
+<td>How hybrid recall weighs keywords against meaning. <code>auto</code> favours keywords for queries with a date, a quoted phrase or a name, and balances them otherwise.</td>
+</tr>
+<tr>
+<td><code>memory.retrieval.hybrid.file_boost</code></td>
+<td><code>True</code></td>
+<td><code>live</code></td>
+<td>In hybrid recall, raise the best paragraph of a Topic that several matches come from.</td>
+</tr>
+<tr>
 <td><code>memory.retrieval.top_k</code></td>
 <td><code>5</code></td>
 <td><code>live</code></td>
@@ -314,6 +364,18 @@
 <td><code>True</code></td>
 <td><code>live</code></td>
 <td>Include archived evidence alongside curated Topic records.</td>
+</tr>
+<tr>
+<td><code>memory.layers.project</code></td>
+<td><code>True</code></td>
+<td><code>live</code></td>
+<td>A conversation in a project also reads that project's own Memory, kept in ~/.openprogram/projects/&lt;project&gt;/memory.</td>
+</tr>
+<tr>
+<td><code>memory.layers.project_writes</code></td>
+<td><code>True</code></td>
+<td><code>live</code></td>
+<td>With Project memory on, write what a project's conversations record into that project's Memory instead of the personal one.</td>
 </tr>
 <tr>
 <td><code>memory.core.inject</code></td>
@@ -615,6 +677,9 @@
 </li>
 <li>
 <a class="lvl-2" href="#security">Security</a>
+</li>
+<li>
+<a class="lvl-2" href="#voice">Voice</a>
 </li>
 <li>
 <a class="lvl-2" href="#search">Search</a>

@@ -35,6 +35,14 @@
 |---|---|---|---|
 | `security.outbound_url` | `{'exceptions': []}` | `live` | 仅所有者可设置的精确 Origin 或 CIDR 例外，供已声明的配置服务使用；也可指定明确承担目标策略执行职责的策略代理。 |
 
+## 语音
+
+| 配置键 | 默认值 | 生效方式 | 说明 |
+|---|---|---|---|
+| `voice.engine` | `auto` | `live` | 把输入框麦克风的录音转成文字。`auto` 在本机 whisper.cpp 模型已下载时用它，否则依次用 OpenAI、Groq。`local` 让音频留在这台电脑上（需要 `brew install whisper-cpp`）。 |
+| `voice.language` | `auto` | `live` | `auto` 让识别服务自动识别每句话的语言。 |
+| `voice.model` | `` | `live` | 留空使用识别服务的默认模型：gpt-4o-mini-transcribe（OpenAI）、whisper-large-v3-turbo（Groq）、large-v3-turbo-q5_0（本机）。只在选定了识别服务时生效。 |
+
 ## 搜索
 
 | 配置键 | 默认值 | 生效方式 | 说明 |
@@ -46,12 +54,17 @@
 | 配置键 | 默认值 | 生效方式 | 说明 |
 |---|---|---|---|
 | `memory.backend` | `local` | `next_start` | `local` 使用磁盘上的记忆工具；`none` 禁用记忆。 |
-| `memory.writer.model` | `` | `live` | 空值使用默认聊天 Agent 的模型服务和模型。设置 provider/model 仅覆盖后台记忆写入使用的模型。 |
+| `memory.writer.model` | `` | `live` | 空值使用默认 Agent 的模型；该 Agent 没有模型时使用上次使用的模型。设置 provider/model 可指定后台记忆写入和整理使用的模型。 |
 | `memory.writer.enabled` | `True` | `live` | 在后台将已完成对话整理为主题记录。 |
+| `memory.writer.verify` | `False` | `live` | 后台写入后，针对这次记下的一条事实提一个问题，在 Memory 中检索答案；找不到时修复 Topic。每次写入会多花几次模型调用。 |
 | `memory.writer.trigger_tokens` | `16000` | `live` | 触发后台写入前累计的对话 token 数。 |
 | `memory.retrieval.method` | `bm25` | `live` | 自动回忆和记忆搜索使用的检索方式。 |
+| `memory.retrieval.hybrid.weighting` | `auto` | `live` | 混合检索中关键词与语义的权重。`auto` 在查询含日期、引号短语或人名时偏向关键词，其余情况两者均衡。 |
+| `memory.retrieval.hybrid.file_boost` | `True` | `live` | 混合检索时，若多条匹配来自同一个 Topic，提升该 Topic 中最匹配的段落。 |
 | `memory.retrieval.top_k` | `5` | `live` | 每轮自动添加的匹配记录上限。 |
 | `memory.retrieval.include_sources` | `True` | `live` | 在整理后的主题记录之外，同时检索归档证据。 |
+| `memory.layers.project` | `True` | `live` | 项目中的对话还会读取该项目自己的 Memory，存放在 ~/.openprogram/projects/&lt;project&gt;/memory。 |
+| `memory.layers.project_writes` | `True` | `live` | 开启项目记忆时，把项目对话记下的内容写入该项目的 Memory，而不是个人 Memory。 |
 | `memory.core.inject` | `True` | `live` | 将精简的核心记忆视图加入每次系统提示词。 |
 | `memory.recent.limit` | `50` | `live` | Recent 派生视图保留的最新记录数量。 |
 

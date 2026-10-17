@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,18 +75,19 @@
 <a class="navlink" href="/docs/interfaces/web.html" data-title-zh="网页界面" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html">Web UI</a>
 <a class="navlink" href="/docs/interfaces/tui.html" data-title-zh="终端界面" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html">Terminal UI</a>
 <a class="navlink" href="/docs/interfaces/cli.html" data-title-zh="命令行" data-href-en="/docs/interfaces/cli.html" data-href-zh="/docs/interfaces/cli.zh.html">CLI</a>
-<a class="navlink" href="/docs/interfaces/acp.html" data-title-zh="编辑器集成" data-href-en="/docs/interfaces/acp.html" data-href-zh="/docs/interfaces/acp.zh.html">Editor integration</a></div></div>
+<a class="navlink" href="/docs/interfaces/acp.html" data-title-zh="编辑器集成" data-href-en="/docs/interfaces/acp.html" data-href-zh="/docs/interfaces/acp.zh.html">Editor integration</a></div>
+<div class="nav-sec"><div class="nav-sec-title" data-title-zh="聊天输入">Chat input</div><a class="navlink" href="/docs/interfaces/voice-input.html" data-title-zh="语音输入" data-href-en="/docs/interfaces/voice-input.html" data-href-zh="/docs/interfaces/voice-input.zh.html">Voice input</a></div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="界面">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面">Surfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="桌面应用">Desktop App</span></nav><h1 id="桌面-app-与内置浏览器">桌面 App 与内置浏览器<a class="header-anchor" href="#桌面-app-与内置浏览器">#</a></h1>
 <p>全部页面，包括设置和侧栏管理页面，均在选中标签中打开。标签名称随当前页面变化，后退/前进恢复该标签的路由和名称。切换标签恢复各自当前页面；访问页面不重命名会话。</p>
 <p>本地 App 刷新会保留解包原生依赖的文件权限，并在此前刷新丢失执行权限时恢复 node-pty 终端辅助程序的执行权限。</p>
 <p>每个标签独立保存后退和前进历史，默认入口页是该标签的初始页面。后退和前进只恢复当前标签中的页面，切换标签不增加历史。从另一个入口页打开相同目的地时，两个标签各自保留。后退后选择新目的地，只替换当前标签的前进记录。历史随标签保存；网页内部的 URL 导航由浏览器控件处理。</p>
 <p>macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每个 Pane 可以放 Files、聊天、内置 Browser 或 Terminal；Pane 可以分屏，也可以移到其他应用窗口，底层会话与浏览器 tab 不会因此改变。</p>
-<p>把标签向下拖出标签栏，或者拖动格子顶部的「•••」把手，中间区域会变成类似调度中心的窗口总览：每个窗口缩成一张卡片，显示它最近一次的画面，分屏的窗口在卡片里也保持分屏。拖到卡片左右各 1/4 宽的位置，就放到这个窗口的左边或右边；拖到中间一列的上半或下半，就放到它上面或下面；高亮的那一半和底部提示会说明放到哪里。拖到卡片之间的空白处单独打开，拖出 App 窗口新开一个窗口，按 Esc 取消。不拖动也能查看所有窗口：点标签栏右端主菜单左边的网格按钮，或者在中间区域双指捏合（网页在正常大小时捏合也会打开总览，双指张开则像 Safari 一样放大网页）；点卡片切换过去，按 Esc 或双指张开关闭。指针移到「•••」把手上，它会变成 macOS 的红黄绿窗口按钮：红色关闭这个标签，黄色把格子收回标签栏，绿色单独打开它。三个按钮都像 macOS 一样带动画：关闭的格子淡出，其余格子展开填满它的位置；收回标签栏的格子向上折叠进它的标签；绿色让格子放大到占满窗口。贴靠和填满也会让格子平滑移到新位置。系统开启「减少动态效果」时，布局直接切换。停在绿灯上展开贴靠菜单：<strong>移动与调整大小</strong>（半边；按住 Option 是四分之一）、<strong>填满与排列</strong>（填满、左右、左 + 右侧上下、四宫格）、<strong>还原上次布局</strong>、<strong>均分大小</strong>和<strong>更多布局</strong>（上下、单屏、九宫格、十六宫格和已保存布局）。在 macOS 上，Control+Option+方向键把焦点格移到对应半边，再加 Shift 排成左右或上下两格，Control+Option+F 填满或退出填满，Control+Option+R 还原上次布局。拖动分隔线到 1/3、1/2、2/3 附近会吸住，格子太小时停住。</p>
+<p>把标签向下拖出标签栏，或者拖动格子顶部的「•••」把手，中间区域会变成类似调度中心的窗口总览（被拖的标签展开成一个显示其内容的小窗跟着指针走；它已经在你手上，总览里不再列出；它在标签栏里的位置会收拢，后面的标签往左补上，拖回标签栏又会让出位置）：每个窗口缩成一张卡片，显示它最近一次的画面，分屏的窗口在卡片里也保持分屏。拖到卡片左右各 1/4 宽的位置，就放到这个窗口的左边或右边；拖到中间一列的上半或下半，就放到它上面或下面；高亮的那一半和底部提示会说明放到哪里。松手后，被放上去的那个窗口从卡片放大铺满中间区域，放大的同时让出位置：它的窗格变窄，拖进来的标签从那一侧滑入，两边的分界线一起移动，动的是真实窗口而不是截图。标签栏里合并后的窗口留在原来的位置，名字以一个短暂的上浮换成你拖进来的那个标签。拖动时其他卡片大小不变，并在这个标签单独放置的位置空出一格，空位随指针移动，其他卡片随之让开。放到空位或空白处就在那里单独打开：总览不关闭，这个标签成为那个位置上单独的一张卡片，标签栏也按同样的顺序排列。拖出 App 窗口新开一个窗口，按 Esc 取消。不拖动也能查看所有窗口：点标签栏右端主菜单左边的网格按钮，或者在中间区域双指捏合（网页在正常大小时捏合也会打开总览，双指张开则像 Safari 一样放大网页）；点卡片切换过去，按 Esc 或双指张开关闭。和调度中心一样，卡片本身也能拖：拖到另一张卡片的某一侧，两个窗口就合并；放到空白处，就移到其他卡片为它让出的空位；从分屏卡片里拖出其中一格放到空白处，它就单独成一个窗口。无论是拖动时打开还是用按钮打开，总览的样子都一样。指针移到「•••」把手上，它会变成 macOS 的红黄绿窗口按钮：红色关闭这个标签，黄色把格子收回标签栏，绿色单独打开它。三个按钮都像 macOS 一样带动画：关闭的格子淡出，其余格子展开填满它的位置；收回标签栏的格子像 macOS 的神灯效果一样弯成漏斗，从它的标签底边被吸进去，标签随即亮一下（从分屏里收起的格子还没有自己的标签，标签会先在标签栏里展开，格子再折进去）；绿色让格子放大到占满窗口。贴靠和填满也会让格子平滑移到新位置。系统开启「减少动态效果」时，布局直接切换。停在绿灯上展开贴靠菜单：<strong>移动与调整大小</strong>（半边；按住 Option 是四分之一）、<strong>填满与排列</strong>（填满、左右、左 + 右侧上下、四宫格）、<strong>还原上次布局</strong>、<strong>均分大小</strong>和<strong>更多布局</strong>（上下、单屏、九宫格、十六宫格和已保存布局）。在 macOS 上，Control+Option+方向键把焦点格移到对应半边，再加 Shift 排成左右或上下两格，Control+Option+F 填满或退出填满，Control+Option+R 还原上次布局。拖动分隔线到 1/3、1/2、2/3 附近会吸住，格子太小时停住。</p>
 <p>关闭最后一个标签后，标签栏和中间内容区域都保持为空，不会自动创建标签或显示默认入口。点击顶部加号可打开新标签。</p>
 <p>后退和前进按钮也包含初始新标签页。从初始页打开应用或内置页面后，可以后退回到初始页，再前进回到原页面，始终使用同一个标签。后退后选择其他页面会替换原来的前进记录。</p>
 <p>macOS 从 <a href="https://github.com/fzkuji-neo/OpenProgram/releases">GitHub Releases</a> 下载对应架构的 DMG，把 <code>OpenProgram.app</code> 复制到 <code>/Applications</code>；当前 macOS 发行版使用 Developer ID 签名和 Apple 公证。Windows 只安装已发布 release 附带的带签名 <code>win-x64.exe</code> 或 <code>win-arm64.exe</code>；某个版本没有带签名 Windows EXE 时，使用该版本的 CLI/server 与浏览器 UI。完整步骤见<a href="/docs/install/install.zh.html">安装</a>。</p>
-<p>Terminal Pane 在 macOS 使用 login shell，在 Windows 通过 ConPTY 使用 Windows PowerShell。两个平台的封装 App 都从内置 managed Python 启动 worker，不依赖系统 Python 或 Node.js。</p>
+<p>Terminal Pane 在 macOS 使用 login shell，在 Windows 通过 ConPTY 使用 Windows PowerShell。两个平台的封装 App 都从内置 managed Python 启动 worker，不依赖系统 Python 或 Node.js。启动时连不上 worker，App 会把它拉起来并显示 <strong>Waiting for backend to start...</strong>，每秒探测一次直到它应答。安装程序（更新或本地刷新）正在替换 App 和 runtime 期间，页面改为显示 <strong>Updating OpenProgram...</strong>；这时 App 不拉起 worker，安装结束后自动重连。</p>
 <p>在 Linux 从源码运行 Desktop 时，终端优先使用已安装且为绝对路径的 <code>SHELL</code>，否则依次回退到 <code>/bin/bash</code>、<code>/bin/sh</code>，不要求安装 zsh。若没有可用 shell，终端会在启动进程前明确提示缺失项。</p>
 <p>从会话标签打开其他会话时复用当前标签，即使其他标签已显示该会话也保持独立。从默认入口页打开会话也使用当前标签。从其他类型页面打开会话时，可以选择已有会话标签或新建标签。后退和前进始终只作用于当前标签。草稿输入和后台更新的标题在导航和重新加载后保留，已删除会话会从全部历史中移除。</p>
 <h2 id="打开-browser">打开 Browser<a class="header-anchor" href="#打开-browser">#</a></h2>
@@ -100,7 +101,9 @@
 <p>普通网页标签和分栏标签都显示网站 favicon。图标加载中、不可用、无效或完全透明时，桌面 App 显示统一的浏览器图标。重新打开保留的页面时会恢复其当前图标，不需要重新加载页面。</p>
 <p>网页在刷新、后退、前进或导航时要求确认离开，App 会显示确认框。默认按钮及取消操作都是 <strong>Stay on page（留在页面）</strong>。选择 <strong>Leave page（离开页面）</strong> 才会继续刚才的操作，未保存的修改可能丢失。</p>
 <p>网页加载时，刷新按钮会变为 <strong>Stop loading（停止加载）</strong>，显示 X 图标，浏览器工具栏下方显示动态细线。点击停止加载即可取消；加载结束或停止后细线消失。启用减少动态效果时，细线保持静态。</p>
-<p>键盘快捷键作用于当前聚焦窗格里的浏览器标签页（Windows 上用 Ctrl 代替 ⌘）：⌘R 刷新页面，⇧⌘R 忽略缓存刷新；⌘L 选中地址栏；⌘[ 和 ⌘] 后退、前进；⌘F 页内查找；⌘+、⌘− 和 ⌘0 缩放页面；⌘P 打印。聚焦窗格不是浏览器标签页时，⌘R 刷新 App 窗口，其中打开的网页也会重新加载。</p>
+<p>键盘快捷键作用于当前聚焦窗格里的浏览器标签页（Windows 上用 Ctrl 代替 ⌘）：⌘R 刷新页面，⇧⌘R 忽略缓存刷新；⌘L 选中地址栏；⌘[ 和 ⌘] 后退、前进；⌘F 页内查找；⌘+、⌘− 和 ⌘0 缩放页面；⌘P 打印。聚焦窗格不是浏览器标签页时，⌘R 刷新 App 窗口，其中打开的网页也会重新加载。网页获得焦点时，⌘K 同样打开 App 的<a href="/docs/interfaces/web.zh.html#%E5%91%BD%E4%BB%A4%E9%9D%A2%E6%9D%BF">命令面板</a>。</p>
+<p>想让 agent 关注页面的某一部分时，打开网页的 <strong>⋮</strong> 菜单，选择 <strong>评论页面元素…</strong>，再点击页面上的元素。指针下的元素会显示轮廓；按 Esc 或点击评论行上的 X 取消。输入评论后点击 <strong>加入消息</strong>：对话的输入框会加入一段文字，写明页面标题和地址、元素的 CSS 选择器和可见文字，以及你的评论。评论加入当前聚焦的对话；没有时加入打开这个网页的 agent 所在的对话，再没有时加入你最近所在的对话；提示里会写明是哪个对话。在你发送消息之前不会发出任何内容，所以可以先评论多个元素。选择元素的脚本运行在网页无法看到的独立脚本环境中。</p>
+<p>想把页面的一部分作为图片给 agent 看时，在同一个菜单里选择 <strong>区域截图…</strong>，再在页面上拖出要截的区域。拖动时会显示尺寸；只点击不拖动会重新开始，按 Esc 或点击提示行上的 X 取消。截图作为 PNG 附件加入输入框，文件名写明网站和尺寸，加入的对话与评论相同。选区画在同一个独立脚本环境里，截图前就会移除，所以不会出现在图片里。</p>
 <p>书签栏将放不下的条目放入双箭头菜单，最右侧用分隔线隔开“所有书签”入口，点击后进入书签管理页。“其他书签”和“移动端书签”仍保留原文件夹、顺序和内容。书签栏、文件夹菜单和管理页依次使用已保存的网站图标、网站自身 <code>/favicon.ico</code>、浏览器默认图标。添加书签会保留当前网页图标，再次访问相同书签 URL 时按网页提供的新图标更新；图标请求不发送 referrer，不使用第三方图标服务。浏览器主页的快捷入口显示网站自身的 <code>/favicon.ico</code>，网站没有图标时显示首字母。</p>
 <p>在主页点击“添加”，填写地址和可选的名称，再点击“添加”或按 Enter 即可保存快捷方式。编辑面板使用当前界面主题和字体。点击取消、关闭、面板外部、再次点击“添加”图标或按 Escape，均会关闭面板并清空未保存的内容。</p>
 <p>使用期间，同一渲染进程中的书签栏、文件夹菜单和标签页组件共用已解码的图标。再次打开书签菜单会复用菜单页面和图标缓存，不会每次都从加载占位图标开始。缓存有容量限制，失败来源在五分钟后允许重试，成功来源在三十分钟后再次使用时更新。关闭窗口会释放保留的书签菜单；重启 App 后可以通过浏览器缓存重新加载图标。</p>
@@ -154,6 +157,10 @@
 <h2 id="重启后继续运行中的会话">重启后继续运行中的会话<a class="header-anchor" href="#重启后继续运行中的会话">#</a></h2>
 <p>worker 重启后，可恢复的运行中会话会使用正常执行时已经记录的输入和结果，在原会话中自动继续。新建的恢复意图默认没有时间限制，不需要单独保存，也不增加重启提示。手动暂停、取消和已完成的任务保持停止。已经确认完成的工具操作不会重复执行；外部操作的结果仍不明确时，需要先核对结果。界面重新连接时保留已有聊天内容。</p>
 <p>会话显示正常消息和工具结果，包括你要求执行的软件更新结果。聊天中不另设软件更新历史、更新操作按钮或更新恢复提示，打开会话也不会启动软件更新历史轮询。</p>
+<h2 id="通知与防休眠">通知与防休眠<a class="header-anchor" href="#通知与防休眠">#</a></h2>
+<p>OpenProgram 在后台时，会话的一轮执行完成、出错停止、向你提问或请求批准、或等待系统权限，桌面 App 会发系统通知。任何一个 OpenProgram 窗口在前台时不发通知。同一事件只通知一次，打开多个窗口也一样。你自己停止的执行不通知。点击通知会把对应窗口调到前台并打开该会话。</p>
+<p>有会话在运行时，App 会阻止电脑空闲休眠，屏幕仍可以关闭。没有会话运行后即解除。</p>
+<p>在<strong>设置 → 通用 → 通知</strong>中可以分别关闭这两项。设置只对这台电脑生效，重启后保留。浏览器访问 http://localhost:18100 时不发通知，也不阻止休眠。</p>
 <h2 id="重启与保留的浏览器页面">重启与保留的浏览器页面<a class="header-anchor" href="#重启与保留的浏览器页面">#</a></h2>
 <p>Desktop App 或 worker 进程重启后，你尚未关闭的网页会在后台自动恢复。应用保留同一保留 tab、会话与分支归属，以及最后确认的地址和标题。它在该保留 tab 后创建新的活页面；上一进程的句柄不再有效。不会为同一保留 tab 再开一份副本，不会重新打开你已关闭的网页，也不会显示你已隐藏的预览。紧凑画中画、纵向 Files / Activity / Resources 侧栏以及分组资源行保持原样。文案跟随 App 语言设置。</p>
 <p>网页正在回来时，资源行留在原类型分组，显示 <strong>正在恢复网页…</strong>。恢复失败时同一行显示 <strong>网页恢复失败</strong>。新的活页面之后需要重新连接时，显示 <strong>需要重新连接</strong>。这些行不会进入通用的不可用分组。明确关闭的网页和已退出的终端从活动资源列表移除。恢复网页不会启动或继续 Agent。空闲页面仍可直接操作。新任务仍按常规重新观察页面并检查权限。恢复会重新加载最后确认的 URL，并使用 Desktop <code>webtabs</code> 分区里已有的站点存储；上一进程中未保存的 DOM 与表单不会恢复。没有保留 tab 描述的旧资源记录不会自动重建，该行留在原分组并显示 <strong>网页恢复失败</strong>。这一有界重启行为已在默认 App 中实现。</p>
@@ -219,7 +226,7 @@
 <p>离开再返回“能力 → Programs”时，目录树、选中的 Program 和已加载的调用图保持显示。页面可见时每五秒后台检测展开目录和所选调用图，重新聚焦也会检测；未变化的文件复用分析结果。点击刷新不会重置选择或已展开目录。检测失败时保留已有内容，便于重试。</p>
 <p>浏览器任务可以通过 <code>upload</code>、最新文件输入框的 <code>ref</code> 和 <code>path</code> 选择用户批准的本地文件（最大 50 MiB）。即使已经选定页面，上传仍经过正常权限检查，因为选择文件可能立即发送内容。沙箱读取限制仍然生效。观察结果只展示所选文件名，不展示内容或本地路径。<code>file_selected</code> 只验证选中文件；上传被网站接受需要根据网站响应另行验证。结果不确定时不会自动重传。</p>
 <p>验证使用 <code>assertion</code> 和非空的 <code>value</code>；<code>text</code> 用于输入文字或报告阻碍。同一观察上连续三次操作失败或断言不成立会停止并返回实际原因。权限或执行拒绝后停止，不重复动作。报告阻碍不代表完成，实际操作步数统计页面修改，不统计模型调用。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页界面">Web UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页界面">Web UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -245,6 +252,9 @@
 </li>
 <li>
 <a class="lvl-2" href="#重启后继续运行中的会话">重启后继续运行中的会话</a>
+</li>
+<li>
+<a class="lvl-2" href="#通知与防休眠">通知与防休眠</a>
 </li>
 <li>
 <a class="lvl-2" href="#重启与保留的浏览器页面">重启与保留的浏览器页面</a>

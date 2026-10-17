@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1791905658" data-alt-lang-url="/docs/reference/design/runtime/session/storage.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/reference/design/runtime/session/storage.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>数据模型 · OpenProgram Docs</title>
-<meta name="description" content="磁盘布局 # &lt;state&gt;/sessions/ ├── index.json # 注册表（摘要缓存） ├── locations.json # session id → 仓库路径的持久映射 ├── &lt;session_id_1&gt;/ # 默认项目和既有 home-root 布局 │ ├── .git/ #">
+<meta name="description" content="磁盘布局 # 会话存放在所属项目的文件夹里。每个项目（包括 id 为 default 的主目录项目） 各有一个文件夹： &lt;state&gt;/projects/ ├── projects.json # 项目注册表 ├── &lt;project_id&gt;/ # 每个项目一个文件夹；`default` 是主目录项目 │ ├──">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/session/storage.zh.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/design/runtime/session/storage.zh.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/session/storage.zh.html">
 <meta property="og:title" content="数据模型 · OpenProgram Docs">
-<meta property="og:description" content="磁盘布局 # &lt;state&gt;/sessions/ ├── index.json # 注册表（摘要缓存） ├── locations.json # session id → 仓库路径的持久映射 ├── &lt;session_id_1&gt;/ # 默认项目和既有 home-root 布局 │ ├── .git/ #">
+<meta property="og:description" content="磁盘布局 # 会话存放在所属项目的文件夹里。每个项目（包括 id 为 default 的主目录项目） 各有一个文件夹： &lt;state&gt;/projects/ ├── projects.json # 项目注册表 ├── &lt;project_id&gt;/ # 每个项目一个文件夹；`default` 是主目录项目 │ ├──">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="数据模型 · OpenProgram Docs">
-<meta name="twitter:description" content="磁盘布局 # &lt;state&gt;/sessions/ ├── index.json # 注册表（摘要缓存） ├── locations.json # session id → 仓库路径的持久映射 ├── &lt;session_id_1&gt;/ # 默认项目和既有 home-root 布局 │ ├── .git/ #">
+<meta name="twitter:description" content="磁盘布局 # 会话存放在所属项目的文件夹里。每个项目（包括 id 为 default 的主目录项目） 各有一个文件夹： &lt;state&gt;/projects/ ├── projects.json # 项目注册表 ├── &lt;project_id&gt;/ # 每个项目一个文件夹；`default` 是主目录项目 │ ├──">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -76,7 +76,7 @@
 <a class="navlink" href="/docs/reference/design/implementation-status.html" data-title-zh="实现索引" data-href-en="/docs/reference/design/implementation-status.html" data-href-zh="/docs/reference/design/implementation-status.zh.html">Implementation index</a>
 <a class="navlink" href="/docs/reference/design/framework-comparison.html" data-title-zh="框架对比" data-href-en="/docs/reference/design/framework-comparison.html" data-href-zh="/docs/reference/design/framework-comparison.zh.html">Framework comparison</a>
 <a class="navlink" href="/docs/reference/design/feature-matrix.html" data-title-zh="功能矩阵" data-href-en="/docs/reference/design/feature-matrix.html" data-href-zh="/docs/reference/design/feature-matrix.zh.html">Feature matrix</a></details>
-<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">83</span></summary>
+<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">84</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
 <a class="navlink" href="/docs/reference/design/runtime/codex-capability-adoption.html" data-title-zh="Codex 功能核对" data-href-en="/docs/reference/design/runtime/codex-capability-adoption.html" data-href-zh="/docs/reference/design/runtime/codex-capability-adoption.zh.html">Codex capability audit</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="调用流程" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Call flow</a>
@@ -114,7 +114,8 @@
 <a class="navlink" href="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-title-zh="命名图解" data-href-en="/docs/reference/design/runtime/operations/branch-naming.viz.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.viz.html">Naming diagram</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/edge-field-rename.html" data-title-zh="边字段命名" data-href-en="/docs/reference/design/runtime/operations/edge-field-rename.html" data-href-zh="/docs/reference/design/runtime/operations/edge-field-rename.zh.html">Edge naming</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-title-zh="调用者标识" data-href-en="/docs/reference/design/runtime/operations/unify-parent-called-by.html" data-href-zh="/docs/reference/design/runtime/operations/unify-parent-called-by.zh.html">Caller identity</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="目标与恢复">Goals and recovery</span><span class="nav-count">8</span></summary><a class="navlink" href="/docs/reference/design/runtime/goal-and-recovery.html" data-title-zh="目标与恢复" data-href-en="/docs/reference/design/runtime/goal-and-recovery.html" data-href-zh="/docs/reference/design/runtime/goal-and-recovery.zh.html">Goals and recovery</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="目标与恢复">Goals and recovery</span><span class="nav-count">9</span></summary><a class="navlink" href="/docs/reference/design/runtime/goal-and-recovery.html" data-title-zh="目标与恢复" data-href-en="/docs/reference/design/runtime/goal-and-recovery.html" data-href-zh="/docs/reference/design/runtime/goal-and-recovery.zh.html">Goals and recovery</a>
+<a class="navlink" href="/docs/reference/design/runtime/always-on-agents.html" data-title-zh="常驻 Agent" data-href-en="/docs/reference/design/runtime/always-on-agents.html" data-href-zh="/docs/reference/design/runtime/always-on-agents.zh.html">Always-on Agents</a>
 <a class="navlink" href="/docs/reference/design/runtime/agent-resource-governance.html" data-title-zh="资源配额" data-href-en="/docs/reference/design/runtime/agent-resource-governance.html" data-href-zh="/docs/reference/design/runtime/agent-resource-governance.zh.html">Resource quotas</a>
 <a class="navlink" href="/docs/reference/design/runtime/structured-generation-recovery.html" data-title-zh="生成恢复" data-href-en="/docs/reference/design/runtime/structured-generation-recovery.html" data-href-zh="/docs/reference/design/runtime/structured-generation-recovery.zh.html">Generation recovery</a>
 <a class="navlink" href="/docs/reference/design/runtime/durable-tool-results.html" data-title-zh="工具结果存储" data-href-en="/docs/reference/design/runtime/durable-tool-results.html" data-href-zh="/docs/reference/design/runtime/durable-tool-results.zh.html">Tool result storage</a>
@@ -186,7 +187,7 @@
 <a class="navlink" href="/docs/reference/design/memory/written-marker.viz.html" data-title-zh="写入游标图解" data-href-en="/docs/reference/design/memory/written-marker.viz.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.viz.html">Write cursor diagram</a>
 <a class="navlink" href="/docs/reference/design/memory/written-marker.html" data-title-zh="写入游标" data-href-en="/docs/reference/design/memory/written-marker.html" data-href-zh="/docs/reference/design/memory/written-marker.zh.html">Write cursor</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">63</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="界面与交互">Interfaces</span><span class="nav-count">65</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="基础">Foundations</span><span class="nav-count">15</span></summary><a class="navlink" href="/docs/reference/design/ui/README.html" data-title-zh="网页界面" data-href-en="/docs/reference/design/ui/README.html" data-href-zh="/docs/reference/design/ui/README.zh.html">Web UI</a>
 <a class="navlink" href="/docs/reference/design/ui/app-icon.html" data-title-zh="应用图标" data-href-en="/docs/reference/design/ui/app-icon.html" data-href-zh="/docs/reference/design/ui/app-icon.zh.html">App icon</a>
 <a class="navlink" href="/docs/reference/design/ui/invariants.html" data-title-zh="界面不变量" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html">UI invariants</a>
@@ -202,10 +203,12 @@
 <a class="navlink" href="/docs/reference/design/ui/page-loading-performance.html" data-title-zh="页面加载性能" data-href-en="/docs/reference/design/ui/page-loading-performance.html" data-href-zh="/docs/reference/design/ui/page-loading-performance.zh.html">Page loading performance</a>
 <a class="navlink" href="/docs/reference/design/ui/indicator-dots.html" data-title-zh="状态指示" data-href-en="/docs/reference/design/ui/indicator-dots.html" data-href-zh="/docs/reference/design/ui/indicator-dots.zh.html">Status indicators</a>
 <a class="navlink" href="/docs/reference/design/ui/session-status.html" data-title-zh="会话状态" data-href-en="/docs/reference/design/ui/session-status.html" data-href-zh="/docs/reference/design/ui/session-status.zh.html">Session status</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="对话与编辑器">Chat and composer</span><span class="nav-count">18</span></summary><a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment options</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="对话与编辑器">Chat and composer</span><span class="nav-count">20</span></summary><a class="navlink" href="/docs/reference/design/ui/attachment-handling.html" data-title-zh="附件方案" data-href-en="/docs/reference/design/ui/attachment-handling.html" data-href-zh="/docs/reference/design/ui/attachment-handling.zh.html">Attachment options</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-attachments.html" data-title-zh="附件传递" data-href-en="/docs/reference/design/ui/chat-attachments.html" data-href-zh="/docs/reference/design/ui/chat-attachments.zh.html">Attachment delivery</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-turn-visual-spec.html" data-title-zh="聊天轮次布局" data-href-en="/docs/reference/design/ui/chat-turn-visual-spec.html" data-href-zh="/docs/reference/design/ui/chat-turn-visual-spec.zh.html">Chat turn layout</a>
 <a class="navlink" href="/docs/reference/design/ui/tool-group-summary.html" data-title-zh="工具组摘要" data-href-en="/docs/reference/design/ui/tool-group-summary.html" data-href-zh="/docs/reference/design/ui/tool-group-summary.zh.html">Tool group summary</a>
+<a class="navlink" href="/docs/reference/design/ui/sub-agents-card.html" data-title-zh="子代理卡片" data-href-en="/docs/reference/design/ui/sub-agents-card.html" data-href-zh="/docs/reference/design/ui/sub-agents-card.zh.html">Sub-agents card</a>
+<a class="navlink" href="/docs/reference/design/ui/activity-panel.html" data-title-zh="Activity 面板" data-href-en="/docs/reference/design/ui/activity-panel.html" data-href-zh="/docs/reference/design/ui/activity-panel.zh.html">Activity panel</a>
 <a class="navlink" href="/docs/reference/design/ui/chat-transcript-follow.html" data-title-zh="会话记录跟随" data-href-en="/docs/reference/design/ui/chat-transcript-follow.html" data-href-zh="/docs/reference/design/ui/chat-transcript-follow.zh.html">Transcript following</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-interaction-modes.html" data-title-zh="输入框交互" data-href-en="/docs/reference/design/ui/composer-interaction-modes.html" data-href-zh="/docs/reference/design/ui/composer-interaction-modes.zh.html">Composer interaction</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-local-attachment-paths.html" data-title-zh="附件路径" data-href-en="/docs/reference/design/ui/composer-local-attachment-paths.html" data-href-zh="/docs/reference/design/ui/composer-local-attachment-paths.zh.html">Attachment paths</a>
@@ -251,7 +254,7 @@
 <a class="navlink" href="/docs/reference/design/cli/slash-commands.html" data-title-zh="斜杠命令" data-href-en="/docs/reference/design/cli/slash-commands.html" data-href-zh="/docs/reference/design/cli/slash-commands.zh.html">Slash commands</a>
 <a class="navlink" href="/docs/reference/design/cli/tui-upgrade.html" data-title-zh="会话记录渲染" data-href-en="/docs/reference/design/cli/tui-upgrade.html" data-href-zh="/docs/reference/design/cli/tui-upgrade.zh.html">Transcript rendering</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型与外部接入">Models and connections</span><span class="nav-count">41</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型与外部接入">Models and connections</span><span class="nav-count">43</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="请求与模型">Requests and models</span><span class="nav-count">11</span></summary><a class="navlink" href="/docs/reference/design/providers/README.html" data-title-zh="模型服务" data-href-en="/docs/reference/design/providers/README.html" data-href-zh="/docs/reference/design/providers/README.zh.html">Providers</a>
 <a class="navlink" href="/docs/reference/design/providers/models/overview.html" data-title-zh="模型目录" data-href-en="/docs/reference/design/providers/models/overview.html" data-href-zh="/docs/reference/design/providers/models/overview.zh.html">Model catalog</a>
 <a class="navlink" href="/docs/reference/design/providers/request-build.html" data-title-zh="请求构建" data-href-en="/docs/reference/design/providers/request-build.html" data-href-zh="/docs/reference/design/providers/request-build.zh.html">Request construction</a>
@@ -277,7 +280,7 @@
 <a class="navlink" href="/docs/reference/design/providers/record-replay.html" data-title-zh="录制与回放" data-href-en="/docs/reference/design/providers/record-replay.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.html">Recording and replay</a>
 <a class="navlink" href="/docs/reference/design/providers/record-replay.viz.html" data-title-zh="回放图解" data-href-en="/docs/reference/design/providers/record-replay.viz.html" data-href-zh="/docs/reference/design/providers/record-replay.zh.viz.html">Replay diagram</a>
 <a class="navlink" href="/docs/reference/design/providers/responses-reasoning-replay.html" data-title-zh="推理记录回放" data-href-en="/docs/reference/design/providers/responses-reasoning-replay.html" data-href-zh="/docs/reference/design/providers/responses-reasoning-replay.zh.html">Reasoning replay</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="扩展与集成">Extensions and integrations</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/integrations/README.html" data-title-zh="集成" data-href-en="/docs/reference/design/integrations/README.html" data-href-zh="/docs/reference/design/integrations/README.zh.html">Integrations</a>
 <a class="navlink" href="/docs/reference/design/integrations/nooa.html" data-title-zh="直接调用、Agent 类与自动 DAG 上下文" data-href-en="/docs/reference/design/integrations/nooa.html" data-href-zh="/docs/reference/design/integrations/nooa.zh.html">Direct calls, Agent classes and automatic DAG context</a>
 <a class="navlink" href="/docs/reference/design/integrations/editor-integration.html" data-title-zh="编辑器集成" data-href-en="/docs/reference/design/integrations/editor-integration.html" data-href-zh="/docs/reference/design/integrations/editor-integration.zh.html">Editor integration</a>
 <a class="navlink" href="/docs/reference/design/integrations/extension-management.html" data-title-zh="扩展管理" data-href-en="/docs/reference/design/integrations/extension-management.html" data-href-zh="/docs/reference/design/integrations/extension-management.zh.html">Extension management</a>
@@ -287,12 +290,14 @@
 <a class="navlink" href="/docs/reference/design/integrations/skills-and-plugins.html" data-title-zh="技能与插件" data-href-en="/docs/reference/design/integrations/skills-and-plugins.html" data-href-zh="/docs/reference/design/integrations/skills-and-plugins.zh.html">Skills and plugins</a>
 <a class="navlink" href="/docs/reference/design/integrations/web-use-technical-spec.html" data-title-zh="网页自动化规范" data-href-en="/docs/reference/design/integrations/web-use-technical-spec.html" data-href-zh="/docs/reference/design/integrations/web-use-technical-spec.zh.html">Web specification</a>
 <a class="navlink" href="/docs/reference/design/integrations/web-use.html" data-title-zh="网页自动化" data-href-en="/docs/reference/design/integrations/web-use.html" data-href-zh="/docs/reference/design/integrations/web-use.zh.html">Web automation</a>
+<a class="navlink" href="/docs/reference/design/integrations/computer-and-browser-use.html" data-title-zh="操控电脑与浏览器" data-href-en="/docs/reference/design/integrations/computer-and-browser-use.html" data-href-zh="/docs/reference/design/integrations/computer-and-browser-use.zh.html">Computer and browser use</a>
 <a class="navlink" href="/docs/reference/design/extension-gating/README.html" data-title-zh="扩展控制" data-href-en="/docs/reference/design/extension-gating/README.html" data-href-zh="/docs/reference/design/extension-gating/README.zh.html">Extension controls</a>
 <a class="navlink" href="/docs/reference/design/extension-gating/future-work.html" data-title-zh="后续工作" data-href-en="/docs/reference/design/extension-gating/future-work.html" data-href-zh="/docs/reference/design/extension-gating/future-work.zh.html">Future work</a>
 <a class="navlink" href="/docs/reference/design/extension-gating/reference-comparison.html" data-title-zh="参考对比" data-href-en="/docs/reference/design/extension-gating/reference-comparison.html" data-href-zh="/docs/reference/design/extension-gating/reference-comparison.zh.html">Reference comparison</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="消息渠道">Channels</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/channels/README.html" data-title-zh="通信渠道" data-href-en="/docs/reference/design/channels/README.html" data-href-zh="/docs/reference/design/channels/README.zh.html">Channels</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="消息渠道">Channels</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/channels/README.html" data-title-zh="通信渠道" data-href-en="/docs/reference/design/channels/README.html" data-href-zh="/docs/reference/design/channels/README.zh.html">Channels</a>
 <a class="navlink" href="/docs/reference/design/channels/audit.html" data-title-zh="需求约束" data-href-en="/docs/reference/design/channels/audit.html" data-href-zh="/docs/reference/design/channels/audit.zh.html">Requirements</a>
-<a class="navlink" href="/docs/reference/design/channels/design.html" data-title-zh="架构" data-href-en="/docs/reference/design/channels/design.html" data-href-zh="/docs/reference/design/channels/design.zh.html">Architecture</a></details>
+<a class="navlink" href="/docs/reference/design/channels/design.html" data-title-zh="架构" data-href-en="/docs/reference/design/channels/design.html" data-href-zh="/docs/reference/design/channels/design.zh.html">Architecture</a>
+<a class="navlink" href="/docs/reference/design/channels/chat-bots.html" data-title-zh="渠道上的聊天机器人行为" data-href-en="/docs/reference/design/channels/chat-bots.html" data-href-zh="/docs/reference/design/channels/chat-bots.zh.html">Chat-Bot Behavior on Channels</a></details>
 </details>
 <details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与工程">Security and engineering</span><span class="nav-count">16</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="安全与权限">Security and permissions</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/sandbox-architecture.html" data-title-zh="权限与沙箱" data-href-en="/docs/reference/design/runtime/sandbox-architecture.html" data-href-zh="/docs/reference/design/runtime/sandbox-architecture.zh.html">Authority and sandbox</a>
@@ -337,11 +342,12 @@
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">12</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">13</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
 <a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/runtime/environments.html" data-title-zh="运行环境" data-href-en="/docs/reference/design/runtime/environments.html" data-href-zh="/docs/reference/design/runtime/environments.zh.html">Environments</a>
+<a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-agent.html" data-title-zh="统一 Agent 执行" data-href-en="/docs/reference/design/runtime/unified-agent.html" data-href-zh="/docs/reference/design/runtime/unified-agent.zh.html">Unified Agent execution</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">7</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
 <a class="navlink" href="/docs/reference/design/ui/conversation-lifecycle.html">Conversation lifecycle and responsiveness</a>
@@ -355,33 +361,37 @@
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="会话与存储">Sessions</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="数据模型">Data model</span></nav><div id="session-数据模型"></div>
 <h1 id="数据模型">数据模型<a class="header-anchor" href="#数据模型">#</a></h1>
 <h2 id="磁盘布局">磁盘布局<a class="header-anchor" href="#磁盘布局">#</a></h2>
-<pre><code>&lt;state&gt;/sessions/
-├── index.json                         # 注册表（摘要缓存）
-├── locations.json                     # session id → 仓库路径的持久映射
-├── &lt;session_id_1&gt;/                    # 默认项目和既有 home-root 布局
-│   ├── .git/                          # 会话仓库元数据
-│   ├── meta.json                      # 会话元数据和 DAG 当前 head
-│   ├── history/                       # 每个 DAG 节点一个 JSON 文件
-│   ├── context/                       # 持久化上下文产物
-│   └── workdir/attachments/           # 该会话上传的文件
-├── projects/&lt;project_id&gt;/              # 新建的项目绑定存储
-│   ├── &lt;session_id&gt;/                   # 会话 Git 仓库
-│   └── .file-recovery/&lt;session_id&gt;/&lt;turn&gt;/ # 该会话的每轮恢复文件
-├── .file-recovery/&lt;session_id&gt;/&lt;turn&gt;/ # 默认根目录的每轮恢复文件
+<p>会话存放在所属项目的文件夹里。每个项目（包括 id 为 <code>default</code> 的主目录项目）
+各有一个文件夹：</p>
+<pre><code>&lt;state&gt;/projects/
+├── projects.json                      # 项目注册表
+├── &lt;project_id&gt;/                      # 每个项目一个文件夹；`default` 是主目录项目
+│   ├── settings.json                  # 项目默认设置
+│   ├── memory/                        # 项目的记忆工作区
+│   └── chats/
+│       ├── &lt;session_id&gt;/              # 会话 Git 仓库
+│       │   ├── .git/                  # 会话仓库元数据
+│       │   ├── meta.json              # 会话元数据和 DAG 当前 head
+│       │   ├── history/               # 每个 DAG 节点一个 JSON 文件
+│       │   ├── context/               # 持久化上下文产物
+│       │   └── workdir/attachments/   # 该会话上传的文件
+│       └── .file-recovery/&lt;session_id&gt;/&lt;turn&gt;/ # 每轮的文件撤销恢复
+├── .chats-index.json                  # 注册表（摘要缓存）
+├── .chats-locations.json              # session id → 仓库路径的持久映射
 ├── .migration/                        # 迁移日志和 staging 状态
 ├── .deleted/                          # 持久化删除意图
 └── .locks/ / .session-locks/          # 进程间协调
 </code></pre>
-<p>默认根目录是 <code>&lt;state&gt;/sessions</code>，其中 <code>&lt;state&gt;</code> 是 OpenProgram 状态目录。
-新建且绑定非默认项目的 session 放在 <code>projects/&lt;project_id&gt;/&lt;session_id&gt;</code>。
-默认项目和集中存储迁移前创建的 session 仍留在根目录下的
-<code>&lt;session_id&gt;</code>。迁移或重定位期间，<code>locations.json</code> 是持久路径权威来源。
-工作目录不会作为主要会话仓库；旧的 <code>&lt;project&gt;/.openprogram/sessions/&lt;id&gt;/</code>
-只作为 legacy 迁移源读取。</p>
-<p><code>history/</code> 文件构成对话 DAG。<code>meta.json</code> 保存 DAG 的活动 <code>head_id</code>，而仓库
-的 Git <code>HEAD</code> 表示最近一次存储提交。这两个指针含义不同：切换对话分支不会
-执行 Git 分支 checkout，<code>session_commits()</code> 也单独暴露每轮 Git 提交，而不是
-DAG 节点列表。</p>
+<p>存储根目录是 <code>&lt;state&gt;/projects</code>，其中 <code>&lt;state&gt;</code> 是 OpenProgram 状态目录。
+会话放在 <code>&lt;project_id&gt;/chats/&lt;session_id&gt;</code>；不属于任何项目的会话归主目录项目，
+落在 <code>default/chats/</code>。存储自己的簿记文件以隐藏条目放在同一个文件夹里，
+所以列目录只看到注册表和各项目文件夹。在其他根目录上打开的存储（应用运行
+记录、嵌入宿主）也用同样的 <code>&lt;project_id&gt;/chats/&lt;session_id&gt;</code> 放置方式。</p>
+<p>把会话分配到另一个项目时，会在注册表里重新绑定并更新 <code>meta.json</code>；还没有
+历史的会话会连文件夹一起移动。已有历史的会话保留原文件夹，由
+<code>.chats-locations.json</code> 记录位置。迁移或重定位期间，<code>.chats-locations.json</code>
+是持久路径权威来源。工作目录不会作为主要会话仓库；旧的
+<code>&lt;project&gt;/.openprogram/sessions/&lt;id&gt;/</code> 只作为 legacy 迁移源读取。</p>
 <h2 id="持久字段metajson">持久字段（meta.json）<a class="header-anchor" href="#持久字段metajson">#</a></h2>
 <table>
 <thead>
@@ -490,6 +500,18 @@ DAG 节点列表。</p>
 <td>未读标记</td>
 </tr>
 <tr>
+<td><code>sort_at</code></td>
+<td>float</td>
+<td>是</td>
+<td>在项目列表里的位置，表示为排序用的时间；0 = 没有（见 operations.zh.md“项目列表里的位置”）</td>
+</tr>
+<tr>
+<td><code>sort_since</code></td>
+<td>float</td>
+<td>是</td>
+<td>摆放时的 <code>updated_at</code>；活动超过它，位置失效</td>
+</tr>
+<tr>
 <td><code>_auto_titled</code></td>
 <td>bool</td>
 <td>否</td>
@@ -497,7 +519,7 @@ DAG 节点列表。</p>
 </tr>
 </tbody>
 </table>
-<p>&quot;注册表&quot;列标记该字段是否缓存到 <code>index.json</code>。<code>_auto_titled</code> 和 <code>project_id</code> 不进注册表：前者是内部标记，后者在列举时由项目目录映射补充。</p>
+<p>&quot;注册表&quot;列标记该字段是否缓存到 <code>.chats-index.json</code>。<code>_auto_titled</code> 和 <code>project_id</code> 不进注册表：前者是内部标记，后者在列举时由项目目录映射补充。</p>
 <h2 id="注册表独有字段">注册表独有字段<a class="header-anchor" href="#注册表独有字段">#</a></h2>
 <p>以下字段只在注册表中，不在 meta.json 中：</p>
 <table>
@@ -585,8 +607,8 @@ turn 正在写入的。</p>
 <code>&lt;state&gt;/channels/*/accounts/*/attachments</code> 下的渠道附件根目录，由附件路径
 策略单独允许读取。<code>.file-recovery/&lt;session_id&gt;/&lt;turn&gt;/</code> 是普通的每轮文件撤销
 恢复目录，位于会话 Git 仓库之外。legacy 项目迁移时，会话数据和已有恢复目录
-先暂存到 <code>&lt;state&gt;/sessions/.migration/staging/</code> 并校验，再发布到中央目标路径的
-<code>.file-recovery</code> 兄弟目录；发布完成后才更新 <code>locations.json</code>。</p>
+先暂存到 <code>&lt;state&gt;/projects/.migration/staging/</code> 并校验，再发布到中央目标路径的
+<code>.file-recovery</code> 兄弟目录；发布完成后才更新 <code>.chats-locations.json</code>。</p>
 <p>历史附件标记会保留原始绝对路径。附件界面、文件读取和 <code>send_file</code> 的路径解析
 只允许把精确的旧路径形式
 <code>&lt;project&gt;/.openprogram/sessions/&lt;session_id&gt;/workdir/attachments/&lt;relative&gt;</code>
@@ -604,7 +626,7 @@ turn 正在写入的。</p>
     <span class="k">def</span><span class="w"> </span><span class="nf">latest_user_text</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
 </code></pre>
 <p>每个方法的完整行为见 <a href="/docs/reference/design/runtime/session/operations.zh.html">operations.md</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/README.html" data-href-en="/docs/reference/design/runtime/session/README.html" data-href-zh="/docs/reference/design/runtime/session/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="阅读指南">Reading guide</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/operations.html" data-href-en="/docs/reference/design/runtime/session/operations.html" data-href-zh="/docs/reference/design/runtime/session/operations.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="操作流程">Operations</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/session/README.html" data-href-en="/docs/reference/design/runtime/session/README.html" data-href-zh="/docs/reference/design/runtime/session/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="阅读指南">Reading guide</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/operations.html" data-href-en="/docs/reference/design/runtime/session/operations.html" data-href-zh="/docs/reference/design/runtime/session/operations.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="操作流程">Operations</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

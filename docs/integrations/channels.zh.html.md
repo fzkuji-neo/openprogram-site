@@ -9,7 +9,7 @@ Channels 把聊天平台——**Telegram、Discord、Slack、微信**——接�
 | Telegram | Bot API 长轮询 | bot token（BotFather 发放） | 支持 | 图片 + 文档 | 支持（photo/document） |
 | Discord | discord.py Gateway | bot token | 支持 | 支持 | 支持 |
 | Slack | Socket Mode（`slack_sdk`） | bot token（`xoxb-`）**加** app-level token（`xapp-`） | 支持 | 支持（需 `files:read` scope） | 支持（需 `files:write` scope） |
-| 微信 | iLink 长轮询 | 用个人微信扫码 | 不支持（微信消息发出后不能编辑） | 不支持（iLink 只暴露文本） | 不支持 |
+| 微信 | iLink 长轮询 | 用个人微信扫码 | 不支持（微信消息发出后不能编辑） | 图片、语音、文件、视频 | 支持（图片/视频/文件） |
 
 受支持的 release 已包含 Discord 与 Slack 依赖。开发者从源码安装时，也会通过完整开发安装获得相同的 channel 依赖。
 
@@ -112,6 +112,18 @@ allowlist 想放多少人就放多少人。上面的每个人接的都是同一�
 
 对于未知发信人，配对是默认路径：他们会被拦截并收到配对码。owner 也可以通过本机 CLI/API 的 `access allow`，把已知的平台 user ID 直接加入 allowlist；对这个发信人不需要配对码。没有任何设置能关掉某个账号的门禁。
 
+### 通过准入的发信人能做什么
+
+默认情况下，通过准入的发信人就是你这个 owner：聊天里的一轮能用的工具和你在网页里打字的一轮一样，遵循这个聊天会话的权限模式和规则。工具需要批准时，请求以问题的形式发到聊天里，用 `/answer` 回答（见[回复、进度与长消息](#回复进度与长消息)）。群聊一开始就开着沙盒，那里的 shell 命令只能写工作目录；你可以在网页里这个会话的设置中切换，渠道不会再把它改回来。
+
+想让某个账号的发信人只能回复和用记忆、碰不到文件、shell 和网络，就设置：
+
+```bash
+openprogram channels accounts set wechat sender_access paired   # 或 owner（所有渠道）
+```
+
+allowlist 里的每个人拿到的都是同样的权限，所以 `owner` 只留给只有你自己、或你完全信任的人能联系到的账号。
+
 想要一个记忆互不相干的 agent，就跑自己的实例，各有各的状态目录和端口：
 
 ```bash
@@ -119,6 +131,12 @@ openprogram --profile alice
 ```
 
 第二个实例怎么建，见 [多实例配置](../install/profiles.zh.md)。
+
+## 渠道与运行环境
+
+渠道决定会话的消息同步到哪里，不决定 agent 的工具在哪里运行；后者是会话的[运行环境](../capabilities/environments.zh.md)。从渠道进来的会话使用默认环境。
+
+在 Web 和 App 里，输入框上方环境 chip 旁边的渠道 chip 显示会话的渠道，没绑定时显示 **未连接**。点它可以绑定账号、切换账号或断开。输入框下方 **+** 菜单里的 **渠道** 提供同样的选择。
 
 ## 聊天如何映射到会话
 
@@ -128,36 +146,59 @@ openprogram --profile alice
 - **Discord 和 Slack**：每个 *(channel, user)* 组合一个会话。同一个频道里的两个发信人各有各的对话，也看不到、答不了对方的待答问题。对话是分开的，背后的记忆工作区是整个实例共用的一份（见[谁能和你的机器人说话](#谁能和你的机器人说话)）。
 - **微信**：每个 peer 一个会话（私聊）。
 
-默认还按账号隔离（`session_scope: per-account-channel-peer`）。agent 可以放宽（`per-channel-peer`、`per-peer` 或单一 `main` 会话），也可以按天轮换会话（`session_daily_reset: "HH:MM"`）或按空闲时间轮换（`session_idle_minutes`）。
+默认还按账号隔离（`session_scope: per-account-channel-peer`）。agent 可以放宽（`per-channel-peer`、`per-peer` 或单一 `main` 会话），也可以按天轮换会话（`session_daily_reset: "HH:MM"`）或按空闲时间轮换（`session_idle_minutes`）。在聊天里发 `/new`（或 `/reset`）会立刻为这个聊天开一通新对话；之前那通留在网页侧栏里。
 
 ### 谁说的
 
-好几个人共用一通对话时（Telegram 群聊默认的 `shared`，或者 agent 配成 `session_scope: main`），每条进来的消息前面都带着发信人的名字：
+好几个人共用一通对话时（Telegram 群聊默认的 `shared`，或者 agent 配成 `session_scope: main`），每条进来的消息都在正文旁边带着发信人：
 
 ```
-[Ada (7391)] 预算定 5 万
-[Bo (8022)] 改成 8 万
+{"speaker_kind":"human","speaker_id":"7391","speaker_display":"Ada","content":"预算定 5 万"}
+{"speaker_kind":"human","speaker_id":"8022","speaker_display":"Bo","content":"改成 8 万"}
 ```
 
-显示名是平台上看到的那个名字，数字是发信人的平台 id：id 在改名之后不变，也能把两个取了同一个名字的人分开。agent 把这个标签当消息的一部分读，所以它回的是对的那个人，记忆也把每条事实记在说这话的人名下，而不是统统记成一个匿名"用户"。显示名是它的主人在平台上随手填的任何东西，所以拼进去之前会压成一行、截到 64 字符、方括号换成圆括号。
+显示名是平台上看到的那个名字，id 是发信人的平台 id：id 在改名之后不变，也能把两个取了同一个名字的人分开。agent 两个都读，所以它回的是对的那个人，记忆也把每条事实记在说这话的人名下，而不是统统记成一个匿名"用户"。显示名是它的主人在平台上随手填的任何东西，所以会压成一行、截到 64 字符、方括号换成圆括号。消息正文原样保留；发信人在正文里打一个带方括号的名字，也不会被当成那个人。
 
-标签只加在聊天渠道的消息上，而且每一条都加，私聊也加，因为 `session_scope: main` 会把私聊 peer 也放进同一通会话。网页、命令行、TUI 的对话不受影响。标签是消息正文的一部分，所以网页记录里回看自己那条消息时也能看到它。
+聊天渠道的每条消息都带发信人，私聊也带，因为 `session_scope: main` 会把私聊 peer 也放进同一通会话。网页、命令行、TUI 的对话没有发信人字段。网页记录里，渠道消息在气泡上方用一行小字标出平台和发信人，例如 `微信 · Ada`；微信发信人没有昵称可显示，这一行把 id 缩成首尾各四个字符。
 
-### Telegram 群聊行为
+### 群聊行为
 
-两个账号级设置把 Telegram 的群聊语义变成显式配置（改完重启 worker 生效）：
+群里（Telegram 群、Discord 服务器频道、Slack 频道）大多数消息是人和人在聊。每个群处在三种模式之一：
+
+- `always`：每条消息都开启一轮。
+- `mention`：只有 @机器人 或回复机器人消息的那条才开启一轮，提及在进 agent 前被剥掉。其余消息会留着，下一轮把最近 50 条连同发信人放在触发消息上方一起交给 agent，让它知道问题之前聊了什么。网页记录里，它们收在这一轮气泡顶部一个"群里之前的消息"小开关后面。
+- `ambient`：agent 看每一条消息，自己决定要不要开口。没点名机器人的消息也开启一轮，标记为房间事件；agent 对它的回复只留在网页记录里（标着"旁听"），不发进群。agent 有值得说的话时，用 `chat_send` 工具发到群里。这类轮次不显示"正在输入"，也不加确认表情。点名机器人的消息照常回复。这个模式下每条消息都要调用一次模型。
+
+账号设置 `require_mention` 决定它下面各群的默认模式（`on` 即 `mention`，默认的 `off` 即 `always`）；群里任何人都可以用 `/activation mention`、`/activation always` 或 `/activation ambient` 切换这个群，单发 `/activation` 查看当前模式。私聊永远不设门槛。
 
 ```bash
-openprogram channels accounts set telegram group_sessions per-user   # 或 shared
-openprogram channels accounts set telegram require_mention on       # 或 off
+openprogram channels accounts set telegram require_mention on       # 或 off（discord、slack 同样可用）
+openprogram channels accounts set telegram group_sessions per-user  # 或 shared（仅 telegram）
 ```
 
-- `group_sessions`——`shared`（默认）：全群对着同一通对话说话。`per-user`：群里每个成员各占一个会话，行为与 Discord/Slack 一致。
-- `require_mention`——`on`：群聊里只有 @机器人 或回复机器人消息时才响应（提及在进 agent 前被剥掉）。`off`（默认）：响应群里的每条消息。私聊永远不设门槛。
+群成员能接触到 agent 的记忆：agent 会调出记得的内容来回答他们，也会记下他们说的话。`/memory read` 让这个群不写入记忆，`/memory off` 让记忆完全不进这个群，`/memory on`（默认）沿用 agent 自己的记忆设置。私聊总是沿用 agent 的设置。
+
+`group_sessions`（Telegram，改完重启 worker 生效）——`shared`（默认）：全群对着同一通对话说话。`per-user`：群里每个成员各占一个会话，行为与 Discord/Slack 一致。
+
+其他机器人发的消息会被忽略，所以同一个群里的两个机器人不会没完没了地互相回复；平台把同一条消息投递两次，也只开启一轮。一个群每分钟最多开启 10 轮，超出的消息作为"之前的消息"等下一轮。
+
+### 聊天命令
+
+| 命令 | 作用 |
+|---|---|
+| `/new`、`/reset` | 为这个聊天开一通新对话 |
+| `/activation [mention\|always\|ambient]` | 查看或切换这个群的模式 |
+| `/memory [on\|read\|off]` | 查看或收窄这个群对 agent 记忆的访问 |
+| `/answer <question_id> <选项>` | 回答函数提出的问题（见下） |
+| `/decline <question_id>` | 拒绝这个问题 |
+
+在群里用命令不需要 @机器人。Telegram 群里写成 `/new@你的机器人` 也可以。
 
 ## 回复、进度与长消息
 
-agent 工作期间，机器人先发一条 `⏳ working...` 占位消息，随工具执行实时编辑（`⚙ bash` → `✓ bash` → …），最终替换成完整回复。微信不能编辑消息，完整回复以普通消息送达。
+agent 工作期间，聊天里会显示机器人"正在输入"（Telegram、Discord、微信；Slack 没有给机器人用的输入提示）。在 Telegram、Discord、Slack 上，机器人还会先发一条 `⏳ working...` 占位消息，随工具执行实时编辑（`⚙ bash` → `✓ bash` → …），最终替换成完整回复。微信不能编辑消息，所以回复边写边按段落发出：一段攒到约 200 字就发，agent 调用工具之前写的那句话（"我查一下……"）会在工具运行前先发出去。
+
+账号设置 `ack_reaction on`（Telegram、Discord、Slack）打开后，机器人一接手消息就给它加一个 👀。Slack 需要 `reactions:write` 权限。
 
 agent 输出是 markdown，发送时按平台渲染：Telegram 收到 HTML（`**bold**` → 粗体，代码围栏 → `<pre>` 块），Slack 收到 mrkdwn，Discord 原生渲染 markdown，微信拿到剥掉记号的纯文本。超长回复按各平台上限自动切分：Telegram 4,000 字符、Discord 1,800、Slack 39,000、微信 1,800。
 
@@ -170,11 +211,15 @@ agent 输出是 markdown，发送时按平台渲染：Telegram 收到 HTML（`**
 /decline <question_id>
 ```
 
-只有属于该聊天会话的问题才能在这里回答。
+只有属于该聊天会话的问题才能在这里回答。在群里，只有发起这一轮的人能回答它停下来问的问题。工具审批也这样发过来，标着需要批准。
 
 ## 附件
 
-入站的图片和文件下载到 `<state>/channels/<channel>/accounts/<account>/attachments/`（单文件上限 20 MB）。4 MB 以内的图片还会作为图像输入直达模型；每个落盘文件都以 `[attachment: <路径> (<类型>, <大小>)]` 的形式列在消息里，agent 用文件工具打开。有人回复早先的消息时（Telegram/Discord 回复、Slack thread），被引用的文本会以 `> 引用` 块的形式附在新消息上方。
+入站的图片和文件下载到 `<state>/channels/<channel>/accounts/<account>/attachments/`（单文件上限 20 MB）。4 MB 以内的图片还会作为图像输入直达模型；每个落盘文件都以 `[attachment: <路径> (<类型>, <大小>)]` 的形式列在消息里，agent 用文件工具打开。
+
+微信的媒体从腾讯 CDN 加密下发，下载时解密。语音消息带有微信自己的转写时，agent 收到的就是这段文字；没有转写的语音存成 `.silk` 文件，这种音频格式模型没法直接听。
+
+有人回复早先的消息时（Telegram/Discord 回复、Slack thread），被引用的文本会以 `> 引用` 块的形式附在新消息上方。
 
 从代码或 agent 里发文件走 outbound API：
 
@@ -183,7 +228,7 @@ from openprogram.channels.outbound import send_file
 send_file("telegram", "default", "123456", "/path/to/report.pdf", caption="周报")
 ```
 
-Telegram 图片走 photo、其余走 document；Discord 把文件连同 caption 一起上传；Slack 走 external-upload 流程（需 `files:write`）。微信 iLink 机器人收不了文件——`send_file` 返回 `not_supported`，请改发带文件路径的文本。
+Telegram 图片走 photo、其余走 document；Discord 把文件连同 caption 一起上传；Slack 走 external-upload 流程（需 `files:write`）。微信把文件加密后上传到腾讯 CDN，按类型发成图片、视频或文件消息（上限 100 MB）；caption 随后作为一条单独的文字消息发出。
 
 ## 常见错误
 
@@ -203,3 +248,4 @@ Telegram 图片走 photo、其余走 document；Discord 把文件连同 caption 
 
 - [设计笔记：channel 子系统](../reference/design/channels/design.zh.md)——架构与消息流
 - [界面总览](../interfaces/README.zh.md)——渠道对话同样出现在 Web UI / TUI
+- [常驻 Agent](../capabilities/always-on-agents.zh.md)——把常驻 Agent 的报告发到渠道会话

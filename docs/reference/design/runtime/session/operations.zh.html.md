@@ -16,15 +16,27 @@
 3. 把所有 `status=running` 重置为 `idle`；这是修复死亡 worker 留下的
    session 列表状态。执行恢复是另一条路径：执行子系统可以通过自己的恢复流程
    继续持久化的 checkpoint 操作。
-4. 清理未归档的旧空壳：session 超过 1 小时且没有 `history/` 目录时删除。
-   已归档、路径暂时不可达或被迁移日志覆盖的 session 保留。
+4. 清理但不丢数据。第一次写 meta 就会建 `history/`，所以没有它的目录是
+   损坏或外来的，不会是被丢下的草稿。对未归档、超过 1 小时的摘要行：
+   - 目录里有 `history/` → 保留；
+   - 默认位置没有目录，且任何布局里都找不到该 session → 只删摘要行，
+     项目绑定和 location 映射不动；
+   - 目录里有 `meta.json`、`.git` 或 `events.jsonl` 但没有 `history/`
+     → 原地保留并记 warning；
+   - 其余（空壳）→ 在 session 锁下移到
+     `.quarantine/<session_id>-<时间>/session/`，附 `reason.json`，并删摘要行。
+     store 根目录之外的目录一律不移动。
+
+   拿不准的一律保留：没有 `created_at` 的行、已归档或有删除记录的 session、
+   不可达的非默认位置、迁移日志里阶段不是 `done` / `deleted` 的行、读不出的
+   迁移日志（整轮跳过）、session 锁被占用、文件系统报错。这一步从不删除文件；
+   `.quarantine` 保留到有人手动清理。
 
 启动时不会按时间删除归档 session，也没有 session 数量容量上限。显式归档的
 session 会一直保留，直到所有者删除。
 
 半残 session 的处理：
-- 有 `meta.json` 没 `history/` → 旧的未归档空壳可删除；最近创建、已归档、
-  不可达或迁移中的 session 保留。
+- 有 `meta.json` 没 `history/` → 保留并列出（显示为空对话），只有显式删除才会移除。
 - 有 `history/` 没 `meta.json` → 无法重建注册表，不对外暴露为 session。
 
 ---
@@ -45,8 +57,8 @@ session 会一直保留，直到所有者删除。
 
 ```
 调用方调 create_session(session_id, agent_id, source=..., ...)
-  → 解析位置：默认项目使用 <state>/sessions/<session_id>，绑定项目使用
-    <state>/sessions/projects/<project_id>/<session_id>
+  → 解析位置：<state>/projects/<project_id>/chats/<session_id>；
+    没有绑定项目时 project_id 为 `default`（主目录项目）
   → 写 meta.json（id, agent_id, title, created_at, updated_at, source, status="idle", ...）
   → 写注册表：_index[session_id] = 摘要条目
   → 注册表原子写磁盘（临时文件 → os.rename）
@@ -57,13 +69,13 @@ session 会一直保留，直到所有者删除。
 
 dispatcher 和 channel handler 的创建与写入第一条消息是原子的——创建后立即 `append_message`，不会产生空壳。
 
-`session_context` 在 `__enter__` 时创建（因为后续 ContextVar 装载需要有效的 session），如果后续没写消息就异常退出，会产生空壳，由启动时清理处理。
+`session_context` 在 `__enter__` 时创建（因为后续 ContextVar 装载需要有效的 session），如果后续没写消息就异常退出，session 会作为空对话留下（它已有 `meta.json` 和 `history/`），直到有人删除。
 
 ---
 
 ## 主项目绑定
 
-会话的**主工作目录**就是它所绑定项目的路径。草稿阶段可以自由选择，**第一条真实消息提交时定格**。此后不能把 session 绑定到另一个项目。会话仓库已经位于应用状态目录下，并按稳定 project id 分组；项目路径变化不会改变 session→project 绑定或仓库 id。
+会话的**主工作目录**就是它所绑定项目的路径。草稿阶段可以自由选择，**第一条真实消息提交时定格**。此后不能再从 composer 把 session 绑定到另一个项目；唯一能改变它的是下面的显式**移动**，它连同仓库一起搬走，并在图上留下记录。会话仓库已经位于应用状态目录下，并按稳定 project id 分组；项目路径变化不会改变 session→project 绑定或仓库 id。
 
 追加工作目录是相反的设计，也应该如此：会话生命周期内随时增删。见 [additional-working-directories.zh.md](../additional-working-directories.zh.md)。
 
@@ -82,6 +94,24 @@ dispatcher 和 channel handler 的创建与写入第一条消息是原子的—�
 
 `set_session_project` 在任何时候都接受"绑到会话已有的那个项目"——上面那条 ack 后的幂等 bind 走的就是这条路，它到达时第一轮已经提交。而在已有轮次的会话上绑**另一个**项目会被拒，理由为 `project is frozen after the first turn`（`ws_actions/project.py:FROZEN_ERROR`）。composer chip 与之对齐：已有 session id 的会话只读展示已绑项目，不再给选择器。
 
+### 把会话移到另一个项目
+
+移动是用户在侧栏里的主动操作：把聊天行拖到另一个项目上，或在它的菜单里选**移动到项目**。对应 `move_session_to_project` ws action：
+
+```
+move_session_to_project {session_id, project_id}
+  → 会话上有轮次在跑时拒绝（RUNNING_ERROR）：那一轮正在旧文件夹里工作
+  → SessionStore.move_session：持会话锁，丢掉缓存的仓库，把
+    projects/<old>/chats/<id> 连同旁边的 .file-recovery/<id> 重命名到
+    projects/<new>/chats/<id>，记录新位置，改注册表绑定，写 meta.project_id；
+    离开的项目追加到 meta.project_history
+  → record_move：下面的 `project/move` 节点
+  → session_moved {ok, from_project_id, project_id, node_id} +
+    向所有客户端广播 projects_changed + 一份新的 projects_list
+```
+
+从下一轮起，主工作目录就是新项目的路径（`project_workdir_for` 每次都重新解析）；项目记忆层打开时，记忆写入落到新项目的工作区。`project_history` 维持"一轮只写一层"：`project_layer.left_workspace_ids` 把会话离开过的项目换算成它们的记忆工作区 id，`write_target` 把这些工作区标记过的轮次当作已写，所以新项目的记忆只收移动之后说的话，旧项目的记忆保留它已有的内容。移到主目录项目同理，目标换成个人工作区。会话自己的设置（模型、权限模式）随 meta 一起走；项目默认值（`settings.json`）从此读新项目的。
+
 ### 附件与恢复
 
 浏览器上传的文件在 dispatch 前解码并保存到
@@ -91,7 +121,7 @@ composer 草稿；发布后会清理，因此不是持久的 session 附件存�
 位于 `<state>/channels/*/accounts/*/attachments` 的渠道根目录。
 
 旧项目迁移时，迁移日志会清点外部恢复目录，将会话和恢复数据一起复制到
-`<state>/sessions/.migration/staging/` 并校验，再把会话发布到
+`<state>/projects/.migration/staging/` 并校验，再把会话发布到
 `projects/<project_id>/<session_id>/`，把恢复数据发布到旁边的
 `.file-recovery/<session_id>/<turn>/`，随后才更新 location 权威记录。发布缺失或
 失败时，项目保持不可用状态，新的项目绑定任务会被阻止。
@@ -114,7 +144,7 @@ relocate_project {session_id, project_id, path}
   → project_relocated {ok, old_path, path, node_id} + 一份新的 projects_list
 ```
 
-它改的是**项目的路径**，而非会话→项目的绑定，所以定格之后依然合法。绑定到该项目的 session 保持同一个稳定 project id 和应用状态目录下的会话仓库。旧工作目录副本通过迁移日志和持久 location index 处理。默认项目拒绝重定位：它的显示路径是家目录，每次 `get_default_project` 读取都会恢复；它没有独立的项目 Git 仓库。每轮文件撤销恢复仍位于目标仓库旁的 `.file-recovery/<session_id>/<turn>/`，在会话 Git 仓库之外。
+它改的是**项目的路径**，而非会话→项目的绑定，所以定格之后依然合法。绑定到该项目的 session 保持同一个稳定 project id 和应用状态目录下的会话仓库。旧工作目录副本通过迁移日志和持久 location index 处理。默认项目拒绝重定位：它的显示路径是家目录，每次 `get_default_project` 读取都会恢复；它没有独立的项目 Git 仓库。每轮文件撤销恢复仍位于目标仓库旁的 `.file-recovery/<session_id>/<turn>/`，在会话 Git 仓库之外。定位到已属于另一个项目的目录会被拒绝，只有一个例外：被定位的项目目录已缺失且没有对话时，它是这个目录过期的第二份登记，于是并入拥有该目录的项目，选择器随即选中那个项目。
 
 ### relocate 记录节点
 
@@ -128,6 +158,8 @@ relocate_project {session_id, project_id, path}
 | `predecessor` | `None` |
 | `output` | `<旧路径> → <新路径>` |
 | `metadata` | `{display: "runtime", project_id, old_path, new_path}` |
+
+移动用同样的方式记录（`record_move`）：`name` 为 `project/move`，`output` 为 `<旧项目名> → <新项目名>`，`metadata` 带 `old_project_id` 和 `new_project_id`。
 
 形状照搬 `context/system_prompt`（dag/overview.md §3、§7）：写入不变式只约束对话节点；`caller` 已设，store 便不推进 head——记录重定位不动分支尖端。名字刻意**不放在** `context/` 下：那是隐藏于对话流的管线机器，而重定位是值得看见的用户动作。
 
@@ -192,6 +224,10 @@ updated_at 只在追加消息路径推进；rename、pin、archive 和 read/unre
 
 `data` 只包含变更的字段，前端做增量 patch。
 
+### 项目列表里的位置
+
+侧栏按最后活跃时间列出项目里的对话。把对话拖到列表里的另一个位置，给它的是一个时间而不是序号：`update_session_flags` 带 `sort_at`（秒）把它写进 meta，同时写 `sort_since`——对话当时的 `updated_at`。客户端在 `updated_at` 没超过 `sort_since` 时按 `sort_at` 排序，所以别的对话有新活动仍会排到它前面，它自己的下一轮就结束这次摆放（服务端不清理；`sort_at` 为 0 清掉两者）。客户端把 `sort_at` 取在前后邻居的时间之间，放到顶部时取当前时间。两个字段都是索引字段，会话列表带着它们。
+
 ### status 的写入时机
 
 dispatcher 在 turn 生命周期中写 status：
@@ -250,7 +286,7 @@ channel 会话命名与普通会话**完全一样**，走同一套两阶段 LLM 
 
 ### 空会话
 
-创建即写第一条消息是原子的，正常不产生空会话；万一产生由启动清理或手动删除处理。命名层不对空会话做特殊过滤。
+创建即写第一条消息是原子的，正常不产生空会话；万一产生则保留到手动删除；启动清理因为它有 `meta.json` 和 `history/` 而保留它。命名层不对空会话做特殊过滤。
 
 ### 用户主动重命名
 
@@ -295,7 +331,7 @@ LLM 标题生成的细节（prompt、参数、后处理）见 [name.md](name.zh.
 
 ### 每条 session 返回的字段
 
-注册表中的 15 个字段 + preview + project（列举时补充），共 17 个。完整列表见 [storage.md](storage.zh.md)。
+注册表中的 17 个字段 + preview + project（列举时补充），共 19 个。完整列表见 [storage.md](storage.zh.md)。
 
 ---
 
@@ -303,7 +339,7 @@ LLM 标题生成的细节（prompt、参数、后处理）见 [name.md](name.zh.
 
 ```
 调用方调 delete_session(session_id)
-  → 删除 <state>/sessions/<session_id>/ 整个目录
+  → 删除 <state>/projects/<project_id>/chats/<session_id>/ 整个目录
   → 删除 _index[session_id]
   → 注册表原子写磁盘
   → 广播 session_deleted：

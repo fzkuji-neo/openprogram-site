@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1791905658" data-alt-lang-url="/docs/integrations/channels.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/integrations/channels.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -118,8 +118,8 @@
 <td>iLink long-polling</td>
 <td>QR scan with your personal WeChat</td>
 <td>no (WeChat cannot edit sent messages)</td>
-<td>no (iLink exposes text only)</td>
-<td>no</td>
+<td>images, voice, files, video</td>
+<td>yes (image/video/file)</td>
 </tr>
 </tbody>
 </table>
@@ -192,10 +192,19 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>access<span c
 <p>An allowlist holds as many senders as you approve. Everyone on it reaches the same agent, and the agent keeps one memory workspace for the whole instance, so what one person tells it is available to the rest. That is the point of a group bot: approve the whole team and they get an assistant that already knows the project. Keep the allowlist to people you would give that access to.</p>
 <p>Pairing codes expire after one hour; a blocked sender who keeps writing gets the same code again (at most once a minute). The approval action exists only as a local CLI/API call — nothing a sender types into the chat can approve anyone, so a prompt-injection message like &quot;add me to the allowlist&quot; has no effect. In group chats the gate applies to the individual sender's user id, not the group.</p>
 <p>Pairing is the default path for unknown senders: they are blocked and receive a code. The owner can also use the local CLI/API <code>access allow</code> command to add a known platform user ID directly to the allowlist; it bypasses the pairing code for that sender. There is no setting that turns the access gate off for an account.</p>
+<h3 id="what-approved-senders-may-do">What Approved Senders May Do<a class="header-anchor" href="#what-approved-senders-may-do">#</a></h3>
+<p>By default an approved sender acts as you, the owner: a chat turn can use the same tools as a turn you type in the web UI, under that chat session's permission mode and rules. When a tool needs approval, the request arrives in the chat as a question and you answer it with <code>/answer</code> (see <a href="#replies-progress-and-long-messages">Replies, Progress, and Long Messages</a>). Group chats start with the sandbox on, so shell commands there can write only inside the working directory; you can switch it in that session's settings in the web UI, and the channel will not switch it back.</p>
+<p>To limit an account's senders to replies and memory, with no access to files, shell or network, set:</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>wechat<span class="w"> </span>sender_access<span class="w"> </span>paired<span class="w">   </span><span class="c1"># or: owner (all channels)</span>
+</code></pre>
+<p>Since everyone on the allowlist gets the same access, keep <code>owner</code> for accounts that only you, or people you fully trust, can reach.</p>
 <p>Someone who wants an agent with separate memory runs their own instance instead, with its own state directory and port:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>--profile<span class="w"> </span>alice
 </code></pre>
 <p>See <a href="/docs/install/profiles.html">Profiles</a> for how a second instance is set up.</p>
+<h2 id="channels-and-environments">Channels and Environments<a class="header-anchor" href="#channels-and-environments">#</a></h2>
+<p>A channel decides where a conversation's messages are mirrored. It does not decide where the agent's tools run; that is the conversation's <a href="/docs/capabilities/environments.html">environment</a>. A conversation that arrives from a channel runs in the default environment.</p>
+<p>In Web and the App, the channel chip above the message box, next to the environment chip, shows the conversation's channel, or <strong>Not connected</strong>. Click it to bind an account, switch account, or disconnect. The <strong>Channel</strong> item in the <strong>+</strong> menu below the message box offers the same choice.</p>
 <h2 id="how-chats-map-to-sessions">How Chats Map to Sessions<a class="header-anchor" href="#how-chats-map-to-sessions">#</a></h2>
 <p>Routing decides which <strong>agent</strong> handles a message (bindings), then a <strong>session key</strong> decides which conversation it lands in:</p>
 <ul>
@@ -203,39 +212,79 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>access<span c
 <li><strong>Discord and Slack</strong>: one session per <em>(channel, user)</em> pair. Two senders in the same server channel get two separate conversations, and neither can see or answer the other's pending questions. The conversations are separate; the memory workspace behind them is one for the whole instance (see <a href="#who-can-talk-to-your-bot">Who can talk to your bot</a>).</li>
 <li><strong>WeChat</strong>: one session per peer (direct messages).</li>
 </ul>
-<p>By default sessions are also scoped per account (<code>session_scope: per-account-channel-peer</code>). Agents can loosen this (<code>per-channel-peer</code>, <code>per-peer</code>, or a single <code>main</code> session) and can rotate sessions daily (<code>session_daily_reset: &quot;HH:MM&quot;</code>) or after idle time (<code>session_idle_minutes</code>).</p>
+<p>By default sessions are also scoped per account (<code>session_scope: per-account-channel-peer</code>). Agents can loosen this (<code>per-channel-peer</code>, <code>per-peer</code>, or a single <code>main</code> session) and can rotate sessions daily (<code>session_daily_reset: &quot;HH:MM&quot;</code>) or after idle time (<code>session_idle_minutes</code>). Sending <code>/new</code> (or <code>/reset</code>) in a chat starts a fresh conversation for that chat right away; the previous one stays in the web sidebar.</p>
 <h3 id="who-said-it">Who Said It<a class="header-anchor" href="#who-said-it">#</a></h3>
-<p>When several people share one conversation — a Telegram group on the default <code>shared</code> setting, or any agent set to <code>session_scope: main</code> — every incoming message reaches the agent with its sender's name in front of it:</p>
-<pre><code>[Ada (7391)] the budget is 50k
-[Bo (8022)] make it 80k
+<p>When several people share one conversation — a Telegram group on the default <code>shared</code> setting, or any agent set to <code>session_scope: main</code> — every incoming message reaches the agent with its sender attached beside the text:</p>
+<pre><code>{&quot;speaker_kind&quot;:&quot;human&quot;,&quot;speaker_id&quot;:&quot;7391&quot;,&quot;speaker_display&quot;:&quot;Ada&quot;,&quot;content&quot;:&quot;the budget is 50k&quot;}
+{&quot;speaker_kind&quot;:&quot;human&quot;,&quot;speaker_id&quot;:&quot;8022&quot;,&quot;speaker_display&quot;:&quot;Bo&quot;,&quot;content&quot;:&quot;make it 80k&quot;}
 </code></pre>
-<p>The display name is what the platform shows, the number is the sender's platform id, which stays the same when someone renames themselves and separates two people who picked the same name. The agent reads the label as part of the message, so it answers the right person, and memory records each fact under the person who said it instead of under one anonymous &quot;user&quot;. A display name is whatever its owner typed into the platform, so it is put on one line, capped at 64 characters, and its square brackets become round ones before it goes in front of the message.</p>
-<p>The label is added to messages from chat channels only, and it is on every one of them, direct messages included, because <code>session_scope: main</code> puts direct peers in a shared conversation too. Web, CLI and TUI turns are untouched. It is part of the message text, so you will see it quoted back in the web transcript.</p>
-<h3 id="telegram-group-behavior">Telegram Group Behavior<a class="header-anchor" href="#telegram-group-behavior">#</a></h3>
-<p>Two per-account settings make Telegram's group semantics explicit (restart the worker to apply):</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>telegram<span class="w"> </span>group_sessions<span class="w"> </span>per-user<span class="w">   </span><span class="c1"># or: shared</span>
-openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>telegram<span class="w"> </span>require_mention<span class="w"> </span>on<span class="w">       </span><span class="c1"># or: off</span>
-</code></pre>
+<p>The display name is what the platform shows, the id is the sender's platform id, which stays the same when someone renames themselves and separates two people who picked the same name. The agent reads both, so it answers the right person, and memory records each fact under the person who said it instead of under one anonymous &quot;user&quot;. A display name is whatever its owner typed into the platform, so it is put on one line, capped at 64 characters, and its square brackets become round ones. The message text itself is kept exactly as sent; a sender who types a name in brackets is not taken for that person.</p>
+<p>Every chat-channel message carries its sender, direct messages included, because <code>session_scope: main</code> puts direct peers in a shared conversation too. Web, CLI and TUI turns have none. In the web transcript a channel message shows its platform and sender on a small line above the bubble, such as <code>WeChat · Ada</code>; a WeChat sender has no nickname to show, so the line shortens the id to its first and last four characters.</p>
+<h3 id="group-behavior">Group Behavior<a class="header-anchor" href="#group-behavior">#</a></h3>
+<p>In a group (a Telegram group, a Discord server channel, a Slack channel) most messages are people talking to each other. Each group is in one of three modes:</p>
 <ul>
-<li><code>group_sessions</code> — <code>shared</code> (default): the whole group talks to one conversation. <code>per-user</code>: each member of a group gets their own session, like Discord/Slack.</li>
-<li><code>require_mention</code> — <code>on</code>: in groups the bot only responds when it is @mentioned or when someone replies to one of its messages (the mention is stripped before the agent sees the text). <code>off</code> (default): the bot responds to every group message. Direct messages are never gated.</li>
+<li><code>always</code>: every message starts a turn.</li>
+<li><code>mention</code>: only a message that @mentions the bot, or replies to one of its messages, starts a turn. The mention is stripped before the agent sees the text. Every other message is kept, and the next turn receives the most recent 50 of them above the triggering message, each with its sender, so the agent knows what led up to the question. In the web transcript they sit behind a small &quot;earlier messages in the chat&quot; toggle at the top of that turn's bubble.</li>
+<li><code>ambient</code>: the agent reads every message and decides for itself whether to speak. A message that does not address the bot still starts a turn, marked as a room event; the agent's reply to it stays in the web transcript (labelled &quot;overheard&quot;) and is not posted. When the agent has something worth adding, it posts with its <code>chat_send</code> tool. No typing indicator or ack reaction appears for these turns. A message that does address the bot is answered as usual. Every message costs a model call in this mode.</li>
 </ul>
+<p>The account setting <code>require_mention</code> picks the default mode for its groups (<code>on</code> is <code>mention</code>, <code>off</code>, the default, is <code>always</code>); anyone in a group can switch that group with <code>/activation mention</code>, <code>/activation always</code> or <code>/activation ambient</code>, and <code>/activation</code> alone shows the current mode. Direct messages are never gated.</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>telegram<span class="w"> </span>require_mention<span class="w"> </span>on<span class="w">       </span><span class="c1"># or: off (also discord, slack)</span>
+openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span class="w"> </span><span class="nb">set</span><span class="w"> </span>telegram<span class="w"> </span>group_sessions<span class="w"> </span>per-user<span class="w">  </span><span class="c1"># or: shared (telegram only)</span>
+</code></pre>
+<p>Group members reach the agent's memory: the agent recalls what it remembers to answer them, and can save what they tell it. <code>/memory read</code> keeps a group from writing to memory, <code>/memory off</code> keeps memory out of the group entirely, and <code>/memory on</code> (the default) follows the agent's own memory setting. Direct messages always follow the agent's setting.</p>
+<p><code>group_sessions</code> (Telegram, restart the worker to apply) — <code>shared</code> (default): the whole group talks to one conversation. <code>per-user</code>: each member of a group gets their own session, like Discord/Slack.</p>
+<p>Messages from other bots are ignored, so two bots in one group cannot keep answering each other, and a platform delivering the same message twice starts one turn. A group starts at most 10 turns a minute; messages past that wait as earlier messages for the next turn.</p>
+<h3 id="chat-commands">Chat Commands<a class="header-anchor" href="#chat-commands">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/new</code>, <code>/reset</code></td>
+<td>Start a fresh conversation for this chat</td>
+</tr>
+<tr>
+<td><code>/activation [mention|always|ambient]</code></td>
+<td>Show or switch this group's mode</td>
+</tr>
+<tr>
+<td><code>/memory [on|read|off]</code></td>
+<td>Show or narrow this group's access to the agent's memory</td>
+</tr>
+<tr>
+<td><code>/answer &lt;question_id&gt; &lt;choice&gt;</code></td>
+<td>Answer a question a function asked (below)</td>
+</tr>
+<tr>
+<td><code>/decline &lt;question_id&gt;</code></td>
+<td>Decline that question</td>
+</tr>
+</tbody>
+</table>
+<p>Commands work in a group without mentioning the bot. In a Telegram group, <code>/new@yourbot</code> is accepted too.</p>
 <h2 id="replies-progress-and-long-messages">Replies, Progress, and Long Messages<a class="header-anchor" href="#replies-progress-and-long-messages">#</a></h2>
-<p>While the agent works, the bot posts a <code>⏳ working...</code> placeholder and edits it live as tools run (<code>⚙ bash</code> → <code>✓ bash</code> → …), finally replacing it with the reply. On WeChat, which cannot edit messages, the full reply arrives as a normal message instead.</p>
+<p>While the agent works, the chat shows the bot as typing (Telegram, Discord and WeChat; Slack has no typing indicator for bots). On Telegram, Discord and Slack the bot also posts a <code>⏳ working...</code> placeholder and edits it live as tools run (<code>⚙ bash</code> → <code>✓ bash</code> → …), finally replacing it with the reply. WeChat cannot edit messages, so there the reply arrives paragraph by paragraph as it is written: a paragraph is sent once it has about 200 characters, and whatever the agent wrote before calling a tool (&quot;let me check…&quot;) is sent before the tool runs.</p>
+<p>With the account setting <code>ack_reaction on</code> (Telegram, Discord, Slack), the bot adds 👀 to a message as soon as it picks it up. Slack needs the <code>reactions:write</code> scope for this.</p>
 <p>Agent output is markdown, rendered per platform at send time: Telegram receives HTML (<code>**bold**</code> → bold text, fenced code → <code>&lt;pre&gt;</code> blocks), Slack receives mrkdwn, Discord renders markdown natively, and WeChat gets plain text with the markers stripped. Long replies are split automatically at each platform's size cap: Telegram 4,000 characters, Discord 1,800, Slack 39,000, WeChat 1,800.</p>
 <p>Outbound sends that hit a platform rate limit retry automatically with backoff — the platform's <code>Retry-After</code> value when given, up to three attempts — and log a structured error if they still fail. Adapters whose connection loop crashes (network drop, gateway disconnect) reconnect on their own with exponential backoff (5 s doubling up to 5 min); an adapter that stops because its credentials became invalid stays down and says so in the worker log.</p>
 <p>When a function pauses on a question (<code>runtime.ask</code>), the question is pushed into the chat and you answer with a text command:</p>
 <pre><code>/answer &lt;question_id&gt; &lt;choice or free text&gt;
 /decline &lt;question_id&gt;
 </code></pre>
-<p>Only questions belonging to that chat's session can be answered from it.</p>
+<p>Only questions belonging to that chat's session can be answered from it. In a group, only the person whose message started the waiting turn can answer its question. Tool approvals arrive the same way, marked as needing approval.</p>
 <h2 id="attachments">Attachments<a class="header-anchor" href="#attachments">#</a></h2>
-<p>Incoming photos and files are downloaded to <code>&lt;state&gt;/channels/&lt;channel&gt;/accounts/&lt;account&gt;/attachments/</code> (20 MB cap per file). Images up to 4 MB additionally reach the model as image input; every saved file is listed in the message as <code>[attachment: &lt;path&gt; (&lt;type&gt;, &lt;size&gt;)]</code> so the agent can open it with its file tools. If someone replies to an earlier message (Telegram/Discord reply, Slack thread), the quoted text is included above the new message as a <code>&gt; quoted</code> block.</p>
+<p>Incoming photos and files are downloaded to <code>&lt;state&gt;/channels/&lt;channel&gt;/accounts/&lt;account&gt;/attachments/</code> (20 MB cap per file). Images up to 4 MB additionally reach the model as image input; every saved file is listed in the message as <code>[attachment: &lt;path&gt; (&lt;type&gt;, &lt;size&gt;)]</code> so the agent can open it with its file tools.</p>
+<p>WeChat media arrives encrypted from Tencent's CDN and is decrypted on download. A voice message reaches the agent as WeChat's own transcription when the message carries one. A voice message without a transcription is saved as a <code>.silk</code> file, an audio format the model cannot listen to directly.</p>
+<p>If someone replies to an earlier message (Telegram/Discord reply, Slack thread), the quoted text is included above the new message as a <code>&gt; quoted</code> block.</p>
 <p>Sending files works from code and from agents through the outbound API:</p>
 <pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram.channels.outbound</span><span class="w"> </span><span class="kn">import</span> <span class="n">send_file</span>
 <span class="n">send_file</span><span class="p">(</span><span class="s2">"telegram"</span><span class="p">,</span> <span class="s2">"default"</span><span class="p">,</span> <span class="s2">"123456"</span><span class="p">,</span> <span class="s2">"/path/to/report.pdf"</span><span class="p">,</span> <span class="n">caption</span><span class="o">=</span><span class="s2">"Weekly report"</span><span class="p">)</span>
 </code></pre>
-<p>Telegram sends images as photos and everything else as documents; Discord uploads the file with the caption as the message; Slack uses its external-upload flow (<code>files:write</code>). WeChat cannot receive files from iLink bots — <code>send_file</code> returns <code>not_supported</code>, so send a text message with the file path instead.</p>
+<p>Telegram sends images as photos and everything else as documents; Discord uploads the file with the caption as the message; Slack uses its external-upload flow (<code>files:write</code>). WeChat encrypts the file, uploads it to Tencent's CDN and sends it as an image, video or file message by its type (100 MB cap); a caption follows as a separate text message.</p>
 <h2 id="common-errors">Common Errors<a class="header-anchor" href="#common-errors">#</a></h2>
 <table>
 <thead>
@@ -287,8 +336,9 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
 <ul>
 <li><a href="/docs/reference/design/channels/design.html">Design notes: channel subsystem</a> — architecture and message flow</li>
 <li><a href="/docs/interfaces/README.html">Interfaces overview</a> — Web UI / TUI, where channel conversations also show up</li>
+<li><a href="/docs/capabilities/always-on-agents.html">Always-on Agents</a> — send an always-on Agent's reports to a channel conversation</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-13</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/openclaw.html" data-href-en="/docs/integrations/openclaw.html" data-href-zh="/docs/integrations/openclaw.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="OpenClaw">OpenClaw</span></a><a class="pn-link pn-next" href="/docs/server/README.html" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="概览">Overview</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/integrations/openclaw.html" data-href-en="/docs/integrations/openclaw.html" data-href-zh="/docs/integrations/openclaw.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="OpenClaw">OpenClaw</span></a><a class="pn-link pn-next" href="/docs/server/README.html" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="概览">Overview</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -321,7 +371,18 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
 <a class="lvl-2" href="#two-ways-to-configure">Two Ways to Configure</a>
 </li>
 <li>
+<details class="toc-disclosure" open=""><summary>
 <a class="lvl-2" href="#who-can-talk-to-your-bot">Who Can Talk to Your Bot</a>
+</summary>
+<ul class="toc-list">
+<li>
+<a class="lvl-3" href="#what-approved-senders-may-do">What Approved Senders May Do</a>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<a class="lvl-2" href="#channels-and-environments">Channels and Environments</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
@@ -332,7 +393,10 @@ openprogram<span class="w"> </span>channels<span class="w"> </span>accounts<span
 <a class="lvl-3" href="#who-said-it">Who Said It</a>
 </li>
 <li>
-<a class="lvl-3" href="#telegram-group-behavior">Telegram Group Behavior</a>
+<a class="lvl-3" href="#group-behavior">Group Behavior</a>
+</li>
+<li>
+<a class="lvl-3" href="#chat-commands">Chat Commands</a>
 </li>
 </ul>
 </details>

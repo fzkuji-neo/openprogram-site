@@ -35,6 +35,14 @@ Every user-editable setting, from the single schema that the `setup` CLI, `openp
 |---|---|---|---|
 | `security.outbound_url` | `{'exceptions': []}` | `live` | Owner-only exact Origin or CIDR exceptions for declared configured-service consumers, plus an optional policy proxy that explicitly asserts target-policy enforcement. |
 
+## Voice
+
+| Key | Default | Apply | Description |
+|---|---|---|---|
+| `voice.engine` | `auto` | `live` | Turns the composer microphone's recording into text. `auto` uses local whisper.cpp when its model is downloaded, then OpenAI, then Groq. `local` keeps audio on this computer (needs `brew install whisper-cpp`). |
+| `voice.language` | `auto` | `live` | `auto` lets the engine detect the language of each phrase. |
+| `voice.model` | `` | `live` | Empty uses the engine's default: gpt-4o-mini-transcribe (OpenAI), whisper-large-v3-turbo (Groq), large-v3-turbo-q5_0 (local). Applies only when an engine is chosen. |
+
 ## Search
 
 | Key | Default | Apply | Description |
@@ -46,12 +54,17 @@ Every user-editable setting, from the single schema that the `setup` CLI, `openp
 | Key | Default | Apply | Description |
 |---|---|---|---|
 | `memory.backend` | `local` | `next_start` | `local` = on-disk memory tool; `none` = disabled. |
-| `memory.writer.model` | `` | `live` | Empty uses the default chat agent's provider and model. Set provider/model to override only background memory writing. |
+| `memory.writer.model` | `` | `live` | Empty uses the default Agent's model, or the last used model when that Agent has none. Set provider/model to choose the model for background memory writing and organizing. |
 | `memory.writer.enabled` | `True` | `live` | Turn completed conversations into Topic records in the background. |
+| `memory.writer.verify` | `False` | `live` | After a background write, ask a question about one fact it recorded, search Memory for the answer, and repair the Topics when the answer cannot be found. Costs several extra model calls per write. |
 | `memory.writer.trigger_tokens` | `16000` | `live` | Conversation tokens accumulated before a background write. |
 | `memory.retrieval.method` | `bm25` | `live` | Retrieval used for automatic recall and Memory search. |
+| `memory.retrieval.hybrid.weighting` | `auto` | `live` | How hybrid recall weighs keywords against meaning. `auto` favours keywords for queries with a date, a quoted phrase or a name, and balances them otherwise. |
+| `memory.retrieval.hybrid.file_boost` | `True` | `live` | In hybrid recall, raise the best paragraph of a Topic that several matches come from. |
 | `memory.retrieval.top_k` | `5` | `live` | Maximum matching records added automatically to a turn. |
 | `memory.retrieval.include_sources` | `True` | `live` | Include archived evidence alongside curated Topic records. |
+| `memory.layers.project` | `True` | `live` | A conversation in a project also reads that project's own Memory, kept in ~/.openprogram/projects/&lt;project&gt;/memory. |
+| `memory.layers.project_writes` | `True` | `live` | With Project memory on, write what a project's conversations record into that project's Memory instead of the personal one. |
 | `memory.core.inject` | `True` | `live` | Inject the compact Core view into each system prompt. |
 | `memory.recent.limit` | `50` | `live` | Latest records retained in the Recent derived view. |
 

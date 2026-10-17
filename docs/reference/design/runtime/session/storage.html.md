@@ -4,39 +4,45 @@
 
 ## On-Disk Layout
 
+Conversations live in the folder of the project they belong to. Every
+project, the home project (id `default`) included, owns one folder:
+
 ```
-<state>/sessions/
-├── index.json                         # registry (summary cache)
-├── locations.json                     # durable session-id → repository path map
-├── <session_id_1>/                    # default and pre-existing home-root layout
-│   ├── .git/                          # session repository metadata
-│   ├── meta.json                      # session metadata and active DAG head
-│   ├── history/                       # one JSON file per DAG node
-│   ├── context/                       # persisted context artifacts
-│   └── workdir/attachments/           # uploaded files for this session
-├── projects/<project_id>/              # new bound-project storage
-│   ├── <session_id>/                   # session Git repository
-│   └── .file-recovery/<session_id>/<turn>/ # per-turn file undo recovery
-├── .file-recovery/<session_id>/<turn>/ # default-root per-turn recovery
+<state>/projects/
+├── projects.json                      # project registry
+├── <project_id>/                      # one folder per project; `default` is the home project
+│   ├── settings.json                  # project defaults
+│   ├── memory/                        # the project's memory workspace
+│   └── chats/
+│       ├── <session_id>/              # session Git repository
+│       │   ├── .git/                  # session repository metadata
+│       │   ├── meta.json              # session metadata and active DAG head
+│       │   ├── history/               # one JSON file per DAG node
+│       │   ├── context/               # persisted context artifacts
+│       │   └── workdir/attachments/   # uploaded files for this session
+│       └── .file-recovery/<session_id>/<turn>/ # per-turn file undo recovery
+├── .chats-index.json                  # registry (summary cache)
+├── .chats-locations.json              # durable session-id → repository path map
 ├── .migration/                        # migration journal and staging state
 ├── .deleted/                          # durable delete intents
 └── .locks/ / .session-locks/          # inter-process coordination
 ```
 
-The default root is `<state>/sessions`, where `<state>` is OpenProgram's state
-directory. A newly created session bound to a non-default project is placed
-under `projects/<project_id>/<session_id>`. The default project and sessions
-created before the centralized placement migration remain at the root-level
-`<session_id>` path. `locations.json` is the durable authority when a session
-is being migrated or relocated. A working folder is never used as the primary
-conversation repository; the old `<project>/.openprogram/sessions/<id>/`
-location is read only as a legacy migration source.
+The store root is `<state>/projects`, where `<state>` is OpenProgram's state
+directory. A session is placed at `<project_id>/chats/<session_id>`; a session
+bound to no project belongs to the home project and lands under
+`default/chats/`. The store's own bookkeeping sits in hidden entries of the
+same folder, so a listing shows only the registry and the project folders.
+A store opened on any other root (application runs, an embedding host) uses
+the same `<project_id>/chats/<session_id>` placement.
 
-The `history/` files are the conversation DAG. `meta.json` stores the active
-DAG `head_id`, while the repository's Git `HEAD` records the latest storage
-commit. Those are different pointers: changing the conversation branch does
-not mean checking out the Git branch, and `session_commits()` exposes Git's
-per-turn commits separately from DAG nodes.
+Assigning a conversation to another project rebinds it in the registry and
+updates `meta.json`; a conversation with no history yet also moves its folder.
+A conversation with history keeps its folder, and `.chats-locations.json`
+records where it is. `.chats-locations.json` is the durable authority while a
+session is being migrated or relocated. A working folder is never used as the
+primary conversation repository; the old `<project>/.openprogram/sessions/<id>/`
+location is read only as a legacy migration source.
 
 ## Persistent Fields (meta.json)
 
@@ -58,9 +64,11 @@ per-turn commits separately from DAG nodes.
 | `group` | str? | Yes | group label |
 | `status` | str | Yes | lifecycle status (see below) |
 | `unread` | bool | Yes | unread marker |
+| `sort_at` | float | Yes | a place in the project list, as the time the session sorts by; 0 = none (see operations.md, "A place in the project list") |
+| `sort_since` | float | Yes | the `updated_at` the place was given at; activity past it ends the place |
 | `_auto_titled` | bool | No | auto-naming idempotency marker (internal control; not stored in the registry, not returned to the frontend) |
 
-The "Registry" column indicates whether the field is cached in `index.json`. `_auto_titled` and `project_id` are not stored in the registry: the former is an internal marker, and the latter is supplemented from the project directory mapping when listing.
+The "Registry" column indicates whether the field is cached in `.chats-index.json`. `_auto_titled` and `project_id` are not stored in the registry: the former is an internal marker, and the latter is supplemented from the project directory mapping when listing.
 
 ## Registry-Only Fields
 
@@ -130,8 +138,8 @@ roots are separately readable by the attachment path policy. The
 `.file-recovery/<session_id>/<turn>/` tree is ordinary per-turn file undo
 recovery and is kept outside the session Git repository. During legacy project
 migration, session data and any existing recovery tree are staged under
-`<state>/sessions/.migration/staging/`, verified, then published into the
-central destination's sibling `.file-recovery` tree; `locations.json` is
+`<state>/projects/.migration/staging/`, verified, then published into the
+central destination's sibling `.file-recovery` tree; `.chats-locations.json` is
 updated only after publication.
 
 Historical attachment markers retain their original absolute path. The

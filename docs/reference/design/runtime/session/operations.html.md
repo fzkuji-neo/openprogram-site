@@ -18,17 +18,34 @@ When the process starts, SessionStore runs a one-time initialization:
    status left by a dead worker. Execution recovery is separate: the
    execution subsystem may resume durable checkpoint-backed operations through
    its own recovery path.
-4. Remove stale unarchived empty shells: a session older than one hour with
-   no `history/` directory is deleted. Archived sessions and sessions whose
-   location is unreachable or covered by a migration journal are retained.
+4. Clean up without losing data. The first meta write creates `history/`, so
+   a directory without it is damaged or foreign, never an abandoned draft. For
+   an unarchived summary row older than one hour:
+   - its directory has `history/` → kept;
+   - its directory is absent at the default placement and no layout holds the
+     session → only the summary row is dropped; project bindings and the
+     location map stay;
+   - its directory has `meta.json`, `.git` or `events.jsonl` but no
+     `history/` → kept in place with a warning;
+   - otherwise (a shell) → moved, under the session lock, to
+     `.quarantine/<session_id>-<time>/session/` with a `reason.json`, and
+     its summary row dropped. Directories outside the store root are never
+     moved.
+
+   Anything uncertain is retained: a row without `created_at`, an archived
+   or tombstoned session, an unreachable non-default placement, a migration
+   journal row in any stage other than `done` or `deleted`, an unreadable
+   migration journal (the whole pass is skipped), a busy session lock, or a
+   filesystem error. This pass never deletes files; `.quarantine` is kept
+   until someone removes it by hand.
 
 Startup does not expire archived sessions and does not enforce a session-count
 capacity limit. Explicitly archived sessions remain until the owner deletes
 them.
 
 Handling of half-broken sessions:
-- Has `meta.json` but no `history/` → an old unarchived shell is eligible for
-  deletion; a recent, archived, unreachable, or migrating session is retained.
+- Has `meta.json` but no `history/` → kept and listed (as an empty
+  conversation); it is removed only by an explicit delete.
 - Has `history/` but no `meta.json` → it cannot be rebuilt into the registry
   and is not exposed as a session.
 
@@ -50,8 +67,8 @@ No other place creates a session.
 
 ```
 Caller calls create_session(session_id, agent_id, source=..., ...)
-  → Resolve placement: <state>/sessions/<session_id>/ for the default project,
-    or <state>/sessions/projects/<project_id>/<session_id>/ for a bound project
+  → Resolve placement: <state>/projects/<project_id>/chats/<session_id>/,
+    with project_id `default` (the home project) when no project is bound
   → Write meta.json (id, agent_id, title, created_at, updated_at, source, status="idle", ...)
   → Write the registry: _index[session_id] = summary entry
   → Atomically write the registry to disk (temp file → os.rename)
@@ -62,13 +79,13 @@ Caller calls create_session(session_id, agent_id, source=..., ...)
 
 For the dispatcher and the channel handler, creation and writing the first message are atomic — `append_message` is called immediately after creation, so no empty shell is produced.
 
-`session_context` creates the session in `__enter__` (because the subsequent ContextVar loading needs a valid session). If it exits abnormally before writing any message, an empty shell is produced, which is handled by the startup cleanup.
+`session_context` creates the session in `__enter__` (because the subsequent ContextVar loading needs a valid session). If it exits abnormally before writing any message, the session stays as an empty conversation (it already has `meta.json` and `history/`) until someone deletes it.
 
 ---
 
 ## Main project binding
 
-A session's **main working directory** is the path of the project it is bound to. The binding is chosen freely while the chat is still a draft, and **freezes when the first real message commits**. After that turn, a different project cannot be bound to the session. The session repository is already under the application state root, grouped by the stable project id; changing the project's path does not change the session-to-project binding or the repository id.
+A session's **main working directory** is the path of the project it is bound to. The binding is chosen freely while the chat is still a draft, and **freezes when the first real message commits**. After that turn, a different project cannot be bound to the session through the composer; the one way to change it is the explicit **move** below, which moves the repository with it and leaves a record in the graph. The session repository is already under the application state root, grouped by the stable project id; changing the project's path does not change the session-to-project binding or the repository id.
 
 Additional working directories are the opposite and are meant to be: they are added and removed at any point in the session's life. See [additional-working-directories.md](../additional-working-directories.md).
 
@@ -86,6 +103,26 @@ draft chat, project picked in the composer chip
 Settings picked while the chat is a draft (a model, for example) are stored before the session is created, so its repository can already exist at the default location without an `id`. `handle_chat` therefore asks `is_created` (meta has an `id`, or the repo has history) rather than whether the repository exists, and `create_session` moves such a settings-only repository to the project's placement, keeping those settings.
 
 `set_session_project` accepts a bind naming the project the session already has, at any age — that is what the post-ack idempotent bind above sends, and it arrives after the first turn is committed. A bind naming a **different** project on a session that already has turns is rejected with `project is frozen after the first turn` (`ws_actions/project.py:FROZEN_ERROR`). The composer chip matches: for a session with an id it renders the bound project read-only instead of the picker.
+
+### Moving a conversation to another project
+
+A move is the user's own act, from the sidebar: a chat row dragged onto another project, or **Move to project** in its menu. It is the `move_session_to_project` ws action:
+
+```
+move_session_to_project {session_id, project_id}
+  → refused while a turn runs on the session (RUNNING_ERROR): the turn is
+    working in the old folder
+  → SessionStore.move_session: under the session's locks, drop the cached
+    repository, rename projects/<old>/chats/<id> to projects/<new>/chats/<id>
+    together with its sibling .file-recovery/<id>, record the new location,
+    rebind the registry, and set meta.project_id; the project it left is
+    appended to meta.project_history
+  → record_move: the `project/move` node below
+  → session_moved {ok, from_project_id, project_id, node_id} +
+    projects_changed to every client + a fresh projects_list
+```
+
+From the next turn the main working directory is the new project's path (`project_workdir_for` resolves fresh every call) and, with the project layers on, memory writes land in the new project's workspace. `project_history` is what keeps a turn in one layer: `project_layer.left_workspace_ids` turns the projects a conversation left into their memory workspace ids, and `write_target` counts the turns those workspaces marked as written, so the new project's memory takes only what is said after the move and the old project's memory keeps what it had. Moving into the home project works the same way, with the personal workspace as the target. Settings on the conversation (model, permission mode) travel with its meta; project defaults (`settings.json`) are read from the new project from then on.
 
 ### Repairing a missing directory
 
@@ -109,17 +146,17 @@ It changes the **project's path**, never the session→project binding, which is
 The project's identity is its stable id; the path is a mutable attribute. Codex matches recorded cwd against recent turn context; DeepSeek validates workspace paths against an immutable session header cwd. Those mechanisms do not track arbitrary folder moves, and they do not mean that moving a folder deletes history. OpenProgram stores conversations under the application state directory and treats the working folder as a location. Three mechanisms reconnect a moved folder:
 
 1. **Native identity, not a HOME scan.** On startup, access, volume reconnect, or a directory/ancestor event, OpenProgram resolves a stored bookmark or inode. A match updates the project path. There is no minute-by-minute walk of HOME.
-2. **Application-owned session placement.** Bound conversations live at
-   `sessions/projects/<project-id>/<session-id>/`. Relocating a project does
+2. **Application-owned session placement.** Conversations live at
+   `projects/<project-id>/chats/<session-id>/`. Relocating a project does
    not move already-centralized chat files. Legacy workdir copies migrate
    through a journaled operation. Per-turn file undo recovery remains in the
    destination's sibling `.file-recovery/<session_id>/<turn>/` tree, outside
    the session Git repository.
-3. **Opening a folder never auto-adopts copies.** Names, Git remotes, Git contents and leftover `.openprogram/sessions` markers do not prove continuity. Manual **Locate folder** may replace identity after showing the expected old path and revision, and it refuses a destination already owned by another project.
+3. **Opening a folder never auto-adopts copies.** Names, Git remotes, Git contents and leftover `.openprogram/sessions` markers do not prove continuity. Manual **Locate folder** may replace identity after showing the expected old path and revision, and it refuses a destination already owned by another project, with one exception: when the project being located is missing and has no conversations, it is a stale second registration of that folder, so it folds into the owning project, which the picker then selects.
 
 Startup cleanup respects the same reality: a project-bound session whose
-recorded location is unreachable, or whose migration journal is active, is
-**not** treated as an empty shell. It is retained until location repair or
+recorded location is unreachable, or whose migration journal is not settled,
+is **not** treated as a shell. It is retained until location repair or
 migration resolves it.
 
 The composer's draft picker lists `path_missing` projects (clicking one opens the locate flow instead of selecting it), and the `/projects` page shows the warning with a "Locate folder…" action; neither surface silently hides a project whose folder moved.
@@ -136,7 +173,7 @@ attachment store. Channel attachments remain in their channel roots under
 
 During legacy project migration, the migration journal inventories any
 external recovery tree, copies both the session and recovery data under
-`<state>/sessions/.migration/staging/`, verifies them, then publishes the
+`<state>/projects/.migration/staging/`, verifies them, then publishes the
 session under `projects/<project_id>/<session_id>/` and recovery data under its
 sibling `.file-recovery/<session_id>/<turn>/` tree before the location
 authority is updated. A missing or failed publication keeps the project in a
@@ -160,6 +197,8 @@ The move changes where every later turn runs, so it is recorded in the session g
 | `predecessor` | `None` |
 | `output` | `<old path> → <new path>` |
 | `metadata` | `{display: "runtime", project_id, old_path, new_path}` |
+
+A move is recorded the same way (`record_move`): `name` is `project/move`, `output` is `<old project name> → <new project name>`, and `metadata` carries `old_project_id` and `new_project_id`.
 
 The shape follows `context/system_prompt` (dag/overview.md §3, §7): the write invariant constrains only conversational nodes, and because `caller` is set the store leaves head where it is — recording a relocation never moves the branch tip. The name is deliberately **not** under `context/`: those are pipeline machinery hidden from the transcript, while a relocation is a user action worth seeing.
 
@@ -226,6 +265,10 @@ The broadcast is initiated by the WebSocket handler layer via `_broadcast` after
 
 `data` contains only the changed fields, and the frontend does an incremental patch.
 
+### A place in the project list
+
+The sidebar lists a project's conversations by last activity. A conversation dragged to another place in that list is given that place as a time, not an order: `update_session_flags` with `sort_at` (seconds) stores it on the meta together with `sort_since`, the conversation's `updated_at` at the time. The client sorts by `sort_at` while `updated_at` has not passed `sort_since`, so newer activity in other conversations still passes the placed one, and its own next turn ends the placement (nothing is cleared on the server; `sort_at` 0 clears both). The client picks `sort_at` between the neighbours' times, or now at the top. Both are index fields, so the session list carries them.
+
 ### When status is written
 
 The dispatcher writes status during the turn lifecycle:
@@ -284,7 +327,7 @@ Channel conversation naming is **exactly the same** as for ordinary conversation
 
 ### Empty conversations
 
-Creation and writing the first message are atomic, so empty conversations are not normally produced; should one occur, it is handled by startup cleanup or manual deletion. The naming layer does no special filtering for empty conversations.
+Creation and writing the first message are atomic, so empty conversations are not normally produced; should one occur, it stays until deleted manually; startup cleanup keeps it because it has `meta.json` and `history/`. The naming layer does no special filtering for empty conversations.
 
 ### User-initiated rename
 
@@ -331,7 +374,7 @@ archived, and all views without a round trip.
 
 ### Fields returned per session
 
-The 15 fields in the registry + preview + project (filled in during listing), 17 in total. See [storage.md](storage.md) for the complete list.
+The 17 fields in the registry + preview + project (filled in during listing), 19 in total. See [storage.md](storage.md) for the complete list.
 
 ---
 
@@ -339,7 +382,7 @@ The 15 fields in the registry + preview + project (filled in during listing), 17
 
 ```
 Caller calls delete_session(session_id)
-  → Delete the entire <state>/sessions/<session_id>/ directory
+  → Delete the entire <state>/projects/<project_id>/chats/<session_id>/ directory
   → Delete _index[session_id]
   → Atomically write the registry to disk
   → Broadcast session_deleted:
