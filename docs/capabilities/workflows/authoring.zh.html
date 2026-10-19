@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792385903" data-alt-lang-url="/docs/capabilities/workflows/authoring.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792397863" data-alt-lang-url="/docs/capabilities/workflows/authoring.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>工作流编写 · OpenProgram Docs</title>
-<meta name="description" content="编写和检查 Workflow # Workflow 是一个小型 Python 包。 Agent 实例定义角色， Context 对象定义每次模型调用看到什么，普通函数决定调用顺序。聊天里的 Agent 用普通文件工具编写 Workflow；你也可以按同样的形式手写。包通过 openprogram workflows">
+<meta name="description" content="编写和检查 Workflow # Workflow 是一个小型 Python 包。 Agent 实例定义角色， Context 对象定义每次模型调用看到什么，普通函数决定调用顺序。聊天里的 Agent 用普通文件工具编写 Workflow；你也可以按同样的形式手写，或者 录制一次演示 让 agent 做成">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/workflows/authoring.zh.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/capabilities/workflows/authoring.zh.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/workflows/authoring.zh.html">
 <meta property="og:title" content="工作流编写 · OpenProgram Docs">
-<meta property="og:description" content="编写和检查 Workflow # Workflow 是一个小型 Python 包。 Agent 实例定义角色， Context 对象定义每次模型调用看到什么，普通函数决定调用顺序。聊天里的 Agent 用普通文件工具编写 Workflow；你也可以按同样的形式手写。包通过 openprogram workflows">
+<meta property="og:description" content="编写和检查 Workflow # Workflow 是一个小型 Python 包。 Agent 实例定义角色， Context 对象定义每次模型调用看到什么，普通函数决定调用顺序。聊天里的 Agent 用普通文件工具编写 Workflow；你也可以按同样的形式手写，或者 录制一次演示 让 agent 做成">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="工作流编写 · OpenProgram Docs">
-<meta name="twitter:description" content="编写和检查 Workflow # Workflow 是一个小型 Python 包。 Agent 实例定义角色， Context 对象定义每次模型调用看到什么，普通函数决定调用顺序。聊天里的 Agent 用普通文件工具编写 Workflow；你也可以按同样的形式手写。包通过 openprogram workflows">
+<meta name="twitter:description" content="编写和检查 Workflow # Workflow 是一个小型 Python 包。 Agent 实例定义角色， Context 对象定义每次模型调用看到什么，普通函数决定调用顺序。聊天里的 Agent 用普通文件工具编写 Workflow；你也可以按同样的形式手写，或者 录制一次演示 让 agent 做成">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -84,6 +84,7 @@
 <a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-title-zh="步骤选择" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html">Next-step selection</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink active" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
+<a class="navlink" href="/docs/capabilities/workflows/recording.html" data-title-zh="录制 Workflow" data-href-en="/docs/capabilities/workflows/recording.html" data-href-zh="/docs/capabilities/workflows/recording.zh.html">Record a workflow</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
@@ -109,7 +110,7 @@
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="指南">Guide</div><a class="navlink" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-title-zh="自编程智能体" data-href-en="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-zh="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html">Self-programming agents</a></div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg">Agentic Workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="工作流编写">Workflow authoring</span></nav><h1 id="编写和检查-workflow">编写和检查 Workflow<a class="header-anchor" href="#编写和检查-workflow">#</a></h1>
-<p>Workflow 是一个小型 Python 包。<code>Agent</code> 实例定义角色，<code>Context</code> 对象定义每次模型调用看到什么，普通函数决定调用顺序。聊天里的 Agent 用普通文件工具编写 Workflow；你也可以按同样的形式手写。包通过 <code>openprogram workflows check</code> 后，它的入口就成为可调用的工具。</p>
+<p>Workflow 是一个小型 Python 包。<code>Agent</code> 实例定义角色，<code>Context</code> 对象定义每次模型调用看到什么，普通函数决定调用顺序。聊天里的 Agent 用普通文件工具编写 Workflow；你也可以按同样的形式手写，或者<a href="/docs/capabilities/workflows/recording.zh.html">录制一次演示</a>让 agent 做成 Workflow。包通过 <code>openprogram workflows check</code> 后，它的入口就成为可调用的工具。</p>
 <h2 id="编码前明确合同">编码前明确合同<a class="header-anchor" href="#编码前明确合同">#</a></h2>
 <p>在包的 <code>README.md</code> 中写明：</p>
 <table>
@@ -340,7 +341,7 @@ openprogram<span class="w"> </span>workflows<span class="w"> </span>list
 <li>**Python：**入口是普通的可导入函数。</li>
 </ul>
 <p>每次入口调用都记录在会话图中，每次角色调用是一个子节点，保存模型收到的完整请求。普通函数不记录。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/README.html" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工作流">Workflows</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/reports.html" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="每周报告">Weekly reports</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/README.html" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工作流">Workflows</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/recording.html" data-href-en="/docs/capabilities/workflows/recording.html" data-href-zh="/docs/capabilities/workflows/recording.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="录制 Workflow">Record a workflow</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

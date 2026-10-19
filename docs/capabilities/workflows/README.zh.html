@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792385903" data-alt-lang-url="/docs/capabilities/workflows/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792397863" data-alt-lang-url="/docs/capabilities/workflows/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -84,6 +84,7 @@
 <a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-title-zh="步骤选择" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html">Next-step selection</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink active" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
+<a class="navlink" href="/docs/capabilities/workflows/recording.html" data-title-zh="录制 Workflow" data-href-en="/docs/capabilities/workflows/recording.html" data-href-zh="/docs/capabilities/workflows/recording.zh.html">Record a workflow</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
@@ -160,7 +161,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 <p>浏览器 workflow 在选择 backend 时保留明确传入的初始 URL。官方 MCP backend 支持受取消检查约束的等待，并传递 snapshot 失败。页面恢复保留当前窗口范围，不重复执行失败的动作；确认完成的结果保留实际证据和观察到的目标。</p>
 <h2 id="编写你自己的">编写你自己的<a class="header-anchor" href="#编写你自己的">#</a></h2>
 <p>任何满足目录契约（<code>&lt;package&gt;/agentics/__init__.py</code> 暴露 <code>PROGRAM_ENTRIES</code>）的仓库都能被同一条 <code>programs install</code> 命令安装。契约、最小模板和发布流程见<a href="/docs/capabilities/installing-harnesses.zh.html">安装与编写 Harness</a>。</p>
-<p>Harness 契约与 <code>~/.openprogram/workflows</code> 中的单个 Workflow 包不同。包结构、完整测试示例和 <code>workflows check</code> 命令见<a href="/docs/capabilities/workflows/authoring.zh.html">编写和检查 Workflow</a>。聊天 Agent 编写的 Workflow 经过同样的检查。</p>
+<p>Harness 契约与 <code>~/.openprogram/workflows</code> 中的单个 Workflow 包不同。包结构、完整测试示例和 <code>workflows check</code> 命令见<a href="/docs/capabilities/workflows/authoring.zh.html">编写和检查 Workflow</a>。聊天 Agent 编写的 Workflow 经过同样的检查。想把一件事演示给 agent 看而不是用文字描述，可以<a href="/docs/capabilities/workflows/recording.zh.html">录制 Workflow</a>。</p>
 <p>Workflow 表单只询问任务信息，不要求配置执行设置。文本润色在同一次模型请求中根据文本判断风格，不强制用户选择。浏览器 backend 和会话标识保留为内部参数。文档页码和输出位置属于可选的任务要求。显式 Python 调用仍支持受支持的覆盖值。</p>
 <h2 id="周报">周报<a class="header-anchor" href="#周报">#</a></h2>
 <p>如果 Workflow 目录已安装 <code>weekly_report</code>，可以直接提供周报内容或修改要求。例如：“提交本周周报：……”；“只修改本周周报的下周计划，其他字段不变”；“只查看本周提交记录”；“不要提交，把草稿写到 reports/weekly_report.md”。</p>

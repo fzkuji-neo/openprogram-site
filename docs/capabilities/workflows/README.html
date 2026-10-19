@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792385903" data-alt-lang-url="/docs/capabilities/workflows/README.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792397863" data-alt-lang-url="/docs/capabilities/workflows/README.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -84,6 +84,7 @@
 <a class="navlink" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-title-zh="步骤选择" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html">Next-step selection</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink active" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
+<a class="navlink" href="/docs/capabilities/workflows/recording.html" data-title-zh="录制 Workflow" data-href-en="/docs/capabilities/workflows/recording.html" data-href-zh="/docs/capabilities/workflows/recording.zh.html">Record a workflow</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
@@ -159,7 +160,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 <p>Browser workflows retain an explicit initial URL when a backend is selected. Official MCP backends support guarded waits and propagate snapshot failures. Page recovery stays within the current window scope and does not replay the failed action. A verified result retains its actual evidence and observed target.</p>
 <h2 id="writing-your-own">Writing your own<a class="header-anchor" href="#writing-your-own">#</a></h2>
 <p>Any repository that follows the directory contract (<code>&lt;package&gt;/agentics/__init__.py</code> exposing <code>PROGRAM_ENTRIES</code>) can be installed with the same <code>programs install</code> command. See <a href="/docs/capabilities/installing-harnesses.html">Installing and writing harnesses</a> for the contract, a minimal template, and the publishing flow.</p>
-<p>That harness contract is different from a single Workflow package in <code>~/.openprogram/workflows</code>. For the package form, a complete tested example and the <code>workflows check</code> command, see <a href="/docs/capabilities/workflows/authoring.html">Write and check a Workflow</a>. Workflows the chat agent writes go through the same check.</p>
+<p>That harness contract is different from a single Workflow package in <code>~/.openprogram/workflows</code>. For the package form, a complete tested example and the <code>workflows check</code> command, see <a href="/docs/capabilities/workflows/authoring.html">Write and check a Workflow</a>. Workflows the chat agent writes go through the same check. To show the agent a task instead of describing it, <a href="/docs/capabilities/workflows/recording.html">record a workflow</a>.</p>
 <p>Workflow forms ask for task information, not execution settings. Text polishing infers its style from the text in the same model request; it does not require a style selection. Browser backend and session handles remain internal. Document page ranges and output destinations are optional task requirements. Explicit Python callers retain supported overrides.</p>
 <h2 id="weekly-reports">Weekly reports<a class="header-anchor" href="#weekly-reports">#</a></h2>
 <p>If <code>weekly_report</code> is installed in your Workflow catalog, call it with the report text or the change you want. For example, ask it to submit this week's report, update only next week's plan, inspect the existing record, or prepare a local draft at a named path.</p>

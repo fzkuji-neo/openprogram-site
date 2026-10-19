@@ -70,6 +70,8 @@
   <url><loc>https://openprogram.io/docs/capabilities/workflows/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/authoring.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/authoring.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/workflows/recording.html</loc></url>
+  <url><loc>https://openprogram.io/docs/capabilities/workflows/recording.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/reports.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/reports.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/research-agent.html</loc></url>
@@ -607,6 +609,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/web-runtime-reliability.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/weekly-report.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/weekly-report.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow-recording.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow-recording.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/scheduler/memory-integration.html</loc></url>
