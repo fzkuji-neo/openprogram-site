@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/reference/cli/workflows.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792385903" data-alt-lang-url="/docs/reference/cli/workflows.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>workflows · OpenProgram Docs</title>
-<meta name="description" content="Author and validate reusable Workflow packages usage: openprogram workflows [-h] verb ... workflows validate # Statically validate a Workflow package without">
+<meta name="description" content="Check and list workflow packages usage: openprogram workflows [-h] verb ... workflows check # Validate a workflow, run its tests and commit it so it can be">
 <link rel="canonical" href="https://openprogram.io/docs/reference/cli/workflows.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/cli/workflows.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/cli/workflows.html">
 <meta property="og:title" content="workflows · OpenProgram Docs">
-<meta property="og:description" content="Author and validate reusable Workflow packages usage: openprogram workflows [-h] verb ... workflows validate # Statically validate a Workflow package without">
+<meta property="og:description" content="Check and list workflow packages usage: openprogram workflows [-h] verb ... workflows check # Validate a workflow, run its tests and commit it so it can be">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="workflows · OpenProgram Docs">
-<meta name="twitter:description" content="Author and validate reusable Workflow packages usage: openprogram workflows [-h] verb ... workflows validate # Statically validate a Workflow package without">
+<meta name="twitter:description" content="Check and list workflow packages usage: openprogram workflows [-h] verb ... workflows check # Validate a workflow, run its tests and commit it so it can be">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -131,11 +131,11 @@
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="参考">Reference</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="CLI 命令">CLI commands</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="工作流">workflows</span></nav><!-- GENERATED FILE — do not edit. Rebuilt by scripts/docs_site/generate_reference.py from apps/cli/python/openprogram_cli/_impl/parser.py. -->
 <h1 id="workflows">workflows<a class="header-anchor" href="#workflows">#</a></h1>
-<p>Author and validate reusable Workflow packages</p>
+<p>Check and list workflow packages</p>
 <pre><code class="language-text">usage: openprogram workflows [-h] verb ...
 </code></pre>
-<h2 id="workflows-validate"><code>workflows validate</code><a class="header-anchor" href="#workflows-validate">#</a></h2>
-<p>Statically validate a Workflow package without executing it</p>
+<h2 id="workflows-check"><code>workflows check</code><a class="header-anchor" href="#workflows-check">#</a></h2>
+<p>Validate a workflow, run its tests and commit it so it can be called</p>
 <table>
 <thead>
 <tr>
@@ -146,16 +146,20 @@
 <tbody>
 <tr>
 <td><code>directory</code></td>
-<td>Workflow project directory containing pyproject.toml</td>
+<td>Workflow package directory (contains <strong>init</strong>.py)</td>
+</tr>
+<tr>
+<td><code>-m</code>, <code>--message</code> <code>MESSAGE</code></td>
+<td>Commit message</td>
 </tr>
 <tr>
 <td><code>--json</code></td>
-<td>Emit a stable JSON report</td>
+<td>Emit a JSON report</td>
 </tr>
 </tbody>
 </table>
-<h2 id="workflows-test"><code>workflows test</code><a class="header-anchor" href="#workflows-test">#</a></h2>
-<p>Run Workflow behavior tests in a required OS sandbox</p>
+<h2 id="workflows-list"><code>workflows list</code><a class="header-anchor" href="#workflows-list">#</a></h2>
+<p>List user workflows and their load state</p>
 <table>
 <thead>
 <tr>
@@ -165,36 +169,8 @@
 </thead>
 <tbody>
 <tr>
-<td><code>directory</code></td>
-<td>Workflow package directory containing pyproject.toml</td>
-</tr>
-<tr>
 <td><code>--json</code></td>
-<td>Emit a JSON result</td>
-</tr>
-</tbody>
-</table>
-<h2 id="workflows-publish"><code>workflows publish</code><a class="header-anchor" href="#workflows-publish">#</a></h2>
-<p>Test and publish an immutable Workflow package revision</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>directory</code></td>
-<td>Workflow package directory containing pyproject.toml</td>
-</tr>
-<tr>
-<td><code>--json</code></td>
-<td>Emit a JSON result</td>
-</tr>
-<tr>
-<td><code>--replace</code></td>
-<td>Replace an existing clean Workflow package after tests pass</td>
+<td>Emit JSON</td>
 </tr>
 </tbody>
 </table>
@@ -202,13 +178,10 @@
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
-<a class="lvl-2" href="#workflows-validate">workflows validate</a>
+<a class="lvl-2" href="#workflows-check">workflows check</a>
 </li>
 <li>
-<a class="lvl-2" href="#workflows-test">workflows test</a>
-</li>
-<li>
-<a class="lvl-2" href="#workflows-publish">workflows publish</a>
+<a class="lvl-2" href="#workflows-list">workflows list</a>
 </li>
 </ul></aside>
 </div>

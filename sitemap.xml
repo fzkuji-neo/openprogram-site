@@ -70,8 +70,6 @@
   <url><loc>https://openprogram.io/docs/capabilities/workflows/README.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/authoring.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/authoring.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/capabilities/workflows/gui-agent.html</loc></url>
-  <url><loc>https://openprogram.io/docs/capabilities/workflows/gui-agent.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/reports.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/reports.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/capabilities/workflows/research-agent.html</loc></url>
@@ -528,6 +526,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/agentic-self-recursion.zh.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-job-lifecycle.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/command-sessions.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/command-sessions.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/control.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/control.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/execution/dispatcher-split.html</loc></url>
@@ -568,12 +568,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/report-suite.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/sandbox-architecture.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-authoring.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-authoring.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-model.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-model.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-ui.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-programming-workflow-ui.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/self-update.html</loc></url>
@@ -613,8 +607,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/runtime/web-runtime-reliability.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/weekly-report.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/runtime/weekly-report.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow-control-primitives.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow-control-primitives.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/runtime/workflow.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/scheduler/memory-integration.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/scheduler/memory-integration.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/security/dependency-security.html</loc></url>
@@ -681,8 +675,6 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/file-type-icons.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/git-folder-pills.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/git-folder-pills.zh.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent.html</loc></url>
-  <url><loc>https://openprogram.io/docs/reference/design/ui/gui-agent.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/hover-tips.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/hover-tips.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/icons.html</loc></url>
@@ -717,6 +709,8 @@
   <url><loc>https://openprogram.io/docs/reference/design/ui/remote-web-access.zh.viz.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/resource-panel-preview-plan.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/resource-panel-preview-plan.zh.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/resource-preview.html</loc></url>
+  <url><loc>https://openprogram.io/docs/reference/design/ui/resource-preview.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-files.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-files.zh.html</loc></url>
   <url><loc>https://openprogram.io/docs/reference/design/ui/right-sidebar-typography.html</loc></url>

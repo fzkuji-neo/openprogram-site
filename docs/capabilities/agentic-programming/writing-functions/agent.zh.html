@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/agent.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792385903" data-alt-lang-url="/docs/capabilities/agentic-programming/writing-functions/agent.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,7 +85,6 @@
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
-<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
@@ -180,10 +179,10 @@
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">final_text</span><span class="p">)</span>
 </code></pre>
-<p>后续轮次使用同一个 session ID。<code>Context.for_session</code> 选择存储，不创建模型客户端。可选的 <code>head_id</code> 指定分支前驱；<code>Context(history_filter=False)</code> 排除历史图内容，保留当前输入。具名内容和 provider 以用户内容参与请求，不改变系统指令或工具权限。</p>
+<p>后续轮次使用同一个 session ID。<code>Context.for_session</code> 选择存储，不创建模型客户端。可选的 <code>head_id</code> 指定分支前驱；<code>Context(history=None)</code> 排除历史图内容，保留当前输入。具名内容和 provider 以用户内容参与请求，不改变系统指令或工具权限。</p>
 <p><code>arun_turn()</code> 和 <code>aresume_turn()</code> 是异步入口。事件回调在执行线程运行，与 asyncio 消费者通信时使用线程安全的传递方式。取消等待任务会通知执行轮次，并等待协作式清理；同步调用可通过 <code>cancel_event</code> 传入 <code>threading.Event</code>。</p>
 <p><code>resume_turn(continuation)</code> 使用已有断点和冻结请求，不重复追加用户消息，也不重新应用实例中改变的设置。持久化暂停、执行中追加输入和恢复准入仍由现有执行驱动及控制服务负责，不创建第二套任务管理。普通函数不记录节点，嵌套 Agent 保持独立 DAG，工具超时不取消父聊天。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Python 函数">Python functions</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="函数元数据">Function metadata</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/pure-python.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/pure-python.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Python 函数">Python functions</span></a><a class="pn-link pn-next" href="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-en="/docs/capabilities/agentic-programming/writing-functions/function-metadata.html" data-href-zh="/docs/capabilities/agentic-programming/writing-functions/function-metadata.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="函数元数据">Function metadata</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

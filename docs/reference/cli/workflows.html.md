@@ -3,36 +3,26 @@
 
 # workflows
 
-Author and validate reusable Workflow packages
+Check and list workflow packages
 
 ```text
 usage: openprogram workflows [-h] verb ...
 ```
 
-## `workflows validate`
+## `workflows check`
 
-Statically validate a Workflow package without executing it
-
-| Option | Description |
-|---|---|
-| `directory` | Workflow project directory containing pyproject.toml |
-| `--json` | Emit a stable JSON report |
-
-## `workflows test`
-
-Run Workflow behavior tests in a required OS sandbox
+Validate a workflow, run its tests and commit it so it can be called
 
 | Option | Description |
 |---|---|
-| `directory` | Workflow package directory containing pyproject.toml |
-| `--json` | Emit a JSON result |
+| `directory` | Workflow package directory (contains __init__.py) |
+| `-m`, `--message` `MESSAGE` | Commit message |
+| `--json` | Emit a JSON report |
 
-## `workflows publish`
+## `workflows list`
 
-Test and publish an immutable Workflow package revision
+List user workflows and their load state
 
 | Option | Description |
 |---|---|
-| `directory` | Workflow package directory containing pyproject.toml |
-| `--json` | Emit a JSON result |
-| `--replace` | Replace an existing clean Workflow package after tests pass |
+| `--json` | Emit JSON |

@@ -17,7 +17,7 @@ macOS 与 Windows Desktop App 将 OpenProgram 显示为多 Pane 工作区。每�
 
 macOS 从 [GitHub Releases](https://github.com/fzkuji-neo/OpenProgram/releases) 下载对应架构的 DMG，把 `OpenProgram.app` 复制到 `/Applications`；当前 macOS 发行版使用 Developer ID 签名和 Apple 公证。Windows 只安装已发布 release 附带的带签名 `win-x64.exe` 或 `win-arm64.exe`；某个版本没有带签名 Windows EXE 时，使用该版本的 CLI/server 与浏览器 UI。完整步骤见[安装](../install/install.zh.md)。
 
-Terminal Pane 在 macOS 使用 login shell，在 Windows 通过 ConPTY 使用 Windows PowerShell。两个平台的封装 App 都从内置 managed Python 启动 worker，不依赖系统 Python 或 Node.js。启动时连不上 worker，App 会把它拉起来并显示 **Waiting for backend to start...**，每秒探测一次直到它应答。安装程序（更新或本地刷新）正在替换 App 和 runtime 期间，页面改为显示 **Updating OpenProgram...**；这时 App 不拉起 worker，安装结束后自动重连。
+Terminal Pane 在 macOS 使用 login shell，在 Windows 通过 ConPTY 使用 Windows PowerShell。在任何终端视图里（终端或 Claude Code 标签页、Resources 里 agent 的终端和后台终端、终端预览）右键可以 **复制**、**粘贴**（只在能输入的视图里）和 **把选中内容加入对话**，最后一项会把选中的输出以代码块形式加入当前对话的草稿。两个平台的封装 App 都从内置 managed Python 启动 worker，不依赖系统 Python 或 Node.js。启动时连不上 worker，App 会把它拉起来并显示 **Waiting for backend to start...**，每秒探测一次直到它应答。安装程序（更新或本地刷新）正在替换 App 和 runtime 期间，页面改为显示 **Updating OpenProgram...**；这时 App 不拉起 worker，安装结束后自动重连。
 
 在 Linux 从源码运行 Desktop 时，终端优先使用已安装且为绝对路径的 `SHELL`，否则依次回退到 `/bin/bash`、`/bin/sh`，不要求安装 zsh。若没有可用 shell，终端会在启动进程前明确提示缺失项。
 
@@ -104,7 +104,7 @@ Chrome Web Store 与 Edge Add-ons 页面可以作为普通网页打开，但 Ope
 
 有会话归属的 Agent 网页默认不占顶部标签，固定或显式分屏时保留在顶部；没有归属记录的旧网页保留在顶部。点击网页可打开原有视图；网页支持固定和关闭。折叠面板或分组不会停止资源。选择资源后，资源面板继续显示在视图右侧。关闭网页后，活动列表立即移除该项，并处理关闭请求；如果未确认关闭，该项会重新显示。
 
-Docker 与 SSH 命令保留在代码执行／Activity 流程中，执行命令不等于创建软件资源。GUI Harness 记录配置的桌面或 VM 关联；其他集成必须登记实际软件或环境对象及其身份，不能用命令、镜像名或进程代替。点击环境资源可查看目标和状态。
+Docker 与 SSH 命令保留在代码执行／Activity 流程中，执行命令不等于创建软件资源。唯一的例外是 Agent 留在后台运行的命令，它显示为“后台终端”（见“共享 Terminal 环境”）。GUI Harness 记录配置的桌面或 VM 关联；其他集成必须登记实际软件或环境对象及其身份，不能用命令、镜像名或进程代替。点击环境资源可查看目标和状态。
 
 其他集成可以在可信运行时会话内使用 `openprogram.session_resources.resource_use(kind, title, target)` 上报完整的软件或环境对象。上下文自动记录真实会话，退出后释放使用记录。系统不会从任意 shell 命令文本推断资源；资源 URL 会去掉凭据、查询参数与片段。
 
@@ -115,11 +115,17 @@ worker 重启后，可恢复的运行中会话会使用正常执行时已经记�
 
 会话显示正常消息和工具结果，包括你要求执行的软件更新结果。聊天中不另设软件更新历史、更新操作按钮或更新恢复提示，打开会话也不会启动软件更新历史轮询。
 
+## 退出后重新打开窗口
+
+从主窗口拖出来的窗口，下次启动 App 时会回到上次在屏幕上的位置，标签页也都还在。退出前已经关掉的窗口不会再打开。上次的位置不在任何显示器上时，窗口在默认位置打开。
+
 ## 通知与防休眠
 
 OpenProgram 在后台时，会话的一轮执行完成、出错停止、向你提问或请求批准、或等待系统权限，桌面 App 会发系统通知。任何一个 OpenProgram 窗口在前台时不发通知。同一事件只通知一次，打开多个窗口也一样。你自己停止的执行不通知。点击通知会把对应窗口调到前台并打开该会话。
 
 有会话在运行时，App 会阻止电脑空闲休眠，屏幕仍可以关闭。没有会话运行后即解除。
+
+**通知声音** 选择提示音：系统默认、无，或 macOS 上的某个系统声音（选中时会播放一次）。
 
 在**设置 → 通用 → 通知**中可以分别关闭这两项。设置只对这台电脑生效，重启后保留。浏览器访问 http://localhost:18100 时不发通知，也不阻止休眠。
 
@@ -161,6 +167,10 @@ App 或 worker 重启时正在操作网页的 Agent 会继续使用浏览器工�
 ### 共享 Terminal 环境
 
 持久 Terminal 环境关联到会话后，与网页一起显示在 Resources 列表中。点击终端可在会话旁打开交互视图；用户和 Agent 操作的是同一个 shell，工作目录、环境变量与输出保持一致。隐藏视图和切换会话不会终止进程。“终止终端”需要确认；请求已接收不代表进程已经退出。“共享终端”允许本机其他会话发现它；改为私有会撤销当前 Agent 绑定。
+
+往终端标签页输入、中断或关闭，按权限模式处理，不管标签页是你开的还是 Agent 开的。需要批准时，卡片写明是哪个标签页、它当前的目录、里面有没有命令在运行，并原样显示要输入的内容。
+
+Agent 用 `bash` 留在后台运行的命令，在同一个 Terminal 分组里显示为“后台终端”。点开后只读显示输出，并提供“停止”；Agent 通过 `write_stdin` 往里输入，不经过这个视图。
 
 输入已送达不代表命令成功。输入结果不确定时不会自动重发。“重新连接视图”仅重新读取输出。用户尚未提交的输入片段或输入版本变化会阻止 Agent 继续冲突操作，Agent 必须重新观察。
 

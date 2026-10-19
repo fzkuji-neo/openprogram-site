@@ -43,6 +43,13 @@ Every user-editable setting, from the single schema that the `setup` CLI, `openp
 | `voice.language` | `auto` | `live` | `auto` lets the engine detect the language of each phrase. |
 | `voice.model` | `` | `live` | Empty uses the engine's default: gpt-4o-mini-transcribe (OpenAI), whisper-large-v3-turbo (Groq), large-v3-turbo-q5_0 (local). Applies only when an engine is chosen. |
 
+## Computer use
+
+| Key | Default | Apply | Description |
+|---|---|---|---|
+| `computer_use.vm_url` | `` | `live` | Base URL of an OSWorld-compatible server (GET /screenshot, POST /execute), e.g. http://192.168.64.2:5000. Set it to give computer_use_agent its vm target; empty turns it off. |
+| `computer_use.chrome_extension_token` | *(secret)* | `live` | The token shown by the Playwright Extension in your Chrome or Edge. With it, computer_use_agent's browser target connects to your own browser without asking which tab to share; empty asks each time. |
+
 ## Search
 
 | Key | Default | Apply | Description |

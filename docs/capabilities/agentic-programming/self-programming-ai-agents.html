@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792385903" data-alt-lang-url="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Self-programming agents · OpenProgram Docs</title>
-<meta name="description" content="Self-Programming AI Agents # A self-programming AI agent can create or revise executable workflows while it works. In OpenProgram, those workflows use the">
+<meta name="description" content="Self-Programming AI Agents # A self-programming AI agent can create or revise executable workflows while it works. In OpenProgram, the agent writes a Workflow">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-programming/self-programming-ai-agents.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/capabilities/agentic-programming/self-programming-ai-agents.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-programming/self-programming-ai-agents.html">
 <meta property="og:title" content="Self-programming agents · OpenProgram Docs">
-<meta property="og:description" content="Self-Programming AI Agents # A self-programming AI agent can create or revise executable workflows while it works. In OpenProgram, those workflows use the">
+<meta property="og:description" content="Self-Programming AI Agents # A self-programming AI agent can create or revise executable workflows while it works. In OpenProgram, the agent writes a Workflow">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Self-programming agents · OpenProgram Docs">
-<meta name="twitter:description" content="Self-Programming AI Agents # A self-programming AI agent can create or revise executable workflows while it works. In OpenProgram, those workflows use the">
+<meta name="twitter:description" content="Self-Programming AI Agents # A self-programming AI agent can create or revise executable workflows while it works. In OpenProgram, the agent writes a Workflow">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -85,7 +85,6 @@
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
-<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
@@ -111,57 +110,56 @@
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="指南">Guide</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程智能体">Self-programming agents</span></nav><h1 id="self-programming-ai-agents">Self-Programming AI Agents<a class="header-anchor" href="#self-programming-ai-agents">#</a></h1>
 <p>A self-programming AI agent can create or revise executable workflows while it
-works. In OpenProgram, those workflows use the Agent method execution:
-the agent edits a source file with normal tools, the runtime validates and loads the
-function, and later turns can call it from the same registry as existing tools.</p>
+works. In OpenProgram, the agent writes a Workflow package in
+<code>~/.openprogram/workflows/&lt;name&gt;/</code> with its normal file tools, runs
+<code>openprogram workflows check</code> to test and commit it, and later turns call its
+entries from the same registry as existing tools.</p>
 <p>This is narrower than unrestricted self-modification. OpenProgram does not let a
-model silently replace the runtime or bypass validation. The editable unit is a
-reviewable function with a declared interface, explicit tool access, recorded
-execution, and normal source control.</p>
+model silently replace the runtime or bypass the check. The editable unit is a
+reviewable package with declared entries, explicit tool access per role,
+recorded execution, and its own Git history.</p>
 <h2 id="what-the-agent-programs">What the agent programs<a class="header-anchor" href="#what-the-agent-programs">#</a></h2>
-<p>An agentic function combines deterministic control flow with model decisions:</p>
-<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+<p>A Workflow combines deterministic control flow with model decisions:</p>
+<pre><code class="language-python"><span class="kn">from</span><span class="w"> </span><span class="nn">openprogram</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">Context</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">Agent</span><span class="p">):</span>
-    <span class="n">tools</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">method_options</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">'review_then_revise'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'tool'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-    <span class="p">}</span>
+<span class="n">reviewer</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">instructions</span><span class="o">=</span><span class="s2">"You find concrete defects."</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="p">[])</span>
+<span class="n">editor</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">instructions</span><span class="o">=</span><span class="s2">"You revise drafts."</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="p">[])</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">review_then_revise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">draft</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""Review a draft, then revise it against the review."""</span>
-        <span class="n">review</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Identify concrete defects in this draft:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Revise the draft using this review:</span><span class="se">\n\n</span><span class="si">{</span><span class="n">review</span><span class="si">}</span><span class="se">\n\n</span><span class="si">{</span><span class="n">draft</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="n">_example_agent</span> <span class="o">=</span> <span class="n">ExampleAgent</span><span class="p">()</span>
-<span class="n">review_then_revise</span> <span class="o">=</span> <span class="n">_example_agent</span><span class="o">.</span><span class="n">review_then_revise</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">review_then_revise</span><span class="p">(</span><span class="n">draft</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Review a draft, then revise it against the review."""</span>
+    <span class="n">ctx</span> <span class="o">=</span> <span class="n">Context</span><span class="p">({</span><span class="s2">"draft"</span><span class="p">:</span> <span class="n">draft</span><span class="p">})</span>
+    <span class="n">review</span> <span class="o">=</span> <span class="n">reviewer</span><span class="p">(</span><span class="s2">"Identify concrete defects in this draft"</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">editor</span><span class="p">(</span><span class="s2">"Revise the draft using the review"</span><span class="p">,</span>
+                  <span class="n">context</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">derive</span><span class="p">({</span><span class="s2">"review"</span><span class="p">:</span> <span class="n">review</span><span class="p">}))</span>
+
+
+<span class="n">PROGRAM_ENTRIES</span> <span class="o">=</span> <span class="p">[</span><span class="n">review_then_revise</span><span class="p">]</span>
 </code></pre>
-<p>The Python body fixes the required order. The model handles the two semantic
-steps. Each call remains visible in OpenProgram's execution context.</p>
+<p>The Python body fixes the required order. The two roles handle the semantic
+steps, and each sees only the blocks its Context holds. Each role call is
+recorded in the session graph.</p>
 <h2 id="how-an-agent-creates-one">How an agent creates one<a class="header-anchor" href="#how-an-agent-creates-one">#</a></h2>
 <p>Install and start OpenProgram:</p>
 <pre><code class="language-bash">curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openprogram.io/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 openprogram
 </code></pre>
 <p>Then ask the agent for a bounded workflow, for example:</p>
-<pre><code class="language-text">Create an agentic function named review_then_revise. It must review a draft,
-revise it against the review, expose only its final output, and include a smoke
-test. Show me the diff before committing it.
+<pre><code class="language-text">Create a Workflow named review_then_revise. It must review a draft, revise it
+against the review, return only the final text, and include a behavior test.
 </code></pre>
-<p>The bundled
-<a href="/docs/reference/api/agent.html">Agentic function API</a>
-defines the file layout, decorator contract, validation steps, and smoke tests.
-A watcher can load an approved function without restarting the worker.</p>
+<p><a href="/docs/capabilities/workflows/authoring.html">Write and check a Workflow</a> defines the package
+layout, the rules for roles and Context, the test helper and the check. The
+worker loads a checked Workflow without restarting.</p>
 <h2 id="runtime-controls-that-still-apply">Runtime controls that still apply<a class="header-anchor" href="#runtime-controls-that-still-apply">#</a></h2>
 <ul>
-<li>Tool access comes from the function's explicit runtime call and configured
-approval policy.</li>
-<li>Function calls, model calls, and their context relationships are recorded in
-the session DAG.</li>
+<li>Tool access comes from each role's <code>tools</code> and the configured approval policy.</li>
+<li>Each role call and the exact request it sent are recorded in the session
+graph.</li>
 <li>Resource limits, cancellation, structured output validation, and provider
 accounting remain runtime responsibilities.</li>
-<li>Source changes remain ordinary files: they can be inspected, tested,
-reverted, and reviewed before publication.</li>
+<li>Source changes remain ordinary files: they can be inspected, tested and
+reverted, and only a checked, committed version loads.</li>
 </ul>
 <h2 id="when-to-use-it">When to use it<a class="header-anchor" href="#when-to-use-it">#</a></h2>
 <p>Use self-programming when a repeated task needs a reusable, inspectable process
@@ -172,7 +170,7 @@ already has a stable implementation.</p>
 the <a href="/docs/reference/api/agent.html"><code>Agent</code> method reference</a>, and the
 <a href="/docs/capabilities/agentic-programming/philosophy.html">design rationale</a> for the full
 execution contract.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/permissions.html" data-href-en="/docs/capabilities/permissions.html" data-href-zh="/docs/capabilities/permissions.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工具权限">Tool permissions</span></a><a class="pn-link pn-next" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/permissions.html" data-href-en="/docs/capabilities/permissions.html" data-href-zh="/docs/capabilities/permissions.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工具权限">Tool permissions</span></a><a class="pn-link pn-next" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

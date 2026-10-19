@@ -3,36 +3,26 @@
 
 # 工作流
 
-编写和验证可复用的 Workflow 包
+检查并列出 Workflow 包
 
 ```text
 usage: openprogram workflows [-h] verb ...
 ```
 
-## `workflows validate`
+## `workflows check`
 
-静态验证 Workflow 包，不执行代码
-
-| 参数 | 说明 |
-|---|---|
-| `directory` | 包含 pyproject.toml 的 Workflow 项目目录 |
-| `--json` | 输出稳定格式的 JSON 报告 |
-
-## `workflows test`
-
-在强制启用的操作系统沙箱内运行 Workflow 行为测试
+校验 Workflow、运行其测试并提交，使其可以调用
 
 | 参数 | 说明 |
 |---|---|
-| `directory` | 包含 pyproject.toml 的 Workflow 包目录 |
-| `--json` | 输出 JSON 结果 |
+| `directory` | Workflow 包目录（包含 __init__.py） |
+| `-m`, `--message` `MESSAGE` | 提交信息 |
+| `--json` | 输出 JSON 报告 |
 
-## `workflows publish`
+## `workflows list`
 
-测试并发布不可变的 Workflow 包修订版本
+列出用户 Workflow 及其加载状态
 
 | 参数 | 说明 |
 |---|---|
-| `directory` | 包含 pyproject.toml 的 Workflow 包目录 |
-| `--json` | 输出 JSON 结果 |
-| `--replace` | 测试通过后替换已有且无未提交改动的 Workflow 包 |
+| `--json` | 输出 JSON |

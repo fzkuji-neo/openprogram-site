@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/reference/config-keys.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792385903" data-alt-lang-url="/docs/reference/config-keys.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -272,6 +272,31 @@
 <td>``</td>
 <td><code>live</code></td>
 <td>Empty uses the engine's default: gpt-4o-mini-transcribe (OpenAI), whisper-large-v3-turbo (Groq), large-v3-turbo-q5_0 (local). Applies only when an engine is chosen.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="computer-use">Computer use<a class="header-anchor" href="#computer-use">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Apply</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>computer_use.vm_url</code></td>
+<td>``</td>
+<td><code>live</code></td>
+<td>Base URL of an OSWorld-compatible server (GET /screenshot, POST /execute), e.g. http://192.168.64.2:5000. Set it to give computer_use_agent its vm target; empty turns it off.</td>
+</tr>
+<tr>
+<td><code>computer_use.chrome_extension_token</code></td>
+<td><em>(secret)</em></td>
+<td><code>live</code></td>
+<td>The token shown by the Playwright Extension in your Chrome or Edge. With it, computer_use_agent's browser target connects to your own browser without asking which tab to share; empty asks each time.</td>
 </tr>
 </tbody>
 </table>
@@ -680,6 +705,9 @@
 </li>
 <li>
 <a class="lvl-2" href="#voice">Voice</a>
+</li>
+<li>
+<a class="lvl-2" href="#computer-use">Computer use</a>
 </li>
 <li>
 <a class="lvl-2" href="#search">Search</a>

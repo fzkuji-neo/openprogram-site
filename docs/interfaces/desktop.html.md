@@ -17,7 +17,7 @@ The Back and Forward buttons also include the initial New tab page. After openin
 
 On macOS, install the architecture-matched DMG and copy `OpenProgram.app` to `/Applications`; current macOS releases are Developer ID signed and Apple notarized. On Windows, install only the signed `win-x64.exe` or `win-arm64.exe` attached to a published [GitHub Release](https://github.com/fzkuji-neo/OpenProgram/releases). If a release has no signed Windows EXE, use the CLI/server and browser UI for that version. The complete steps are in [Installation](../install/install.md).
 
-Terminal panes use the login shell on macOS and Windows PowerShell through ConPTY on Windows. Packaged apps on both platforms start the worker from their embedded managed Python and do not depend on a system Python or Node.js. When the worker is not reachable at startup, the App starts it and shows **Waiting for backend to start...** until it answers, checking every second. While an installer is replacing the App and its runtime (an update, or a local refresh) the page shows **Updating OpenProgram...** instead; the App starts no worker then and reconnects on its own once the installer is done.
+Terminal panes use the login shell on macOS and Windows PowerShell through ConPTY on Windows. Right-click any terminal view (a Terminal or Claude Code tab, an agent terminal or background terminal in Resources, or the terminal preview) for **Copy**, **Paste** (in views that take input) and **Add selection to chat**, which adds the selected output to the focused conversation's draft as a code block. Packaged apps on both platforms start the worker from their embedded managed Python and do not depend on a system Python or Node.js. When the worker is not reachable at startup, the App starts it and shows **Waiting for backend to start...** until it answers, checking every second. While an installer is replacing the App and its runtime (an update, or a local refresh) the page shows **Updating OpenProgram...** instead; the App starts no worker then and reconnects on its own once the installer is done.
 
 When running Desktop from source on Linux, terminal panes use an installed absolute `SHELL` path, then fall back to `/bin/bash` or `/bin/sh`. They do not require zsh. If no shell is available, the terminal reports the missing prerequisite before starting a process.
 
@@ -104,7 +104,7 @@ Click **Resources** in the right sidebar to open **Session resources**. Use the 
 
 Agent-created webpages with recorded session ownership stay out of the top strip unless pinned or in a split. Legacy pages without an owner remain in the top strip. Select a webpage to open its existing view. Webpages can be pinned or closed; collapsing the panel or a group leaves resources running. Selecting a resource keeps the panel open beside its view. Closing a webpage removes its active row immediately while the close request is processed. If closure is not confirmed, the row becomes available again.
 
-Docker and SSH commands stay in the execution/Activity flow; running a command does not create a software resource. GUI Harness reports its configured desktop or VM attachment. Other integrations must register the actual software/environment object and its identity, rather than a command, image name or process. Select an environment resource to inspect its target and status.
+Docker and SSH commands stay in the execution/Activity flow; running a command does not create a software resource. The one exception is a command the Agent left running in the background, which is listed as a Background terminal (see Shared Terminal environments). GUI Harness reports its configured desktop or VM attachment. Other integrations must register the actual software/environment object and its identity, rather than a command, image name or process. Select an environment resource to inspect its target and status.
 
 Integrations can report complete software/environment objects through `openprogram.session_resources.resource_use(kind, title, target)` inside a trusted runtime session. The context records the actual session automatically and releases the usage on exit. OpenProgram does not infer resources from arbitrary shell command text. URL resource identities omit credentials, query parameters, and fragments.
 
@@ -115,11 +115,17 @@ Recoverable running conversations continue automatically in the same conversatio
 
 Conversations show normal messages and tool results, including results of an update you requested. They do not contain a separate software-update history, update controls, or update recovery notices. Opening a conversation does not start software-update history polling.
 
+## Windows reopen after quitting
+
+Windows you tore off the main window come back when the App starts again, at their last place on screen and with their tabs. A window you closed before quitting stays closed. A window whose last place is off every display opens at its default place.
+
 ## Notifications and keep-awake
 
 When OpenProgram is in the background, the desktop App sends a system notification when a session's turn finishes, stops with an error, asks you a question or for approval, or waits for system access. No notification appears while any OpenProgram window is in front. Each event notifies once, even with several windows open. Stopping a turn yourself does not notify. Click a notification to bring its window forward and open that session.
 
 While any session is running, the App keeps the computer from idle-sleeping. The display can still turn off. The hold ends when no session is running.
+
+**Notification sound** picks the sound: the system default, none, or on macOS one of the system sounds, which plays once when chosen.
 
 Turn either behavior off in **Settings → General → Notifications**. The choices apply to this computer and persist across restarts. The browser interface at http://localhost:18100 sends no notifications and does not keep the computer awake.
 
@@ -158,6 +164,10 @@ Self-update continuation, replanning after a changed runtime contract, and origi
 ### Shared Terminal environments
 
 Select a Terminal resource to attach its interactive view beside the conversation. The Agent and the user share the same shell, working directory, environment and output. Hiding the view or switching sessions does not terminate the shell. **Terminate terminal** explicitly requests process termination and requires confirmation; an acknowledged request is not evidence that the process has exited. **Share terminal** makes it discoverable to other sessions on that Desktop host; making it private revokes the current Agent binding.
+
+Typing into, interrupting or closing a terminal tab follows the permission mode, whether you opened the tab or the Agent did. When approval is asked, the card names the tab, its current directory and whether a command is running in it, and shows exactly what would be typed.
+
+Commands the Agent left running with `bash` are listed in the same Terminal group as **Background terminal**. Selecting one shows its output read-only, with **Stop**; the Agent types into it with `write_stdin`, not through this view.
 
 Terminal input delivery does not indicate command success. After an uncertain input result, OpenProgram does not resend it. **Reconnect view** reads the current output again without replaying input. An unfinished human input fragment or changed input revision prevents conflicting Agent input until the Agent observes the terminal again.
 

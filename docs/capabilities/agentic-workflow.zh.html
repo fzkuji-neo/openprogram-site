@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792385903" data-alt-lang-url="/docs/capabilities/agentic-workflow.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>自编程工作流 · OpenProgram Docs</title>
-<meta name="description" content="自编程 Workflow # OpenProgram 可以创建、版本化、搜索和执行可复用的 Python Workflow package。任务需要稳定的多阶段结构、显式恢复、重复使用或可审查版本历史时，适合创建 Workflow；一个 Agent 可以直接完成的一次性任务不需要新建 Workflow。 当前四个入口">
+<meta name="description" content="自编程 Workflow # OpenProgram 的聊天 Agent 可以为你编写可复用的 Workflow。当任务需要稳定的多阶段结构、会被反复使用或需要可审阅的版本历史时，才值得写成 Workflow。Agent 能直接完成的一次性任务不需要。 Agent 如何编写 # 没有专门的编写工具。Agent">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/agentic-workflow.zh.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/capabilities/agentic-workflow.zh.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/agentic-workflow.zh.html">
 <meta property="og:title" content="自编程工作流 · OpenProgram Docs">
-<meta property="og:description" content="自编程 Workflow # OpenProgram 可以创建、版本化、搜索和执行可复用的 Python Workflow package。任务需要稳定的多阶段结构、显式恢复、重复使用或可审查版本历史时，适合创建 Workflow；一个 Agent 可以直接完成的一次性任务不需要新建 Workflow。 当前四个入口">
+<meta property="og:description" content="自编程 Workflow # OpenProgram 的聊天 Agent 可以为你编写可复用的 Workflow。当任务需要稳定的多阶段结构、会被反复使用或需要可审阅的版本历史时，才值得写成 Workflow。Agent 能直接完成的一次性任务不需要。 Agent 如何编写 # 没有专门的编写工具。Agent">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="自编程工作流 · OpenProgram Docs">
-<meta name="twitter:description" content="自编程 Workflow # OpenProgram 可以创建、版本化、搜索和执行可复用的 Python Workflow package。任务需要稳定的多阶段结构、显式恢复、重复使用或可审查版本历史时，适合创建 Workflow；一个 Agent 可以直接完成的一次性任务不需要新建 Workflow。 当前四个入口">
+<meta name="twitter:description" content="自编程 Workflow # OpenProgram 的聊天 Agent 可以为你编写可复用的 Workflow。当任务需要稳定的多阶段结构、会被反复使用或需要可审阅的版本历史时，才值得写成 Workflow。Agent 能直接完成的一次性任务不需要。 Agent 如何编写 # 没有专门的编写工具。Agent">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -85,7 +85,6 @@
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
-<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
@@ -110,58 +109,33 @@
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="指南">Guide</div><a class="navlink" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-title-zh="自编程智能体" data-href-en="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-zh="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html">Self-programming agents</a></div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agentic 工作流">Agentic workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="自编程工作流">Workflow automation</span></nav><h1 id="自编程-workflow">自编程 Workflow<a class="header-anchor" href="#自编程-workflow">#</a></h1>
-<p>OpenProgram 可以创建、版本化、搜索和执行可复用的 Python Workflow package。任务需要稳定的多阶段结构、显式恢复、重复使用或可审查版本历史时，适合创建 Workflow；一个 Agent 可以直接完成的一次性任务不需要新建 Workflow。</p>
-<h2 id="当前四个入口">当前四个入口<a class="header-anchor" href="#当前四个入口">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>入口</th>
-<th>职责</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>search_workflows(task)</code></td>
-<td>只读搜索本地 catalog；不调用模型、不写文件、不执行候选。</td>
-</tr>
-<tr>
-<td><code>create_workflow(task)</code></td>
-<td>编写并静态校验一个新 package，然后发布首个 Git revision；不执行用户任务。</td>
-</tr>
-<tr>
-<td><code>revise_workflow(workflow_id, request)</code></td>
-<td>为指定 package 编写并静态校验新 revision；旧 revision 保持可用。</td>
-</tr>
-<tr>
-<td><code>auto_workflow(task)</code></td>
-<td>仅用户手动使用：搜索、选择复用或有依据的创建，然后执行固定 revision。</td>
-</tr>
-</tbody>
-</table>
-<p>Chat Agent 可以直接调用搜索、创建、修订或具体 Workflow，但不能调用 <code>auto_workflow</code>；完整自动编排入口只在 Programs UI 提供给用户。</p>
-<h2 id="已发布-package-与一次运行不是一回事">已发布 package 与一次运行不是一回事<a class="header-anchor" href="#已发布-package-与一次运行不是一回事">#</a></h2>
-<p>已发布 Workflow 是带独立 Git 历史的多文件 Python package。每次执行会把一个不可变 revision 复制到会话仓库，并创建独立 <code>run_id</code>，记录 <code>state.json</code>、checkpoint、结果和 <code>project_ref.json</code>。</p>
-<p>运行已发布 package 不会修改或重新发布它。执行失败时，run 进入 <code>failed</code>，保留原错误和 checkpoint；修改 package 必须显式调用 <code>revise_workflow</code>。</p>
-<p>用户明确取消时，run 会把 <code>cancelled</code> 保存为终态。再次恢复该 <code>run_id</code> 只返回已保存的取消结果，不会重新执行。进程级 <code>KeyboardInterrupt</code> 则保存为 <code>interrupted</code>；后续调用可以复用该 run 保存的 artifact 和 checkpoint。这里的状态是 Workflow run 投影，不是 canonical Execution record。为恢复尝试分配新的 canonical <code>execution_id</code> 仍属于尚未完成的统一 Execution 接入。</p>
-<p>历史 <code>code.py</code> run 仍可兼容恢复，但 legacy 单模块格式不再接受新 authoring，也不会出现在 Workflow 搜索结果中。</p>
-<h2 id="自己编写-package">自己编写 package<a class="header-anchor" href="#自己编写-package">#</a></h2>
-<p>当前 authoring 合同见<a href="/docs/capabilities/workflows/authoring.zh.html">编写 Workflow package</a>，其中列出必需文件、metadata、入口签名、允许的 import、校验命令和当前接入限制。</p>
-<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./my_workflow
-openprogram<span class="w"> </span>workflows<span class="w"> </span>validate<span class="w"> </span>./my_workflow<span class="w"> </span>--json
+<p>OpenProgram 的聊天 Agent 可以为你编写可复用的 Workflow。当任务需要稳定的多阶段结构、会被反复使用或需要可审阅的版本历史时，才值得写成 Workflow。Agent 能直接完成的一次性任务不需要。</p>
+<h2 id="agent-如何编写">Agent 如何编写<a class="header-anchor" href="#agent-如何编写">#</a></h2>
+<p>没有专门的编写工具。Agent 使用普通的文件工具和命令行：</p>
+<ol>
+<li>把 <code>~/.openprogram/workflows/&lt;name&gt;/</code> 建成 Git 仓库并写好包：角色、函数、<code>PROGRAM_ENTRIES</code>、<code>README.md</code> 和行为测试。</li>
+<li>运行 <code>openprogram workflows check ~/.openprogram/workflows/&lt;name&gt;</code>。检查会导入包、在操作系统沙箱中运行测试，通过后提交。</li>
+<li>失败时读报告、修改包，然后再次检查。</li>
+</ol>
+<p>运行中的 worker 会在几秒内加载已提交的 Workflow，它的入口随即作为工具出现在所有聊天和 Programs 页面中，无需重启。修改 Workflow 也一样：改文件，再检查。早期版本保留在 Workflow 的 Git 历史中。</p>
+<h2 id="查找和运行-workflow">查找和运行 Workflow<a class="header-anchor" href="#查找和运行-workflow">#</a></h2>
+<pre><code class="language-bash">openprogram<span class="w"> </span>workflows<span class="w"> </span>list
 </code></pre>
-<p>静态校验不会 import package，也不会执行 <code>tests/test_workflow.py</code>。强制 sandbox 的行为测试门和人工 publish 命令目前还不是公开能力；CLI 会明确报告这一边界。</p>
-<p>如果扩展是一个暴露多组 agentic function 的可安装仓库，而不是单个生成式 Workflow package，请使用另一套 <a href="/docs/capabilities/installing-harnesses.zh.html">Harness 安装合同</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/goal.html" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="目标">Goals</span></a><a class="pn-link pn-next" href="/docs/capabilities/docs-question.html" data-href-en="/docs/capabilities/docs-question.html" data-href-zh="/docs/capabilities/docs-question.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="框架问答">Framework questions</span></a></div></article></main>
+<p>列出每个 Workflow 及其状态：已加载、加载失败或暂不可调用（例如有未提交改动）。在聊天中，每个入口都是 Agent 可以像其他工具一样调用的工具。Programs 页面显示同样的 Workflow，并为每个入口打开参数表单。</p>
+<h2 id="自己编写">自己编写<a class="header-anchor" href="#自己编写">#</a></h2>
+<p>包结构、角色与 Context 规则、测试工具和检查命令见<a href="/docs/capabilities/workflows/authoring.zh.html">编写和检查 Workflow</a>。</p>
+<p>对于公开一组 agentic function、而不是单个 Workflow 包的可安装仓库，使用独立的<a href="/docs/capabilities/installing-harnesses.zh.html">harness 安装合同</a>。</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/goal.html" data-href-en="/docs/capabilities/goal.html" data-href-zh="/docs/capabilities/goal.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="目标">Goals</span></a><a class="pn-link pn-next" href="/docs/capabilities/docs-question.html" data-href-en="/docs/capabilities/docs-question.html" data-href-zh="/docs/capabilities/docs-question.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="框架问答">Framework questions</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
-<a class="lvl-2" href="#当前四个入口">当前四个入口</a>
+<a class="lvl-2" href="#agent-如何编写">Agent 如何编写</a>
 </li>
 <li>
-<a class="lvl-2" href="#已发布-package-与一次运行不是一回事">已发布 package 与一次运行不是一回事</a>
+<a class="lvl-2" href="#查找和运行-workflow">查找和运行 Workflow</a>
 </li>
 <li>
-<a class="lvl-2" href="#自己编写-package">自己编写 package</a>
+<a class="lvl-2" href="#自己编写">自己编写</a>
 </li>
 </ul></aside>
 </div>

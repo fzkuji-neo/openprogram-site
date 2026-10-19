@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/reference/design/runtime/self-programmed-agentic-workflow.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792385903" data-alt-lang-url="/docs/reference/design/runtime/execution/command-sessions.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Workflow overview · OpenProgram Docs</title>
-
-<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html">
-
+<title>Command sessions · OpenProgram Docs</title>
+<meta name="description" content="How the agent runs shell commands: bash and write_stdin , and how they relate to terminal_use . The model follows Codex&#x27;s unified exec ( exec_command /">
+<link rel="canonical" href="https://openprogram.io/docs/reference/design/runtime/execution/command-sessions.html">
+<link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/design/runtime/execution/command-sessions.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
-<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html">
-<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.zh.html">
-<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Workflow overview"}]}</script>
+<link rel="alternate" hreflang="en" href="https://openprogram.io/docs/reference/design/runtime/execution/command-sessions.html">
+<link rel="alternate" hreflang="zh-Hans" href="https://openprogram.io/docs/reference/design/runtime/execution/command-sessions.zh.html">
+<link rel="alternate" hreflang="x-default" href="https://openprogram.io/docs/reference/design/runtime/execution/command-sessions.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"OpenProgram Docs","item":"https://openprogram.io/docs/"},{"@type":"ListItem","position":2,"name":"Command sessions"}]}</script>
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="OpenProgram">
-<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/self-programmed-agentic-workflow.html">
-<meta property="og:title" content="Workflow overview · OpenProgram Docs">
-<meta property="og:description" content="">
+<meta property="og:url" content="https://openprogram.io/docs/reference/design/runtime/execution/command-sessions.html">
+<meta property="og:title" content="Command sessions · OpenProgram Docs">
+<meta property="og:description" content="How the agent runs shell commands: bash and write_stdin , and how they relate to terminal_use . The model follows Codex&#x27;s unified exec ( exec_command /">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -25,8 +25,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Workflow overview · OpenProgram Docs">
-<meta name="twitter:description" content="">
+<meta name="twitter:title" content="Command sessions · OpenProgram Docs">
+<meta name="twitter:description" content="How the agent runs shell commands: bash and write_stdin , and how they relate to terminal_use . The model follows Codex&#x27;s unified exec ( exec_command /">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -66,7 +66,7 @@
 <nav class="tabbar"><a class="tablink" href="/docs/README.html" data-title-zh="开始使用" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html">Get started</a><a class="tablink" href="/docs/install/install.html" data-title-zh="安装" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html">Install</a><a class="tablink" href="/docs/capabilities/README.html" data-title-zh="能力" data-href-en="/docs/capabilities/README.html" data-href-zh="/docs/capabilities/README.zh.html">Capabilities</a><a class="tablink" href="/docs/interfaces/README.html" data-title-zh="界面" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html">Interfaces</a><a class="tablink" href="/docs/models/README.html" data-title-zh="模型" data-href-en="/docs/models/README.html" data-href-zh="/docs/models/README.zh.html">Models</a><a class="tablink" href="/docs/integrations/anthropic.html" data-title-zh="集成" data-href-en="/docs/integrations/anthropic.html" data-href-zh="/docs/integrations/anthropic.zh.html">Integrations</a><a class="tablink" href="/docs/server/README.html" data-title-zh="服务与运维" data-href-en="/docs/server/README.html" data-href-zh="/docs/server/README.zh.html">Server &amp; Ops</a><a class="tablink" href="/docs/reference/README.html" data-title-zh="参考" data-href-en="/docs/reference/README.html" data-href-zh="/docs/reference/README.zh.html">Reference</a><a class="tablink active" href="/docs/reference/design/README.html" data-title-zh="设计" data-href-en="/docs/reference/design/README.html" data-href-zh="/docs/reference/design/README.zh.html">Design</a></nav>
 
 <div class="scrim"></div>
-<div class="layout no-toc">
+<div class="layout">
   <nav class="sidebar" aria-label="Documentation">
     <input class="nav-filter" type="text" data-i18n-ph="nav_filter"
            aria-label="Filter docs" placeholder="Filter docs…" autocomplete="off" spellcheck="false">
@@ -76,13 +76,14 @@
 <a class="navlink" href="/docs/reference/design/implementation-status.html" data-title-zh="实现索引" data-href-en="/docs/reference/design/implementation-status.html" data-href-zh="/docs/reference/design/implementation-status.zh.html">Implementation index</a>
 <a class="navlink" href="/docs/reference/design/framework-comparison.html" data-title-zh="框架对比" data-href-en="/docs/reference/design/framework-comparison.html" data-href-zh="/docs/reference/design/framework-comparison.zh.html">Framework comparison</a>
 <a class="navlink" href="/docs/reference/design/feature-matrix.html" data-title-zh="功能矩阵" data-href-en="/docs/reference/design/feature-matrix.html" data-href-zh="/docs/reference/design/feature-matrix.zh.html">Feature matrix</a></details>
-<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">84</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<details class="nav-branch nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">81</span></summary>
+<details class="nav-sec nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
 <a class="navlink" href="/docs/reference/design/runtime/codex-capability-adoption.html" data-title-zh="Codex 功能核对" data-href-en="/docs/reference/design/runtime/codex-capability-adoption.html" data-href-zh="/docs/reference/design/runtime/codex-capability-adoption.zh.html">Codex capability audit</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="调用流程" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Call flow</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/control.html" data-title-zh="执行控制" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html">Execution control</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-title-zh="操作生命周期" data-href-en="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html">Action lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="工作树" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Worktrees</a>
+<a class="navlink active" href="/docs/reference/design/runtime/execution/command-sessions.html" data-title-zh="命令会话" data-href-en="/docs/reference/design/runtime/execution/command-sessions.html" data-href-zh="/docs/reference/design/runtime/execution/command-sessions.zh.html">Command sessions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html" data-title-zh="递归图解" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.viz.html">Recursion diagram</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="递归保护" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Recursion guard</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="异步任务" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async tasks</a>
@@ -132,17 +133,13 @@
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具集" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Toolsets</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="输入请求" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">Input requests</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html" data-title-zh="文件与恢复" data-href-en="/docs/reference/design/runtime/operations/file-management.html" data-href-zh="/docs/reference/design/runtime/operations/file-management.zh.html">Files and recovery</a></details>
-<details class="nav-sec nav-disclosure" open><summary><span class="nav-sec-title" data-title-zh="程序与工作流">Programs and workflows</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/function/README.html" data-title-zh="函数" data-href-en="/docs/reference/design/function/README.html" data-href-zh="/docs/reference/design/function/README.zh.html">Functions</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="程序与工作流">Programs and workflows</span><span class="nav-count">9</span></summary><a class="navlink" href="/docs/reference/design/function/README.html" data-title-zh="函数" data-href-en="/docs/reference/design/function/README.html" data-href-zh="/docs/reference/design/function/README.zh.html">Functions</a>
 <a class="navlink" href="/docs/reference/design/function/agentic-program.html" data-title-zh="程序模型" data-href-en="/docs/reference/design/function/agentic-program.html" data-href-zh="/docs/reference/design/function/agentic-program.zh.html">Program model</a>
 <a class="navlink" href="/docs/reference/design/function/calling-unification.html" data-title-zh="函数调用" data-href-en="/docs/reference/design/function/calling-unification.html" data-href-zh="/docs/reference/design/function/calling-unification.zh.html">Function calling</a>
 <a class="navlink" href="/docs/reference/design/function/calling/code-call.html" data-title-zh="顺序调用" data-href-en="/docs/reference/design/function/calling/code-call.html" data-href-zh="/docs/reference/design/function/calling/code-call.zh.html">Fixed-order calls</a>
 <a class="navlink" href="/docs/reference/design/runtime/application-runtime.html" data-title-zh="应用运行时" data-href-en="/docs/reference/design/runtime/application-runtime.html" data-href-zh="/docs/reference/design/runtime/application-runtime.zh.html">Application runtime</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html" data-title-zh="程序结构" data-href-en="/docs/reference/design/runtime/programs-architecture.html" data-href-zh="/docs/reference/design/runtime/programs-architecture.zh.html">Program structure</a>
-<a class="navlink active" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html" data-title-zh="工作流概览" data-href-en="/docs/reference/design/runtime/self-programmed-agentic-workflow.html" data-href-zh="/docs/reference/design/runtime/self-programmed-agentic-workflow.zh.html">Workflow overview</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html" data-title-zh="程序职责" data-href-en="/docs/reference/design/runtime/self-programming-workflow-model.html" data-href-zh="/docs/reference/design/runtime/self-programming-workflow-model.zh.html">Program responsibilities</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html" data-title-zh="工作流编写" data-href-en="/docs/reference/design/runtime/self-programming-workflow-authoring.html" data-href-zh="/docs/reference/design/runtime/self-programming-workflow-authoring.zh.html">Workflow authoring</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html" data-title-zh="程序界面" data-href-en="/docs/reference/design/runtime/self-programming-workflow-ui.html" data-href-zh="/docs/reference/design/runtime/self-programming-workflow-ui.zh.html">Program interface</a>
-<a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html" data-title-zh="工作流控制" data-href-en="/docs/reference/design/runtime/workflow-control-primitives.html" data-href-zh="/docs/reference/design/runtime/workflow-control-primitives.zh.html">Workflow control</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html" data-title-zh="执行统一方案" data-href-en="/docs/reference/design/runtime/llm-and-agent.html" data-href-zh="/docs/reference/design/runtime/llm-and-agent.zh.html">Execution unification</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="自主更新" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-updates</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="报告">Reports</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/report-suite.html" data-title-zh="报告工作流" data-href-en="/docs/reference/design/runtime/report-suite.html" data-href-zh="/docs/reference/design/runtime/report-suite.zh.html">Report workflows</a>
@@ -215,8 +212,8 @@
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html" data-title-zh="响应式控件" data-href-en="/docs/reference/design/ui/composer-responsive-controls.html" data-href-zh="/docs/reference/design/ui/composer-responsive-controls.zh.html">Responsive controls</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html" data-title-zh="工具配置菜单" data-href-en="/docs/reference/design/ui/composer-tool-profile-menu.html" data-href-zh="/docs/reference/design/ui/composer-tool-profile-menu.zh.html">Tool profile menu</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-fast-control.html" data-title-zh="速度控制" data-href-en="/docs/reference/design/ui/composer-fast-control.html" data-href-zh="/docs/reference/design/ui/composer-fast-control.zh.html">Speed control</a>
-<a class="navlink" href="/docs/reference/design/ui/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/reference/design/ui/gui-agent.html" data-href-zh="/docs/reference/design/ui/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/reference/design/ui/agent-control-overlay.html" data-title-zh="Agent 控制提示层" data-href-en="/docs/reference/design/ui/agent-control-overlay.html" data-href-zh="/docs/reference/design/ui/agent-control-overlay.zh.html">Agent control overlay</a>
+<a class="navlink" href="/docs/reference/design/ui/resource-preview.html" data-title-zh="资源与操作预览" data-href-en="/docs/reference/design/ui/resource-preview.html" data-href-zh="/docs/reference/design/ui/resource-preview.zh.html">Resources and operation preview</a>
 <a class="navlink" href="/docs/reference/design/ui/browser-control-surfaces.html" data-title-zh="网页任务控制" data-href-en="/docs/reference/design/ui/browser-control-surfaces.html" data-href-zh="/docs/reference/design/ui/browser-control-surfaces.zh.html">Browser task control</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html" data-title-zh="队列与执行引导" data-href-en="/docs/reference/design/ui/send-queue-reliability.html" data-href-zh="/docs/reference/design/ui/send-queue-reliability.zh.html">Queue and steering</a>
 <a class="navlink" href="/docs/reference/design/ui/session-auto-rename.html" data-title-zh="会话命名" data-href-en="/docs/reference/design/ui/session-auto-rename.html" data-href-zh="/docs/reference/design/ui/session-auto-rename.zh.html">Session naming</a>
@@ -342,12 +339,13 @@
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">13</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">14</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
 <a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/runtime/environments.html" data-title-zh="运行环境" data-href-en="/docs/reference/design/runtime/environments.html" data-href-zh="/docs/reference/design/runtime/environments.zh.html">Environments</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/environments.html" data-title-zh="运行环境" data-href-en="/docs/reference/design/runtime/environments.html" data-href-zh="/docs/reference/design/runtime/environments.zh.html">Environments</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a>
+<a class="navlink" href="/docs/reference/design/runtime/workflow.html" data-title-zh="Workflow" data-href-en="/docs/reference/design/runtime/workflow.html" data-href-zh="/docs/reference/design/runtime/workflow.zh.html">Workflows</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-agent.html" data-title-zh="统一 Agent 执行" data-href-en="/docs/reference/design/runtime/unified-agent.html" data-href-zh="/docs/reference/design/runtime/unified-agent.zh.html">Unified Agent execution</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">7</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
 <a class="navlink" href="/docs/reference/design/ui/conversation-lifecycle.html">Conversation lifecycle and responsiveness</a>
@@ -358,8 +356,133 @@
 <a class="navlink" href="/docs/reference/design/ui/icons.html" data-title-zh="图标体系" data-href-en="/docs/reference/design/ui/icons.html" data-href-zh="/docs/reference/design/ui/icons.zh.html">Icon system</a></details>
 </details></div>
   </nav>
-  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="程序与工作流">Programs and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="工作流概览">Workflow overview</span></nav><iframe class="viz-frame" src="/docs/reference/design/runtime/self-programmed-agentic-workflow.raw.html" loading="lazy" title="可视化文档"></iframe><div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/programs-architecture.html" data-href-en="/docs/reference/design/runtime/programs-architecture.html" data-href-zh="/docs/reference/design/runtime/programs-architecture.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="程序结构">Program structure</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/self-programming-workflow-model.html" data-href-en="/docs/reference/design/runtime/self-programming-workflow-model.html" data-href-zh="/docs/reference/design/runtime/self-programming-workflow-model.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="程序职责">Program responsibilities</span></a></div></article></main>
-  <aside class="toc"></aside>
+  <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="Agent 与工作流">Agents and workflows</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="执行与控制">Execution</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="命令会话">Command sessions</span></nav><h1 id="command-sessions">Command sessions<a class="header-anchor" href="#command-sessions">#</a></h1>
+<p>How the agent runs shell commands: <code>bash</code> and <code>write_stdin</code>, and how they relate to <code>terminal_use</code>. The model follows Codex's unified exec (<code>exec_command</code> / <code>write_stdin</code>) and Claude Code's background-task notice, on top of OpenProgram's managed-process supervisor.</p>
+<h2 id="two-tool-families-split-by-whose-process-it-is">Two tool families, split by whose process it is<a class="header-anchor" href="#two-tool-families-split-by-whose-process-it-is">#</a></h2>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Tools</th>
+<th>Owner of the process</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent commands</td>
+<td><code>bash</code>, <code>write_stdin</code></td>
+<td>The agent. Results only reach the agent.</td>
+</tr>
+<tr>
+<td>Terminal panel</td>
+<td><code>terminal_use</code></td>
+<td>A terminal tab: one the agent opened (<code>terminal-resource:</code> id) or one the user opened.</td>
+</tr>
+</tbody>
+</table>
+<p>Codex and Claude Code split the same way: Codex has <code>exec_command</code>/<code>write_stdin</code> for its own processes and only a read-only <code>read_thread_terminal</code> for the user's terminal; Claude Code has <code>Bash</code> for its own and the terminal panel tools for tabs. The split follows risk: an agent command affects only what the agent asked for, while a user's tab holds the user's sign-ins and running work.</p>
+<h2 id="bash">bash<a class="header-anchor" href="#bash">#</a></h2>
+<p><code>bash(command, workdir, yield_time_ms, tty, description)</code>:</p>
+<ol>
+<li><code>prepare_command</code> resolves <code>workdir</code> exactly as before (worktree, sandbox checks, remote <code>cd</code> guard).</li>
+<li><code>session.run</code> checks the 64-session cap, then <code>processes.start(command, cwd, tty=..., run_command=...)</code> launches the command under a detached supervisor.</li>
+<li><code>collect</code> reads unread output every 50 ms into a head/tail buffer (1 MiB, first and last halves kept) until the command ends or <code>yield_time_ms</code> passes (default 30000; clamp 250–30000, as Codex's exec_command).</li>
+<li>Ended: the reply is <code>Process exited with code N</code> plus output, and the record is removed; its output is all in the reply. Still running: the record gets <code>background=True</code> and the reply is <code>Process running with session ID &lt;id&gt;</code>.</li>
+</ol>
+<p>The reply header copies Codex's (<code>Wall time</code>, <code>Process exited with code</code> / <code>Process running with session ID</code>, <code>Output:</code>) and adds <code>cwd=</code> and a non-local <code>backend=</code>. stdout and stderr arrive as one stream. A nonzero exit or a supervisor failure is an error result; a running session is not. The sandbox explanation is appended when <code>is_sandbox_denial</code> matches the merged output of a sandboxed command.</p>
+<p>Cancelling the turn during the first wait stops the command (the old foreground contract, checked by <code>check_cancelled</code> in the collect loop). A session already in the background is unaffected by later cancellations.</p>
+<p>A call with no trusted conversation (a script or test calling the tool directly) runs once through <code>backend.run</code> with a ten-minute limit and the earlier <code>exit_code=</code> format.</p>
+<h2 id="write_stdin">write_stdin<a class="header-anchor" href="#write_stdin">#</a></h2>
+<p><code>write_stdin(session_id, chars, yield_time_ms)</code> finds the session in the conversation (same <code>session_id</code>, or an execution in its scope), then:</p>
+<table>
+<thead>
+<tr>
+<th><code>chars</code></th>
+<th>tty session</th>
+<th>pipe session</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>empty</td>
+<td>poll</td>
+<td>poll</td>
+</tr>
+<tr>
+<td><code>&quot;\x03&quot;</code></td>
+<td>written to the terminal (line discipline sends SIGINT)</td>
+<td><code>interrupt</code> command: SIGINT to the process group</td>
+</tr>
+<tr>
+<td>other</td>
+<td><code>write</code> command, raw bytes, then 100 ms before reading</td>
+<td>refused: stdin is closed</td>
+</tr>
+</tbody>
+</table>
+<p>Yield: writes default 250 ms and clamp 250–30000; empty polls clamp 5000–300000 (Codex's values). A reply that shows the exit marks the record <code>reported</code>.</p>
+<h2 id="processes-layer">Processes layer<a class="header-anchor" href="#processes-layer">#</a></h2>
+<ul>
+<li><code>group_guard</code> runs a pipe command with stdin <code>/dev/null</code> (Codex closes stdin for non-tty). For tty it opens a pty, makes it the controlling terminal of its own session (it is already a session leader), puts its group in the foreground, sets 30×120, and pumps master ↔ supervisor pipes. It ignores SIGINT as it ignores SIGTERM, so an interrupt reaches the command, not the guard.</li>
+<li>The supervisor's <code>write</code> command sends raw bytes (no newline added); <code>interrupt</code> sends SIGINT to the group (Windows: terminates the tree).</li>
+<li><code>ProcessStore</code> records <code>tty</code>, <code>sandboxed</code>, <code>background</code>, <code>reported</code>, <code>last_used</code>; <code>take()</code> returns unread output and the bytes dropped before they were read; <code>live_count()</code> and <code>unreported_exits()</code> are single SQL queries.</li>
+<li>tty needs the local backend on macOS or Linux.</li>
+</ul>
+<h2 id="session-cap">Session cap<a class="header-anchor" href="#session-cap">#</a></h2>
+<p>At most 64 live sessions per conversation (Codex <code>MAX_UNIFIED_EXEC_PROCESSES</code>). <code>live_count</code> gates the check cheaply; at the cap, the least recently used session outside the eight most recently used (<code>PROTECTED_RECENT</code>, as Codex) is stopped and marked <code>reported</code>, and the new command's reply names it. There is no idle timeout and no one-shot timeout mode.</p>
+<h2 id="exit-notices">Exit notices<a class="header-anchor" href="#exit-notices">#</a></h2>
+<p><code>processes.notices.run_exit_notices</code> runs in the worker lifespan and sweeps every 2 s:</p>
+<ol>
+<li><code>unreported_exits()</code>: <code>background</code>, not <code>reported</code>, status <code>exited</code> or <code>failed</code>. A <code>stopped</code> command (the user's Stop, or the cap) sends nothing.</li>
+<li>Skip while the conversation has a running turn or a nonterminal execution; it is retried after that turn.</li>
+<li>Clone the conversation's newest chat request (its trusted actor and config snapshot, as Goal continuation does), set <code>source=&quot;process_exit&quot;</code>, a fresh user message id and the notice text (command, exit code, duration, last 2000 characters of output), and admit it with key <code>process_exit:&lt;id&gt;</code>. A conversation with no chat execution is marked reported without a notice.</li>
+<li><code>process_exit</code> is a runtime source: the turn's user node is <code>display=&quot;runtime&quot;</code> and memory skips it.</li>
+</ol>
+<h2 id="approvals">Approvals<a class="header-anchor" href="#approvals">#</a></h2>
+<ul>
+<li><code>write_stdin</code> with empty chars or <code>&quot;\x03&quot;</code> is allowed without asking (<code>SESSION_POLL</code>); <code>bash</code> already approved the command. Other input follows the mode, as <code>bash</code>.</li>
+<li><code>terminal_use</code> <code>input</code>, <code>interrupt</code> or <code>close</code> follows the permission mode, on the user's tabs and the agent's alike. When it asks, the card (<code>TerminalApproval</code>) names the tab, its current directory from shell integration, whether a command is running, unfinished human input, and the exact input with control characters spelled out.</li>
+<li><code>write_stdin</code> is a risky tool wherever <code>process</code> was (Auto risk set, MCP/delegated hard constraints, dangerous allow rules).</li>
+</ul>
+<h2 id="interface">Interface<a class="header-anchor" href="#interface">#</a></h2>
+<ul>
+<li>Activity lists background sessions only (<code>background</code> true, or records from before this field); a command in its first wait shows as an active tool call.</li>
+<li>Resources lists running background sessions in the Terminal group as <strong>Background terminal</strong> (<code>backgroundTerminalRows</code>), and <code>BackgroundTerminalView</code> shows the retained output read-only in xterm with Stop. Output refreshes with the managed-process poll (3 s).</li>
+<li>Tool rows: <code>write_stdin</code> reads &quot;Waited for output&quot;, &quot;Interrupted&quot; or &quot;Typed&quot;; <code>terminal_use</code> input reads &quot;Typed in terminal&quot;.</li>
+</ul>
+<h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
+<p>Implemented as described. Not adopted from Codex: zsh fork, shell snapshots, the <code>shell</code> / <code>login</code> / <code>max_output_tokens</code> parameters, and stdin approval on policy drift. Background terminal output refreshes by polling, not streaming.</p>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工作树">Worktrees</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.viz.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="递归图解">Recursion diagram</span></a></div></article></main>
+  <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
+<ul class="toc-list">
+<li>
+<a class="lvl-2" href="#two-tool-families-split-by-whose-process-it-is">Two tool families, split by whose process it is</a>
+</li>
+<li>
+<a class="lvl-2" href="#bash">bash</a>
+</li>
+<li>
+<a class="lvl-2" href="#write_stdin">write_stdin</a>
+</li>
+<li>
+<a class="lvl-2" href="#processes-layer">Processes layer</a>
+</li>
+<li>
+<a class="lvl-2" href="#session-cap">Session cap</a>
+</li>
+<li>
+<a class="lvl-2" href="#exit-notices">Exit notices</a>
+</li>
+<li>
+<a class="lvl-2" href="#approvals">Approvals</a>
+</li>
+<li>
+<a class="lvl-2" href="#interface">Interface</a>
+</li>
+<li>
+<a class="lvl-2" href="#implementation-status">Implementation status</a>
+</li>
+</ul></aside>
 </div>
 
 <div class="search-overlay">

@@ -43,6 +43,13 @@
 | `voice.language` | `auto` | `live` | `auto` 让识别服务自动识别每句话的语言。 |
 | `voice.model` | `` | `live` | 留空使用识别服务的默认模型：gpt-4o-mini-transcribe（OpenAI）、whisper-large-v3-turbo（Groq）、large-v3-turbo-q5_0（本机）。只在选定了识别服务时生效。 |
 
+## 电脑操作
+
+| 配置键 | 默认值 | 生效方式 | 说明 |
+|---|---|---|---|
+| `computer_use.vm_url` | `` | `live` | OSWorld 兼容服务器的基础地址（GET /screenshot、POST /execute），例如 http://192.168.64.2:5000。设置后 computer_use_agent 获得 vm 目标；留空则关闭。 |
+| `computer_use.chrome_extension_token` | *（密钥）* | `live` | 你 Chrome 或 Edge 里 Playwright Extension 显示的令牌。设置后 computer_use_agent 的 browser 目标连接你自己的浏览器时不再询问共享哪个标签页；留空则每次询问。 |
+
 ## 搜索
 
 | 配置键 | 默认值 | 生效方式 | 说明 |

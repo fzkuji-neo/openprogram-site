@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792385903" data-alt-lang-url="/docs/capabilities/workflows/reports.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,7 +85,6 @@
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
 <a class="navlink active" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
-<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
@@ -147,7 +146,7 @@
 <p>显式 <code>requests</code> JSON 仍可直接指定子 Workflow，参数不改写。各子 Workflow 管理自己的进度与恢复；总入口不再恢复旧的共同检查点，请使用对应子入口的恢复参数。</p>
 <h2 id="材料与输出">材料与输出<a class="header-anchor" href="#材料与输出">#</a></h2>
 <p>腾讯入口语义理解周次与用户提供的进展，保留完整原话到后续模型上下文；提供的材料必须来自原文。未提供材料时查找已有原始报告、近期会话中的本人原始消息和有精确日期的记忆，排除其他周次和不可靠记录。腾讯周报同时读取近期会话中具有本人归属和精确日期的原始消息，保留 session/message 来源，排除助手草稿和未归属消息。聊天消息只是候选，仍需选择相关进展。派生的聊天来源引用不会再次作为原始证据导入。待确认的记忆和未可信归属的原始记忆来源被排除；生成的记忆笔记可以作为查找候选，但不等于独立核实的本人事实。会话检索最多读取近期 20 个会话及每个会话最后 200 条消息，合并候选最多 30 条、18,000 UTF-8 字节。证据不足仅描述本次已检查范围，不能据此断言其他记录中没有相关工作。 目标为约100字，通常80–120字，只报告本周实际进展。微信只读取、整理和生成本地稿件，由用户发送。</p>
-<p>五个独立包位于 <code>openprogram/programs/workflow/weekly_report/</code>。在 Abilities 展开同名文件夹即可选择各入口。调用图显示总入口到路由 Agent 和四个子 Workflow 的可能调用关系；不代表每次全部执行。</p>
+<p>五个独立包并列放在 <code>~/.openprogram/workflows/</code>，总入口 <code>weekly_report</code> 直接 import 其余四个包。在 Abilities 的 workflow 文件夹中即可选择各入口。调用图显示总入口到路由 Agent 和四个子 Workflow 的可能调用关系；不代表每次全部执行。</p>
 <p>路由、小组请求解析和个人周报的模型调用继承 Runtime 超时配置（<code>OPENPROGRAM_EXEC_TIMEOUT_S</code>），不再单独限制为 90 秒。小组请求对未验证原生 schema 能力的提供商允许使用提示词兼容模式，并保留 schema 校验和 Runtime 已有的有限格式修正重试；未恢复的模型异常保留真实失败类型，不再误报为缺少用户输入。外部记录写入结果不确定时不自动重复执行。</p>
 <p>小组汇报可以只输入“做小组汇报”。流程主动从记忆、相关本地资料及已确定的微信群查找群、名单、当周材料和作者证据，不再要求用户补字段。原始正文保留；未指定周次时使用当前 ISO 周并标注这一假设。作者未核实则明确标注，资料不足则生成带来源限制的部分草稿，不编造进展。</p>
 <p>默认 <code>source=auto</code>；显式 <code>source=supplied</code> 只使用输入材料。微信读取验证群身份并保留来源证据，历史覆盖始终不完整；微信访问失败时继续查询本地资料。流程不发送消息、不修改系统权限，也不因信息缺失调用 ask_user。</p>
@@ -162,7 +161,7 @@
 <h2 id="飞书网页操作失败">飞书网页操作失败<a class="header-anchor" href="#飞书网页操作失败">#</a></h2>
 <p>飞书检查和写入阶段只提供 <code>web_use</code>，使用当前的 <code>command</code> 参数协议。接受页面观察或报告写入前必须有真实工具回执，模型正文中的工具调用文本不算网页操作。这两个阶段不设置固定的总超时或工具轮次上限，显式 Runtime 部署限制仍然生效。网页访问失败通过总入口传递，不再作为成功文本返回。后续子 Workflow 失败时，原始异常保留此前已完成子任务的结果，总入口不会自动重跑这些任务。</p>
 <p>提交和修改也要求准确字段绑定及重新读回字段。提交请求遇到已有记录时返回检查结果，只有明确要求修改才允许更新。最终提交或保存动作在派发前记录，结果不确定时不能自动再次点击。没有原始事实的五维空占位不计入进展正文。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工作流编写">Workflow authoring</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/gui-agent.html" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="界面智能体">GUI Agent</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/workflows/authoring.html" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工作流编写">Workflow authoring</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/research-agent.html" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="研究智能体">Research Agent</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

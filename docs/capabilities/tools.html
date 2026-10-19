@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/capabilities/tools.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792385903" data-alt-lang-url="/docs/capabilities/tools.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,7 +85,6 @@
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
-<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
@@ -192,12 +191,12 @@
 <tbody>
 <tr>
 <td><code>bash</code></td>
-<td>Run a shell command synchronously, returning stdout / stderr / exit code</td>
+<td>Run a shell command and return its output and exit code; a command still running after its wait keeps running as a session</td>
 <td>Nothing</td>
 </tr>
 <tr>
-<td><code>process</code></td>
-<td>Manage background shell sessions (long-running services, pollable output)</td>
+<td><code>write_stdin</code></td>
+<td>Wait for more output from a session <code>bash</code> left running, interrupt it, or type into it</td>
 <td>Nothing</td>
 </tr>
 <tr>
@@ -208,12 +207,45 @@
 </tbody>
 </table>
 <p><code>execute_code</code> returns stdout, stderr and the observed exit code. A nonzero exit or timeout is an error result; partial output remains available to diagnose the failure. Success requires a zero exit code. Each call uses a fresh Python subprocess.</p>
+<h3 id="commands-that-keep-running">Commands that keep running<a class="header-anchor" href="#commands-that-keep-running">#</a></h3>
+<p><code>bash</code> waits up to <code>yield_time_ms</code> (default and maximum 30000 ms, minimum 250 ms) for the command to finish. A command that finishes in time returns its output (stdout and stderr together) and <code>Process exited with code N</code>. A command still running then keeps running in the background, and the result says <code>Process running with session ID &lt;id&gt;</code>, with the output so far. Servers, watchers and long builds work this way; no separate start step is needed.</p>
+<p><code>write_stdin(session_id, chars, yield_time_ms)</code> reaches that session:</p>
+<table>
+<thead>
+<tr>
+<th><code>chars</code></th>
+<th>Effect</th>
+<th>Wait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>empty</td>
+<td>Writes nothing and returns new output, or the exit code once the command ends</td>
+<td>5000–300000 ms, default 5000</td>
+</tr>
+<tr>
+<td><code>&quot;\u0003&quot;</code></td>
+<td>Interrupts the command, like Ctrl-C</td>
+<td>Default 250 ms</td>
+</tr>
+<tr>
+<td>anything else</td>
+<td>Typed into the command as is; end a line with <code>&quot;\n&quot;</code></td>
+<td>250–30000 ms, default 250</td>
+</tr>
+</tbody>
+</table>
+<p>Typing needs a session started with <code>bash(..., tty=true)</code>, which runs the command in a pseudo-terminal (local backend on macOS or Linux). Without <code>tty</code> the command's stdin is closed, so a command waiting for input ends instead of hanging, and only the interrupt is accepted. The output of a call is kept up to 1 MiB, its first and last halves when longer.</p>
+<p>When a background command ends on its own and no <code>bash</code> or <code>write_stdin</code> result has shown the agent that exit, the conversation gets a notice turn saying which command ended, its exit code and its last output. A conversation in the middle of a turn gets it once that turn ends; a command you stop yourself sends no notice. Background commands are listed as <strong>Background terminal</strong> under Terminal in Resources, where you can watch their output and stop them, and in Activity.</p>
+<p>A conversation runs at most 64 commands at once. Starting another stops the least recently used one, never one of the eight most recently used, and the result names the command it stopped. Cancelling a turn stops a command that is still in its first wait; commands already in the background keep running.</p>
+<p>Polling a session or interrupting it is never asked about, since <code>bash</code> already ran the command. Typing into a session follows the permission mode, like <code>bash</code>.</p>
 <h3 id="one-shot-command-directories">One-shot command directories<a class="header-anchor" href="#one-shot-command-directories">#</a></h3>
 <p><code>bash</code> starts a new shell for every call. Use the optional <code>workdir</code> argument to select the starting directory for that call, for example <code>bash(command=&quot;npm test&quot;, workdir=&quot;apps/web&quot;)</code>. This is tool-call notation; the ordinary Python export is an AgentTool, not a direct shell function.</p>
 <p>Local relative paths resolve from the currently bound worktree, or the host process directory when no worktree is bound. Absolute paths are also accepted. Paths are literal: <code>~</code>, environment variables and shell expressions are not expanded. Omit <code>workdir</code> to retain the existing worktree/backend default. A directory change or <code>export</code> inside one command does not affect another call. <code>workdir</code> does not change the worktree binding or the base used by file tools.</p>
 <p>Missing, non-directory or denied workdirs fail without running the requested command; the tool does not create them or fall back to a different location. Selecting a directory does not grant access to it. Under a local sandbox policy, explicit workdirs must already satisfy the original workspace's read/write policy, including symlinks and extra authorized roots. Execution remains inside that original sandbox boundary. An unavailable configured sandbox is not bypassed for an explicit workdir.</p>
 <p>SSH and Docker interpret explicit workdirs as POSIX paths in the backend filesystem, not paths on the host. Relative remote paths require an absolute POSIX worktree binding. A guarded directory change prevents the command list from running if that directory is unavailable; Docker does not create the requested directory via <code>-w</code>. When a host sandbox policy is active, explicit remote workdirs are refused until backend-native path authorization is available. Omitting <code>workdir</code> preserves the existing backend behavior.</p>
-<p>Results include the selected local starting <code>cwd</code>, or <code>requested_cwd</code> for remote paths whose canonical location is not independently observed. This is not an ending-directory report or a promise of persistent shell state. Long-running processes remain the separate <code>process</code> tool's responsibility; <code>bash</code> does not control the Desktop integrated terminal.</p>
+<p>Results include the selected local starting <code>cwd</code>, or <code>requested_cwd</code> for remote paths whose canonical location is not independently observed. This is not an ending-directory report or a promise of persistent shell state. <code>bash</code> does not control the Desktop integrated terminal; that is <code>terminal_use</code>.</p>
 <h2 id="web">Web<a class="header-anchor" href="#web">#</a></h2>
 <table>
 <thead>
@@ -331,13 +363,13 @@
 </thead>
 <tbody>
 <tr>
-<td><code>computer_use</code></td>
-<td>Read an application's window (screenshot + Accessibility tree) and click, type, scroll, drag, paste, copy or use its menu bar in the background, one step or a batch at a time; one approval per application</td>
-<td>macOS with Accessibility and Screen Recording for the runtime, Linux under X11 with AT-SPI and xdotool, or Windows with UI Automation</td>
+<td><code>computer_use_agent</code></td>
+<td>Operate a screen: application windows in the background (screenshot + Accessibility tree), Pages of the built-in browser, or a configured virtual machine. One step, a batch, Python code, or a new agent working from a brief; one approval per application</td>
+<td>Applications: macOS with Accessibility and Screen Recording for the runtime, Linux under X11 with AT-SPI and xdotool, or Windows with UI Automation. Virtual machine: <code>computer_use.vm_url</code></td>
 </tr>
 </tbody>
 </table>
-<p><a href="/docs/capabilities/computer-use.html">Computer use</a> lists the actions and the approval scopes.</p>
+<p><a href="/docs/capabilities/computer-use.html">Computer use</a> lists the targets, actions and approval scopes.</p>
 <h2 id="images-and-pdf">Images and PDF<a class="header-anchor" href="#images-and-pdf">#</a></h2>
 <table>
 <thead>
@@ -491,7 +523,7 @@
 </tbody>
 </table>
 <p><code>canvas</code> and <code>agent_browser</code> registered tools mark explicit validation and dependency/process failures as errors. Successful Canvas content and successful CLI stdout remain successful even when the text begins with <code>Error:</code>. Plain Python <code>execute()</code> calls keep their string return values.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/mcp.html" data-href-en="/docs/capabilities/mcp.html" data-href-zh="/docs/capabilities/mcp.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="MCP">MCP</span></a><a class="pn-link pn-next" href="/docs/capabilities/lsp.html" data-href-en="/docs/capabilities/lsp.html" data-href-zh="/docs/capabilities/lsp.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="语言服务器">Language servers</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/mcp.html" data-href-en="/docs/capabilities/mcp.html" data-href-zh="/docs/capabilities/mcp.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="MCP">MCP</span></a><a class="pn-link pn-next" href="/docs/capabilities/lsp.html" data-href-en="/docs/capabilities/lsp.html" data-href-zh="/docs/capabilities/lsp.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="语言服务器">Language servers</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -510,6 +542,9 @@
 <a class="lvl-2" href="#execution">Execution</a>
 </summary>
 <ul class="toc-list">
+<li>
+<a class="lvl-3" href="#commands-that-keep-running">Commands that keep running</a>
+</li>
 <li>
 <a class="lvl-3" href="#one-shot-command-directories">One-shot command directories</a>
 </li>

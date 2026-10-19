@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/capabilities/computer-use.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792385903" data-alt-lang-url="/docs/capabilities/computer-use.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>操控电脑 · OpenProgram Docs</title>
-<meta name="description" content="computer_use 工具让模型在你继续工作的同时读取并操作桌面应用的窗口：应用留在后台，键盘和鼠标仍归你，不会有窗口被带到前台。模型看到的是窗口截图加上它的 Accessibility 树，对编号元素执行动作，然后只拿回发生变化的那几行。它支持 macOS、X11 下的 Linux 和 Windows，差异见">
+<meta name="description" content="一个工具 computer_use_agent 让模型操作屏幕：桌面应用的窗口、一个网页浏览器（App 内置的，或你自己的 Chrome、Edge），或一台虚拟机。应用窗口在你继续工作的同时被读取和操作：应用留在后台，键盘和鼠标仍归你，不会有窗口被带到前台。模型看到的是窗口截图加上它的 Accessibility">
 <link rel="canonical" href="https://openprogram.io/docs/capabilities/computer-use.zh.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/capabilities/computer-use.zh.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/capabilities/computer-use.zh.html">
 <meta property="og:title" content="操控电脑 · OpenProgram Docs">
-<meta property="og:description" content="computer_use 工具让模型在你继续工作的同时读取并操作桌面应用的窗口：应用留在后台，键盘和鼠标仍归你，不会有窗口被带到前台。模型看到的是窗口截图加上它的 Accessibility 树，对编号元素执行动作，然后只拿回发生变化的那几行。它支持 macOS、X11 下的 Linux 和 Windows，差异见">
+<meta property="og:description" content="一个工具 computer_use_agent 让模型操作屏幕：桌面应用的窗口、一个网页浏览器（App 内置的，或你自己的 Chrome、Edge），或一台虚拟机。应用窗口在你继续工作的同时被读取和操作：应用留在后台，键盘和鼠标仍归你，不会有窗口被带到前台。模型看到的是窗口截图加上它的 Accessibility">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="操控电脑 · OpenProgram Docs">
-<meta name="twitter:description" content="computer_use 工具让模型在你继续工作的同时读取并操作桌面应用的窗口：应用留在后台，键盘和鼠标仍归你，不会有窗口被带到前台。模型看到的是窗口截图加上它的 Accessibility 树，对编号元素执行动作，然后只拿回发生变化的那几行。它支持 macOS、X11 下的 Linux 和 Windows，差异见">
+<meta name="twitter:description" content="一个工具 computer_use_agent 让模型操作屏幕：桌面应用的窗口、一个网页浏览器（App 内置的，或你自己的 Chrome、Edge），或一台虚拟机。应用窗口在你继续工作的同时被读取和操作：应用留在后台，键盘和鼠标仍归你，不会有窗口被带到前台。模型看到的是窗口截图加上它的 Accessibility">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -85,7 +85,6 @@
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
-<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
@@ -110,24 +109,52 @@
 <div class="nav-sec"><div class="nav-sec-title" data-title-zh="指南">Guide</div><a class="navlink" href="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-title-zh="自编程智能体" data-href-en="/docs/capabilities/agentic-programming/self-programming-ai-agents.html" data-href-zh="/docs/capabilities/agentic-programming/self-programming-ai-agents.zh.html">Self-programming agents</a></div></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="能力">Capabilities</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="操控电脑">Computer use</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="操控电脑">Computer use</span></nav><h1 id="操控电脑">操控电脑<a class="header-anchor" href="#操控电脑">#</a></h1>
-<p><code>computer_use</code> 工具让模型在你继续工作的同时读取并操作桌面应用的窗口：应用留在后台，键盘和鼠标仍归你，不会有窗口被带到前台。模型看到的是窗口截图加上它的 Accessibility 树，对编号元素执行动作，然后只拿回发生变化的那几行。它支持 macOS、X11 下的 Linux 和 Windows，差异见<a href="#%E5%9C%A8-linux-%E4%B8%8A">在 Linux 上</a>和<a href="#%E5%9C%A8-windows-%E4%B8%8A">在 Windows 上</a>。</p>
-<p>网页有自己的工具 <code>web_use</code>，它驱动 App 内置浏览器和无头 Chromium。<code>computer_use</code> 负责桌面上的其他一切：Finder、备忘录、计算器、Xcode、聊天客户端、游戏启动器。</p>
+<p>一个工具 <code>computer_use_agent</code> 让模型操作屏幕：桌面应用的窗口、一个网页浏览器（App 内置的，或你自己的 Chrome、Edge），或一台虚拟机。应用窗口在你继续工作的同时被读取和操作：应用留在后台，键盘和鼠标仍归你，不会有窗口被带到前台。模型看到的是窗口截图加上它的 Accessibility 树，对编号元素执行动作，然后只拿回发生变化的那几行。应用操作支持 macOS、X11 下的 Linux 和 Windows，差异见<a href="#%E5%9C%A8-linux-%E4%B8%8A">在 Linux 上</a>和<a href="#%E5%9C%A8-windows-%E4%B8%8A">在 Windows 上</a>。</p>
+<h2 id="目标与指南">目标与指南<a class="header-anchor" href="#目标与指南">#</a></h2>
+<p>每次调用都要指定一个 <code>target</code>：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>操作什么</th>
+<th>需要什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app</code></td>
+<td>本机的应用窗口，由 <code>args.app</code> 指定：Finder、备忘录、计算器、Xcode、聊天客户端、游戏启动器</td>
+<td>下文的桌面权限</td>
+</tr>
+<tr>
+<td><code>browser</code></td>
+<td>网页，在 <code>args.browser</code> 指定的浏览器里：默认是 App 内置浏览器（App 窗口里的标签页，以及它在后台打开的标签页），也可以是你自己的 Chrome 或 Edge</td>
+<td>App；Chrome 或 Edge 见<a href="#%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84-chrome-%E6%88%96-edge">你自己的 Chrome 或 Edge</a></td>
+</tr>
+<tr>
+<td><code>vm</code></td>
+<td>一台运行 OSWorld 兼容服务的远程机器</td>
+<td><code>computer_use.vm_url</code>，见<a href="#%E8%99%9A%E6%8B%9F%E6%9C%BA">虚拟机</a></td>
+</tr>
+</tbody>
+</table>
+<p>工具说明里只有这张清单。一个对话第一次调用某个目标时，返回该目标的指南（它的动作及参数）和目标当前的状态，所以模型只学它马上要用的那块屏幕的动作。<code>action=&quot;guide&quot;</code> 可以再次查看指南。</p>
 <h2 id="一步长什么样">一步长什么样<a class="header-anchor" href="#一步长什么样">#</a></h2>
-<pre><code>computer_use(action=&quot;get_app_state&quot;, app=&quot;Calculator&quot;)
+<pre><code>computer_use_agent(target=&quot;app&quot;, args={&quot;app&quot;: &quot;Calculator&quot;})
 </code></pre>
-<p>返回窗口截图和这样的树：</p>
+<p>返回指南、窗口截图和这样的树：</p>
 <pre><code>0 window &quot;Calculator&quot; actions: AXRaise
   12 static text value=&quot;0&quot;
   18 button &quot;7&quot;
   23 button &quot;All Clear&quot;
 </code></pre>
 <p>每一行是一个元素：序号、角色、标签、当前值、<code>[focused]</code>、<code>[checked]</code> 之类的状态标记，以及它额外提供的动作。模型随后对序号下手：</p>
-<pre><code>computer_use(action=&quot;click&quot;, app=&quot;Calculator&quot;, element_index=18)
+<pre><code>computer_use_agent(target=&quot;app&quot;, action=&quot;click&quot;, args={&quot;app&quot;: &quot;Calculator&quot;, &quot;element_index&quot;: 18})
 </code></pre>
 <p>每个动作返回 <code>Done: …</code>，后面跟树的 diff：<code>-</code> 开头的行消失了，<code>+</code> 开头的行是新增或变化的。序号是稳定的：元素只要还在窗口里就保持原序号，即使它上方插入了新东西；新元素拿到一个从未用过的号，所以早先读到的序号绝不会悄悄指向别的元素。给 <code>get_app_state</code> 传 <code>full=true</code> 可以重新拿到整棵树。树最多 1500 个元素，截图长边最多 1568 像素。</p>
 <p>有些应用自己绘制内容，不向辅助功能描述它：游戏、画布类编辑器、远程桌面、部分 Electron 应用。窗口的树少于 12 个元素时，状态里还会列出 macOS 从截图上识别出的文字，每行一条并带中心点的像素位置，例如 <code>&quot;New Game&quot; at (160, 215), 120x30</code>；模型用 <code>x</code>、<code>y</code> 点击它。识别在本机完成，优先使用你的首选语言，并按每张截图检测语言。同一份状态还会列出不带文字的图标和控件（如齿轮、垃圾桶），以轮廓的中心点和尺寸表示，例如 <code>(112, 169), 55x56</code>；模型先对照截图认出每个是什么，再去点击。</p>
 <p>动作之后工具等待窗口稳定，而不是固定停顿：至少 0.3 秒，直到树不再变化，最多 1.5 秒——界面上有转圈或进度条时最多 5 秒。</p>
-<h2 id="动作">动作<a class="header-anchor" href="#动作">#</a></h2>
+<h2 id="应用动作">应用动作<a class="header-anchor" href="#应用动作">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -164,7 +191,7 @@
 </tr>
 <tr>
 <td><code>click</code></td>
-<td><code>app</code>、<code>element_index</code> 或 <code>x</code>,<code>y</code>、<code>mouse_button?</code>、<code>click_count?</code>、<code>key?</code>、<code>duration?</code></td>
+<td><code>app</code>、<code>element_index</code> 或 <code>x</code>,<code>y</code> 或 <code>describe</code>、<code>mouse_button?</code>、<code>click_count?</code>、<code>key?</code>、<code>duration?</code></td>
 <td>按下一个元素，或点击上一张截图上的一点。<code>key</code> 是按住的修饰键，如 <code>cmd</code>、<code>shift+alt</code>；<code>duration</code> 是按住鼠标的秒数，至多 10 秒</td>
 </tr>
 <tr>
@@ -184,12 +211,12 @@
 </tr>
 <tr>
 <td><code>scroll</code></td>
-<td><code>app</code>、<code>element_index</code> 或 <code>x</code>,<code>y</code>、<code>direction?</code>、<code>pages?</code> 或 <code>pixels?</code></td>
+<td><code>app</code>、<code>element_index</code> 或 <code>x</code>,<code>y</code> 或 <code>describe</code>、<code>direction?</code>、<code>pages?</code> 或 <code>pixels?</code></td>
 <td>按页滚动（可以是小数），或按点数距离滚动</td>
 </tr>
 <tr>
 <td><code>drag</code></td>
-<td><code>app</code>、<code>x</code>、<code>y</code>、<code>to_x</code>、<code>to_y</code></td>
+<td><code>app</code>、<code>x</code>,<code>y</code> 或 <code>describe</code>、<code>to_x</code>,<code>to_y</code> 或 <code>to_describe</code></td>
 <td>在上一张截图的两点之间拖拽</td>
 </tr>
 <tr>
@@ -229,18 +256,13 @@
 </tr>
 <tr>
 <td><code>hover</code></td>
-<td><code>app</code>、<code>element_index</code> 或 <code>x</code>,<code>y</code>、<code>duration?</code></td>
+<td><code>app</code>、<code>element_index</code> 或 <code>x</code>,<code>y</code> 或 <code>describe</code>、<code>duration?</code></td>
 <td>让指针在元素上停留 <code>duration</code> 秒（默认 0.8），以打开提示和悬停菜单；你的光标不会动。在后台时不理会指针的应用不会有反应</td>
 </tr>
 <tr>
 <td><code>wait</code></td>
 <td><code>app</code>、<code>duration?</code></td>
 <td>等待最多 10 秒（默认 1），然后返回发生的变化：页面加载、播放、收到回复</td>
-</tr>
-<tr>
-<td><code>batch</code></td>
-<td><code>app</code>、<code>actions</code></td>
-<td>至多 20 个上面的执行类步骤，按顺序作用于同一个应用；遇到第一个错误即停止，最后只返回一次状态</td>
 </tr>
 <tr>
 <td><code>start_audio_recording</code></td>
@@ -255,17 +277,24 @@
 </tbody>
 </table>
 <p><code>app</code> 是 <code>list_apps</code> 打印的名称、bundle id 或 <code>.app</code> 路径。<code>x</code>、<code>y</code> 是该应用最近一张截图上的像素，不是屏幕坐标。</p>
-<p>在 <code>batch</code> 里，每一步都使用批量开始前读到的状态里的序号和坐标；每一步写自己的 <code>action</code>，不写应用：</p>
-<pre><code>computer_use(action=&quot;batch&quot;, app=&quot;Calculator&quot;, actions=[
-  {&quot;action&quot;: &quot;click&quot;, &quot;element_index&quot;: 18},
-  {&quot;action&quot;: &quot;press_key&quot;, &quot;key&quot;: &quot;KP_Multiply&quot;},
-  {&quot;action&quot;: &quot;click&quot;, &quot;element_index&quot;: 18},
-  {&quot;action&quot;: &quot;press_key&quot;, &quot;key&quot;: &quot;KP_Enter&quot;}
+<p>元素动作能到达被隐藏、最小化或被其他窗口盖住的窗口。坐标点击、拖拽和滚轮同样在后台进行：指针不动，前台应用不变。坐标只为树描述不了的画布和自绘控件而存在；凡是列出了序号，优先用序号。</p>
+<p>在 macOS 上，桌面 App 会显示每一步落在哪里：agent 光标（与 App 网页上标示操作的是同一个）在应用窗口上滑到目标元素或位置，并在那里播放一次点击，你自己的指针不动。浏览器工具栏里的<strong>显示操作</strong>可以把它关掉，网页和应用一起生效。agent 在某个窗口里操作时，macOS 还会把这个窗口标成共享中：紫色徽标盖住它的标题栏按钮，菜单栏出现屏幕共享图标。最后一步之后约 20 秒两者消失。</p>
+<h2 id="多个步骤代码和新-agent">多个步骤、代码和新 agent<a class="header-anchor" href="#多个步骤代码和新-agent">#</a></h2>
+<p>多个步骤放进 <code>actions</code>，至多 20 个，按顺序作用于同一个应用。遇到第一个错误即停止，最后只返回一次状态；每一步都使用这批步骤之前读到的状态里的序号和坐标：</p>
+<pre><code>computer_use_agent(target=&quot;app&quot;, args={&quot;app&quot;: &quot;Calculator&quot;}, actions=[
+  {&quot;action&quot;: &quot;click&quot;, &quot;args&quot;: {&quot;element_index&quot;: 18}},
+  {&quot;action&quot;: &quot;press_key&quot;, &quot;args&quot;: {&quot;key&quot;: &quot;KP_Multiply&quot;}},
+  {&quot;action&quot;: &quot;click&quot;, &quot;args&quot;: {&quot;element_index&quot;: 18}},
+  {&quot;action&quot;: &quot;press_key&quot;, &quot;args&quot;: {&quot;key&quot;: &quot;KP_Enter&quot;}}
 ])
 </code></pre>
-<p>元素动作能到达被隐藏、最小化或被其他窗口盖住的窗口。坐标点击、拖拽和滚轮同样在后台进行：指针不动，前台应用不变。坐标只为树描述不了的画布和自绘控件而存在；凡是列出了序号，优先用序号。</p>
+<p>需要循环、条件判断和数据处理时，模型改为发送 <code>code</code>：带顶层 <code>await</code> 的 Python，在没有文件、网络和进程权限的隔离解释器里运行，变量在本轮内保留。每个目标是一个对象，它的方法就是它的动作：<code>await cu.app.click(app=&quot;Numbers&quot;, element_index=3)</code>、<code>await cu.browser.observe()</code>、<code>await cu.vm.screenshot()</code>。代码只能操作本次调用指定的应用，不能运行页面脚本、上传文件或打开新网站，每次调用最多运行 120 秒、执行 100 个动作。代码模式只支持 macOS。</p>
+<p><code>context</code> 决定由谁来做。默认的 <code>inherit</code> 表示模型在这个对话里亲自操作，看到每一步结果。<code>fresh</code> 把任务交给一个使用相同模型和设置的新 agent：它从 <code>brief</code>（任务、已知信息、要汇报什么）和该目标的指南开始，用自己的 <code>computer_use_agent</code> 调用完成工作，只有最终回复回到对话。适合中间画面对话不需要看的长操作。新 agent 不能再启动新的 agent。</p>
+<h2 id="按描述定位">按描述定位<a class="header-anchor" href="#按描述定位">#</a></h2>
+<p>凡是接受 <code>x</code>,<code>y</code> 的动作，模型都可以改给 <code>describe</code>：按外观对目标的简短描述，如“蓝色的发送按钮”“右上角的齿轮图标”（拖拽终点用 <code>to_describe</code>）。工具会重新截图，用 GUI 感知包（图标检测器、OCR 和记住的组件，由对话的模型核对）找到描述的东西，并在它的中心执行动作。这种方式更慢且要调用模型，所以优先用元素序号和 ref；它和按书面简报工作的新 agent 搭配很好。</p>
+<p>感知包是 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI-Agent-Harness</a> Program。每个 release 都带着它和 GPA detector 权重，但检测器依赖的库（PyTorch、OpenCV、EasyOCR）不在 product runtime 里，所以 <code>describe</code> 只在装了这些库的环境（例如开发环境）里可用。其他环境里指南会说明 <code>describe</code> 不可用，其他定位方式照常可用。</p>
 <h2 id="网页">网页<a class="header-anchor" href="#网页">#</a></h2>
-<p><code>web_use</code> 以同样的方式驱动网页：<code>observe</code> 返回 ref，<code>act</code> 接受一个 <code>action</code> 及其参数。除了 <code>navigate</code>、<code>click</code>、<code>type</code>、<code>press</code>、<code>scroll</code>、<code>hover</code>、<code>select</code>、<code>upload</code> 和 <code>screenshot</code>，它还提供与 <code>computer_use</code> 相同的词汇：</p>
+<p><code>browser</code> 目标驱动 App 内置浏览器的 Page：<code>list_pages</code> 列出它们，<code>observe</code> 返回 ref，其他动作都作用在 ref 上。除了 <code>navigate</code>、<code>click</code>、<code>type</code>、<code>press</code>、<code>scroll</code>、<code>hover</code>、<code>select</code>、<code>upload</code> 和 <code>screenshot</code>，它还提供与应用窗口相同的词汇：</p>
 <table>
 <thead>
 <tr>
@@ -332,18 +361,62 @@
 </tr>
 </tbody>
 </table>
-<p>App 浏览器里的页面全程留在后台：事件在页面内派发，标签页不会被激活。带 <code>url</code> 的 <code>observe</code> 打开的标签页同样在你的工作后面；<code>visible: true</code> 则把它放到前台，用于你要求看着它操作的时候。<code>changes_only: true</code> 只完整列出相对同一页面上一次观察新增或变化的元素：没变的元素只占一行并带上新 ref，没变的页面文字和无障碍快照会省略，消失的元素会列出名字。ref 始终属于最新一次观察。在两个 MCP 后端上无障碍快照来自后端本身，所以 <code>changes_only</code> 在那里不起作用。在 Playwright 和 Chrome DevTools MCP 后端上，后端做不到的选项（例如三击或按住按键）会在发送任何东西之前以 <code>unsupported_option</code> 失败。</p>
-<p>脚本能读取和修改已登录页面持有的一切，所以每次 <code>evaluate</code> 调用都会先问你并展示完整脚本，任何权限模式下都如此，即使有规则允许 <code>web_use</code> 也一样。批准只覆盖这一次调用：它没有“总是允许”，无法询问的定时任务或频道轮次会被拒绝。</p>
+<p>App 浏览器里的页面全程留在后台：事件在页面内派发，标签页不会被激活。带 <code>url</code> 的 <code>observe</code> 打开的标签页同样在你的工作后面；<code>visible: true</code> 则把它放到前台，用于你要求看着它操作的时候。<code>changes_only: true</code> 只完整列出相对同一页面上一次观察新增或变化的元素：没变的元素只占一行并带上新 ref，没变的页面文字和无障碍快照会省略，消失的元素会列出名字。ref 始终属于最新一次观察。</p>
+<p>对话自己的 Page 不需要审批。打开你电脑之外的网站、上传文件会先询问。脚本能读取和修改已登录页面持有的一切，所以每次 <code>evaluate</code> 调用都会先问你并展示完整脚本，任何权限模式下都如此，即使有规则允许 <code>computer_use_agent</code> 也一样。批准只覆盖这一次调用：它没有“始终允许”，无法询问的定时任务或频道轮次会被拒绝。</p>
+<h2 id="查看和接管网页">查看和接管网页<a class="header-anchor" href="#查看和接管网页">#</a></h2>
+<p>在桌面 App 中，Agent 打开的网页保留在后台。右侧栏的 <strong>Resources</strong> 按分支列出当前会话的网页，包括子 Agent 使用的网页。继续同一分支时保持原有资源分组。即使 URL 相同，不同 Page 也保持独立；无法确定分支归属的网页显示在“未归属”中。</p>
+<p>Agent 的网页打开的弹窗或新窗口会作为独立的 Page 在后台加载，并归入 <strong>Resources</strong> 中同一会话和分支，不抢占你的视图。Agent 对原网页的下一次结果会告诉它这个弹窗，让它在弹窗里继续，而不是在原网页重新走一遍流程。你自己打开的网页弹出的窗口照常作为普通标签显示在前台。</p>
+<p>单击资源在聊天中查看它的图像预览。“在会话中预览”是针对同一现有 Page 的显式控件：不增加顶部标签；若当前正在查看网页，则回到所属会话，使聊天预览可见。聊天预览标题栏提供持续的“固定预览 / 取消固定预览”：固定后保持当前页面；取消固定后恢复自动显示该分支最近实际操作的网页。选择资源只显示它、不固定，也不抢占标签焦点；处于自动预览时，Agent 下一次读取或操作其他网页就会切换过去。打开、读取和操作网页都算在内，不只是点击和输入。该固定控件只在聊天预览上，会话资源没有固定按钮。“隐藏”停止预览截图并保留网页。用资源行或“在会话中预览”恢复已隐藏的预览，没有单独的“显示预览”控件。“展开”放大图像预览且不改变自动或固定预览，“打开页面”把原来的 Page 显示为普通顶部标签并隐藏聊天预览。返回会话后，除非已经隐藏，否则恢复预览。这些选择按会话和分支保存。固定只在本次打开 App 期间有效，重新加载后恢复自动预览。</p>
+<p>网页标签与其预览不得同时显示。真实网页在自己的标签中保持可用，不会变暗或被遮罩阻挡。工具栏显示当前操作者，并提供“暂停 Agent，我来操作”“让 Agent 继续”“显示操作”和“操作记录”。聊天预览使用单行紧凑控件栏；空闲和已关闭显示“可直接操作”，不提供暂停或继续按钮。默认小窗为 300×198.75。拖动标题栏移动，或从任一边/角调整大小；画面比例保持联动，底层页面不被缩放。操作位置提示短暂显示，不拦截输入；记录显示操作类型和结果，不保存网页中输入的完整文字。</p>
+<p>在真实网页中点击、输入、滚动或导航会请求暂停：停止接纳后续 Agent 输入，并请求暂停执行。仅聚焦页面或查看预览不会暂停。已经发送的动作仍可能完成。“正在暂停…”表示停止尚未确认；“已暂停”需要执行确认及状态核对。“暂停失败，请重试”表示 App 尚未确认停止，在仍连接时可用“重试暂停”；真实网页仍然可以正常使用。“让 Agent 继续”需要明确操作，并重新观察页面、检查当前权限。</p>
+<p>关闭网页会影响所有引用同一 Page 的分支。正在使用的网页先请求停止，在确认停止前继续保留。关闭网页与隐藏预览是不同操作。连接中断或目标不可用时，最后一张图像会标注为旧画面。已保存的资源描述不会恢复 Agent 输入租约，也不会重新创建已关闭的 Page。</p>
+<p>若 App 或 worker 重启，你尚未关闭的网页在后台恢复，不额外增加顶部标签。保留的 tab、会话与分支以及最后确认的标题和 URL 保持不变。应用为该保留 tab 创建新的活页面。先前的活句柄无效。明确关闭的网页留在“已关闭的网页”。已隐藏的预览保持隐藏，直到你选择该资源或使用“在会话中预览”。正在恢复、恢复失败或需要重新连接的行留在原分支，分别显示“正在恢复网页…”、“网页恢复失败”或“需要重新连接”，不进入通用不可用分组。恢复网页不要求“让 Agent 继续”。空闲页面仍显示“可直接操作”。新任务动作仍须在新页面上重新观察并检查当前权限。恢复会重新加载最后确认的 URL，并使用已有站点持久存储；上一进程中未保存的 DOM 与表单值不会恢复。没有保留 tab 描述的旧资源记录不会自动重建，在原分组显示“网页恢复失败”。这一有界重启恢复已经实现。</p>
+<p>聊天小窗也会跟随 Agent 操作的其他东西。Agent 操作桌面应用窗口时，小窗显示这个应用，画面是 Agent 最近一次对该窗口的截图，每一步后更新。Agent 接管终端或向终端输入时，小窗只读显示该终端的实时输出。自动预览、固定和关闭的规则相同；Agent 下一次操作网页时，小窗切回网页。截图只保存在内存里，worker 重启后不保留。</p>
+<p>这些控制作用于 OpenProgram 中确切的 Page。应用窗口和虚拟机显示仍按上文各自的审批进行。</p>
+<h2 id="你自己的-chrome-或-edge">你自己的 Chrome 或 Edge<a class="header-anchor" href="#你自己的-chrome-或-edge">#</a></h2>
+<p>调用把 <code>args.browser</code> 设为 <code>chrome</code> 或 <code>edge</code> 时，<code>browser</code> 目标就在你平时浏览用的浏览器里工作，页面带着你的登录状态和 Cookie 打开。动作与内置浏览器相同：<code>list_pages</code> 按序号列出你的标签页，<code>observe(page=&lt;序号&gt;)</code> 切到其中一个，<code>observe(url=…)</code> 打开新标签页，<code>click</code>、<code>type</code>、<code>press</code>、<code>scroll</code>、<code>screenshot</code>、<code>verify</code> 等作用在那次观察给出的 ref 上。模型被要求只在你点名或任务需要你的登录状态时才用你的浏览器，并且只用你点名的那一个。</p>
+<p>它以扩展模式运行微软的 Playwright MCP 服务器（<code>@playwright/mcp --extension</code>），由你浏览器里的 <a href="https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm">Playwright Extension</a> 连接过来；Edge 也从 Chrome 应用商店安装同一个扩展。安装一次即可；服务器本身通过 <code>npx</code> 获取，所以需要装有 Node.js。第一次动作时扩展会询问共享哪个标签页。要免去这一步，复制扩展里显示的令牌并设置：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>computer_use.chrome_extension_token<span class="w"> </span>&lt;token&gt;
+</code></pre>
+<p>一次批准覆盖本会话的 Chrome（或 Edge）；<code>evaluate</code>（页面 JavaScript）每次都询问，<code>upload</code> 会写明上传。代码模式不覆盖你的浏览器。</p>
+<h2 id="虚拟机">虚拟机<a class="header-anchor" href="#虚拟机">#</a></h2>
+<p><code>vm</code> 目标驱动一台运行 <a href="https://os-world.github.io/">OSWorld</a> 兼容服务的机器：工具用 <code>GET /screenshot</code> 截图，并通过 <code>POST /execute</code> 在那台机器上用 pyautogui 执行指针和键盘输入。设置一次服务地址：</p>
+<pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>computer_use.vm_url<span class="w"> </span>http://192.168.64.2:5000
+</code></pre>
+<p>虚拟机没有元素树：它的动作是 <code>screenshot</code>、<code>click</code>、<code>move</code>、<code>drag</code>、<code>scroll</code>、<code>type_text</code>、<code>press_key</code> 和 <code>wait</code>，用上一张截图的像素或 <code>describe</code> 定位。每个执行类调用都会返回一张新截图。一个对话第一次使用虚拟机时会请求审批，审批里写明服务地址。</p>
 <h2 id="审批">审批<a class="header-anchor" href="#审批">#</a></h2>
-<p>一个会话第一次触碰某个应用时，审批卡片会显示这个应用本身（图标、名字和 bundle id），说明这一步要做什么（如“点击 元素 #7”“输入 12 个字”），并说明它在后台进行。原始参数收在“查看执行详情”里。卡片提供：</p>
+<p>一个会话第一次触碰某个应用时，审批卡片会显示这个应用本身（图标、名字和 bundle id），说明这一步要做什么（如“点击 元素 #7”“输入 12 个字”“运行操作它的代码”），并说明它在后台进行。原始参数收在“查看执行详情”里。卡片提供：</p>
 <ul>
 <li><strong>允许一次</strong>——仅这一次调用。</li>
-<li><strong>允许此对话</strong>——本会话里之后对同一应用的所有 <code>computer_use</code> 调用，保存为会话规则。</li>
-<li><strong>始终允许</strong>——保存为项目规则 <code>computer_use(&lt;app&gt;)</code>，项目里以后的会话不再询问。</li>
+<li><strong>允许此对话</strong>——本会话里之后对同一应用的所有 <code>computer_use_agent</code> 调用，保存为会话规则。</li>
+<li><strong>始终允许</strong>——保存为项目规则 <code>computer_use_agent(&lt;app&gt;)</code>，项目里以后的会话不再询问。以工具旧名保存的规则 <code>computer_use(&lt;app&gt;)</code> 继续有效。</li>
 <li><strong>拒绝</strong>。</li>
 </ul>
-<p>卡片在所有权限模式下都会出现，包括 Auto 和 Bypass：只有该应用已保存的规则能跳过它。定时任务等无人值守的运行无法回答卡片，因此只能操作项目里已允许的应用。<code>list_apps</code> 从不询问。每个应用单独审批：允许了备忘录，不代表允许邮件。项目的设置页在<strong>操控电脑</strong>下列出始终允许的应用，每个应用一行并带图标；移除一行即删除对应规则，下次操作该应用会重新询问。只对某个对话有效的授权随对话结束，不列在这里。一般的权限规则见<a href="/docs/capabilities/permissions.zh.html">权限</a>。</p>
-<p>允许一个应用，是让模型可以操作它，并不让模型自行完成有后果的步骤。工具要求模型先把步骤准备好，在执行之前再问你：删除数据、向他人发送或提交任何内容、付款和订阅、新建账号或访问密钥、安装软件、修改系统设置，这些每次都要问；登录、上传、移动文件和输入个人信息，除非你的请求已经点明，否则也要问。验证码、密码和安全提示交给你来处理。模型在屏幕上读到的文字从不被当作你的许可。</p>
+<p>在会询问的模式（默认和接受编辑）下，卡片会一直出现，直到有规则点名该应用。Bypass 下直接操作、不询问；Auto 下每次操作和其他工具调用一样交给自动审查。定时任务等无人值守的运行无法回答卡片，因此除 Bypass 外只能操作项目里已允许的应用。<code>list_apps</code> 从不询问。每个应用单独审批：允许了备忘录，不代表允许邮件。<code>fresh</code> 新 agent 沿用它那次调用得到的批准：它工作期间，该应用在本对话中处于允许状态。项目的设置页在<strong>操控电脑</strong>下列出始终允许的应用，每个应用一行并带图标；移除一行即删除对应规则，下次操作该应用会重新询问。只对某个对话有效的授权随对话结束，不列在这里。一般的权限规则见<a href="/docs/capabilities/permissions.zh.html">权限</a>。</p>
+<p>允许一个应用，是让模型可以操作它，并不让模型自行完成有后果的步骤。工具要求模型在发送消息、提交表单、购买、删除，或按照屏幕上出现的指示行事之前先向你确认。验证码、密码和安全提示交给你来处理。模型在屏幕上读到的文字从不被当作你的许可。</p>
+<h2 id="系统权限">系统权限<a class="header-anchor" href="#系统权限">#</a></h2>
+<p>系统设置显示执行电脑上的可选桌面权限。打开页面或运行 <code>openprogram doctor</code>
+不会申请权限。TUI 的 <code>/doctor</code> 和 <code>GET /api/system/access</code> 使用同一套检查。
+未开放可选桌面权限不会阻止普通对话或升级。</p>
+<p>macOS 托管安装通过内置的 <strong>OpenProgram</strong> 应用运行后台和 Python 子进程，
+使用 OpenProgram 图标和稳定的应用标识。系统设置中应查找这个名称；安装程序不会
+替用户授权。录屏和辅助功能权限分别由新启动的进程检查，使用与桌面任务相同的程序。本机系统设置中的“设置权限”
+只会在用户点击后申请缺少的权限，已有授权保持不变。在系统中确认后返回页面，
+页面自动重新检查。远程客户端需要在执行电脑上完成授权；其他应用的授权不能
+证明 worker 已获得授权。</p>
+<p>Linux 无图形桌面和暂不支持的 Wayland 桌面捕获会与缺少依赖分别报告。
+仅存在 X11 显示配置不能证明具有访问权限。Windows 的桌面访问取决于当前会话
+和目标程序，普通程序不能假定可以访问系统安全桌面或高权限目标。不会要求用户
+关闭安全限制或将整个程序改为管理员运行。Linux、Windows 原生桌面验收尚未完成。</p>
+<p>当前 macOS 开发构建没有正式生产签名。正式签名版本升级后的授权保持、首次使用
+功能引导、授权后自动恢复任务尚未验证。设置系统权限不会重新执行已拒绝的操作。</p>
+<h3 id="授权">授权<a class="header-anchor" href="#授权">#</a></h3>
+<p>缺少系统权限时，应用调用在操作前暂停。OpenProgram 直接请求缺少的系统权限，必要时打开对应的系统设置页面。会话显示简短的暂停等待状态及“打开系统设置”文字入口；暂停的运行卡不显示权限表单、继续按钮、空结果、重试或修改操作。真正失败和取消的运行保留各自的终态。</p>
+<p>后台保存等待中的任务，通过新启动的 OpenProgram 进程检查权限，使用与桌面任务相同的程序，避免沿用系统设置改变前保存的检查结果。检查本身不会申请权限。权限可用后，同一个任务继续一次。关闭页面不会停止检查；如果需要重启应用，启动后会再次检查保存的任务。取消任务后不会恢复。检查失败时保留等待状态，不会当作已经授权。查看旧会话本身不会启动操作或重新弹出系统授权。系统授权不会替代工具操作审批。</p>
+<p>本地临时签名的 macOS 版本更新后，旧录屏授权可能失效，而系统开关仍显示开启。OpenProgram 会记录已安装应用成功取得录屏权限时的身份。如果之后应用身份改变且录屏检查失败，下一次本机授权操作会先更新 OpenProgram 自己的旧录屏登记，再进入系统授权流程。每个变化后的身份最多处理一次；状态检查和重连不会重置权限。使用稳定 Developer ID 签名的发行版沿用正常系统授权流程。</p>
+<p>切换会话时，同一个等待任务的重复消息不会再次打开系统授权。你仍可主动打开系统设置。</p>
+<h3 id="macos-自动化权限错误">macOS 自动化权限错误<a class="header-anchor" href="#macos-自动化权限错误">#</a></h3>
+<p>部分桌面命令会向 System Events 或目标应用发送 Apple Events。macOS 按目标应用分别控制“自动化”权限；录屏和辅助功能授权不代表已取得自动化权限。操作报告自动化权限拒绝时，请在执行任务的 Mac 上打开“系统设置 → 隐私与安全性 → 自动化”，检查发起请求的应用对错误中所列目标的授权。失败的操作仍保持失败；修改系统设置不会批准或重复执行该操作。其他原生命令失败会保留实际错误，不会显示为成功。</p>
 <h2 id="另一个桌面空间里的窗口">另一个桌面空间里的窗口<a class="header-anchor" href="#另一个桌面空间里的窗口">#</a></h2>
 <p>在另一个桌面空间里的窗口就地读取和操作：<code>list_windows</code> 会标出它，截图、点击、滚动、拖拽和元素动作都能送达，不用切换桌面空间。macOS 不把按键送给这样的窗口，所以在那里 <code>type_text</code> 和 <code>paste</code> 改为把纯文本插入有焦点的输入框，<code>press_key</code> 会报告按键发不过去。工具不能把窗口移到你当前的桌面空间，只有你自己（或 Dock）能移。</p>
 <h2 id="要求">要求<a class="header-anchor" href="#要求">#</a></h2>
@@ -358,7 +431,7 @@
 <li><code>python3-gi</code>，以及 <code>gir1.2-atspi-2.0</code>、<code>gir1.2-gtk-3.0</code> 和 <code>xdotool</code>；</li>
 <li>可选：<code>x11-utils</code>（<code>xprop</code>，用来区分真正的窗口和辅助窗口）、<code>tesseract-ocr</code>（为没有无障碍树的应用识别截图上的文字）、<code>pulseaudio-utils</code>（录音）。</li>
 </ul>
-<p>相同的部分：树的格式、稳定的编号和差异、截图、<code>zoom</code>、<code>find</code>、<code>batch</code>、<code>menu</code>（有菜单栏的应用）、<code>select_text</code>、<code>set_value</code>、按元素拖动滚动条，以及审批。应用按 <code>list_apps</code> 打印的桌面条目 id（<code>org.gnome.Calculator</code>）、名称或进程名来指定；已安装的应用通过它的桌面条目启动。</p>
+<p>相同的部分：树的格式、稳定的编号和差异、截图、<code>zoom</code>、<code>find</code>、<code>actions</code> 里的多个步骤、<code>menu</code>（有菜单栏的应用）、<code>select_text</code>、<code>set_value</code>、按元素拖动滚动条，以及审批。应用按 <code>list_apps</code> 打印的桌面条目 id（<code>org.gnome.Calculator</code>）、名称或进程名来指定；已安装的应用通过它的桌面条目启动。</p>
 <p>不同的部分：</p>
 <ul>
 <li>元素动作（按下、切换、设值、插入和选中文字、选择菜单项、在输入框里按回车）在后台进行。按 <code>x</code>、<code>y</code> 的指针输入（点击、拖拽、滚轮）、<code>hover</code>，以及回车以外的按键，只有在 GTK 或 Qt 窗口获得焦点时才能送达，所以这一步会把窗口短暂切到前台，输入完成后把焦点和鼠标指针还回原处。<code>hover</code> 会让指针停在窗口上。审批卡片会对这些步骤如实说明。</li>
@@ -369,7 +442,7 @@
 </ul>
 <h2 id="在-windows-上">在 Windows 上<a class="header-anchor" href="#在-windows-上">#</a></h2>
 <p>Windows 上，工具读取窗口的 UI Automation 树（Win32、WPF、WinForms、应用商店应用（UWP、WinUI）和基于 Chromium 的应用都提供），窗口被挡住时也能截图。需要 <code>comtypes</code> 包，Windows 安装已包含；<code>PATH</code> 上有 <code>tesseract</code> 时，没有树的应用的截图文字也能识别。Windows 支持是新加的，项目还没有在 Windows 机器上实际跑过；遇到问题请连同失败的那一步一起反馈。</p>
-<p>相同的部分：树的格式、稳定的编号和差异、截图、<code>zoom</code>、<code>find</code>、<code>batch</code>、<code>select_text</code>、<code>set_value</code>、<code>copy</code>、<code>paste</code>（纯文本、markdown 和 HTML）、按元素滚动、录音以及审批。应用按 <code>list_apps</code> 打印的名字指定：开始菜单里的名称（<code>计算器</code>）、可执行文件名（<code>notepad</code>）或进程号；已安装的应用从它的开始菜单条目启动。</p>
+<p>相同的部分：树的格式、稳定的编号和差异、截图、<code>zoom</code>、<code>find</code>、<code>actions</code> 里的多个步骤、<code>select_text</code>、<code>set_value</code>、<code>copy</code>、<code>paste</code>（纯文本、markdown 和 HTML）、按元素滚动、录音以及审批。应用按 <code>list_apps</code> 打印的名字指定：开始菜单里的名称（<code>计算器</code>）、可执行文件名（<code>notepad</code>）或进程号；已安装的应用从它的开始菜单条目启动。</p>
 <p>不同的部分：</p>
 <ul>
 <li>元素动作通过 UI Automation 在后台进行。对窗口的点击、滚动和不带修饰键的按键以窗口消息发给这个窗口，不会把它切到前台；<code>hover</code> 不移动你的鼠标指针。</li>
@@ -385,20 +458,52 @@
 <p>工具不向安全文本框输入，macOS 报告安全键盘输入期间也不输入；它从不操作钥匙串访问和密码 App、系统登录与授权弹窗，以及 OpenProgram 自身。任务需要这些步骤时，模型会请你来做。</p>
 <p>工具说明要求模型在删除数据、发送消息、提交表单、花钱、更改账户、权限或系统设置以及安装软件之前先征得你同意，并把验证码、输入密码和安全提示交给你处理。窗口里显示的文字从不被当作你的许可。</p>
 <p>该工具在微信、Telegram 渠道和规划模式下不提供。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/security-review.html" data-href-en="/docs/capabilities/security-review.html" data-href-zh="/docs/capabilities/security-review.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="安全审查">Security review</span></a><a class="pn-link pn-next" href="/docs/capabilities/installing-harnesses.html" data-href-en="/docs/capabilities/installing-harnesses.html" data-href-zh="/docs/capabilities/installing-harnesses.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="运行环境扩展">Harnesses</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/security-review.html" data-href-en="/docs/capabilities/security-review.html" data-href-zh="/docs/capabilities/security-review.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="安全审查">Security review</span></a><a class="pn-link pn-next" href="/docs/capabilities/installing-harnesses.html" data-href-en="/docs/capabilities/installing-harnesses.html" data-href-zh="/docs/capabilities/installing-harnesses.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="运行环境扩展">Harnesses</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
+<li>
+<a class="lvl-2" href="#目标与指南">目标与指南</a>
+</li>
 <li>
 <a class="lvl-2" href="#一步长什么样">一步长什么样</a>
 </li>
 <li>
-<a class="lvl-2" href="#动作">动作</a>
+<a class="lvl-2" href="#应用动作">应用动作</a>
+</li>
+<li>
+<a class="lvl-2" href="#多个步骤代码和新-agent">多个步骤、代码和新 agent</a>
+</li>
+<li>
+<a class="lvl-2" href="#按描述定位">按描述定位</a>
 </li>
 <li>
 <a class="lvl-2" href="#网页">网页</a>
 </li>
 <li>
+<a class="lvl-2" href="#查看和接管网页">查看和接管网页</a>
+</li>
+<li>
+<a class="lvl-2" href="#你自己的-chrome-或-edge">你自己的 Chrome 或 Edge</a>
+</li>
+<li>
+<a class="lvl-2" href="#虚拟机">虚拟机</a>
+</li>
+<li>
 <a class="lvl-2" href="#审批">审批</a>
+</li>
+<li>
+<details class="toc-disclosure" open=""><summary>
+<a class="lvl-2" href="#系统权限">系统权限</a>
+</summary>
+<ul class="toc-list">
+<li>
+<a class="lvl-3" href="#授权">授权</a>
+</li>
+<li>
+<a class="lvl-3" href="#macos-自动化权限错误">macOS 自动化权限错误</a>
+</li>
+</ul>
+</details>
 </li>
 <li>
 <a class="lvl-2" href="#另一个桌面空间里的窗口">另一个桌面空间里的窗口</a>

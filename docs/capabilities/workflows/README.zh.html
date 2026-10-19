@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792240777" data-alt-lang-url="/docs/capabilities/workflows/README.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792385903" data-alt-lang-url="/docs/capabilities/workflows/README.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,7 +85,6 @@
 <div class="nav-sec"><div class="nav-sec-title">Agentic Workflows</div><a class="navlink active" href="/docs/capabilities/workflows/README.html" data-title-zh="工作流" data-href-en="/docs/capabilities/workflows/README.html" data-href-zh="/docs/capabilities/workflows/README.zh.html">Workflows</a>
 <a class="navlink" href="/docs/capabilities/workflows/authoring.html" data-title-zh="工作流编写" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html">Workflow authoring</a>
 <a class="navlink" href="/docs/capabilities/workflows/reports.html" data-title-zh="每周报告" data-href-en="/docs/capabilities/workflows/reports.html" data-href-zh="/docs/capabilities/workflows/reports.zh.html">Weekly reports</a>
-<a class="navlink" href="/docs/capabilities/workflows/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/capabilities/workflows/gui-agent.html" data-href-zh="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/research-agent.html" data-title-zh="研究智能体" data-href-en="/docs/capabilities/workflows/research-agent.html" data-href-zh="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a>
 <a class="navlink" href="/docs/capabilities/workflows/wiki-agent.html" data-title-zh="知识库智能体" data-href-en="/docs/capabilities/workflows/wiki-agent.html" data-href-zh="/docs/capabilities/workflows/wiki-agent.zh.html">Wiki Agent</a></div>
 <div class="nav-sec"><div class="nav-sec-title">Agents</div><a class="navlink" href="/docs/capabilities/agents.html" data-title-zh="配置 Agent" data-href-en="/docs/capabilities/agents.html" data-href-zh="/docs/capabilities/agents.zh.html">Configure an Agent</a></div>
@@ -114,7 +113,7 @@
 <p>这一页介绍每个受支持 OpenProgram release 已包含的现成 agent 及其使用方式。如果你想直接用而不是自己写函数，从这里开始。</p>
 <h2 id="是什么">是什么<a class="header-anchor" href="#是什么">#</a></h2>
 <p>Agentic Workflow 是用 <a href="/docs/capabilities/agentic-programming/README.zh.html">Agentic Programming</a> 写成的成品工作流——代码里叫 <strong>harness</strong> 或 <strong>agentic program</strong>：一个自包含的 git 仓库，里面是一组 <code>Agent</code> method。release 中固定的版本会注册进 OpenProgram，像内置函数一样出现在聊天、Web UI 的 Programs 页和 <code>openprogram programs run</code> 里。</p>
-<p>三个第一方 workflow：</p>
+<p>两个第一方 workflow：</p>
 <table>
 <thead>
 <tr>
@@ -124,11 +123,6 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-<td><a href="/docs/capabilities/workflows/gui-agent.zh.html">GUI Agent</a></td>
-<td>已包含</td>
-<td>给一句任务，自主操作桌面（截图 → 识别 → 点击 → 验证循环）</td>
-</tr>
 <tr>
 <td><a href="/docs/capabilities/workflows/research-agent.zh.html">Research Agent</a></td>
 <td>已包含</td>
@@ -151,17 +145,22 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 </code></pre>
 <p><code>programs run</code> 还接受 <code>--provider</code>（openai-codex / gemini-cli / anthropic / openai / gemini，默认自动探测）和 <code>--model</code> 覆盖模型。</p>
 <p>第一方 Programs 是 immutable 产品组件。在可变扩展或开发环境中，<code>programs install</code> 会克隆额外第三方 harness、安装其声明的依赖并登记批准的来源。</p>
-<p><code>openprogram programs list</code> 包含 owner 已授权发布的 Workflow 注册入口，包括 <code>workflow/weekly_report/</code> 这类分类目录中的项目。列出条目不会执行 Workflow，也不会导入未登记的项目。</p>
+<p><code>openprogram programs list</code> 包含从 <code>~/.openprogram/workflows</code> 加载的 Workflow 入口。<code>openprogram workflows list</code> 显示其中每个 Workflow 及其加载状态。</p>
 <h2 id="用哪种方式触发">用哪种方式触发<a class="header-anchor" href="#用哪种方式触发">#</a></h2>
 <ul>
 <li><strong>Web 参数表单</strong>：点击 Programs 中的 <strong>Use</strong> 或侧栏收藏。新标签页变成草稿聊天；已有聊天保留草稿和执行中的任务。填写任务要求后明确发送。打开或关闭表单不会执行 Workflow。</li>
-<li><strong>聊天里</strong>：入口函数以 <code>as_tool=True</code> 注册为工具，直接用自然语言描述任务，模型会调用它（如 <code>gui_agent</code>、<code>research_agent</code>、<code>wiki_agent</code>）。</li>
-<li><strong>命令行</strong>：<code>openprogram programs run gui_agent -a task=&quot;Open Firefox&quot;</code>。</li>
+<li><strong>聊天里</strong>：入口函数以 <code>as_tool=True</code> 注册为工具，直接用自然语言描述任务，模型会调用它（如 <code>research_agent</code>、<code>wiki_agent</code>）。操作应用、内置浏览器 Page 和虚拟机用的是 <a href="/docs/capabilities/computer-use.zh.html"><code>computer_use_agent</code></a> 工具，不是 workflow。</li>
+<li><strong>命令行</strong>：<code>openprogram programs run wiki_agent -a task=&quot;把上面的笔记整理进知识库&quot;</code>。</li>
 <li><strong>Python 里</strong>：harness 的函数就是普通可 import 的 Python 函数。</li>
 </ul>
+<h2 id="模型选择">模型选择<a class="header-anchor" href="#模型选择">#</a></h2>
+<p>正文不调用模型的 Program 可以在未配置模型时执行。模型或凭据不可用时，在正文调用 Runtime 才报错；不调用模型的步骤可以执行，也不会自动选择其他 provider。</p>
+<p>直接运行工具时，内部模型调用同样需要明确的 provider 和 model。缺失或不完整的选择不会使用全局 provider 检测或 provider 的默认模型。</p>
+<p>从聊天执行时，Workflow 的内部模型调用继承当前轮次的 provider 和 model。请求 override 优先于会话选择，再使用 agent profile。该选择同样传入工具子进程。所选模型的 provider 认证仍需有效；初始化失败时保留所选模型的错误，不自动改用其他 provider。</p>
+<p>浏览器 workflow 在选择 backend 时保留明确传入的初始 URL。官方 MCP backend 支持受取消检查约束的等待，并传递 snapshot 失败。页面恢复保留当前窗口范围，不重复执行失败的动作；确认完成的结果保留实际证据和观察到的目标。</p>
 <h2 id="编写你自己的">编写你自己的<a class="header-anchor" href="#编写你自己的">#</a></h2>
 <p>任何满足目录契约（<code>&lt;package&gt;/agentics/__init__.py</code> 暴露 <code>PROGRAM_ENTRIES</code>）的仓库都能被同一条 <code>programs install</code> 命令安装。契约、最小模板和发布流程见<a href="/docs/capabilities/installing-harnesses.zh.html">安装与编写 Harness</a>。</p>
-<p>Harness 契约与单个 Workflow 包不同。包合同、完整测试示例、相对路径以及 <code>workflows validate/test/publish</code> 命令见<a href="/docs/capabilities/workflows/authoring.zh.html">编写、测试和发布 Workflow</a>。生成式 <code>create_workflow</code> 和 <code>revise_workflow</code> 也使用同一强制行为测试要求。</p>
+<p>Harness 契约与 <code>~/.openprogram/workflows</code> 中的单个 Workflow 包不同。包结构、完整测试示例和 <code>workflows check</code> 命令见<a href="/docs/capabilities/workflows/authoring.zh.html">编写和检查 Workflow</a>。聊天 Agent 编写的 Workflow 经过同样的检查。</p>
 <p>Workflow 表单只询问任务信息，不要求配置执行设置。文本润色在同一次模型请求中根据文本判断风格，不强制用户选择。浏览器 backend 和会话标识保留为内部参数。文档页码和输出位置属于可选的任务要求。显式 Python 调用仍支持受支持的覆盖值。</p>
 <h2 id="周报">周报<a class="header-anchor" href="#周报">#</a></h2>
 <p>如果 Workflow 目录已安装 <code>weekly_report</code>，可以直接提供周报内容或修改要求。例如：“提交本周周报：……”；“只修改本周周报的下周计划，其他字段不变”；“只查看本周提交记录”；“不要提交，把草稿写到 reports/weekly_report.md”。</p>
@@ -170,7 +169,7 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 <h3 id="组长周报草稿">组长周报草稿<a class="header-anchor" href="#组长周报草稿">#</a></h3>
 <p><code>group_weekly_report(task)</code> 主动从记忆、相关本地文件和微信查找范围、材料与作者证据，生成未发送草稿。缺字段不再提问，未核实作者与不可用来源写入限制。显式 <code>source: &quot;supplied&quot;</code> 只使用所给材料。来源选项见<a href="/docs/capabilities/workflows/reports.zh.html">每周报告</a>。</p>
 <p>完整且显式只用输入材料的结构化核对由代码完成，不调用模型。汇总按成员限制模型上下文，核验来源引用并保留不确定项。本地文件保存到 <code>reports/group-weekly/&lt;week&gt;/&lt;unique-run&gt;/</code>（或 <code>output_dir</code>）。未找到材料不等于未提交。请核对草稿后自行发送。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="步骤选择">Next-step selection</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/authoring.html" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="工作流编写">Workflow authoring</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-en="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.html" data-href-zh="/docs/capabilities/agentic-programming/choosing-the-next-step/next-step-decision.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="步骤选择">Next-step selection</span></a><a class="pn-link pn-next" href="/docs/capabilities/workflows/authoring.html" data-href-en="/docs/capabilities/workflows/authoring.html" data-href-zh="/docs/capabilities/workflows/authoring.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="工作流编写">Workflow authoring</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -181,6 +180,9 @@ openprogram<span class="w"> </span>programs<span class="w"> </span>run<span clas
 </li>
 <li>
 <a class="lvl-2" href="#用哪种方式触发">用哪种方式触发</a>
+</li>
+<li>
+<a class="lvl-2" href="#模型选择">模型选择</a>
 </li>
 <li>
 <a class="lvl-2" href="#编写你自己的">编写你自己的</a>

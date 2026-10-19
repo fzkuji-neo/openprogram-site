@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/install/install.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792385903" data-alt-lang-url="/docs/install/install.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -181,7 +181,7 @@ console code page and preserves the command's exit status.</p>
 </code></pre>
 <p>The Web UI is served at <code>http://localhost:18100</code>. The runtime contains the prebuilt Web UI, a private Node.js executable, and the compiled Ink application, so system Node.js is not required. Before activation, the installer verifies Web, providers, MCP, memory, channels, search, Ink, Chromium, the GPA detector weight, and registration and import of all three first-party Programs. <code>doctor</code> may still report missing user configuration such as provider credentials.</p>
 <h2 id="included-product-and-additional-extensions">Included product and additional extensions<a class="header-anchor" href="#included-product-and-additional-extensions">#</a></h2>
-<p>GUI Agent, Research Agent, and Wiki Agent are part of every supported release installation. Their Program packages, the GPA detector weight, and Playwright Chromium are included. The GUI Program is installed without dependency resolution: PyTorch, OpenCV, and EasyOCR are not in the product runtime, so GUI perception paths that use them require a separately configured backend or development overlay.</p>
+<p>The GUI, Research Agent, and Wiki Agent Programs are part of every supported release installation. The GUI Program registers no tools of its own; it supplies the visual grounding behind <a href="/docs/capabilities/computer-use.html#pointing-by-description"><code>computer_use_agent</code></a>'s <code>describe</code>. Their Program packages, the GPA detector weight, and Playwright Chromium are included. The GUI Program is installed without dependency resolution: PyTorch, OpenCV, and EasyOCR are not in the product runtime, so GUI perception paths that use them require a separately configured backend or development overlay.</p>
 <p>Third-party Programs are additional user-selected functionality and are stored separately from the read-only product runtime. Editable first-party Program sources, diagnostics, local frontend builds, and replacement OCR/browser backends are developer additions. Replacement backends or dependencies are required only for GUI perception paths that use libraries omitted from the product runtime; they do not change the base runtime manifest.</p>
 <h2 id="development-checkout">Development checkout<a class="header-anchor" href="#development-checkout">#</a></h2>
 <p>Contributors use a source checkout:</p>
@@ -221,7 +221,7 @@ recommended for ordinary users and does not define the <code>stable</code> chann
 </ul>
 <p>See <a href="/docs/install/upgrade.html">Upgrading</a> for version changes and <a href="/docs/install/profiles.html">Profiles</a> for isolated state directories.</p>
 <p>New macOS releases use Developer ID signing and Apple notarization. Older assets explicitly named <code>unsigned</code> retain their original security requirements. Local source builds use a separate development identity.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/faq.html" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="常见问题">FAQ</span></a><a class="pn-link pn-next" href="/docs/install/upgrade.html" data-href-en="/docs/install/upgrade.html" data-href-zh="/docs/install/upgrade.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="版本升级">Release upgrades</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/faq.html" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="常见问题">FAQ</span></a><a class="pn-link pn-next" href="/docs/install/upgrade.html" data-href-en="/docs/install/upgrade.html" data-href-zh="/docs/install/upgrade.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="版本升级">Release upgrades</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

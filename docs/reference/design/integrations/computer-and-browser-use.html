@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792240777" data-alt-lang-url="/docs/reference/design/integrations/computer-and-browser-use.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792385903" data-alt-lang-url="/docs/reference/design/integrations/computer-and-browser-use.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Computer and browser use · OpenProgram Docs</title>
-<meta name="description" content="OpenProgram gives the model two tools for things that happen on a screen. web_use drives web pages in the App&#x27;s built-in browser and the headless Chromium;">
+<meta name="description" content="OpenProgram gives the model one tool for everything that happens on a screen: computer_use_agent . It operates applications on macOS, Linux and Windows, pages">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/integrations/computer-and-browser-use.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/design/integrations/computer-and-browser-use.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/integrations/computer-and-browser-use.html">
 <meta property="og:title" content="Computer and browser use · OpenProgram Docs">
-<meta property="og:description" content="OpenProgram gives the model two tools for things that happen on a screen. web_use drives web pages in the App&#x27;s built-in browser and the headless Chromium;">
+<meta property="og:description" content="OpenProgram gives the model one tool for everything that happens on a screen: computer_use_agent . It operates applications on macOS, Linux and Windows, pages">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Computer and browser use · OpenProgram Docs">
-<meta name="twitter:description" content="OpenProgram gives the model two tools for things that happen on a screen. web_use drives web pages in the App&#x27;s built-in browser and the headless Chromium;">
+<meta name="twitter:description" content="OpenProgram gives the model one tool for everything that happens on a screen: computer_use_agent . It operates applications on macOS, Linux and Windows, pages">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -76,13 +76,14 @@
 <a class="navlink" href="/docs/reference/design/implementation-status.html" data-title-zh="实现索引" data-href-en="/docs/reference/design/implementation-status.html" data-href-zh="/docs/reference/design/implementation-status.zh.html">Implementation index</a>
 <a class="navlink" href="/docs/reference/design/framework-comparison.html" data-title-zh="框架对比" data-href-en="/docs/reference/design/framework-comparison.html" data-href-zh="/docs/reference/design/framework-comparison.zh.html">Framework comparison</a>
 <a class="navlink" href="/docs/reference/design/feature-matrix.html" data-title-zh="功能矩阵" data-href-en="/docs/reference/design/feature-matrix.html" data-href-zh="/docs/reference/design/feature-matrix.zh.html">Feature matrix</a></details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">84</span></summary>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="Agent 与工作流">Agents and workflows</span><span class="nav-count">81</span></summary>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="执行与控制">Execution</span><span class="nav-count">14</span></summary><a class="navlink" href="/docs/reference/design/runtime/README.html" data-title-zh="运行时" data-href-en="/docs/reference/design/runtime/README.html" data-href-zh="/docs/reference/design/runtime/README.zh.html">Runtime</a>
 <a class="navlink" href="/docs/reference/design/runtime/codex-capability-adoption.html" data-title-zh="Codex 功能核对" data-href-en="/docs/reference/design/runtime/codex-capability-adoption.html" data-href-zh="/docs/reference/design/runtime/codex-capability-adoption.zh.html">Codex capability audit</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-call-flow.html" data-title-zh="调用流程" data-href-en="/docs/reference/design/runtime/execution/agent-call-flow.html" data-href-zh="/docs/reference/design/runtime/execution/agent-call-flow.zh.html">Call flow</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/control.html" data-title-zh="执行控制" data-href-en="/docs/reference/design/runtime/execution/control.html" data-href-zh="/docs/reference/design/runtime/execution/control.zh.html">Execution control</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-title-zh="操作生命周期" data-href-en="/docs/reference/design/runtime/execution/agent-action-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/agent-action-lifecycle.zh.html">Action lifecycle</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agent-worktree.html" data-title-zh="工作树" data-href-en="/docs/reference/design/runtime/execution/agent-worktree.html" data-href-zh="/docs/reference/design/runtime/execution/agent-worktree.zh.html">Worktrees</a>
+<a class="navlink" href="/docs/reference/design/runtime/execution/command-sessions.html" data-title-zh="命令会话" data-href-en="/docs/reference/design/runtime/execution/command-sessions.html" data-href-zh="/docs/reference/design/runtime/execution/command-sessions.zh.html">Command sessions</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html" data-title-zh="递归图解" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.viz.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.viz.html">Recursion diagram</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-title-zh="递归保护" data-href-en="/docs/reference/design/runtime/execution/agentic-self-recursion.html" data-href-zh="/docs/reference/design/runtime/execution/agentic-self-recursion.zh.html">Recursion guard</a>
 <a class="navlink" href="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-title-zh="异步任务" data-href-en="/docs/reference/design/runtime/execution/async-job-lifecycle.html" data-href-zh="/docs/reference/design/runtime/execution/async-job-lifecycle.zh.html">Async tasks</a>
@@ -132,17 +133,13 @@
 <a class="navlink" href="/docs/reference/design/runtime/tool-toggle-management.html" data-title-zh="工具集" data-href-en="/docs/reference/design/runtime/tool-toggle-management.html" data-href-zh="/docs/reference/design/runtime/tool-toggle-management.zh.html">Toolsets</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/user-input-requests.html" data-title-zh="输入请求" data-href-en="/docs/reference/design/runtime/operations/user-input-requests.html" data-href-zh="/docs/reference/design/runtime/operations/user-input-requests.zh.html">Input requests</a>
 <a class="navlink" href="/docs/reference/design/runtime/operations/file-management.html" data-title-zh="文件与恢复" data-href-en="/docs/reference/design/runtime/operations/file-management.html" data-href-zh="/docs/reference/design/runtime/operations/file-management.zh.html">Files and recovery</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="程序与工作流">Programs and workflows</span><span class="nav-count">13</span></summary><a class="navlink" href="/docs/reference/design/function/README.html" data-title-zh="函数" data-href-en="/docs/reference/design/function/README.html" data-href-zh="/docs/reference/design/function/README.zh.html">Functions</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="程序与工作流">Programs and workflows</span><span class="nav-count">9</span></summary><a class="navlink" href="/docs/reference/design/function/README.html" data-title-zh="函数" data-href-en="/docs/reference/design/function/README.html" data-href-zh="/docs/reference/design/function/README.zh.html">Functions</a>
 <a class="navlink" href="/docs/reference/design/function/agentic-program.html" data-title-zh="程序模型" data-href-en="/docs/reference/design/function/agentic-program.html" data-href-zh="/docs/reference/design/function/agentic-program.zh.html">Program model</a>
 <a class="navlink" href="/docs/reference/design/function/calling-unification.html" data-title-zh="函数调用" data-href-en="/docs/reference/design/function/calling-unification.html" data-href-zh="/docs/reference/design/function/calling-unification.zh.html">Function calling</a>
 <a class="navlink" href="/docs/reference/design/function/calling/code-call.html" data-title-zh="顺序调用" data-href-en="/docs/reference/design/function/calling/code-call.html" data-href-zh="/docs/reference/design/function/calling/code-call.zh.html">Fixed-order calls</a>
 <a class="navlink" href="/docs/reference/design/runtime/application-runtime.html" data-title-zh="应用运行时" data-href-en="/docs/reference/design/runtime/application-runtime.html" data-href-zh="/docs/reference/design/runtime/application-runtime.zh.html">Application runtime</a>
 <a class="navlink" href="/docs/reference/design/runtime/programs-architecture.html" data-title-zh="程序结构" data-href-en="/docs/reference/design/runtime/programs-architecture.html" data-href-zh="/docs/reference/design/runtime/programs-architecture.zh.html">Program structure</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programmed-agentic-workflow.html" data-title-zh="工作流概览" data-href-en="/docs/reference/design/runtime/self-programmed-agentic-workflow.html" data-href-zh="/docs/reference/design/runtime/self-programmed-agentic-workflow.zh.html">Workflow overview</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-model.html" data-title-zh="程序职责" data-href-en="/docs/reference/design/runtime/self-programming-workflow-model.html" data-href-zh="/docs/reference/design/runtime/self-programming-workflow-model.zh.html">Program responsibilities</a>
-<a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-authoring.html" data-title-zh="工作流编写" data-href-en="/docs/reference/design/runtime/self-programming-workflow-authoring.html" data-href-zh="/docs/reference/design/runtime/self-programming-workflow-authoring.zh.html">Workflow authoring</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-programming-workflow-ui.html" data-title-zh="程序界面" data-href-en="/docs/reference/design/runtime/self-programming-workflow-ui.html" data-href-zh="/docs/reference/design/runtime/self-programming-workflow-ui.zh.html">Program interface</a>
-<a class="navlink" href="/docs/reference/design/runtime/workflow-control-primitives.html" data-title-zh="工作流控制" data-href-en="/docs/reference/design/runtime/workflow-control-primitives.html" data-href-zh="/docs/reference/design/runtime/workflow-control-primitives.zh.html">Workflow control</a>
 <a class="navlink" href="/docs/reference/design/runtime/llm-and-agent.html" data-title-zh="执行统一方案" data-href-en="/docs/reference/design/runtime/llm-and-agent.html" data-href-zh="/docs/reference/design/runtime/llm-and-agent.zh.html">Execution unification</a>
 <a class="navlink" href="/docs/reference/design/runtime/self-update.html" data-title-zh="自主更新" data-href-en="/docs/reference/design/runtime/self-update.html" data-href-zh="/docs/reference/design/runtime/self-update.zh.html">Self-updates</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="报告">Reports</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/report-suite.html" data-title-zh="报告工作流" data-href-en="/docs/reference/design/runtime/report-suite.html" data-href-zh="/docs/reference/design/runtime/report-suite.zh.html">Report workflows</a>
@@ -215,8 +212,8 @@
 <a class="navlink" href="/docs/reference/design/ui/composer-responsive-controls.html" data-title-zh="响应式控件" data-href-en="/docs/reference/design/ui/composer-responsive-controls.html" data-href-zh="/docs/reference/design/ui/composer-responsive-controls.zh.html">Responsive controls</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-tool-profile-menu.html" data-title-zh="工具配置菜单" data-href-en="/docs/reference/design/ui/composer-tool-profile-menu.html" data-href-zh="/docs/reference/design/ui/composer-tool-profile-menu.zh.html">Tool profile menu</a>
 <a class="navlink" href="/docs/reference/design/ui/composer-fast-control.html" data-title-zh="速度控制" data-href-en="/docs/reference/design/ui/composer-fast-control.html" data-href-zh="/docs/reference/design/ui/composer-fast-control.zh.html">Speed control</a>
-<a class="navlink" href="/docs/reference/design/ui/gui-agent.html" data-title-zh="界面智能体" data-href-en="/docs/reference/design/ui/gui-agent.html" data-href-zh="/docs/reference/design/ui/gui-agent.zh.html">GUI Agent</a>
 <a class="navlink" href="/docs/reference/design/ui/agent-control-overlay.html" data-title-zh="Agent 控制提示层" data-href-en="/docs/reference/design/ui/agent-control-overlay.html" data-href-zh="/docs/reference/design/ui/agent-control-overlay.zh.html">Agent control overlay</a>
+<a class="navlink" href="/docs/reference/design/ui/resource-preview.html" data-title-zh="资源与操作预览" data-href-en="/docs/reference/design/ui/resource-preview.html" data-href-zh="/docs/reference/design/ui/resource-preview.zh.html">Resources and operation preview</a>
 <a class="navlink" href="/docs/reference/design/ui/browser-control-surfaces.html" data-title-zh="网页任务控制" data-href-en="/docs/reference/design/ui/browser-control-surfaces.html" data-href-zh="/docs/reference/design/ui/browser-control-surfaces.zh.html">Browser task control</a>
 <a class="navlink" href="/docs/reference/design/ui/send-queue-reliability.html" data-title-zh="队列与执行引导" data-href-en="/docs/reference/design/ui/send-queue-reliability.html" data-href-zh="/docs/reference/design/ui/send-queue-reliability.zh.html">Queue and steering</a>
 <a class="navlink" href="/docs/reference/design/ui/session-auto-rename.html" data-title-zh="会话命名" data-href-en="/docs/reference/design/ui/session-auto-rename.html" data-href-zh="/docs/reference/design/ui/session-auto-rename.zh.html">Session naming</a>
@@ -342,12 +339,13 @@
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/replay.html" data-title-zh="策略回放" data-href-en="/docs/reference/design/proactive/_research_archive/replay.html" data-href-zh="/docs/reference/design/proactive/_research_archive/replay.zh.html">Policy replay</a>
 <a class="navlink" href="/docs/reference/design/proactive/_research_archive/threat-model.html" data-title-zh="威胁模型" data-href-en="/docs/reference/design/proactive/_research_archive/threat-model.html" data-href-zh="/docs/reference/design/proactive/_research_archive/threat-model.zh.html">Threat model</a></details>
 </details>
-<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">13</span></summary>
+<details class="nav-branch nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="待分类">Uncategorized</span><span class="nav-count">14</span></summary>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="概览">Overview</span><span class="nav-count">1</span></summary><a class="navlink" href="/docs/reference/design/repository-integration.html" data-title-zh="仓库分支整合" data-href-en="/docs/reference/design/repository-integration.html" data-href-zh="/docs/reference/design/repository-integration.zh.html">Repository integration</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="模型服务">Providers</span><span class="nav-count">2</span></summary><a class="navlink" href="/docs/reference/design/providers/anthropic-api-auth.html">Anthropic API authentication</a>
 <a class="navlink" href="/docs/reference/design/providers/local-models.html" data-title-zh="本地模型 Provider" data-href-en="/docs/reference/design/providers/local-models.html" data-href-zh="/docs/reference/design/providers/local-models.zh.html">Local model providers</a></details>
-<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">3</span></summary><a class="navlink" href="/docs/reference/design/runtime/environments.html" data-title-zh="运行环境" data-href-en="/docs/reference/design/runtime/environments.html" data-href-zh="/docs/reference/design/runtime/environments.zh.html">Environments</a>
+<details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="运行时">Runtime</span><span class="nav-count">4</span></summary><a class="navlink" href="/docs/reference/design/runtime/environments.html" data-title-zh="运行环境" data-href-en="/docs/reference/design/runtime/environments.html" data-href-zh="/docs/reference/design/runtime/environments.zh.html">Environments</a>
 <a class="navlink" href="/docs/reference/design/runtime/tool-name-resolution.html">Tool name resolution</a>
+<a class="navlink" href="/docs/reference/design/runtime/workflow.html" data-title-zh="Workflow" data-href-en="/docs/reference/design/runtime/workflow.html" data-href-zh="/docs/reference/design/runtime/workflow.zh.html">Workflows</a>
 <a class="navlink" href="/docs/reference/design/runtime/unified-agent.html" data-title-zh="统一 Agent 执行" data-href-en="/docs/reference/design/runtime/unified-agent.html" data-href-zh="/docs/reference/design/runtime/unified-agent.zh.html">Unified Agent execution</a></details>
 <details class="nav-sec nav-disclosure"><summary><span class="nav-sec-title" data-title-zh="网页界面">Web UI</span><span class="nav-count">7</span></summary><a class="navlink" href="/docs/reference/design/ui/chat-compose.html" data-title-zh="聊天引用与消息编辑" data-href-en="/docs/reference/design/ui/chat-compose.html" data-href-zh="/docs/reference/design/ui/chat-compose.zh.html">Chat quotes and message editing</a>
 <a class="navlink" href="/docs/reference/design/ui/conversation-lifecycle.html">Conversation lifecycle and responsiveness</a>
@@ -359,71 +357,207 @@
 </details></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="模型与外部接入">Models and connections</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="扩展与集成">Extensions and integrations</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="操控电脑与浏览器">Computer and browser use</span></nav><h1 id="computer-and-browser-use">Computer and browser use<a class="header-anchor" href="#computer-and-browser-use">#</a></h1>
-<p>OpenProgram gives the model two tools for things that happen on a screen. <code>web_use</code> drives web pages in the App's built-in browser and the headless Chromium; <code>computer_use</code> drives any other macOS application in the background. This record explains why there are exactly two, how <code>computer_use</code> is built, and what the two still lack against Codex and the Claude desktop app.</p>
-<h2 id="why-two-tools-and-why-these-two">Why two tools, and why these two<a class="header-anchor" href="#why-two-tools-and-why-these-two">#</a></h2>
-<p>Codex (ChatGPT.app) exposes one tool, <code>cua_repl</code>: the model writes JavaScript against a <code>cua</code> object whose targets — an app from <code>cua.getApp(name)</code> or a tab from <code>cua.createBrowserTab(...)</code> — share one API (<code>getAXState</code>, <code>click</code>, <code>drag</code>, <code>scroll</code>, <code>selectText</code>, <code>setValue</code>, <code>performSecondaryAction</code>, plus <code>paste</code>, <code>pressKey</code>, <code>typeText</code> for apps). Which backend handles a target is fixed by the target kind, not chosen by the model.</p>
-<p>The Claude desktop app exposes many tools in groups: <code>app_*</code> for background control of one application (list windows, screenshot, zoom, click, type, key, scroll, drag, menu, AX find, focus, batch), a display-scope &quot;full control&quot; set that takes over the real pointer and keyboard, browser tools, <code>framebuffer_*</code> for virtual machines, and a request/release pair per application.</p>
-<p>OpenProgram takes Codex's shape and the Claude app's vocabulary:</p>
+<p>OpenProgram gives the model one tool for everything that happens on a screen: <code>computer_use_agent</code>. It operates applications on macOS, Linux and Windows, pages in the App's built-in browser and the headless Chromium, and a remote virtual machine. This record explains the tool's shape, how it hands the model only the instructions it needs, how a click target becomes a screen position, how the model chooses whether the work runs in the current context, and how the application and browser backends underneath are built.</p>
+<h2 id="three-ways-to-give-a-model-a-screen">Three ways to give a model a screen<a class="header-anchor" href="#three-ways-to-give-a-model-a-screen">#</a></h2>
+<p><strong>Codex</strong> (ChatGPT.app) has one execution tool, <code>js</code> in the <code>cua_repl</code> MCP server: the model writes JavaScript against <code>sky</code> (Mac apps) and <code>agent.browsers</code> (the in-app browser, Chrome). The knowledge sits in three skills, <code>computer-use</code>, <code>control-in-app-browser</code> and <code>control-chrome</code>, each about 3,200–3,400 tokens. The context holds one line per skill; the model reads a <code>SKILL.md</code> itself when the task needs it, and the browser skill then has it run <code>documentation()</code> inside <code>js</code> to fetch the browser API reference. Loading costs two or three model calls, and a model that skips the reading does not know the API.</p>
+<p><strong>Claude Code</strong> has many small tools: the built-in browser's <code>navigate</code>, <code>read_page</code>, <code>find</code>, <code>computer</code>, <code>form_input</code> and about fifteen more, whose full schemas are always in context, and a second set for the user's Chrome, deferred as bare names until <code>ToolSearch</code> loads them. Every parameter is schema-checked, but two sets with the same verbs invite picking the wrong one, and the resident set costs context in every conversation.</p>
+<p><strong>OpenProgram</strong> takes Codex's single entry and Claude Code's structured arguments:</p>
 <ul>
-<li><strong>One tool per surface, structured arguments.</strong> The model does not write code to drive a window. <code>computer_use(action=…, app=…, …)</code> and <code>web_use(command=…, …)</code> are ordinary function calls with a JSON schema, which is what the rest of the harness — approval cards, permission rules, tool presentation, deferral — already understands.</li>
-<li><strong>No backend selection by the model.</strong> A web page is a <code>web_use</code> target, an application is a <code>computer_use</code> target. The old GUI Agent plan of a planner that picks among desktop, browser and VM backends is not needed for ordinary tasks; its workflow stays as it is and is not the entry point for these tools.</li>
-<li><strong>Everything in the background.</strong> Element actions through the Accessibility API and pointer events routed to a process do not move the user's cursor, change the key window or raise a window. A foreground &quot;full control&quot; tier like the Claude app's is deliberately absent: the background route already covers coordinate clicks, drags and wheel scrolls.</li>
-<li><strong>Approval per application.</strong> The unit the user reasons about is &quot;may it touch Notes&quot;, not &quot;may it click&quot;. The rule is <code>computer_use(&lt;app&gt;)</code>, and it can be granted once, for the conversation, or for the project.</li>
+<li><strong>One tool.</strong> <code>computer_use_agent</code> is the only screen tool the model sees. Its schema is small and the same for every target; the actions and their arguments live in per-target guides.</li>
+<li><strong>Guides arrive with the first call.</strong> The tool description is a catalogue of the targets. The first call for a target returns that target's guide together with its current state (installed and running apps, open pages), so the guide costs no extra call and does not depend on the model remembering to read it.</li>
+<li><strong>Arguments or code.</strong> Simple steps are structured calls (<code>action</code> + <code>args</code>, or up to 20 <code>actions</code>). Steps with loops, conditions or data handling are a Python snippet (<code>code</code>) that runs in an isolated interpreter whose variables survive between calls.</li>
+<li><strong>The model chooses the context.</strong> <code>context: &quot;inherit&quot;</code> (default) runs in the current conversation; <code>context: &quot;fresh&quot;</code> starts an agent with a clean context and a written brief, which returns only its result.</li>
+<li><strong>Grounding is a layer.</strong> A click target is an element index, a page ref, a pixel, or a text description resolved by visual detection.</li>
 </ul>
-<p>Each Claude app tool group and where it lands:</p>
+<h2 id="computer_use_agent"><code>computer_use_agent</code><a class="header-anchor" href="#computer_use_agent">#</a></h2>
+<h3 id="shape">Shape<a class="header-anchor" href="#shape">#</a></h3>
+<pre><code>computer_use_agent(target, action?, args?, actions?, code?, timeout?, context?, brief?)
+</code></pre>
 <table>
 <thead>
 <tr>
-<th>Claude app</th>
-<th>OpenProgram</th>
+<th>Parameter</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>list apps and windows, screenshot, zoom</td>
-<td><code>list_apps</code>, <code>list_windows</code>, <code>get_app_state</code>, <code>zoom</code></td>
+<td><code>target</code></td>
+<td><code>app</code>, <code>browser</code> or <code>vm</code>; all three are always in the schema, and a target this host cannot reach answers with how to set it up</td>
 </tr>
 <tr>
-<td>click (double, triple, right, with modifiers), type, key, hold a key</td>
-<td><code>click</code> (<code>click_count</code>, <code>mouse_button</code>, <code>key</code>, <code>duration</code>), <code>type_text</code>, <code>press_key</code> (<code>duration</code>)</td>
+<td><code>action</code>, <code>args</code></td>
+<td>one step and its arguments; omitted, the call opens the target</td>
 </tr>
 <tr>
-<td>scroll, drag, hover, wait</td>
-<td><code>scroll</code>, <code>drag</code>, <code>hover</code>, <code>wait</code></td>
+<td><code>actions</code></td>
+<td>up to 20 steps <code>{action, args}</code> on one target, stopping at the first error; the state comes back once</td>
 </tr>
 <tr>
-<td>menu, AX find, focus, batch</td>
-<td><code>menu</code>, <code>find</code> (with OCR fallback), <code>focus</code>, <code>batch</code></td>
+<td><code>code</code></td>
+<td>Python run in the isolated interpreter (see Code)</td>
 </tr>
 <tr>
-<td>request / release an application</td>
-<td>the per-application approval card and its <code>computer_use(&lt;app&gt;)</code> rule; nothing to release, since nothing is held</td>
+<td><code>timeout</code></td>
+<td>seconds a code call may run, at most 120 (default 60)</td>
 </tr>
 <tr>
-<td>display-scope full control (real pointer and keyboard)</td>
-<td>absent by design: background delivery covers coordinate input; on Linux and for Windows chords the window comes forward only for the step, and the approval card says so</td>
+<td><code>context</code></td>
+<td><code>inherit</code> (default) or <code>fresh</code></td>
 </tr>
 <tr>
-<td>browser tools</td>
-<td><code>web_use</code></td>
-</tr>
-<tr>
-<td><code>framebuffer_*</code> for virtual machines</td>
-<td>absent: a VM's window is an ordinary application window, read by screenshot and OCR and driven by coordinates</td>
+<td><code>brief</code></td>
+<td>with <code>fresh</code>: goal, known facts, limits and what to hand back</td>
 </tr>
 </tbody>
 </table>
-<h2 id="computer_use"><code>computer_use</code><a class="header-anchor" href="#computer_use">#</a></h2>
-<h3 id="shape">Shape<a class="header-anchor" href="#shape">#</a></h3>
-<pre><code>computer_use(action, app, element_index | x,y, …)
+<p><code>action</code>, <code>actions</code> and <code>code</code> are exclusive. Arguments are validated by the target, and an error names the right spelling, since the schema does not list every action's arguments.</p>
+<h3 id="targets-and-guides">Targets and guides<a class="header-anchor" href="#targets-and-guides">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Backend</th>
+<th>Opening returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app</code></td>
+<td><code>openprogram/computer_use/</code> (macOS, Linux X11, Windows)</td>
+<td><code>args.app</code> given: its state (tree and screenshot); otherwise the app list</td>
+</tr>
+<tr>
+<td><code>browser</code></td>
+<td>the <code>web_use</code> runtime (App Pages, headless Chromium); with <code>args.browser</code> = <code>chrome</code> or <code>edge</code>, Playwright MCP in extension mode connected to the user's browser</td>
+<td>the page list (the tab list in the user's browser)</td>
+</tr>
+<tr>
+<td><code>vm</code></td>
+<td>an OSWorld-compatible server at <code>computer_use.vm_url</code></td>
+<td>a screenshot</td>
+</tr>
+</tbody>
+</table>
+<p>Each target has a guide (<code>guides/&lt;target&gt;.md</code>; the app guide has macOS, Linux and Windows variants): its actions, their arguments, how results look, and the confirmation policy. The tool remembers which guides it has sent per conversation and per agent generation, and attaches a guide to the first result for its target; <code>action: &quot;guide&quot;</code> returns it again, for instance after compaction dropped it. Starting a fresh agent forgets that agent generation's guides, because the new agent begins with only its prompt.</p>
+<p>The <code>app</code> actions are those of the application backend below, with the same arguments; the <code>browser</code> actions are the <code>web_use</code> runtime's commands: <code>list_pages</code>, <code>observe</code>, <code>verify</code> and <code>close</code> keep their names, and each <code>act</code> action (<code>navigate</code>, <code>click</code>, <code>type</code>, …) is an action of its own. As in Codex, the browser is chosen first and the actions do not change with it. <code>args.browser</code> omitted is the built-in browser through <code>web_use</code>; <code>chrome</code> or <code>edge</code> is the user's own browser, which none of the <code>web_use</code> backends reaches. For those, <code>targets/browser.py</code> hands each step to <code>workflow/browser/extension_browser.py</code>, which runs <code>@playwright/mcp --extension --browser chrome|msedge</code> (the version pinned for <code>web_use</code>) through <code>_SyncMCPClient</code>, one server per conversation and browser, kept between calls. The server opens <code>chrome-extension://&lt;id&gt;/connect.html</code> in that browser with the address of its relay, and the Playwright Extension connects back and relays CDP for the tab the user shares; with <code>computer_use.chrome_extension_token</code> set, the server passes <code>PLAYWRIGHT_MCP_EXTENSION_TOKEN</code> and the extension connects without asking. <code>list_pages</code>, <code>observe</code>, <code>close</code>, <code>screenshot</code>, <code>upload</code>, <code>evaluate</code>, the logs and <code>verify</code> map to the server's tab, snapshot, screenshot, file, evaluate and log tools; every element and pointer action goes through <code>OfficialMCPPageBackend._action_call</code>, the same translation the <code>playwright_mcp</code> backend applies to App Pages. Refs are the server's snapshot refs. Code mode registers no resource for the user's browser.</p>
+<h3 id="grounding">Grounding<a class="header-anchor" href="#grounding">#</a></h3>
+<p><code>grounding.py</code> turns a step's target into what the backend takes:</p>
+<table>
+<thead>
+<tr>
+<th>Given</th>
+<th>Resolved to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>element_index</code> (app) / <code>ref</code> (browser)</td>
+<td>passed through; the backend acts on the element</td>
+</tr>
+<tr>
+<td><code>x</code>, <code>y</code></td>
+<td>passed through as pixels of the target's last screenshot</td>
+</tr>
+<tr>
+<td><code>describe</code></td>
+<td>the last screenshot and the text go to gui_harness's <code>locate_target</code> (GPA-GUI-Detector icons, OCR text, saved components, a model check, zoom when unsure); its centre becomes <code>x</code>, <code>y</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>describe</code> is offered for <code>app</code> and <code>vm</code>, and only where gui_harness and its perception dependencies are importable; the guide leaves it out otherwise. It costs several model calls inside the tool, so the guide places it after indices and pixels. gui_harness is not modified; only <code>planning.component_memory.locate_target</code> is called.</p>
+<h3 id="code">Code<a class="header-anchor" href="#code">#</a></h3>
+<p><code>code</code> runs in the persistent sandboxed interpreter of <code>backend/gui_runner.py</code> (seatbelt on macOS, no file, network or process access). The namespace has <code>cu.app</code>, <code>cu.browser</code> and <code>cu.vm</code>; <code>await cu.app.click(app=&quot;Numbers&quot;, element_index=3)</code> is the structured step <code>click</code> with those arguments, dispatched by the host through the same target code, grounding and checks, one effect receipt per step (<code>backend/gui_broker.py</code>). A code call names its <code>target</code> and, for <code>app</code>, <code>args.app</code>; the approval covers that application, and steps on another application are refused. <code>evaluate</code> is not available inside code, since every page script needs its own approval. One interpreter serves one execution attempt, so variables persist for the rest of the turn; it is replaced when it fails or times out. Each call may run 120 seconds and 100 steps. Code mode needs the macOS sandbox; elsewhere a code call reports that the sandbox is unavailable.</p>
+<h3 id="context">Context<a class="header-anchor" href="#context">#</a></h3>
+<p><code>context: &quot;fresh&quot;</code> hands the task to an agent with a clean context through the generic <code>agent</code> spawn (<code>_agent_impl</code>, <code>start_from=&quot;clean&quot;</code>): same session, same model and thinking settings, the result returned as this call's result. Its prompt is the brief, a line naming the target (and <code>args.app</code>), the target's guide, and, where <code>describe</code> is available, the recommendation to ground by it when an element has no index or ref. Screenshots and grounding calls stay in its context. The spawn depth limit keeps it from starting another one.</p>
+<p>A spawned agent cannot ask for approval, so the <code>fresh</code> call carries it: it names the target and, for <code>app</code>, <code>args.app</code>, and goes through the same approval as a direct call. While the agent runs, the call's exact rule is written as a session rule (unless one already exists) and removed when the agent returns, so the agent's own calls match it and nothing outlives the call.</p>
+<h3 id="approval-and-access">Approval and access<a class="header-anchor" href="#approval-and-access">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Approval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app</code> (except <code>list_apps</code>)</td>
+<td>per application, as before: rule <code>computer_use_agent(&lt;app&gt;)</code>, asked in the modes that ask; former <code>computer_use(&lt;app&gt;)</code> rules still match</td>
+</tr>
+<tr>
+<td><code>browser</code></td>
+<td>the turn's Page grant when the conversation has Pages; otherwise the permission mode; <code>evaluate</code> is approved per call, once</td>
+</tr>
+<tr>
+<td><code>browser</code> with <code>args.browser</code></td>
+<td>the user's Chrome or Edge, once per conversation: rule <code>computer_use_agent(browser:chrome)</code> (or <code>browser:edge</code>), never the Page grant; <code>evaluate</code> is approved per call</td>
+</tr>
+<tr>
+<td><code>vm</code></td>
+<td>per endpoint: rule <code>computer_use_agent(vm:&lt;url&gt;)</code></td>
+</tr>
+<tr>
+<td><code>fresh</code></td>
+<td>as the target it names</td>
+</tr>
+</tbody>
+</table>
+<p>System access (Accessibility, Screen Recording) gates <code>app</code> calls other than <code>list_apps</code> as before.</p>
+<h3 id="module-layout">Module layout<a class="header-anchor" href="#module-layout">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>openprogram/programs/tools/system/computer_use_agent/tool.py</code></td>
+<td>the registered tool: schema, catalogue, routing, guide bookkeeping, approval reason</td>
+</tr>
+<tr>
+<td><code>…/computer_use_agent/guides/</code></td>
+<td>the target guides</td>
+</tr>
+<tr>
+<td><code>…/computer_use_agent/targets/app.py</code></td>
+<td>application actions over <code>openprogram/computer_use/</code></td>
+</tr>
+<tr>
+<td><code>…/computer_use_agent/targets/browser.py</code></td>
+<td>page actions over the <code>web_use</code> runtime</td>
+</tr>
+<tr>
+<td><code>…/computer_use_agent/targets/vm.py</code></td>
+<td>screenshot and pyautogui input over the VM server's HTTP API</td>
+</tr>
+<tr>
+<td><code>…/computer_use_agent/grounding.py</code></td>
+<td>target resolution, including <code>describe</code></td>
+</tr>
+<tr>
+<td><code>…/computer_use_agent/code.py</code></td>
+<td>code mode over <code>backend/gui_runner.py</code> and <code>gui_broker.py</code></td>
+</tr>
+<tr>
+<td><code>…/computer_use_agent/fresh.py</code></td>
+<td>the clean-context agent</td>
+</tr>
+</tbody>
+</table>
+<p>There is no separate plan → decide → act → verify loop: a long task goes to a <code>fresh</code> agent working with this same tool, and gui_harness is reached only through <code>describe</code>. Its Program stays installable for that (<code>entries=False</code>, so it registers no tools of its own).</p>
+<h2 id="application-backend">Application backend<a class="header-anchor" href="#application-backend">#</a></h2>
+<h3 id="shape-1">Shape<a class="header-anchor" href="#shape-1">#</a></h3>
+<pre><code>computer_use_agent(target=&quot;app&quot;, action, args={app, element_index | x,y | describe, …})
 </code></pre>
 <p>Actions come in three groups:</p>
 <ul>
 <li><strong>Reading:</strong> <code>list_apps</code>, <code>list_windows</code>, <code>get_app_state</code> (<code>include</code> = all / tree / screenshot, <code>window</code> or <code>window_id</code>), <code>zoom</code> (a region of the last screenshot at full pixel density), <code>find</code> (text and role search over the last tree).</li>
 <li><strong>Acting</strong>, Codex's target API: <code>click</code> (button, count, held modifiers, hold duration), <code>type_text</code>, <code>press_key</code>, <code>set_value</code>, <code>scroll</code> (pages or pixels), <code>drag</code>, <code>perform_secondary_action</code>, <code>select_text</code>, <code>paste</code>; and from the Claude app's <code>app_*</code> set: <code>copy</code>, <code>focus</code>, <code>menu</code>, <code>show_window</code>.</li>
-<li><strong><code>batch</code>:</strong> up to 20 acting steps on one app, in order, stopping at the first error; one settle and one state at the end.</li>
+<li><strong>Several steps</strong> (<code>actions</code>): up to 20 acting steps on one app, in order, stopping at the first error; one settle and one state at the end.</li>
 </ul>
-<p>Only <code>list_apps</code> is approval-free. A batch step cannot name a different app, because the approval the call carries names only the batch's app.</p>
+<p>Only <code>list_apps</code> is approval-free. A step in <code>actions</code> cannot name a different app, because the approval the call carries names only the call's app.</p>
 <p>Every acting call returns <code>Done: &lt;summary&gt;</code> followed by the Accessibility tree <strong>diff</strong> against the state the model last saw: <code>- line</code> for elements that vanished, <code>+ index line</code> for new or changed ones. When more than half the lines (and at least twelve) changed, the whole tree is returned instead, because a diff of a rebuilt view is longer than the view. <code>get_app_state(full=true)</code> returns the full tree on demand. The tree is capped at 1500 nodes and rendered one element per line: index, role (<code>AXTextField</code> → <code>text field</code>, with the subrole in parentheses), label, value, placeholder, flags (<code>focused</code>, <code>selected</code>, <code>checked</code>, <code>disabled</code>, <code>secure</code>, <code>settable</code> …) and the element's secondary actions other than the primary press. Bidirectional marks some apps wrap numbers in are dropped from the rendering and from <code>find</code>.</p>
 <p>The tree covers the window, the menus, popovers and dialogs beside it, and the menu bar with only open menus expanded. Closed menus are read by the <code>menu</code> action, so every read covers the same ground and a diff never shows a whole menu bar appearing or vanishing.</p>
 <p>Results that changed nothing are marked: <code>menu</code> listings, <code>copy</code> and an already-visible <code>show_window</code> return a <code>Report</code>, and the tool returns it without settling or reading the state again.</p>
@@ -439,7 +573,7 @@
 <p>A window whose own walk yields fewer than 12 elements (frame, title bar buttons and little else) is drawn without Accessibility. For such a window every full or screenshot-only read also runs Vision's accurate text recognizer on the screenshot it just took and lists each line as <code>&quot;text&quot; at (cx, cy), WxH</code> in screenshot pixels, top to bottom and left to right, at most 150 lines. The first recognition language picks Vision's model, so the languages are a hint (the user's preferred languages, then Chinese, Japanese, Korean and English) and language detection chooses per image. <code>find</code> with <code>text</code> falls back to these lines when no element matches; for a window that was not sparse it captures and reads the window once at the same scale, so the positions stay valid for actions. OCR text has no indices and is not part of the tree diff: it is evidence for coordinate actions, and a failure of the recognizer leaves the read without it. The same reads list icons and controls without text (<code>ocr.detect_shapes</code>): Vision's contour detector runs twice, once for dark marks on a light window and once for light on dark, at most 1024 pixels on the long side. Top-level outlines within 3 points of each other merge into one shape, and a shape is dropped when it covers a recognized line of two or more characters, is under 8 points on its short side, over 80 points on its long side, more than 4:1, or touches the screenshot's edge (the window's rounded corners and border). A one-character line does not rule a shape out, because the recognizer often reads an icon as a glyph. Shapes the two passes both find are kept once, and the list is sorted in 16-point rows, left to right, at most 60. A shape carries no name: the model reads the screenshot to tell a gear from a trash can.</p>
 <h3 id="audio">Audio<a class="header-anchor" href="#audio">#</a></h3>
 <p>Codex records computer audio with <code>start_audio_recording</code> / <code>stop_audio_recording</code> (60 seconds by default, 300 at most) and hands the clip to the model as audio input. OpenProgram keeps the two actions and their limits. The clip becomes a WAV on disk plus a transcript from the Settings → Voice engine, which every model can read. <code>ToolReturn.audio</code> also carries the WAV as an <code>AudioContent</code> block. When the model lists <code>audio</code> among its inputs, the Gemini converter passes it as inline audio and the Chat Completions converter as <code>input_audio</code>, each in a user turn after the run of tool results, which must stay together. That Chat Completions turn also carries the run's screenshots for vision models, since a <code>tool</code> message holds only text. The Responses and Anthropic converters skip audio blocks, and tool-result media is not written to the conversation history, so the clip costs nothing for models that cannot hear it. <code>audio.py</code> opens an <code>SCStream</code> whose filter is the display with only the target application included, asks for 16 kHz mono float samples, excludes the OpenProgram process, and attaches only an audio output: the 2×2, one-frame-a-second video side is never consumed. Samples past the limit are dropped and a timer stops the stream half a second after it, so a forgotten recording releases the capture. One recording runs per conversation; it is converted to 16-bit PCM on stop and saved under the state directory, keeping the newest 20. The action keeps the per-application approval: only the named app's sound is in the clip. A clip whose peak stays under 1e-4 is reported silent and not transcribed. An application without a window has no <code>SCRunningApplication</code> and cannot be recorded.</p>
-<h3 id="module-layout">Module layout<a class="header-anchor" href="#module-layout">#</a></h3>
+<h3 id="module-layout-1">Module layout<a class="header-anchor" href="#module-layout-1">#</a></h3>
 <table>
 <thead>
 <tr>
@@ -493,8 +627,8 @@
 <td>WASAPI process-loopback capture of one process tree</td>
 </tr>
 <tr>
-<td><code>openprogram/programs/tools/system/computer_use.py</code></td>
-<td>the registered tool: schema, description with the confirmation policy, approval reason, batch, result assembly</td>
+<td><code>openprogram/programs/tools/system/computer_use_agent/targets/app.py</code></td>
+<td>the <code>app</code> target: step validation, <code>describe</code> resolution, several steps, result assembly</td>
 </tr>
 </tbody>
 </table>
@@ -503,6 +637,10 @@
 <p>Pointer events that have to be real (coordinate clicks, drags, wheel) are posted with the recipe the open-source cua-driver established: a focus-without-raise record posted to the target process serial number, a <code>mouseMoved</code> primer, the event stamped with click state, button, subtype 3, target pid, window id and a click group, <code>CGEventSetWindowLocation</code> for the window-relative position, and <code>SLEventPostToPid</code> for delivery. Keyboard events carry an <code>SLSEventAuthenticationMessage</code> so the receiving process accepts them; without SkyLight the code falls back to <code>CGEventPostToPid</code>. The result is a click the application handles as if the user clicked, while the real cursor stays where it is and the front application does not change.</p>
 <p>A window is chosen by <code>window</code> (title substring or index) or <code>window_id</code>; without either, the window the model read last stays selected while it is open, then the focused or main window. A minimized window or a hidden app still gives its tree; the screenshot is unavailable until <code>show_window</code> un-minimizes it (<code>AXMinimized</code>) or unhides the app, neither of which activates it. A window on another Space is read and operated where it is. <code>AXWindows</code> lists only the current Space's windows, so the app's off-screen ordinary windows (layer 0, at least 80×60) that no listed window covers are looked up by SkyLight's remote token: <code>_AXUIElementCreateWithRemoteToken</code> with the pid, <code>0</code>, <code>'coco'</code> and an element id, trying ids from zero (at most 4000) until each window id has its element, as AltTab does; the result is kept per app until that set of ids changes. ScreenCaptureKit captures such a window and SkyLight's pointer route reaches it, but the window server drops key events for it whatever their route, so <code>type_text</code> and <code>paste</code> there set the focused element's <code>AXSelectedText</code> instead, <code>press_key</code> reports that keys do not arrive, and <code>show_window</code> says the window stays on its Space. Moving it is not possible: since macOS 14.5 only the Dock may (<code>SLSMoveWindowsToManagedSpace</code> from any other process needs System Integrity Protection relaxed, as yabai documents).</p>
 <p><code>paste</code> writes the pasteboard (plain text, or HTML rendered from Markdown with <code>markdown-it</code>), sends Cmd+V to the target process, and restores the previous pasteboard contents when the change count shows nothing else wrote in between.</p>
+<h3 id="agent-cursor">Agent cursor<a class="header-anchor" href="#agent-cursor">#</a></h3>
+<p>Before a step that names an element or a point, <code>MacOSComputer.act</code> computes where it lands (the element's centre from its <code>AXFrame</code>, or the screenshot point mapped through the window origin and scale) and calls <code>native_window_resources.note_action_point</code>, then waits <code>CUE_LEAD_SECONDS</code> (0.15 s) so the cursor arrives first. The point is in screen points with the origin at the top left of the main display, the space Electron also uses. The worker broadcasts it as a <code>native.action</code> frame (<code>session_id</code>, <code>x</code>, <code>y</code>, <code>sequence</code>, <code>at</code>, <code>action</code>, <code>app_name</code>); an agentic subprocess forwards it through the same parent channel as operated windows (<code>kind: &quot;action&quot;</code>). In the web client <code>native-window-store.ts</code> hands the frame to <code>openprogramDesktop.nativeActionCue</code> unless <strong>Show actions</strong> is off. The desktop main process (<code>showNativeActionCue</code> in <code>main/action-cues.js</code>) keeps one transparent, click-through, non-focusable, always-on-top window that loads the same <code>/menu-overlay/action-cue</code> page as the Page cursor, glides it from the previous point, plays the click, and hides it after <code>ACTION_CUE_MS</code>. Every App window receives the frame, so the main process drops a step it has already shown by <code>session_id</code>, <code>sequence</code> and <code>at</code>. Linux and Windows do not emit points yet.</p>
+<h3 id="window-marker">Window marker<a class="header-anchor" href="#window-marker">#</a></h3>
+<p>The operated window carries the macOS screen-sharing marker, as under Codex Computer Use: a purple badge over its title-bar buttons and the sharing icon in the menu bar. macOS draws both for any window under a live ScreenCaptureKit stream, so <code>window_watch.WindowWatch</code> keeps one open on it, the way Codex keeps its picture-in-picture stream. <code>MacOSComputer</code> touches it with the window id on every <code>act</code> and every <code>get_state</code> that names a window. The stream filters to that one window (<code>SCContentFilter.initWithDesktopIndependentWindow</code>), asks for a 2x2 frame at one frame a second and attaches no output, so nothing is recorded. Each session watches at most one window: moving to another window releases the previous one, and a window with no step for <code>IDLE_SECONDS</code> (20 s) is released by a sweep timer. Opening the stream runs on its own thread and its failures are ignored, so a step never waits on or fails because of the marker.</p>
 <h3 id="refusals">Refusals<a class="header-anchor" href="#refusals">#</a></h3>
 <p>The tool never types into <code>AXSecureTextField</code> elements or while macOS reports secure keyboard input (<code>kCGSSessionSecureInputPID</code>), and refuses to target Keychain Access, Passwords, loginwindow, SecurityAgent and OpenProgram's own bundles. The refusal is returned as an error that asks the user to do the step; no approval scope overrides it.</p>
 <h3 id="linux-backend">Linux backend<a class="header-anchor" href="#linux-backend">#</a></h3>
@@ -518,7 +656,7 @@
 <li><strong>Audio.</strong> <code>pactl list sink-inputs</code> gives each stream's <code>application.process.id</code>; the recorder polls until a stream of the app or any of its descendants (re-read on every poll, since players are usually children started after recording began) appears, then reads it with <code>parec --monitor-stream=&lt;index&gt;</code> as 16 kHz mono float. Reading continues until parec ends, so the samples it buffers when stop terminates it are kept. Under PipeWire the first samples arrive within a quarter second; under PulseAudio's timer-based scheduling the first monitor of a stream starts 1.2–1.7 s late and that span is lost.</li>
 <li><strong>Refusals.</strong> <code>password text</code> elements, Seahorse, KWallet, gcr prompts, polkit agents and OpenProgram's own entries.</li>
 </ul>
-<p>The tool's description is rewritten for Linux at import (<code>_LINUX_DESCRIPTION</code>): which steps bring the window forward, plain-text <code>paste</code>, clipboard-free <code>copy</code>, the Linux refusals. The <code>computer_use_apps</code> WebSocket reply carries the worker's <code>platform</code>, and on Linux the approval card states for coordinate input, drags, hovers and keys other than Return (<code>needsForeground</code>) that the window comes forward for that step.</p>
+<p>The app guide is rewritten for Linux when it is sent (<code>_LINUX_GUIDE</code> in <code>targets/app.py</code>): which steps bring the window forward, plain-text <code>paste</code>, clipboard-free <code>copy</code>, the Linux refusals. The <code>computer_use_apps</code> WebSocket reply carries the worker's <code>platform</code>, and on Linux the approval card states for coordinate input, drags, hovers and keys other than Return (<code>needsForeground</code>) that the window comes forward for that step.</p>
 <h3 id="windows-backend">Windows backend<a class="header-anchor" href="#windows-backend">#</a></h3>
 <p><code>WindowsComputer</code> keeps the same interface. The process is per-monitor DPI aware (<code>SetProcessDpiAwarenessContext(-4)</code>), so window frames, UI Automation bounds and input coordinates are all physical screen pixels. Every Win32 function it calls has its <code>restype</code> and <code>argtypes</code> declared, so 64-bit handles pass intact.</p>
 <ul>
@@ -533,9 +671,9 @@
 <li><strong>Audio.</strong> <code>ActivateAudioInterfaceAsync</code> on <code>VAD\Process_Loopback</code> with <code>PROCESS_LOOPBACK_MODE_INCLUDE_TARGET_PROCESS_TREE</code> gives an <code>IAudioClient</code> initialised in shared loopback mode with auto-conversion to 16 kHz mono float, read event-driven through <code>IAudioCaptureClient</code> on its own COM thread. The completion handler is an agile COM object, since Windows calls it on a worker thread.</li>
 <li><strong>Refusals.</strong> <code>IsPassword</code> elements, CredentialUIBroker, consent (UAC), LogonUI, LockApp, credwiz, keymgr and OpenProgram.</li>
 </ul>
-<p>The tool's description is rewritten for Windows at import (<code>_WINDOWS_DESCRIPTION</code>), and the approval card says for a chord or a paste (<code>needsForeground(args, &quot;windows&quot;)</code>) that the window comes forward for that step.</p>
+<p>The app guide is rewritten for Windows when it is sent (<code>_WINDOWS_GUIDE</code>), and the approval card says for a chord or a paste (<code>needsForeground(args, &quot;windows&quot;)</code>) that the window comes forward for that step.</p>
 <h3 id="permissions-and-approval">Permissions and approval<a class="header-anchor" href="#permissions-and-approval">#</a></h3>
-<p><code>requires_approval</code> returns <code>computer_use controls &lt;app&gt;</code> for every action except <code>list_apps</code>. <code>parse_command</code> reduces a call to its normalised application name, so <code>exact_rule_for_call</code> yields <code>computer_use(calculator)</code> and <code>rule_to_string</code> prints it in the usual form. The approval card offers four scopes:</p>
+<p>For the <code>app</code> target <code>requires_approval</code> returns <code>computer_use_agent controls &lt;app&gt;</code> for every action except <code>list_apps</code>; a call with <code>code</code>, <code>fresh</code> or no action is approved as reading the app. <code>parse_command</code> reduces a call to its normalised application name (<code>vm:&lt;url&gt;</code> for the VM, none for the browser), so <code>exact_rule_for_call</code> yields <code>computer_use_agent(calculator)</code> and <code>rule_to_string</code> prints it in the usual form. The approval card offers four scopes:</p>
 <table>
 <thead>
 <tr>
@@ -550,7 +688,7 @@
 </tr>
 <tr>
 <td>session</td>
-<td>the session's run config (<code>permission_rules.allow</code>) — <code>computer_use</code> is the first tool in <code>_SESSION_SCOPE_TOOLS</code></td>
+<td>the session's run config (<code>permission_rules.allow</code>) — <code>computer_use_agent</code> is in <code>_SESSION_SCOPE_TOOLS</code></td>
 </tr>
 <tr>
 <td>always</td>
@@ -562,15 +700,15 @@
 </tr>
 </tbody>
 </table>
-<p>The grant is mandatory in every permission mode. <code>permission_decision</code> treats <code>computer_use</code> as an app-grant tool (<code>_APP_GRANT_TOOLS</code>): when the tool's own <code>requires_approval</code> says the call needs approval and no allow rule names the application, the decision is <code>ask</code> with reason <code>APP_GRANT_REQUIRED</code>, before Auto classification or Bypass is consulted. Unattended sources therefore deny such calls, and an allow rule is the only way past the card.</p>
+<p>The grant applies in the modes that ask; Bypass allows the call and Auto sends it to the Auto review. <code>permission_decision</code> treats <code>computer_use_agent</code> as an app-grant tool (<code>_APP_GRANT_TOOLS</code>) for its <code>app</code> and <code>vm</code> targets: when the tool's own <code>requires_approval</code> says the call needs approval and no allow rule names the application, the decision is <code>ask</code> with reason <code>APP_GRANT_REQUIRED</code>, Unattended sources therefore deny such calls outside Bypass, and in the modes that ask an allow rule is the only way past the card. <code>_RULE_ALIASES</code> lets rules saved under the former name, <code>computer_use(&lt;app&gt;)</code>, match <code>computer_use_agent</code> calls. The <code>browser</code> target has no rule of its own: a conversation with Pages gets the turn's <code>SURFACE_GRANT</code>, and an upload or a website outside this computer asks.</p>
 <p>Permission rules are reloaded at every operation boundary (global &lt; project &lt; session), so a session rule applies to the next call without a restart.</p>
-<p>System access: <code>computer_use:desktop</code> is an operation of both the <code>accessibility</code> and <code>screen_recording</code> capabilities; <code>_desktop_operation</code> maps every call except <code>list_apps</code> to it, so a missing grant pauses the call with the standard &quot;waiting&quot; state and the Settings → System access flow, exactly like the GUI Agent's desktop surface.</p>
-<p>The tool is in <code>DEFAULT_TOOLS</code> but deferred (<code>DEFERRED_DEFAULT_TOOLS</code>): its schema sits in the catalog until the model loads it. <code>unsafe_in</code> hides it in WeChat and Telegram channels and in plan mode.</p>
+<p>System access: <code>computer_use:desktop</code> is an operation of both the <code>accessibility</code> and <code>screen_recording</code> capabilities; <code>_desktop_operation</code> maps every <code>app</code> call except <code>list_apps</code> and <code>guide</code> to it, so a missing grant pauses the call with the standard &quot;waiting&quot; state and the Settings → System access flow; the waiting request names <code>computer_use_agent</code>.</p>
+<p>The tool is in <code>DEFAULT_TOOLS</code> and resident: its schema is short, so it is not deferred. When the conversation has Pages, <code>_configure_web_use_tools</code> keeps it and removes the independent browser tools; <code>web_use</code> is never offered to the model. <code>unsafe_in</code> hides it in WeChat and Telegram channels and in plan mode.</p>
 <h3 id="web-presentation">Web presentation<a class="header-anchor" href="#web-presentation">#</a></h3>
-<p><code>tool-presentation.ts</code> renders <code>computer_use</code> calls with the monitor icon and the system tone; the title names the action and the application (&quot;Clicked in Calculator&quot;), the target line shows the key, text, action name or window where one is given. The approval card's scope buttons add &quot;Allow this conversation&quot; between once and always, and the answer summary prints &quot;Allowed for this conversation&quot;. The GUI Agent's internal desktop capability is also named <code>computer_use</code>; the web tells the two apart by argument shape (<code>isGuiToolCall</code>): only a call without an <code>action</code> argument is a GUI Agent step rendered by the GUI view.</p>
-<h2 id="browser-use-what-web_use-has-and-what-it-lacks">Browser use: what <code>web_use</code> has and what it lacks<a class="header-anchor" href="#browser-use-what-web_use-has-and-what-it-lacks">#</a></h2>
-<p><code>web_use</code> today: <code>observe</code>, <code>act</code> with <code>screenshot</code>, <code>navigate</code>, <code>click</code>, <code>type</code>, <code>press</code>, <code>scroll</code>, <code>hover</code>, <code>select</code>, <code>upload</code>, and <code>verify</code> with text, URL, title, element and file assertions, on three backends (Playwright MCP, Chrome DevTools MCP, the App's own Chrome).</p>
-<p>Against the Codex target API, <code>web_use</code> now covers:</p>
+<p><code>lib/computer-use-agent-call.ts</code> reads a <code>computer_use_agent</code> call: <code>appStepArgs</code> turns an <code>app</code> call into the flat step the app renderers take (<code>{action, app, …}</code>; several steps become a batch, code and a fresh agent their own actions), and <code>screenStep</code> names a browser or VM call's action. <code>tool-presentation.ts</code> renders <code>app</code> steps with the monitor icon and the system tone; the title names the action and the application (&quot;Clicked in Calculator&quot;), the target line shows the key, text, action name or window where one is given. Browser calls show the action and URL, VM calls the action, code &quot;Ran code in <app>&quot;, and a fresh agent &quot;Handed to a new agent&quot; with the brief's first line. The approval card's scope buttons add &quot;Allow this conversation&quot; between once and always, and the answer summary prints &quot;Allowed for this conversation&quot;. Calls recorded by the earlier tools (<code>computer_use</code>, <code>web_use</code>, <code>gui_agent</code>) keep their renderers so old conversations read as before.</p>
+<h2 id="browser-target-the-web_use-runtime">Browser target: the <code>web_use</code> runtime<a class="header-anchor" href="#browser-target-the-web_use-runtime">#</a></h2>
+<p>The <code>browser</code> target runs on the <code>web_use</code> runtime (<code>run_web_use</code> in <code>openprogram/programs/workflow/browser/</code>), which other programs still call directly. It has: <code>observe</code>, <code>act</code> with <code>screenshot</code>, <code>navigate</code>, <code>click</code>, <code>type</code>, <code>press</code>, <code>scroll</code>, <code>hover</code>, <code>select</code>, <code>upload</code>, and <code>verify</code> with text, URL, title, element and file assertions, on three backends (Playwright MCP, Chrome DevTools MCP, the App's own Chrome).</p>
+<p>Against the Codex target API it covers:</p>
 <table>
 <thead>
 <tr>
@@ -632,7 +770,7 @@
 </tr>
 </tbody>
 </table>
-<p>The argument names are <code>computer_use</code>'s (<code>mouse_button</code>, <code>click_count</code>, <code>direction</code>, <code>format</code>, <code>prefix</code>, <code>suffix</code>, <code>selection_type</code>, <code>duration</code>), so the two tools read alike; only the held keys of a click are <code>modifiers</code>, because <code>key</code> already names the key of <code>press</code>.</p>
+<p>The argument names are the <code>app</code> target's (<code>mouse_button</code>, <code>click_count</code>, <code>direction</code>, <code>format</code>, <code>prefix</code>, <code>suffix</code>, <code>selection_type</code>, <code>duration</code>), so the two targets read alike; only the held keys of a click are <code>modifiers</code>, because <code>key</code> already names the key of <code>press</code>.</p>
 <p><code>page_actions.py</code> holds the page-side half: argument parsing and five scripts (<code>POINTER_SCRIPT</code>, <code>SCROLL_SCRIPT</code>, <code>INSERT_TEXT_SCRIPT</code>, <code>PASTE_SCRIPT</code>, <code>SELECT_TEXT_SCRIPT</code>), each a function of <code>(element, options)</code>. The controller runs them with <code>evaluate</code> on a ref's handle; the MCP backends run them through <code>browser_evaluate</code> / <code>evaluate_script</code> with the options inlined as JSON and a <code>require</code> guard that throws when the page reports failure, so the backend's own error path reports it. Choices per path:</p>
 <ul>
 <li>Bound App tabs keep the background rule: plain clicks still use the existing background click script; other clicks dispatch pointer and mouse events in the page; drags and coordinate clicks go through the page's input dispatch with the tab's input scale, as before.</li>
@@ -641,46 +779,77 @@
 <li><code>paste</code> dispatches a <code>ClipboardEvent</code> carrying a <code>DataTransfer</code>; when the page does not handle it, the text is inserted with <code>insertHTML</code> (rich editors, <code>md</code>/<code>html</code>) or <code>insertText</code>. The system clipboard is never touched.</li>
 </ul>
 <p>Tabs map onto existing commands: <code>list_pages</code> is <code>listTabs</code>, a Page alias from it is <code>getTab</code>, <code>observe</code> with a <code>url</code> opens a hidden background tab (<code>createBrowserTab</code> hidden) unless a bound Page already shows that origin, and <code>close</code> ends the session. <code>observe</code> with <code>visible: true</code> opens the tab in front, which the schema reserves for when the user asked to watch, since it moves their focus. <code>observe</code> with <code>changes_only: true</code> (<code>observe_diff.py</code>) is the diff form: it compares the new frame with the previous observation of the same URL by role, name, label, value, disabled state and input type, lists new and changed elements in full, gives each unchanged one as a single line with its new ref, drops an unchanged text or ARIA snapshot, and names removed elements. Every observation still issues refs for all its elements and refs belong to one frame, which is how a stale ref is refused; the diff only shortens what is shown, so no ref has to outlive its frame. The MCP backends replace the ARIA snapshot with their own and list only file inputs as elements, so the option does not apply to them.</p>
-<p><code>evaluate</code> reads everything a signed-in page holds, including what observations redact, so it is gated in the permission policy rather than by the tool: <code>force_approval</code> makes a <code>web_use</code> call whose <code>action</code> (top-level or nested) is <code>evaluate</code> ask in every mode, before allow rules, bypass and the bound-surface grant are consulted, and <code>one_shot_approval</code> keeps the card to the &quot;once&quot; scope, never saves a rule, and shows the arguments untruncated. Non-interactive sources are refused. The script runs through the controller on every backend, the MCP ones included, because the controller holds the same tab and the password values of its fields: the result passes through the same redaction as an observation and through <code>_mutated</code>, so the frame is invalidated and the next step observes again. An expression is wrapped as <code>() =&gt; (expr)</code>; scripts are capped at 8000 characters and results at 20,000.</p>
+<p><code>evaluate</code> reads everything a signed-in page holds, including what observations redact, so it is gated in the permission policy rather than by the tool: <code>force_approval</code> makes a <code>computer_use_agent</code> browser call with an <code>evaluate</code> step (single or in <code>actions</code>) ask in every mode, before allow rules, bypass and the bound-surface grant are consulted, and <code>one_shot_approval</code> keeps the card to the &quot;once&quot; scope, never saves a rule, and shows the arguments untruncated. Non-interactive sources are refused. The script runs through the controller on every backend, the MCP ones included, because the controller holds the same tab and the password values of its fields: the result passes through the same redaction as an observation and through <code>_mutated</code>, so the frame is invalidated and the next step observes again. An expression is wrapped as <code>() =&gt; (expr)</code>; scripts are capped at 8000 characters and results at 20,000.</p>
 <p><code>console_messages</code> and <code>network_requests</code> (<code>page_logs.py</code>) read Playwright's own per-Page history (<code>console_messages()</code>, <code>page_errors()</code>, <code>requests()</code>), so nothing has to be listening before the first read. They run through the controller on every backend like <code>evaluate</code>, are read-only and leave the frame valid. Console text passes the password redaction; requests are listed by method, URL without query or fragment, status (<code>no response</code> when the browser never received one) and resource type, never with headers or bodies.</p>
 <h2 id="interface-work">Interface work<a class="header-anchor" href="#interface-work">#</a></h2>
-<p>A <code>computer_use</code> approval card (<code>computer-use-approval.tsx</code>) leads with the application itself: its icon, display name and bundle id come from the <code>computer_use_apps</code> WebSocket action, which calls the backend's <code>app_info</code> and launches nothing, and the web caches them per name (<code>lib/net/computer-use-apps.ts</code>). Below it a chip names the step in words (<code>computer-use-step.ts</code>), two lines state that the step runs in the background (or, for audio, that only that application's sound is recorded) and what the offered scopes cover, and the arguments without empty values fold into &quot;Execution details&quot;.</p>
-<p>The project's Settings tab has a Computer use section (<code>computer-use-apps-section.tsx</code>) between the default settings and the permission rules. It lists the project's <code>computer_use(&lt;app&gt;)</code> allow rules as one row per application with icon, name, bundle id and a remove control, and the generic rule list leaves those rules out. Removing a row removes the rule. Conversation-scoped grants are session rules that end with their conversation, so the section does not list them.</p>
+<p>The approval card for an <code>app</code> call (<code>computer-use-approval.tsx</code>) leads with the application itself: its icon, display name and bundle id come from the <code>computer_use_apps</code> WebSocket action, which calls the backend's <code>app_info</code> and launches nothing, and the web caches them per name (<code>lib/net/computer-use-apps.ts</code>). Below it a chip names the step in words (<code>computer-use-step.ts</code>), two lines state that the step runs in the background (or, for audio, that only that application's sound is recorded) and what the offered scopes cover, and the arguments without empty values fold into &quot;Execution details&quot;.</p>
+<p>The project's Settings tab has a Computer use section (<code>computer-use-apps-section.tsx</code>) between the default settings and the permission rules. It lists the project's <code>computer_use_agent(&lt;app&gt;)</code> allow rules (and those saved as <code>computer_use(&lt;app&gt;)</code>) as one row per application with icon, name, bundle id and a remove control, and the generic rule list leaves those rules out. Removing a row removes the rule. Conversation-scoped grants are session rules that end with their conversation, so the section does not list them.</p>
 <p>The person points the agent at things the way Codex lets them:</p>
 <ul>
 <li>In a web tab, <strong>Comment on the page…</strong> picks one element and adds its selector, text and the comment to the draft; <strong>Screenshot a region…</strong> lets them drag a rectangle and adds those pixels as a PNG attachment. Both run in one isolated world (<code>PICKER_WORLD</code> in <code>apps/desktop/main/web-views.js</code>) that shares a cancel hook, so one mode ends the other. The region overlay is removed and two frames are painted before <code>capturePage</code> takes the rectangle, scaled by the page zoom. The file reaches the target conversation through <code>lib/composer-inbox.ts</code>: the composer showing that conversation takes it as a dropped file, and it waits there until one does.</li>
 <li>The composer's <code>@</code> menu lists open web tabs and running apps above the files (<code>attach/mention-sources.ts</code>). A tab is written as a markdown link to its address and an app as its name and bundle id, so &quot;this tab&quot; resolves without the model guessing. Running apps come from <code>computer_use_apps</code> with <code>running: true</code>, which lists regular apps other than the refused ones and is kept for ten seconds in the page.</li>
 </ul>
-<h2 id="relation-to-the-gui-agent">Relation to the GUI Agent<a class="header-anchor" href="#relation-to-the-gui-agent">#</a></h2>
-<p>The GUI Agent workflow (<code>gui_agent</code>), its grounding pipeline and its capability planner are unchanged. <code>computer_use</code> does not call it and it does not call <code>computer_use</code>. Whether the workflow later becomes a thin sub-agent that runs on <code>computer_use</code> through the generic <code>agent</code> tool is an open decision, taken only after the base tools are complete.</p>
 <h2 id="implementation-status">Implementation status<a class="header-anchor" href="#implementation-status">#</a></h2>
 <ul>
-<li>Implemented: <code>computer_use</code> on macOS with the reading, acting and batch actions above, stable indices, adaptive settling, background pointer and keyboard delivery, tree diffs, per-app approval with the four scopes, system-access gating, web presentation, unit tests for keys, tree numbering, menu matching, batch, rules and approval wiring.</li>
-<li>Implemented for <code>web_use</code>: every row of the parity table above, on all three backends, with tests that run the page scripts in Chromium, and the per-call approval of <code>evaluate</code>.</li>
+<li>Implemented: <code>computer_use_agent</code> with the <code>app</code>, <code>browser</code> and <code>vm</code> targets, per-target guides on first use, several steps, code mode, <code>fresh</code> agents with a carried session rule, <code>describe</code> grounding through gui_harness, the VM target over the OSWorld HTTP API (through the outbound policy as the <code>computer_use.vm</code> consumer), and the web presentation; unit tests cover routing, guides, the VM scripts, grounding and approval, and a sandbox test runs code against stub targets. Not yet run against a live VM server or with gui_harness's detector installed in the App.</li>
+<li>Implemented: the <code>app</code> target on macOS with the reading and acting actions above, stable indices, adaptive settling, background pointer and keyboard delivery, tree diffs, per-app approval with the four scopes, system-access gating, web presentation, unit tests for keys, tree numbering, menu matching, several steps, rules and approval wiring.</li>
+<li>Implemented for the browser target: every row of the parity table above, on all three backends, with tests that run the page scripts in Chromium, and the per-call approval of <code>evaluate</code>.</li>
 <li>Implemented: OCR text for windows with a sparse tree and as the <code>find</code> fallback, with a test that reads a rendered image through Vision.</li>
 <li>Implemented: per-application audio recording with WAV output and Voice-engine transcription.</li>
-<li>Implemented: <code>web_use</code> visible tabs and <code>changes_only</code> observations on the native backends.</li>
+<li>Implemented: visible tabs and <code>changes_only</code> observations on the native backends.</li>
 <li>Implemented: recordings as audio input for Gemini and Chat Completions audio models; tool-result screenshots on Chat Completions vision models.</li>
 <li>Implemented: element comments and region screenshots in web tabs; <code>@</code>-mentions of open tabs and running apps.</li>
 <li>Implemented: outlines of icons and controls without text in sparse windows.</li>
 <li>Implemented: the Linux (X11) backend described above. It is tested in a Debian 12 container with Xvfb, Openbox, the AT-SPI bus and PipeWire against a GTK 3 window (menu bar, entry, password entry, check box, slider, scrolled text view, drawing area, a button that plays sound from a child process), GNOME Calculator (GTK 4 with libadwaita, launched from its desktop entry, 7×6 computed by element clicks) and ImageMagick <code>display</code> (an Xt client without AT-SPI, read by OCR). Host-independent parts have unit tests.</li>
 <li>Implemented: windows on other Spaces, tested from Desktop 1 against Calculator on Desktop 2 (listing, screenshot, element presses computing 7×6, a coordinate click, a scroll, the key errors), with the pointer and the front app unchanged and the window left on its Space; inserting text there is not covered, since Calculator has no text field.</li>
 <li>Implemented, not yet run on Windows: the Windows backend described above. The macOS machines it is built on have no Windows guest, so only its host-independent parts (PNG encoding, key mapping, the HTML clipboard payload, Start menu parsing, the control-type table, refusals, the recording format) have unit tests.</li>
+<li>Implemented on macOS: the agent cursor over desktop apps, with unit tests for the step point frames and the desktop cue window. Not implemented: the Linux and Windows backends emit no step points, so no cursor shows there.</li>
+<li>Implemented: the user's Chrome and Edge in the <code>browser</code> target over Playwright MCP's extension mode, with unit tests for the action mapping, Edge, stopping on failure, <code>verify</code> and the approval subject. Not yet run against the Playwright Extension in a live browser.</li>
+<li>Implemented on macOS: the window marker, with unit tests for watching, switching and idle release. Not implemented on Linux and Windows.</li>
 <li>Not implemented: audio input over the Responses and Anthropic APIs, whose models take no audio; moving a window from another Space, and typing into it with keys (see above); naming an icon from its outline (the model reads the screenshot).</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-17</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/web-use.html" data-href-en="/docs/reference/design/integrations/web-use.html" data-href-zh="/docs/reference/design/integrations/web-use.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="网页自动化">Web automation</span></a><a class="pn-link pn-next" href="/docs/reference/design/extension-gating/README.html" data-href-en="/docs/reference/design/extension-gating/README.html" data-href-zh="/docs/reference/design/extension-gating/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="扩展控制">Extension controls</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/web-use.html" data-href-en="/docs/reference/design/integrations/web-use.html" data-href-zh="/docs/reference/design/integrations/web-use.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="网页自动化">Web automation</span></a><a class="pn-link pn-next" href="/docs/reference/design/extension-gating/README.html" data-href-en="/docs/reference/design/extension-gating/README.html" data-href-zh="/docs/reference/design/extension-gating/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="扩展控制">Extension controls</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
-<a class="lvl-2" href="#why-two-tools-and-why-these-two">Why two tools, and why these two</a>
+<a class="lvl-2" href="#three-ways-to-give-a-model-a-screen">Three ways to give a model a screen</a>
 </li>
 <li>
 <details class="toc-disclosure" open=""><summary>
-<a class="lvl-2" href="#computer_use">computer_use</a>
+<a class="lvl-2" href="#computer_use_agent">computer_use_agent</a>
 </summary>
 <ul class="toc-list">
 <li>
 <a class="lvl-3" href="#shape">Shape</a>
+</li>
+<li>
+<a class="lvl-3" href="#targets-and-guides">Targets and guides</a>
+</li>
+<li>
+<a class="lvl-3" href="#grounding">Grounding</a>
+</li>
+<li>
+<a class="lvl-3" href="#code">Code</a>
+</li>
+<li>
+<a class="lvl-3" href="#context">Context</a>
+</li>
+<li>
+<a class="lvl-3" href="#approval-and-access">Approval and access</a>
+</li>
+<li>
+<a class="lvl-3" href="#module-layout">Module layout</a>
+</li>
+</ul>
+</details>
+</li>
+<li>
+<details class="toc-disclosure" open=""><summary>
+<a class="lvl-2" href="#application-backend">Application backend</a>
+</summary>
+<ul class="toc-list">
+<li>
+<a class="lvl-3" href="#shape-1">Shape</a>
 </li>
 <li>
 <a class="lvl-3" href="#stable-indices">Stable indices</a>
@@ -698,10 +867,16 @@
 <a class="lvl-3" href="#audio">Audio</a>
 </li>
 <li>
-<a class="lvl-3" href="#module-layout">Module layout</a>
+<a class="lvl-3" href="#module-layout-1">Module layout</a>
 </li>
 <li>
 <a class="lvl-3" href="#background-delivery">Background delivery</a>
+</li>
+<li>
+<a class="lvl-3" href="#agent-cursor">Agent cursor</a>
+</li>
+<li>
+<a class="lvl-3" href="#window-marker">Window marker</a>
 </li>
 <li>
 <a class="lvl-3" href="#refusals">Refusals</a>
@@ -722,13 +897,10 @@
 </details>
 </li>
 <li>
-<a class="lvl-2" href="#browser-use-what-web_use-has-and-what-it-lacks">Browser use: what web_use has and what it lacks</a>
+<a class="lvl-2" href="#browser-target-the-web_use-runtime">Browser target: the web_use runtime</a>
 </li>
 <li>
 <a class="lvl-2" href="#interface-work">Interface work</a>
-</li>
-<li>
-<a class="lvl-2" href="#relation-to-the-gui-agent">Relation to the GUI Agent</a>
 </li>
 <li>
 <a class="lvl-2" href="#implementation-status">Implementation status</a>

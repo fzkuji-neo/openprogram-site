@@ -1,48 +1,117 @@
 # 操控电脑与浏览器
 
-OpenProgram 给模型两个处理"屏幕上的事"的工具。`web_use` 驱动 App 内置浏览器和无头 Chromium 里的网页；`computer_use` 在后台驱动其他任何 macOS 应用。这份记录解释为什么恰好是两个、`computer_use` 怎么实现，以及两者相对 Codex 和 Claude 桌面 App 还缺什么。
+OpenProgram 给模型一个处理屏幕上所有事情的工具：`computer_use_agent`。它操作 macOS、Linux 和 Windows 上的应用，App 内置浏览器和无头 Chromium 里的网页，以及远程虚拟机。这份记录说明工具的形态、它如何只把需要的说明交给模型、点击目标如何变成屏幕位置、模型如何选择在当前上下文里做还是交给新 agent，以及底下的应用和浏览器后端如何实现。
 
-## 为什么是两个工具，为什么是这两个
+## 给模型一块屏幕的三种做法
 
-Codex（ChatGPT.app）只暴露一个工具 `cua_repl`：模型针对一个 `cua` 对象写 JavaScript，它的目标——`cua.getApp(name)` 得到的应用、`cua.createBrowserTab(...)` 得到的标签页——共用一套 API（`getAXState`、`click`、`drag`、`scroll`、`selectText`、`setValue`、`performSecondaryAction`，应用额外有 `paste`、`pressKey`、`typeText`）。哪个后端处理哪个目标由目标种类决定，不由模型挑选。
+**Codex**（ChatGPT.app）只有一个执行工具，`cua_repl` MCP 服务里的 `js`：模型针对 `sky`（Mac 应用）和 `agent.browsers`（App 内浏览器、Chrome）写 JavaScript。知识放在三个 skill 里，`computer-use`、`control-in-app-browser` 和 `control-chrome`，每个约 3,200–3,400 token。上下文里每个 skill 只有一行；任务需要时模型自己去读 `SKILL.md`，浏览器 skill 还要它在 `js` 里运行 `documentation()` 取浏览器 API 参考。加载要花两三次模型调用，跳过阅读的模型就不知道 API。
 
-Claude 桌面 App 暴露成组的多个工具：`app_*` 后台控制单个应用（列窗口、截图、放大、点击、输入、按键、滚动、拖拽、菜单、AX 查找、聚焦、批量），接管真实指针和键盘的显示器级"完全控制"一组，浏览器工具，虚拟机用的 `framebuffer_*`，以及按应用的申请/释放一对。
+**Claude Code** 有许多小工具：内置浏览器的 `navigate`、`read_page`、`find`、`computer`、`form_input` 等二十个左右，完整 schema 常驻上下文；用户自己的 Chrome 另有一组，以名字形式延迟加载，直到 `ToolSearch` 载入。每个参数都有 schema 校验，但两组同名动词容易选错，常驻的一组在每个对话里都占上下文。
 
-OpenProgram 取 Codex 的形态、Claude App 的词汇：
+**OpenProgram** 取 Codex 的单一入口和 Claude Code 的结构化参数：
 
-- **每个表面一个工具，结构化参数。**模型不写代码来驱动窗口。`computer_use(action=…, app=…, …)` 和 `web_use(command=…, …)` 都是带 JSON schema 的普通函数调用，harness 的其余部分——审批卡片、权限规则、工具展示、延迟加载——本来就认识这种形态。
-- **模型不选后端。**网页是 `web_use` 的目标，应用是 `computer_use` 的目标。旧 GUI Agent 方案里那个在桌面、浏览器、虚拟机后端之间挑选的 planner，普通任务不需要；它的工作流原样保留，不是这两个工具的入口。
-- **一切在后台。**经 Accessibility API 的元素动作和路由到进程的指针事件不移动用户的光标、不改 key window、不把窗口提到前面。像 Claude App 那样的前台"完全控制"档位有意不做：后台通道已经覆盖了坐标点击、拖拽和滚轮。
-- **按应用审批。**用户心里的单位是"能不能碰备忘录"，不是"能不能点击"。规则是 `computer_use(<app>)`，可以授予一次、授予本对话或授予本项目。
+- **一个工具。** `computer_use_agent` 是模型看到的唯一屏幕工具。它的 schema 很小，对每个目标都一样；动作及其参数放在各目标的指南里。
+- **指南随第一次调用到达。** 工具说明只是目标清单。对某个目标的第一次调用返回该目标的指南和它当前的状态（已安装和运行中的应用、打开的网页），所以指南不需要额外调用，也不依赖模型记得去读。
+- **参数或代码。** 简单的步骤是结构化调用（`action` + `args`，或至多 20 个 `actions`）。带循环、条件或数据处理的步骤是一段 Python（`code`），在隔离解释器里运行，变量在调用之间保留。
+- **由模型选择上下文。** `context: "inherit"`（默认）在当前对话里执行；`context: "fresh"` 启动一个干净上下文、带书面简报的 agent，只返回它的结果。
+- **定位是一层。** 点击目标可以是元素序号、网页 ref、像素，或由视觉检测解析的文字描述。
 
-Claude App 各组工具在这里的对应：
-
-| Claude App | OpenProgram |
-|---|---|
-| 列应用和窗口、截图、放大 | `list_apps`、`list_windows`、`get_app_state`、`zoom` |
-| 点击（双击、三击、右键、带修饰键）、输入、按键、按住键 | `click`（`click_count`、`mouse_button`、`key`、`duration`）、`type_text`、`press_key`（`duration`） |
-| 滚动、拖拽、悬停、等待 | `scroll`、`drag`、`hover`、`wait` |
-| 菜单、AX 查找、聚焦、批量 | `menu`、`find`（带 OCR 回退）、`focus`、`batch` |
-| 申请 / 释放一个应用 | 按应用的审批卡片和 `computer_use(<app>)` 规则；没有占用，所以不需要释放 |
-| 显示器级完全控制（真实指针和键盘） | 有意不做：后台投递已覆盖坐标输入；在 Linux 上以及 Windows 的组合键，窗口只在这一步切到前台，审批卡片会说明 |
-| 浏览器工具 | `web_use` |
-| 虚拟机用的 `framebuffer_*` | 不做：虚拟机的窗口就是普通应用窗口，靠截图和 OCR 读取、按坐标操作 |
-
-## `computer_use`
+## `computer_use_agent`
 
 ### 形态
 
 ```
-computer_use(action, app, element_index | x,y, …)
+computer_use_agent(target, action?, args?, actions?, code?, timeout?, context?, brief?)
+```
+
+| 参数 | 含义 |
+|---|---|
+| `target` | `app`、`browser` 或 `vm`；三者总在 schema 里，本机到不了的目标会回答如何配置 |
+| `action`、`args` | 一个步骤及其参数；省略时打开该目标 |
+| `actions` | 同一目标上至多 20 个 `{action, args}` 步骤，遇到第一个错误即停止；状态只返回一次 |
+| `code` | 在隔离解释器里运行的 Python（见“代码”） |
+| `timeout` | 代码调用可运行的秒数，至多 120（默认 60） |
+| `context` | `inherit`（默认）或 `fresh` |
+| `brief` | 配合 `fresh`：目标、已知事实、限制和要交回什么 |
+
+`action`、`actions` 和 `code` 互斥。参数由目标校验，出错时指出正确写法，因为 schema 不列出每个动作的参数。
+
+### 目标与指南
+
+| 目标 | 后端 | 打开时返回 |
+|---|---|---|
+| `app` | `openprogram/computer_use/`（macOS、Linux X11、Windows） | 给了 `args.app`：它的状态（树和截图）；否则应用列表 |
+| `browser` | `web_use` 运行时（App 的 Page、无头 Chromium）；`args.browser` 为 `chrome` 或 `edge` 时，是连接到用户浏览器的扩展模式 Playwright MCP | 网页列表（用户浏览器里是标签页列表） |
+| `vm` | `computer_use.vm_url` 指向的 OSWorld 兼容服务 | 一张截图 |
+
+每个目标有一份指南（`guides/<target>.md`；app 指南按 macOS、Linux、Windows 改写）：它的动作、参数、结果长什么样，以及确认策略。工具按对话和 agent 代记住已经发过哪些指南，把指南附在该目标的第一次结果上；`action: "guide"` 再次返回它，例如上下文压缩丢掉它之后。启动 fresh agent 时会忘掉那一代 agent 的指南记录，因为新 agent 只从自己的提示开始。
+
+`app` 的动作就是下文应用后端的动作，参数相同；`browser` 的动作是 `web_use` 运行时的命令：`list_pages`、`observe`、`verify` 和 `close` 保持原名，每个 `act` 动作（`navigate`、`click`、`type`……）各自成为一个动作。与 Codex 一样，先选浏览器，动作不随浏览器改变。不写 `args.browser` 是经由 `web_use` 的内置浏览器；`chrome` 或 `edge` 是用户自己的浏览器，`web_use` 的后端都到达不了它。对这两者，`targets/browser.py` 把每一步交给 `workflow/browser/extension_browser.py`，它通过 `_SyncMCPClient` 运行 `@playwright/mcp --extension --browser chrome|msedge`（与 `web_use` 固定的版本相同），每个会话、每个浏览器一个服务器，在调用之间保持。服务器在该浏览器里打开带有其中继地址的 `chrome-extension://<id>/connect.html`，Playwright Extension 回连，并为用户共享的标签页中继 CDP；设置了 `computer_use.chrome_extension_token` 时，服务器传入 `PLAYWRIGHT_MCP_EXTENSION_TOKEN`，扩展不再询问直接连接。`list_pages`、`observe`、`close`、`screenshot`、`upload`、`evaluate`、日志和 `verify` 映射到服务器的标签页、快照、截图、文件、evaluate 和日志工具；所有元素和指针动作都经过 `OfficialMCPPageBackend._action_call`，即 `playwright_mcp` 后端对 App Page 使用的同一套翻译。ref 是服务器快照里的 ref。代码模式不为用户的浏览器注册资源。
+
+### 定位
+
+`grounding.py` 把步骤的目标变成后端接受的形式：
+
+| 给出 | 解析为 |
+|---|---|
+| `element_index`（app）/ `ref`（browser） | 原样传递；后端作用在元素上 |
+| `x`、`y` | 原样传递，是该目标上一张截图的像素 |
+| `describe` | 上一张截图和文字交给 gui_harness 的 `locate_target`（GPA-GUI-Detector 图标、OCR 文字、保存的组件、模型核对、不确定时放大）；它的中心成为 `x`、`y` |
+
+`describe` 只用于 `app` 和 `vm`，并且只在 gui_harness 及其感知依赖可导入时提供；否则指南说明它不可用。它在工具内部要花数次模型调用，所以指南把它排在序号和像素之后。gui_harness 本身不改动，只调用 `planning.component_memory.locate_target`。
+
+### 代码
+
+`code` 在 `backend/gui_runner.py` 的常驻沙箱解释器里运行（macOS 上用 seatbelt，没有文件、网络和进程权限）。命名空间里有 `cu.app`、`cu.browser` 和 `cu.vm`；`await cu.app.click(app="Numbers", element_index=3)` 就是带这些参数的结构化步骤 `click`，由宿主经同样的目标代码、定位和检查派发，每一步一条 effect 回执（`backend/gui_broker.py`）。代码调用要指定 `target`，对 `app` 还要指定 `args.app`；审批覆盖这个应用，作用于其他应用的步骤会被拒绝。代码里不能用 `evaluate`，因为每段页面脚本都需要单独审批。一个解释器服务一次执行尝试，所以变量在本轮剩余时间里保留；失败或超时后解释器会被替换。每次调用最多运行 120 秒、100 步。代码模式需要 macOS 沙箱；在其他系统上代码调用会报告沙箱不可用。
+
+### 上下文
+
+`context: "fresh"` 通过通用的 `agent` 派生（`_agent_impl`，`start_from="clean"`）把任务交给一个干净上下文的 agent：同一会话、同样的模型和思考设置，结果作为这次调用的结果返回。它的提示是简报、一行指明目标（及 `args.app`）、该目标的指南，以及在 `describe` 可用时建议：元素没有序号或 ref 时用它定位。截图和定位调用留在它自己的上下文里。派生深度限制让它不能再启动另一个。
+
+派生出的 agent 无法请求审批，所以 `fresh` 调用替它带上：调用指定目标，对 `app` 还指定 `args.app`，并与直接调用走同样的审批。agent 运行期间，这次调用的确切规则被写成会话规则（已有时不重复写），agent 返回后删除，所以 agent 自己的调用能匹配它，而调用结束后不留下任何东西。
+
+### 审批与访问
+
+| 调用 | 审批 |
+|---|---|
+| `app`（`list_apps` 除外） | 按应用：规则 `computer_use_agent(<app>)`，在会询问的模式下必须；旧的 `computer_use(<app>)` 规则仍然匹配 |
+| `browser` | 对话有 Page 时用本轮的 Page 授权；否则按权限模式；`evaluate` 每次调用单独审批一次 |
+| 带 `args.browser` 的 `browser` | 用户的 Chrome 或 Edge，每个会话一次：规则 `computer_use_agent(browser:chrome)`（或 `browser:edge`），从不使用 Page 授权；`evaluate` 每次调用单独审批 |
+| `vm` | 按服务地址：规则 `computer_use_agent(vm:<url>)` |
+| `fresh` | 与它指定的目标相同 |
+
+系统访问（辅助功能、屏幕录制）照常约束除 `list_apps` 之外的 `app` 调用。
+
+### 模块布局
+
+| 模块 | 作用 |
+|---|---|
+| `openprogram/programs/tools/system/computer_use_agent/tool.py` | 注册的工具：schema、目标清单、路由、指南记录、审批原因 |
+| `…/computer_use_agent/guides/` | 各目标的指南 |
+| `…/computer_use_agent/targets/app.py` | 基于 `openprogram/computer_use/` 的应用动作 |
+| `…/computer_use_agent/targets/browser.py` | 基于 `web_use` 运行时的网页动作 |
+| `…/computer_use_agent/targets/vm.py` | 经虚拟机服务 HTTP API 的截图和 pyautogui 输入 |
+| `…/computer_use_agent/grounding.py` | 目标解析，包括 `describe` |
+| `…/computer_use_agent/code.py` | 基于 `backend/gui_runner.py` 和 `gui_broker.py` 的代码模式 |
+| `…/computer_use_agent/fresh.py` | 干净上下文的 agent |
+
+没有单独的“规划 → 决策 → 执行 → 验证”循环：长任务交给使用同一工具的 `fresh` agent，gui_harness 只通过 `describe` 使用。它的 Program 仍可安装（`entries=False`，不注册自己的工具）。
+
+## 应用后端
+
+### 形态
+
+```
+computer_use_agent(target="app", action, args={app, element_index | x,y | describe, …})
 ```
 
 动作分三组：
 
 - **读取：**`list_apps`、`list_windows`、`get_app_state`（`include` = all / tree / screenshot，`window` 或 `window_id`）、`zoom`（以完整像素密度查看上一张截图的一块区域）、`find`（在上一棵树里按文字和角色查找）。
 - **执行**，即 Codex 的目标 API：`click`（按钮、次数、按住的修饰键、按住时长）、`type_text`、`press_key`、`set_value`、`scroll`（按页或按像素）、`drag`、`perform_secondary_action`、`select_text`、`paste`；以及来自 Claude App `app_*` 一组的 `copy`、`focus`、`menu`、`show_window`。
-- **`batch`：**对同一个应用按顺序执行至多 20 个执行类步骤，遇到第一个错误即停止；最后只等待稳定一次、只返回一次状态。
+- **多个步骤**（`actions`）：对同一个应用按顺序执行至多 20 个执行类步骤，遇到第一个错误即停止；最后只等待稳定一次、只返回一次状态。
 
-只有 `list_apps` 免审批。批量里的步骤不能指定别的应用，因为这次调用携带的审批只点名批量本身的应用。
+只有 `list_apps` 免审批。`actions` 里的步骤不能指定别的应用，因为这次调用携带的审批只点名调用本身的应用。
 
 每个执行动作的调用返回 `Done: <摘要>`，后面跟 Accessibility 树相对模型上次所见状态的 **diff**：`- 行` 是消失的元素，`+ 序号 行` 是新增或变化的。变化行数超过一半（且至少十二行）时改为返回整棵树，因为重建后视图的 diff 比视图本身还长。`get_app_state(full=true)` 按需返回全树。树上限 1500 个节点，每元素一行：序号、角色（`AXTextField` → `text field`，子角色放括号里）、标签、值、占位符、标记（`focused`、`selected`、`checked`、`disabled`、`secure`、`settable`……）以及除主按压之外的次级动作。有些应用给数字包上的双向文字标记会从渲染和 `find` 中去掉。
 
@@ -89,7 +158,7 @@ Codex 用 `start_audio_recording` / `stop_audio_recording` 录电脑声音（默
 | `openprogram/computer_use/linux.py` | `LinuxComputer`：同一接口，基于 AT-SPI、xdotool、Gdk 抓图和 PipeWire/PulseAudio |
 | `openprogram/computer_use/windows.py` | `WindowsComputer`：同一接口，基于 UI Automation（comtypes）、窗口消息、`SendInput` 和 `PrintWindow` |
 | `openprogram/computer_use/windows_audio.py` | 用 WASAPI 进程回环采集一个进程树的声音 |
-| `openprogram/programs/tools/system/computer_use.py` | 注册的工具：schema、含确认策略的说明、审批理由、批量、结果拼装 |
+| `openprogram/programs/tools/system/computer_use_agent/targets/app.py` | `app` 目标：步骤校验、`describe` 解析、多个步骤、结果拼装 |
 
 ### 后台投递
 
@@ -100,6 +169,14 @@ Codex 用 `start_audio_recording` / `stop_audio_recording` 录电脑声音（默
 窗口由 `window`（标题子串或序号）或 `window_id` 选定；两者都不给时，模型上次读过的窗口只要还开着就保持选中，否则取焦点窗口或主窗口。最小化的窗口或被隐藏的应用仍然给出树；截图要等 `show_window` 取消最小化（`AXMinimized`）或取消隐藏应用后才有，这两者都不会激活应用。在另一个桌面空间的窗口就地读取和操作。`AXWindows` 只列当前桌面空间的窗口，所以应用里不在屏幕上、又没有被已列出窗口对应上的普通窗口（第 0 层，至少 80×60），用 SkyLight 的远程令牌查找：以 pid、`0`、`'coco'` 和元素 id 调用 `_AXUIElementCreateWithRemoteToken`，元素 id 从零开始试（最多 4000），直到每个窗口 id 都找到元素，做法同 AltTab；结果按应用缓存，直到这组窗口 id 变化。ScreenCaptureKit 能截这样的窗口，SkyLight 的指针通道也能送达，但不论走哪条通道，窗口服务器都会丢掉发给它的按键，所以在那里 `type_text` 和 `paste` 改为设置焦点元素的 `AXSelectedText`，`press_key` 报告按键送不到，`show_window` 说明窗口留在原桌面空间。窗口无法移动：macOS 14.5 起只有 Dock 能移动窗口（其他进程调用 `SLSMoveWindowsToManagedSpace` 需要放宽系统完整性保护，yabai 的文档写明了这一点）。
 
 `paste` 写入粘贴板（纯文本，或用 `markdown-it` 从 Markdown 渲染出的 HTML），向目标进程发 Cmd+V，并在 change count 表明期间没有别人写入时恢复先前的粘贴板内容。
+
+### Agent 光标
+
+在一个点名元素或坐标的步骤执行前，`MacOSComputer.act` 先算出它落在哪里（元素的中心取自它的 `AXFrame`，截图坐标则按窗口原点和缩放换算），调用 `native_window_resources.note_action_point`，再等待 `CUE_LEAD_SECONDS`（0.15 秒），让光标先到。这个点以屏幕点为单位、原点在主显示器左上角，与 Electron 的坐标空间相同。worker 把它作为 `native.action` 帧广播（`session_id`、`x`、`y`、`sequence`、`at`、`action`、`app_name`）；agentic 子进程通过与被操作窗口相同的父进程通道转发（`kind: "action"`）。Web 客户端里 `native-window-store.ts` 在**显示操作**没有关闭时把帧交给 `openprogramDesktop.nativeActionCue`。桌面主进程（`main/action-cues.js` 里的 `showNativeActionCue`）维护一个透明、点击穿透、不可聚焦、置顶的窗口，加载与网页光标相同的 `/menu-overlay/action-cue` 页面，从上一个点滑过去、播放点击，并在 `ACTION_CUE_MS` 后隐藏。每个 App 窗口都会收到这一帧，所以主进程按 `session_id`、`sequence` 和 `at` 丢掉已显示过的步骤。Linux 和 Windows 还不发出这些点。
+
+### 窗口标识
+
+被操作的窗口带有 macOS 的屏幕共享标识，与 Codex Computer Use 下一样：标题栏按钮上盖一个紫色徽标，菜单栏出现共享图标。macOS 会给任何处在 ScreenCaptureKit 实时流下的窗口画这两样，所以 `window_watch.WindowWatch` 在它上面保持一个流，做法与 Codex 保持画中画流相同。`MacOSComputer` 在每次 `act` 和每次指明窗口的 `get_state` 时用窗口 id 触碰它。流只过滤这一个窗口（`SCContentFilter.initWithDesktopIndependentWindow`），请求每秒一帧的 2x2 画面且不挂任何输出，因此不录下任何内容。每个会话最多监视一个窗口：转到另一个窗口会释放前一个，`IDLE_SECONDS`（20 秒）内没有步骤的窗口由清理定时器释放。打开流在单独线程上进行，失败被忽略，所以步骤不会因标识而等待或失败。
 
 ### 拒绝
 
@@ -119,7 +196,7 @@ Codex 用 `start_audio_recording` / `stop_audio_recording` 录电脑声音（默
 - **音频。** `pactl list sink-inputs` 给出每个音频流的 `application.process.id`；录音器轮询，直到出现该应用或其任一子孙进程的音频流（每次轮询都重新读取子孙进程，因为播放器通常是开始录音之后才启动的子进程），然后用 `parec --monitor-stream=<index>` 以 16 kHz 单声道浮点读取。读取持续到 parec 结束，所以停止时它还缓冲着的样本也会保留。PipeWire 下四分之一秒内就收到第一批样本；PulseAudio 的定时调度下，对一个音频流的首次监听会晚 1.2–1.7 秒开始，这段会丢失。
 - **拒绝。** `password text` 元素、Seahorse、KWallet、gcr 弹窗、polkit 代理以及 OpenProgram 自身的条目。
 
-工具描述在导入时按 Linux 改写（`_LINUX_DESCRIPTION`）：哪些步骤会把窗口切到前台、纯文本 `paste`、不经剪贴板的 `copy`、Linux 上的拒绝列表。`computer_use_apps` 的 WebSocket 回复带上 worker 的 `platform`；在 Linux 上，审批卡片对按坐标输入、拖拽、悬停和回车以外的按键（`needsForeground`）说明这一步会把窗口切到前台。
+app 指南在发送时按 Linux 改写（`targets/app.py` 的 `_LINUX_GUIDE`）：哪些步骤会把窗口切到前台、纯文本 `paste`、不经剪贴板的 `copy`、Linux 上的拒绝列表。`computer_use_apps` 的 WebSocket 回复带上 worker 的 `platform`；在 Linux 上，审批卡片对按坐标输入、拖拽、悬停和回车以外的按键（`needsForeground`）说明这一步会把窗口切到前台。
 
 ### Windows 后端
 
@@ -136,36 +213,36 @@ Codex 用 `start_audio_recording` / `stop_audio_recording` 录电脑声音（默
 - **音频。** 对 `VAD\Process_Loopback` 调用 `ActivateAudioInterfaceAsync`，参数为 `PROCESS_LOOPBACK_MODE_INCLUDE_TARGET_PROCESS_TREE`，得到一个 `IAudioClient`，以共享回环模式初始化并自动转换为 16 kHz 单声道 float，在独立的 COM 线程上由事件驱动经 `IAudioCaptureClient` 读取。完成回调是 agile COM 对象，因为 Windows 在工作线程上调用它。
 - **拒绝。** `IsPassword` 元素、CredentialUIBroker、consent（UAC）、LogonUI、LockApp、credwiz、keymgr 和 OpenProgram。
 
-工具描述在导入时按 Windows 改写（`_WINDOWS_DESCRIPTION`）；对组合键和粘贴（`needsForeground(args, "windows")`），审批卡片说明这一步会把窗口切到前台。
+app 指南在发送时按 Windows 改写（`_WINDOWS_GUIDE`）；对组合键和粘贴（`needsForeground(args, "windows")`），审批卡片说明这一步会把窗口切到前台。
 
 ### 权限与审批
 
-`requires_approval` 对除 `list_apps` 外的每个动作返回 `computer_use controls <app>`。`parse_command` 把一次调用归约为规范化的应用名，于是 `exact_rule_for_call` 得到 `computer_use(calculator)`，`rule_to_string` 以常规形式打印。审批卡片提供四个范围：
+对 `app` 目标，`requires_approval` 对除 `list_apps` 外的每个动作返回 `computer_use_agent controls <app>`；带 `code`、`fresh` 或不带动作的调用按读取该应用审批。`parse_command` 把一次调用归约为规范化的应用名（虚拟机为 `vm:<url>`，浏览器没有），于是 `exact_rule_for_call` 得到 `computer_use_agent(calculator)`，`rule_to_string` 以常规形式打印。审批卡片提供四个范围：
 
 | 范围 | 规则保存在哪 |
 |---|---|
 | once | 不保存 |
-| session | 会话的 run config（`permission_rules.allow`）——`computer_use` 是 `_SESSION_SCOPE_TOOLS` 里的第一个工具 |
+| session | 会话的 run config（`permission_rules.allow`）——`computer_use_agent` 在 `_SESSION_SCOPE_TOOLS` 里 |
 | always | 项目规则 |
 | deny | 不保存 |
 
-这项授权在所有权限模式下都是强制的。`permission_decision` 把 `computer_use` 当作按应用授权的工具（`_APP_GRANT_TOOLS`）：当工具自身的 `requires_approval` 表明这次调用需要审批、且没有允许规则点名该应用时，决定是 `ask`，理由 `APP_GRANT_REQUIRED`，先于 Auto 分类和 Bypass。因此无人值守的来源会拒绝这类调用，允许规则是越过卡片的唯一途径。
+这项授权只在会询问的模式下生效；Bypass 直接放行，Auto 交给自动审查。`permission_decision` 对 `app` 和 `vm` 目标把 `computer_use_agent` 当作按应用授权的工具（`_APP_GRANT_TOOLS`）：当工具自身的 `requires_approval` 表明这次调用需要审批、且没有允许规则点名该应用时，决定是 `ask`，理由 `APP_GRANT_REQUIRED`，因此在 Bypass 之外，无人值守的来源会拒绝这类调用；在会询问的模式下，允许规则是越过卡片的唯一途径。`_RULE_ALIASES` 让以旧名 `computer_use(<app>)` 保存的规则匹配 `computer_use_agent` 调用。`browser` 目标没有自己的规则：有 Page 的对话得到本轮的 `SURFACE_GRANT`，上传文件或打开本机之外的网站会询问。
 
 权限规则在每个操作边界重新加载（全局 < 项目 < 会话），所以会话规则对下一次调用立即生效，无需重启。
 
-系统访问：`computer_use:desktop` 同时是 `accessibility` 和 `screen_recording` 两项能力的操作；`_desktop_operation` 把除 `list_apps` 外的每次调用映射到它，于是缺少授权时调用进入标准的"等待"状态并走设置 → 系统访问流程，与 GUI Agent 的桌面表面完全一致。
+系统访问：`computer_use:desktop` 同时是 `accessibility` 和 `screen_recording` 两项能力的操作；`_desktop_operation` 把除 `list_apps` 和 `guide` 外的每次 `app` 调用映射到它，于是缺少授权时调用进入标准的"等待"状态并走设置 → 系统访问流程；等待请求写明 `computer_use_agent`。
 
-工具在 `DEFAULT_TOOLS` 里但被延迟加载（`DEFERRED_DEFAULT_TOOLS`）：schema 留在目录中直到模型加载它。`unsafe_in` 在微信、Telegram 渠道和规划模式下隐藏它。
+工具在 `DEFAULT_TOOLS` 里且常驻：schema 很短，不延迟加载。对话有 Page 时，`_configure_web_use_tools` 保留它并移除独立的浏览器工具；`web_use` 从不提供给模型。`unsafe_in` 在微信、Telegram 渠道和规划模式下隐藏它。
 
 ### Web 展示
 
-`tool-presentation.ts` 用显示器图标和 system 色调渲染 `computer_use` 调用；标题写动作和应用（"在 Calculator 中点击"），目标行在给了按键、文本、动作名或窗口时显示它们。审批卡片的范围按钮在"允许一次"和"始终允许"之间加入"允许此对话"，答案摘要打印"允许此对话"。GUI Agent 内部的桌面 capability 也叫 `computer_use`；Web 按参数形状区分两者（`isGuiToolCall`）：只有不带 `action` 参数的调用才是由 GUI 视图渲染的 GUI Agent 步骤。
+`lib/computer-use-agent-call.ts` 解读 `computer_use_agent` 调用：`appStepArgs` 把 `app` 调用变成应用渲染器接受的扁平步骤（`{action, app, …}`；多个步骤成为 batch，代码和 fresh agent 各成一个动作），`screenStep` 给出浏览器或虚拟机调用的动作。`tool-presentation.ts` 用显示器图标和 system 色调渲染 `app` 步骤；标题写动作和应用（"在 Calculator 中点击"），目标行在给了按键、文本、动作名或窗口时显示它们。浏览器调用显示动作和 URL，虚拟机调用显示动作，代码显示"在 <app> 中运行代码"，fresh agent 显示"交给新代理"及简报首行。审批卡片的范围按钮在"允许一次"和"始终允许"之间加入"允许此对话"，答案摘要打印"允许此对话"。早先工具（`computer_use`、`web_use`、`gui_agent`）记录的调用保留各自的渲染器，旧对话照常可读。
 
-## 浏览器：`web_use` 有什么、缺什么
+## 浏览器目标：`web_use` 运行时
 
-`web_use` 现状：`observe`，`act` 含 `screenshot`、`navigate`、`click`、`type`、`press`、`scroll`、`hover`、`select`、`upload`，`verify` 含文本、URL、标题、元素和文件断言，三个后端（Playwright MCP、Chrome DevTools MCP、App 自带 Chrome）。
+`browser` 目标运行在 `web_use` 运行时上（`openprogram/programs/workflow/browser/` 的 `run_web_use`），其他程序仍直接调用它。它提供：`observe`，`act` 含 `screenshot`、`navigate`、`click`、`type`、`press`、`scroll`、`hover`、`select`、`upload`，`verify` 含文本、URL、标题、元素和文件断言，三个后端（Playwright MCP、Chrome DevTools MCP、App 自带 Chrome）。
 
-相对 Codex 目标 API，`web_use` 现在覆盖：
+相对 Codex 目标 API，它覆盖：
 
 | 能力 | Codex | `web_use` |
 |---|---|---|
@@ -180,7 +257,7 @@ Codex 用 `start_audio_recording` / `stop_audio_recording` 录电脑声音（默
 | 在页面里运行 JavaScript | `evaluate` | `evaluate` 带 `script`，逐次审批 |
 | 控制台与网络（Claude in Chrome 的 `read_console_messages`、`read_network_requests`） | — | `console_messages`、`network_requests` |
 
-参数名沿用 `computer_use` 的（`mouse_button`、`click_count`、`direction`、`format`、`prefix`、`suffix`、`selection_type`、`duration`），让两个工具读起来一致；只有点击时按住的键叫 `modifiers`，因为 `key` 已经是 `press` 的按键。
+参数名沿用 `app` 目标的（`mouse_button`、`click_count`、`direction`、`format`、`prefix`、`suffix`、`selection_type`、`duration`），让两个目标读起来一致；只有点击时按住的键叫 `modifiers`，因为 `key` 已经是 `press` 的按键。
 
 `page_actions.py` 承载页面一侧：参数解析和五段脚本（`POINTER_SCRIPT`、`SCROLL_SCRIPT`、`INSERT_TEXT_SCRIPT`、`PASTE_SCRIPT`、`SELECT_TEXT_SCRIPT`），每段都是 `(element, options)` 的函数。控制器在 ref 的句柄上用 `evaluate` 运行它们；MCP 后端经 `browser_evaluate` / `evaluate_script` 运行，选项以 JSON 内联，并带一个 `require` 守卫，页面报告失败时抛错，由后端自己的错误路径上报。各路径的取舍：
 
@@ -191,36 +268,36 @@ Codex 用 `start_audio_recording` / `stop_audio_recording` 录电脑声音（默
 
 标签页对应已有命令：`list_pages` 即 `listTabs`，从它拿到的 Page 别名即 `getTab`，带 `url` 的 `observe` 会打开一个隐藏的后台标签页（即隐藏的 `createBrowserTab`），除非已绑定的 Page 正显示同一来源；`close` 结束会话。带 `visible: true` 的 `observe` 在前台打开标签页；它会挪走用户的焦点，所以 schema 只允许在用户要求看着操作时使用。带 `changes_only: true` 的 `observe`（`observe_diff.py`）就是 diff 形式：它按角色、名字、标签、值、禁用状态和输入类型，把新一帧与同一 URL 的上一次观察比较，完整列出新增和变化的元素，没变的元素各占一行并带上新 ref，省略没变的文字和 ARIA 快照，并列出消失的元素。每次观察仍为全部元素签发 ref，ref 只属于它所在的那一帧，过期 ref 正是靠这一点被拒绝；diff 只缩短展示的内容，没有 ref 需要跨帧存活。MCP 后端用自己的 ARIA 快照替换，元素里只列文件输入，所以这个选项对它们不适用。
 
-`evaluate` 能读到已登录页面持有的一切，包括观察结果里被脱敏的内容，所以它的门控放在权限策略里而不是工具里：`action`（顶层或嵌套）为 `evaluate` 的 `web_use` 调用由 `force_approval` 在任何模式下都询问，先于允许规则、bypass 和绑定页面授权；`one_shot_approval` 让卡片只有“本次”范围，从不保存规则，并完整展示参数。非交互来源直接拒绝。脚本在每个后端上都经由控制器运行，MCP 后端也一样，因为控制器持有同一个标签页及其字段的密码值：结果经过与观察相同的脱敏，并经过 `_mutated`，因此当前帧失效，下一步重新观察。表达式被包成 `() => (expr)`；脚本最多 8000 个字符，结果最多 20,000 个字符。
+`evaluate` 能读到已登录页面持有的一切，包括观察结果里被脱敏的内容，所以它的门控放在权限策略里而不是工具里：含 `evaluate` 步骤（单步或在 `actions` 里）的 `computer_use_agent` 浏览器调用由 `force_approval` 在任何模式下都询问，先于允许规则、bypass 和绑定页面授权；`one_shot_approval` 让卡片只有“本次”范围，从不保存规则，并完整展示参数。非交互来源直接拒绝。脚本在每个后端上都经由控制器运行，MCP 后端也一样，因为控制器持有同一个标签页及其字段的密码值：结果经过与观察相同的脱敏，并经过 `_mutated`，因此当前帧失效，下一步重新观察。表达式被包成 `() => (expr)`；脚本最多 8000 个字符，结果最多 20,000 个字符。
 
 `console_messages` 和 `network_requests`（`page_logs.py`）读取 Playwright 为每个 Page 自带的历史（`console_messages()`、`page_errors()`、`requests()`），所以第一次读取前不需要事先挂监听。它们和 `evaluate` 一样在每个后端上都经由控制器运行，只读，不会让当前帧失效。控制台文字经过密码脱敏；请求按方法、去掉查询和片段的 URL、状态码（浏览器从未收到响应时为 `no response`）和资源类型列出，从不包含请求头或请求体。
 
 ## 界面工作
 
-`computer_use` 的审批卡片（`computer-use-approval.tsx`）先展示应用本身：图标、显示名和 bundle id 来自 `computer_use_apps` WebSocket 动作，它调用后端的 `app_info`，不启动任何东西，Web 按名字缓存结果（`lib/net/computer-use-apps.ts`）。其下一个标签用文字说明这一步（`computer-use-step.ts`），两行分别说明这一步在后台进行（录音则说明只录该应用的声音）以及可选范围的含义，去掉空值的参数折叠在"查看执行详情"里。
+`app` 调用的审批卡片（`computer-use-approval.tsx`）先展示应用本身：图标、显示名和 bundle id 来自 `computer_use_apps` WebSocket 动作，它调用后端的 `app_info`，不启动任何东西，Web 按名字缓存结果（`lib/net/computer-use-apps.ts`）。其下一个标签用文字说明这一步（`computer-use-step.ts`），两行分别说明这一步在后台进行（录音则说明只录该应用的声音）以及可选范围的含义，去掉空值的参数折叠在"查看执行详情"里。
 
-项目设置页在默认设置和权限规则之间有一个"操控电脑"分区（`computer-use-apps-section.tsx`）。它把项目的 `computer_use(<app>)` 允许规则列成每个应用一行，带图标、名字、bundle id 和移除按钮，通用规则列表不再重复这些规则。移除一行即删除该规则。对话级授权是随对话结束的会话规则，所以这里不列出。
+项目设置页在默认设置和权限规则之间有一个"操控电脑"分区（`computer-use-apps-section.tsx`）。它把项目的 `computer_use_agent(<app>)` 允许规则（以及以 `computer_use(<app>)` 保存的规则）列成每个应用一行，带图标、名字、bundle id 和移除按钮，通用规则列表不再重复这些规则。移除一行即删除该规则。对话级授权是随对话结束的会话规则，所以这里不列出。
 
 人可以像在 Codex 里那样给 agent 指东西：
 
 - 在网页标签里，**评论页面元素…** 选中一个元素，把它的选择器、文字和评论加进草稿；**区域截图…** 让人拖出一个矩形，把这块像素作为 PNG 附件加入。两者运行在同一个隔离脚本环境里（`apps/desktop/main/web-views.js` 的 `PICKER_WORLD`），共用一个取消钩子，开启一种会结束另一种。区域遮罩先被移除、再画两帧，`capturePage` 才按页面缩放截取那个矩形。文件经 `lib/composer-inbox.ts` 送到目标对话：显示这个对话的输入框把它当作拖进来的文件收下，在那之前它一直在收件箱里等。
 - 输入框的 `@` 菜单在文件之前列出已打开的网页标签和正在运行的应用（`attach/mention-sources.ts`）。标签页写成指向其地址的 markdown 链接，应用写成名称加 bundle id，所以「这个标签页」不用模型去猜。正在运行的应用来自带 `running: true` 的 `computer_use_apps`，它列出被拒应用之外的常规应用，页面里缓存十秒。
 
-## 与 GUI Agent 的关系
-
-GUI Agent 工作流（`gui_agent`）、它的 grounding 流水线和能力 planner 保持不变。`computer_use` 不调用它，它也不调用 `computer_use`。该工作流日后是否变成一个经通用 `agent` 工具运行在 `computer_use` 之上的轻量子 agent，是悬而未决的决定，只在基础工具完备后再做。
-
 ## 实现状态
 
-- 已实现：macOS 上 `computer_use` 的上述读取、执行与批量动作，稳定序号，自适应等待，后台指针与键盘投递，树 diff，四个范围的按应用审批，系统访问门控，Web 展示，按键/树编号/菜单匹配/批量/规则/审批接线的单元测试。
-- `web_use` 已实现：上面对照表的每一行，三个后端都支持，并有在 Chromium 里运行页面脚本的测试，以及 `evaluate` 的逐次审批。
+- 已实现：`computer_use_agent` 及 `app`、`browser`、`vm` 三个目标，首次使用时的目标指南，多个步骤，代码模式，带临时会话规则的 `fresh` agent，经 gui_harness 的 `describe` 定位，经 OSWorld HTTP API 的虚拟机目标（作为 `computer_use.vm` consumer 走出站策略），以及 Web 展示；单元测试覆盖路由、指南、虚拟机脚本、定位和审批，沙箱测试用替身目标运行代码。尚未连接真实虚拟机服务运行，也未在 App 里装上 gui_harness 检测器运行。
+- 已实现：macOS 上 `app` 目标的上述读取与执行动作，稳定序号，自适应等待，后台指针与键盘投递，树 diff，四个范围的按应用审批，系统访问门控，Web 展示，按键/树编号/菜单匹配/多个步骤/规则/审批接线的单元测试。
+- 浏览器目标已实现：上面对照表的每一行，三个后端都支持，并有在 Chromium 里运行页面脚本的测试，以及 `evaluate` 的逐次审批。
 - 已实现：为树稀疏的窗口提供 OCR 文字，并作为 `find` 的回退，附带一个经 Vision 识别渲染图像的测试。
 - 已实现：按应用录音，输出 WAV，并用语音引擎转写。
-- 已实现：`web_use` 的可见标签页，以及原生后端上的 `changes_only` 观察。
+- 已实现：可见标签页，以及原生后端上的 `changes_only` 观察。
 - 已实现：对 Gemini 和 Chat Completions 的音频模型，把录音作为音频输入；Chat Completions 视觉模型能看到工具结果里的截图。
 - 已实现：网页标签里的元素评论和区域截图；对已打开标签页和正在运行应用的 `@` 提及。
 - 已实现：稀疏窗口里不带文字的图标和控件的轮廓。
 - 已实现：上文所述的 Linux（X11）后端。测试在 Debian 12 容器里进行，环境是 Xvfb、Openbox、AT-SPI 总线和 PipeWire，对象是一个 GTK 3 窗口（菜单栏、输入框、密码框、复选框、滑块、带滚动的文本视图、绘图区、一个由子进程放声音的按钮）、GNOME 计算器（GTK 4 加 libadwaita，从桌面条目启动，靠元素点击算出 7×6）以及 ImageMagick 的 `display`（不接入 AT-SPI 的 Xt 客户端，靠 OCR 读取）。与主机无关的部分有单元测试。
 - 已实现：另一个桌面空间里的窗口。测试时从桌面 1 操作桌面 2 上的计算器（列出窗口、截图、按元素算出 7×6、坐标点击、滚动、按键报错），鼠标指针和前台应用都没变，窗口留在原桌面空间；向那里的输入框插入文字没有测到，因为计算器没有输入框。
 - 已实现、尚未在 Windows 上运行：上文所述的 Windows 后端。构建它的 macOS 机器没有 Windows 客户机，所以只有与主机无关的部分（PNG 编码、按键映射、HTML 剪贴板内容、开始菜单解析、控件类型表、拒绝列表、录音格式）有单元测试。
+- macOS 上已实现：桌面应用上的 agent 光标，步骤坐标帧和桌面光标窗口有单元测试。未实现：Linux 和 Windows 后端不发出步骤坐标，那里不会显示光标。
+- 已实现：`browser` 目标里经 Playwright MCP 扩展模式接入的用户 Chrome 和 Edge，动作映射、Edge、遇错停止、`verify` 和审批主体有单元测试。尚未在真实浏览器中配合 Playwright Extension 运行过。
+- macOS 上已实现：窗口标识，监视、切换和空闲释放有单元测试。Linux 和 Windows 上未实现。
 - 未实现：经 Responses 和 Anthropic API 的音频输入（这两个接口的模型不收音频）；把窗口从另一个桌面空间移过来，以及用按键向它输入（见上文）；从轮廓直接认出图标的名字（模型看截图分辨）。
