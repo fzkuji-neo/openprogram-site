@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792402545" data-alt-lang-url="/docs/reference/config-keys.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793002125" data-alt-lang-url="/docs/reference/config-keys.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -385,12 +385,6 @@
 <td>每轮自动添加的匹配记录上限。</td>
 </tr>
 <tr>
-<td><code>memory.retrieval.include_sources</code></td>
-<td><code>True</code></td>
-<td><code>live</code></td>
-<td>在整理后的主题记录之外，同时检索归档证据。</td>
-</tr>
-<tr>
 <td><code>memory.layers.project</code></td>
 <td><code>True</code></td>
 <td><code>live</code></td>
@@ -438,31 +432,6 @@
 <td>``</td>
 <td><code>next_start</code></td>
 <td>受管理录制 ID 或显式回放文件路径；录制模式仅接受 ID。</td>
-</tr>
-</tbody>
-</table>
-<h2 id="目标">目标<a class="header-anchor" href="#目标">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>配置键</th>
-<th>默认值</th>
-<th>生效方式</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>goal.max_turns</code></td>
-<td>—</td>
-<td><code>live</code></td>
-<td>新目标的可选轮数预算。空值（默认）、0 或负数表示不限；只有显式正数才设置上限。达到上限会停止执行，但不会将目标标记为完成。已有目标保留已存预算；使用 /goal budget max_turns=0 可移除上限。</td>
-</tr>
-<tr>
-<td><code>goal.judge_model</code></td>
-<td>``</td>
-<td><code>live</code></td>
-<td>目标完成判定使用的模型，格式为 <code>provider/model</code> 或模型名。空值（默认）使用会话所选模型。选择较便宜的模型可降低每轮判定成本。</td>
 </tr>
 </tbody>
 </table>
@@ -717,9 +686,6 @@
 </li>
 <li>
 <a class="lvl-2" href="#录制">录制</a>
-</li>
-<li>
-<a class="lvl-2" href="#目标">目标</a>
 </li>
 <li>
 <a class="lvl-2" href="#agent">Agent</a>

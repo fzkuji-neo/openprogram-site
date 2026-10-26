@@ -67,3 +67,19 @@ Disable a loaded plugin
 | Option | Description |
 |---|---|
 | `name` | Plugin name to disable |
+
+## `plugins reload`
+
+Re-read a plugin's manifest and code and load it again
+
+| Option | Description |
+|---|---|
+| `name` | Plugin name to reload |
+
+## `plugins inspect`
+
+Show what a plugin can register: setup(ctx) methods, manifest keys, events, services, Web slots
+
+| Option | Description |
+|---|---|
+| `--json` | Emit JSON |

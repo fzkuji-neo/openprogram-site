@@ -11,11 +11,10 @@ OpenProgram 的底座是 Agentic Programming：**Python 控制流程，LLM 提�
 
 ## Agentic Workflows：现成的 agent
 
-基于该范式写成的成品工作流（代码里叫 harness / agentic program），装完即用：自主科研、个人知识库。用 `openprogram programs available` 查看可安装项、`openprogram programs install <name>` 安装、`openprogram programs list` 列出已注册的函数；函数注册后既能在聊天里作为工具触发，也能用 `openprogram programs run` 直接跑。
+基于该范式写成的成品工作流（代码里叫 harness / agentic program），装完即用：自主科研。用 `openprogram programs available` 查看可安装项、`openprogram programs install <name>` 安装、`openprogram programs list` 列出已注册的函数；函数注册后既能在聊天里作为工具触发，也能用 `openprogram programs run` 直接跑。
 
 - [Agentic Workflows 总览](workflows/README.zh.md)
 - [Research Agent](workflows/research-agent.zh.md) —— 从选题到可提交论文
-- [Wiki Agent](workflows/wiki-agent.zh.md) —— 把会话沉淀成 HTML 知识库
 - [安装与编写 Harness](installing-harnesses.zh.md) —— 第三方 harness 的安装机制与目录契约
 
 ## 扩展机制
@@ -23,7 +22,6 @@ OpenProgram 的底座是 Agentic Programming：**Python 控制流程，LLM 提�
 不写 harness 也能扩展 agent 的能力：
 
 - [Skills](skills.zh.md) —— `SKILL.md` 注册表：给模型按需加载的领域知识与操作手册
-- [Distill](distill.zh.md) —— 把做成了的会话蒸馏成可复用的 skill 或函数，让流程不随对话消失
 - [Commit, push, PR](commit-push-pr.zh.md) —— 把做完的活从工作区送到可评审的 pull request，并在 `git log` 里留下 AI 共同作者署名
 - [Plugins](plugins.zh.md) —— 从 pip / npm / git / 本地路径安装插件，向宿主贡献 commands、skills、MCP server 等
 - [MCP](mcp.zh.md) —— 接入任意 MCP server，其工具直接出现在聊天里

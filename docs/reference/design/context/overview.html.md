@@ -24,7 +24,7 @@ dispatcher.process_user_turn
   → engine.prepare()            ← core: 6 steps producing TurnPrep
       1. reference scan (references)
       2. select history messages ── commit-chain (default) or dag (flag), pick one
-      3. assemble system prompt (identity + workspace files + skills + memory)
+      3. assemble system prompt (identity + AGENTS.md chain + skills + memory)
       4. compute token budget (four-way split: system / history / tools / output reserve)
       5. usage reconciliation (provider-measured + local estimate)
       6. return TurnPrep
@@ -236,6 +236,22 @@ serves it to `/context` and `server._broadcast_context_stats` pushes it over the
 `context_stats` WS frame. The ring reads `total_used / window` from the store; the
 panel reads the same fields for its headline and derives `Free space` from them,
 so its per-category rows never contradict the total.
+
+The panel has two levels. The overview shows four parts (system prompt, tools,
+memory, conversation); clicking one, or its bar segment, opens its detail. The
+system prompt detail lists components (base prompt, output style, the agent's own
+prompt, environment, AGENTS.md, skills index, workflows and tool notes, date, plan
+mode) with their text; tools are grouped loaded / on demand / MCP; memory lists the
+`MEMORY.md` of each layer; the conversation is split by kind
+(`messages_detail.groups`) with its largest messages (`messages_detail.top`), each
+linking to its transcript row. Detail rows are scaled with their category, so they
+add up to it. A chat with no session yet reads `GET /api/context/draft?provider=&model=`
+(`session_stats.compute_draft_breakdown`): the agent's prompt and full toolset
+against that model's window. When a turn records its `context/system_prompt` node, the node's
+metadata carries `sections: [{name, chars}]`, the length of each component's block,
+so `session_stats` cuts the recorded text back into components exactly. A node
+recorded before that is split by locating the blocks of a fresh build in it; what
+cannot be located shows as Other.
 
 The canonical WebSocket chat runner records each provider request's prompt size
 as it finishes, so the ring and panel update between tool calls. At turn end it

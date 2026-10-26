@@ -69,7 +69,6 @@ Every user-editable setting, from the single schema that the `setup` CLI, `openp
 | `memory.retrieval.hybrid.weighting` | `auto` | `live` | How hybrid recall weighs keywords against meaning. `auto` favours keywords for queries with a date, a quoted phrase or a name, and balances them otherwise. |
 | `memory.retrieval.hybrid.file_boost` | `True` | `live` | In hybrid recall, raise the best paragraph of a Topic that several matches come from. |
 | `memory.retrieval.top_k` | `5` | `live` | Maximum matching records added automatically to a turn. |
-| `memory.retrieval.include_sources` | `True` | `live` | Include archived evidence alongside curated Topic records. |
 | `memory.layers.project` | `True` | `live` | A conversation in a project also reads that project's own Memory, kept in ~/.openprogram/projects/&lt;project&gt;/memory. |
 | `memory.layers.project_writes` | `True` | `live` | With Project memory on, write what a project's conversations record into that project's Memory instead of the personal one. |
 | `memory.core.inject` | `True` | `live` | Inject the compact Core view into each system prompt. |
@@ -81,13 +80,6 @@ Every user-editable setting, from the single schema that the `setup` CLI, `openp
 |---|---|---|---|
 | `record_replay.mode` | `off` | `next_start` | Record or strictly replay all LLM provider calls on the next process start. |
 | `record_replay.file` | `` | `next_start` | Managed recording ID or an explicit replay file path; record mode accepts IDs only. |
-
-## Goal
-
-| Key | Default | Apply | Description |
-|---|---|---|---|
-| `goal.max_turns` | — | `live` | Optional round budget for new Goals. Empty (default), zero or negative means unlimited. Only an explicit positive value sets a cap. Reaching a cap stops execution without completing the Goal. Existing Goals retain their saved budget; use /goal budget max_turns=0 to remove it. |
-| `goal.judge_model` | `` | `live` | Model the Goal completion judge runs on, as `provider/model` or a bare model name. Empty (default) = the session's picked model. Set a cheaper model to cut the per-round judgment cost. |
 
 ## Agent
 

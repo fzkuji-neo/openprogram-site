@@ -11,11 +11,10 @@ OpenProgram is built on Agentic Programming: **Python controls the flow, the LLM
 
 ## Agentic workflows: ready-made agents
 
-Complete workflows written on top of the paradigm (called harnesses / agentic programs in the code), usable right after install: autonomous research and a personal knowledge base. Research and Wiki are included in every supported release. Inspect their status with `openprogram programs available` and list their registered functions with `openprogram programs list`; the functions can be triggered as tools in chat or run directly with `openprogram programs run`. The install command is for third-party harnesses and developer source overlays.
+Complete workflows written on top of the paradigm (called harnesses / agentic programs in the code), usable right after install: autonomous research. Research is included in every supported release. Inspect their status with `openprogram programs available` and list their registered functions with `openprogram programs list`; the functions can be triggered as tools in chat or run directly with `openprogram programs run`. The install command is for third-party harnesses and developer source overlays.
 
 - [Agentic workflows overview](workflows/README.md)
 - [Research Agent](workflows/research-agent.md) — from topic selection to a submittable paper
-- [Wiki Agent](workflows/wiki-agent.md) — distills sessions into an HTML knowledge base
 - [Installing and writing harnesses](installing-harnesses.md) — the install mechanism and directory contract for third-party harnesses
 
 ## Extension mechanisms
@@ -23,7 +22,6 @@ Complete workflows written on top of the paradigm (called harnesses / agentic pr
 Ways to extend the agent's capabilities without writing a harness:
 
 - [Skills](skills.md) — the `SKILL.md` registry: domain knowledge and playbooks the model loads on demand
-- [Distill](distill.md) — turn a session that worked into a reusable skill or function, so the procedure survives the conversation
 - [Commit, push, PR](commit-push-pr.md) — take finished work from the working tree to a reviewable pull request, with AI co-author attribution in `git log`
 - [Plugins](plugins.md) — install plugins from pip / npm / git / local paths that contribute commands, skills, MCP servers, and more to the host
 - [MCP](mcp.md) — connect any MCP server; its tools appear directly in chat

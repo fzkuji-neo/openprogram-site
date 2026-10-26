@@ -153,7 +153,7 @@ requires an exact `OPENPROGRAM_MCP_TOKEN` match.
 | `run <name>` | Run a program; `--arg key=value` (repeatable), `--provider`, `--model` |
 | `list` | List saved programs |
 | `available` | List installable programs and installed third-party harnesses |
-| `install` / `uninstall` | Developer-only first-party source overlays (gui/research/wiki/all), or install/uninstall an additional third-party harness (git URL / owner/repo); supported releases already include all first-party Programs and reject mutation of their immutable runtime |
+| `install` / `uninstall` | Developer-only first-party source overlays (gui/research/all), or install/uninstall an additional third-party harness (git URL / owner/repo); supported releases already include all first-party Programs and reject mutation of their immutable runtime |
 
 ### skills
 
@@ -193,7 +193,6 @@ One workspace per instance, shared by every agent and every conversation includi
 | `recall QUERY...` | Search memory and print matching paragraphs |
 | `show PATH` / `edit PATH` | Print / edit one memory file with `$EDITOR` |
 | `sleep` | Reorganise topic files now; `--model MODEL` selects the organising model |
-| `backfill` | Write trusted source records that no topic cites; `--model MODEL` selects the writer |
 | `export` | tar+gzip the whole memory directory; `--out PATH` sets the output file (default `./openprogram-memory-<date>.tar.gz`) |
 
 ## Maintenance

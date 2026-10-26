@@ -85,6 +85,47 @@ CLI, or the Desktop release updater. Existing update status and cancellation
 remain available; a worker service alone does not provide the source-update
 controller's build, activation, verification and recovery workflow.
 
+### The chat tool
+
+In a conversation the model drives an update through one tool, `self_update`,
+whose `action` is `status` (the default), `prepare`, `retry` or `cancel`. Its
+schema stays short; the first result explains the workflow and lists the
+action guides. Before the first `prepare` or `retry` in a conversation the call
+is refused once and the refusal carries that action's full instructions
+(`help("self_update.prepare")`, `help("self_update.retry")`), so the next call
+is made with them in view. `prepare` and `retry` always ask the owner for
+one-shot approval, even in bypass mode; `status` needs no approval.
+
+help("self_update") shows this workflow again at any time.
+
+### What an update restarts
+
+An update rebuilds only what changed between the commit the installed App was
+built from (`Contents/Resources/openprogram-source-revision`) and the
+candidate, then restarts as little as that needs:
+
+| Changed paths | Rebuilt | Restart |
+| --- | --- | --- |
+| `apps/web/**` | Web export | None. Open pages reload once nothing typed would be lost. |
+| `docs/**`, `scripts/docs_site/**` | Docs site | None. |
+| `apps/cli/**` (not its Python package) | Terminal UI bundle | None. New terminal sessions use it. |
+| `openprogram/**`, `apps/server/**`, `apps/cli/python/**`, `setup.py` | Wheel and docs | The worker restarts; the App window stays open and shows that it is updating. |
+| `apps/desktop/**` | Desktop archive | The App quits and reopens. |
+| Dependency locks, `package.json` files, `scripts/release/**`, `apps/desktop/scripts/**`, `apps/desktop/build/**`, any other path | The complete App | The App quits and reopens. |
+
+Tests and repository metadata (`tests/**`, `README.md`, `.github/**` and similar)
+change nothing that ships. An App installed from an uncommitted checkout
+(`-dirty`) or from a commit outside the repository always gets the complete
+build. The `self_update(action="prepare")` result reports the expected `restart` and
+`rebuild`; the controller decides again at build time and records the plan in
+the update directory as `activation.json`.
+
+Every level installs the same way: the new App bundle is staged beside the
+installed one, swapped in by rename, verified, and then committed or rolled
+back. An update that restarts nothing also skips maintenance, so running
+conversations and Jobs continue during it. Rollback restores the previous
+bundle with the same restart level.
+
 During an approved update, ordinary queued Jobs retain their identities and
 wait for maintenance to end. Running executions that support durable pause
 stop at their next checkpoint. The update waits for active attempts and
@@ -111,9 +152,10 @@ candidate's `uv.lock` and `scripts/release/product-runtime.json`; the controller
 uses the saved runtime's pinned build tools and private copies of existing
 npm/uv/Electron-builder/node-gyp caches. The Electron platform archive must
 match the trusted controller's pinned version, architecture, and release
-SHA-256; the candidate receives it as a read-only `electronDist` input. It still
-builds the candidate's Web, docs, wheel and
-Desktop archive. Missing caches or a different dependency base stop the update
+SHA-256; the candidate receives it as a read-only `electronDist` input. A
+complete build packages the candidate's Web, docs, wheel and Desktop archive; a
+partial build starts from a copy of the installed App and rebuilds only the
+parts listed above. Missing caches or a different dependency base stop the update
 before activation; they do not authorize downloads or reuse of mismatched
 dependencies. This build path and real installed acceptance remain release gates.
 
@@ -126,7 +168,7 @@ Both checks must complete before activation.
 The fixed macOS icon render check also runs under the trusted controller instead
 of granting the candidate build access to host graphics services.
 
-The source-checkout `self_update_prepare` chat tool accepts an optional
+The source-checkout `self_update(action="prepare")` chat call accepts an optional
 `verification_plan` argument. The plan is included in the mandatory owner
 approval and stored with the immutable request. For example:
 
@@ -140,7 +182,8 @@ be the integer `1`. Check IDs must be unique alphanumeric/underscore/hyphen
 identifiers starting with an alphanumeric character, at most 64 characters.
 Each check requires an integer timeout of 1–60 seconds and an integer output limit of
 1–262144 bytes (1–1572864 for `ui:main`). Supported entries are `/api/commands`, `/api/diagnostics`,
-`/api/doctor`, `/healthz`, `/chat`, `cli:version`, `cli:help`, `test:python` and `ui:main`.
+`/api/doctor`, `/healthz`, `/chat`, a page of the installed docs site such as
+`/docs/install/upgrade.html`, `cli:version`, `cli:help`, `test:python` and `ui:main`.
 Arbitrary URLs, query strings and unsupported fields are rejected before creating
 the update; only `test:python` additionally requires `argv` as described below.
 
@@ -150,6 +193,13 @@ execution arguments. The execution layer applies the approved limits and the
 original overall deadline. Signed evidence must match that check and assertion;
 reusing evidence for another assertion does not pass. Omitting the plan preserves
 the previous HTTP-only verifier behavior and grants no new permissions.
+
+Verification, diagnosis and source repair run on any conversational model.
+A provider without native structured output answers through a prompt whose
+result is still checked against the stage's schema; an answer that fails the
+check makes the verdict inconclusive, and the update rolls back. A model
+request that ends without any outcome stops the stage at once instead of
+holding the update until its deadline.
 
 For a planned update, verification, post-rollback diagnosis and source-repair
 Jobs receive the same approved plan and iteration policy, together with the
@@ -311,8 +361,8 @@ verification and rollback verdicts are retained.
 
 The Job has at most five minutes after rollback, shortened by any earlier approved
 iteration deadline. Restart does not reset that limit or repeat a terminal Job.
-Use the ordinary Job cancel action to stop diagnosis; `self_update_cancel` still
-only cancels a pre-activation update. A new update supersedes pending diagnosis.
+Use the ordinary Job cancel action or `self_update(action="cancel")` to stop
+diagnosis. A new update supersedes pending diagnosis.
 Unavailable models or invalid evidence stop diagnosis without restricting the
 restored service. `self-update status --json` includes `diagnosis_result` when one
 exists. Older requests without frozen diagnostic configuration keep their prior
@@ -328,17 +378,19 @@ linked worktree and commit, and runs the frozen tests in a native sandbox withou
 network access or App write permission. Your original worktree is unchanged.
 Default scope is the original changed files; `bounded_auto` uses its approved
 path patterns. Protected runtime, approval, installer, dependency and Git files
-are not automatically modified. Invalid paths or non-unique old text stop repair.
+are not automatically modified. These limits apply to the files the repair edits;
+files your approved candidate already changed and the repair leaves alone stay as
+you approved them. Invalid paths or non-unique old text stop repair.
 
 Repair and tests share at most ten minutes after rollback, shortened by an
 earlier approved deadline. A new update, cancellation or expiry stops this stage
 and its test processes. Use the ordinary Job cancel action while the model runs;
-after the model finishes, call `self_update_repair_cancel(update_id)` in the
+after the model finishes, call `self_update(action="cancel", update_id=…)` in the
 original conversation to cancel tests. Restart does not replay partial edits,
 commits or tests. Failed worktrees and evidence remain available for inspection.
 Old requests without frozen repair configuration do not gain this capability.
 
-`self_update_status` and `self-update status --json` expose `source_repair_result`.
+`self_update()` (status) and `self-update status --json` expose `source_repair_result`.
 The chat tool uses the same read-only projection as the owner-authenticated Web
 history (`GET /api/self-updates?session_id=…`) and detail
 (`GET /api/self-updates/{update_id}?session_id=…`) endpoints. History includes
@@ -368,7 +420,7 @@ Conversations display ordinary messages and tool results. They do not mount upda
 source drift produce `failed`; cancellation and expiry produce `cancelled` and
 `expired`. None means installed.
 
-For a tested repaired candidate, call `self_update_retry(update_id, candidate_sha)`
+For a tested repaired candidate, call `self_update(action="retry", update_id, candidate_sha)`
 in the original owner conversation. It always asks for one-shot approval, even
 in bypass mode. The approval displays the exact SHA, changed paths, tests and
 remaining budget. Git contents and test logs are checked again after approval;
@@ -384,12 +436,12 @@ first update counts as attempt 1; the maximum of three includes it. Reserving a
 child consumes one attempt, including failed submissions. Restart reuses the
 same child and deadline rather than resetting the budget.
 
-`self_update_iteration_cancel(update_id)` stops the whole sequence, including
+`self_update(action="cancel", update_id)` stops the whole sequence, including
 pending approval, diagnosis, source repair and candidate tests. A child already
 being activated or verified must finish its transaction or safe rollback; no
 subsequent attempt is allowed. This does not cancel unrelated jobs.
 
-The chat `self_update_status` result includes an `iteration` section with root,
+The chat status result includes an `iteration` section with root,
 parent, attempt limits, deadline and submission status. `submitted` means the
 request was handed to the external supervisor, not that installation succeeded.
 The child still goes through packaging, system checks, a new verification Job
@@ -461,7 +513,7 @@ require manual intervention rather than reconstruction from an unverified App.
 
 ## Development checkout
 
-For the locally installed macOS App, run `scripts/refresh-local-app.sh` from the current checkout after committing a change. The script rebuilds the wheel and Desktop assets, builds the GUI, Research and Wiki Program wheels before the App is quit (a failed source build leaves the installed App unchanged), updates both the PATH and embedded Python installations, and refreshes bundled Node and Ink resources and the App icon. It probes the complete embedded runtime before regenerating its capability manifest and restarting the default worker. This also upgrades older App runtime manifests when a newly required capability is introduced; a failed probe stops the refresh instead of declaring the capability verified.
+For the locally installed macOS App, run `scripts/refresh-local-app.sh` from the current checkout after committing a change. The script rebuilds the wheel and Desktop assets, builds the GUI and Research Program wheels before the App is quit (a failed source build leaves the installed App unchanged), updates both the PATH and embedded Python installations, and refreshes bundled Node and Ink resources and the App icon. It probes the complete embedded runtime before regenerating its capability manifest and restarting the default worker. This also upgrades older App runtime manifests when a newly required capability is introduced; a failed probe stops the refresh instead of declaring the capability verified.
 
 The refreshed worker uses the embedded App Python with `-I -B`; an existing launchd service is rebound to that same interpreter, and detached startup uses it as well. The script verifies the actual worker process executable and flags after the health check. A matching package revision alone does not prove interpreter identity. Existing checkpoints retain their strict tool implementation contract; switching Python installation paths can invalidate implementation fingerprints.
 

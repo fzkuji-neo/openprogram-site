@@ -18,7 +18,16 @@ Opening a conversation already displayed in this window selects its existing tab
 
 When Files or a file tab is active, Back and Forward revisit the folders and files you opened in the current project. Returning to Files restores its expanded folders and scroll position. Opening a new location after going back replaces the forward steps. File locations belong to this tab’s saved page history, separate from document version History. Refreshing a stale directory listing keeps existing rows visible while the loaded range is replaced.
 
-A Markdown file opens as a rendered document. Relative image paths such as `figures/a.png` load from the document's own folder, and a relative link opens the linked file in its own tab. Raw HTML in the file is shown as text, not run. A link such as `#installation` scrolls within that document; `guide.md#installation` opens the target file and scrolls after its content loads. Heading keys use lowercase visible text, keep Unicode letters and numbers, replace spaces with hyphens, and assign numeric suffixes to duplicates. Section requests are temporary and are not restored after reopening the app. Navigation preserves unsaved text. Wikilinks, embedded documents, and an outline are not supported by this navigation feature.
+A Markdown file opens as a rendered document. Relative image paths such as `figures/a.png` load from the document's own folder, and a relative link opens the linked file in its own tab. Raw HTML in the file is shown as text, not run. A link such as `#installation` scrolls within that document; `guide.md#installation` opens the target file and scrolls after its content loads. Heading keys use lowercase visible text, keep Unicode letters and numbers, replace spaces with hyphens, and assign numeric suffixes to duplicates. Section requests are temporary and are not restored after reopening the app. Navigation preserves unsaved text.
+
+The document is laid out like Obsidian's reading view: the file name appears as a title, and YAML frontmatter appears as a **Properties** table, with list values such as `tags` shown as pills. Obsidian syntax is rendered too:
+
+- `> [!note] Title` callouts, in the standard kinds (note, tip, warning, danger, and so on). `> [!tip]-` starts folded and `> [!tip]+` starts open; click the title to toggle.
+- `==text==` highlights and `#tag` tags.
+- `[[Note]]`, `[[Note#Heading]]` and `[[Note|label]]` link to `Note.md` in the document's own folder, or the folder written before the name, and open it in its own tab.
+- `![[image.png]]` embeds an image from the same place; `![[image.png|300]]` sets its width. Embedding another note shows a link instead.
+
+Wikilinks are not searched for across the whole folder tree the way Obsidian resolves them, and there is no outline.
 
 In the desktop App, an HTML file opens as a web page in a browser tab: the file card in a reply opens it beside its conversation, and **View page** in a file tab opens the saved file. The page loads from disk through a `file://` address, so stylesheets, images and scripts next to it load and run as they would in Chrome. **View source** in that tab's toolbar returns to the file, where Edit and History work as usual; the file tab's first button reads **Source**. In a regular browser, or when the worker runs on another machine, HTML files stay source files.
 
@@ -73,7 +82,7 @@ Sessions are matched on their title, latest message preview and project name, th
 
 ### Message streaming
 
-After a message is written to the connection, its text appears in the conversation and the submitted composer text clears immediately. The message remains pending until the server confirms receipt; confirmation updates the same message. A reply placeholder then appears, and text, thinking, and tool-call blocks stream over WebSocket in arrival order. When several agents write into one session, each assistant message carries the producing agent's avatar and name.
+After a message is written to the connection, its text appears in the conversation and the submitted composer text clears immediately. The message remains pending until the server confirms receipt; confirmation updates the same message. A reply placeholder then appears, and text, thinking, and tool-call blocks stream over WebSocket in arrival order. When several agents write into one session, each reply from an agent other than the default carries that agent's name above it.
 
 ### Cards and laid-out views in replies
 
@@ -195,7 +204,7 @@ The floating webpage preview fills the space below its compact header, with 10px
 |---|---|
 | `/agents` | Agents: create, configure and start conversations with Agents (model, abilities, memory, context) |
 | `/applications` | Applications: install software from a local folder, then open, enable, hide from the new tab page, update or uninstall it |
-| `/scheduler` | Scheduler: one-time, recurring and monitor tasks, filtered by type; pause, resume or delete each task |
+| `/scheduler` | Scheduler: one-time, recurring and monitor tasks and [reminders](../capabilities/reminders.md), filtered by type; pause, resume or delete each task |
 | `/chats` | History (also `/history`): projects on the left, the home project (named after your home folder) first; each project's Chats, Memory, Settings and Info tabs on the right |
 | `/programs` | Abilities hub: Programs catalog (call tree / graph). Plugins, Skills, and MCP are sibling tabs |
 | `/skills` | Abilities → Skills: browse installed SKILL.md files, discover and create skills; each skill has a detail page |
@@ -209,11 +218,11 @@ Message navigation previews and skill details display raw HTML as text while ret
 
 Opening `/settings` directly lands on `/settings/general`. Model credentials stay on `/settings/providers`; see [configuring models](../models/README.md).
 
-In narrow windows (900px wide or less) the left sidebar starts collapsed to its icon rail until you open it, and an opened sidebar closes again after you navigate. Below 760px the Settings navigation starts as an icon rail too, and collapses when the window is resized to that width. A sidebar you open or close yourself keeps that choice.
+In narrow windows (900px wide or less) the left sidebar starts collapsed to its icon rail until you open it, and an opened sidebar closes again after you navigate. The list column on History (projects), Agents and Settings collapses to an icon rail with the button before the page title. Below 760px these columns start as icon rails too, and collapse when the window is resized to that width. A sidebar or column you open or close yourself keeps that choice.
 
 ### Welcome animation
 
-A new, empty chat shows only the input box. Turn on **Welcome animation** in Settings → General to play a code rain behind it: green columns of letters, digits, symbols and katakana falling down the chat area. It is off by default and saved in this browser. When the system asks for reduced motion, the rain is drawn as a still frame.
+A new, empty chat shows only the input box. Turn on **Welcome animation** in Settings → General to play a code rain behind it: green columns of letters, digits, symbols and katakana falling down the chat area. It is off by default and saved in this browser. Once it is on, **Code rain density** sets how many streams fall at once, from 10% to 100% (40% by default), and applies while you drag. When the system asks for reduced motion, the rain is drawn as a still frame.
 
 ### Tab drag appearance
 
@@ -245,13 +254,19 @@ Files uses a path row, an action row, an optional search row, and a column heade
 
 Get Info is available in the toolbar and file context menu. It shows paths, file bytes, timestamps, and read-only permissions. Visible folders without a cached result are scanned in a bounded queue. Finished samples are saved in the local profile and reused after reopening Files or restarting the App, including incomplete samples with skipped entries. Reopening the view or Get Info does not rescan a cached sample. Use Refresh or Recalculate to update folder totals; file changes made through Files also invalidate the shared samples. Folder rows show approximate complete or cached sizes; `≥` marks a partial result. Details show the scan time, skipped entries, and controls to continue, cancel, or recalculate. Scans sum logical file bytes, include hidden files, and skip symbolic links, restricted directories, and unreadable entries. They are samples taken over time, not atomic snapshots or disk allocation measurements. Cached values may be outdated. Complete recent samples participate in size sorting; refresh to apply newly calculated sizes. Unknown and partial totals stay last in their group.
 
+To move files, drag them onto a folder (or onto empty space for the project root); hovering over a closed folder opens it. ⌘-click (Ctrl-click on Windows and Linux) adds or removes a row from the selection and Shift-click selects a range, so several files move, cut, copy or delete together. Each move shows a notice with **Undo**. A move the server refuses, such as onto an existing name, is not kept. On the tree, ⌘C, ⌘X and ⌘V (Ctrl on Windows and Linux) copy, cut and paste into the selected folder, ⌘Backspace or Delete deletes after confirmation, and F2 renames. Deleted items go to recoverable storage.
+
+Drag files or folders from Finder or File Explorer onto the tree to add them to the project: they land in the folder under the pointer, and a label names that folder while you drag. Files that already exist are left unchanged and counted in a notice. Each file can be up to 1 GiB.
+
+When you come back to the window, Files re-reads its open folders, so changes made in another app appear without pressing Refresh.
+
 The path uses larger text, and its right-hand copy button copies the full absolute path. Refresh keeps the selected path, expanded folders, and loaded page range. File rows show readable sizes, including empty files; long filenames shrink within the remaining space while the size keeps its full width; hover over a size for its exact byte count.
 
 The sidebar shows only projects with non-archived conversations. Empty projects remain available in the project selector and project management.
 
 Conversation history is stored under the OpenProgram state directory, grouped by a stable project ID. Registration writes a small identity file at `<project>/.openprogram/project.json`. Keep this hidden directory when moving the folder, including between drives. On startup or project access, OpenProgram looks for that identity under known project parents, within three directory levels and 4,000 entries. It does not scan the whole disk or depend on operating-system bookmarks.
 
-If a moved folder is outside that search area, open its new location once to reconnect the original project and conversations. Opening a copy while the original is still available creates a separate project. Multiple discovered copies require **Locate folder**. If you locate a missing project at a folder that is already another project, and the missing one has no conversations, the missing entry is removed and the other project is selected. Existing projects whose old identity cannot be verified also need Locate once. Keep the identity file writable during registration and relocation; a damaged or unreadable file produces an error instead of silently changing identity.
+If a moved folder is outside that search area, open its new location, or any folder inside it, once to reconnect the original project and conversations. Projects that moved together follow: after one project is found or located at its new place, other missing projects that sat beside it are reconnected where their identity files are found, so locating one project in a moved folder of projects repairs them all. Opening a copy while the original is still available creates a separate project. Multiple discovered copies require **Locate folder**. If you locate a missing project at a folder that is already another project, and the missing one has no conversations, the missing entry is removed and the other project is selected. Existing projects whose old identity cannot be verified, and folders whose identity no longer matches, offer **Use the folder at this location**: one click confirms the folder still at the recorded path, without opening a picker. The project menu, the Projects page and Files show the same message and actions; Files shows them in place of the tree. Keep the identity file writable during registration and relocation; a damaged or unreadable file produces an error instead of silently changing identity.
 
 While a working folder is unavailable, history remains readable and new tasks in that project wait for a valid location. A different folder at the same path does not inherit the original conversations. A single copy left after deleting the original is treated like a move.
 

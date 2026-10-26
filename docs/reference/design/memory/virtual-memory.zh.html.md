@@ -105,7 +105,7 @@ Append-only。同一事实被重新提炼时，旧记录标 `superseded_by` 指�
   "id": "project.openprogram",
   "type": "project",
   "name": "OpenProgram",
-  "attrs": {"path": "/Users/fzkuji/OpenProgram", "lang": "python"},
+  "attrs": {"path": "~/OpenProgram", "lang": "python"},
   "scope": "global"
 }
 ```
@@ -177,7 +177,7 @@ OpenProgram 记忆 — 项目: OpenProgram, 最后整理 2026-06-18
 · 2026-06-17 修复 CLI attended mode 问题                ↪ session:local_d125
 
 [图谱 · 当前项目相关]
-· OpenProgram 在 /Users/fzkuji/OpenProgram (python, next.js)
+· OpenProgram 在 ~/OpenProgram (python, next.js)
 · worker ──listens-on──► :18109
 
 需要细节: memory_open_session(<id>) / memory_git_log(<project>)

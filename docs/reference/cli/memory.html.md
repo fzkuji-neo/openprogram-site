@@ -45,14 +45,6 @@ Reorganise topic files now, project memory included, instead of waiting for toni
 |---|---|
 | `--model` `MODEL` | Model to reorganise with (default: whatever your own CLI uses) |
 
-## `memory backfill`
-
-Write trusted source records that no Topic cites.
-
-| Option | Description |
-|---|---|
-| `--model` `MODEL` | Model to write with (default: the configured memory writer) |
-
 ## `memory export`
 
 Tar+gzip the entire memory dir to a path.

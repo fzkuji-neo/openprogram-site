@@ -23,7 +23,7 @@ dispatcher.process_user_turn
   → engine.prepare()            ← 核心:6 步产出 TurnPrep
       1. 引用扫描(references)
       2. 选历史消息  ── commit-chain(默认) 或 dag(flag) 二选一
-      3. 拼 system prompt(身份 + 工作区文件 + 技能 + 记忆)
+      3. 拼 system prompt(身份 + AGENTS.md 链 + 技能 + 记忆)
       4. 算 token 预算(四分:system / history / tools / 输出预留)
       5. usage 融合(provider 实测 + 本地估算)
       6. 返回 TurnPrep
@@ -234,6 +234,18 @@ tool 保护(OpenCode)。
 供给 `/context`，`server._broadcast_context_stats` 通过 `context_stats` WS 帧推送。
 圆环从 store 读 `total_used / window`；面板的头行读同样的字段，并据此推出
 `Free space`，所以分项行永远不和总数打架。
+
+面板分两层。总览显示四类（系统提示、工具、记忆、对话），点一类或它在分段条上的那一段
+进入详情。系统提示详情按组件列出（基础提示词、输出风格、Agent 自己的系统提示、环境、
+AGENTS.md、技能索引、工作流与工具说明、日期、计划模式）并附原文；工具分为已加载 /
+按需加载 / MCP；记忆列出每一层的 `MEMORY.md`；对话按类型拆分
+（`messages_detail.groups`）并列出最大的几条消息（`messages_detail.top`），每条链接到
+聊天里对应的那一行。明细行随所属类别一起缩放，加起来等于类别总数。还没有会话的新对话读
+`GET /api/context/draft?provider=&model=`（`session_stats.compute_draft_breakdown`）：
+Agent 的提示词和完整工具集，窗口按该模型计算。每轮记录 `context/system_prompt` 节点时，
+节点 metadata 带 `sections: [{name, chars}]`，即各组件块的长度，`session_stats` 据此把
+记录下的文本精确切回各组件。更早记录的节点没有这项，就在其中查找一次新构建的各块；
+找不到的部分显示为“其他”。
 
 当前 WebSocket 聊天入口在每次 provider 请求结束时记录 prompt 用量，
 因此函数调用之间圆环和面板会更新。轮次结束时，它更新当前分支的 HEAD 并保存最终读数。加载会话时，如果旧轮次保存的

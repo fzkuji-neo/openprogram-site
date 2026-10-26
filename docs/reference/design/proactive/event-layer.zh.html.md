@@ -65,7 +65,7 @@ channel）根本没有意义。开放 dict 也让以后新增关联维度不用�
 | `chat.before_send` | notify | `{session_id, msg_id, text, agent_id, attachments}` | `ws_actions/chat.py`，用户消息落盘之后、进入 runtime 之前 |
 | `plugin.enable` | notify | `{plugin}` | `plugins/loader.py`，插件加载完成、hook 订阅注册之后 |
 | `plugin.disable` | notify | `{plugin}` | `plugins/loader.py`，插件的注册项被摘除之前 |
-| `goal.update` | notify | `{session_id, goal: {text, status, turns_used, max_turns, last_reason, last_question}}` | `goal._emit_goal_update` |
+| `goal.update` | notify | `{session_id, goal: {goal_id, revision, text, status, phase, checklist, budget, usage, pause_reason, last_reason}}` | `goal._emit_goal_update` |
 | `user.prompt_submitted` | notify | `{msg_id, chars}` | `dispatcher/prep.py`，用户行落盘后 |
 | `model.response_started` / `model.response_completed` | notify | `{}` / `{is_error}` | `agent_loop`，循环内每次模型响应 |
 | `file.changed` | notify | `{path, op}` | write / edit / apply_patch 工具 |
@@ -73,6 +73,7 @@ channel）根本没有意义。开放 dict 也让以后新增关联维度不用�
 | `context.compacted` | notify | `{ok, tokens_before, tokens_after, ...}` | `context/engine.py` |
 | `memory.ingest_started` / `memory.ingest_ended` | notify | `{messages}` / `{ok, retryable, reason}` | `memory/session_watcher.py` |
 | `channel.message_inbound` | notify | `{channel, peer_kind, chars}` | `channels/_conversation.py` |
+| `reminder.fired` | notify | `{task_id, title, message, session_id, agent_id, wake, scheduled_for, fired_at}` | `programs/tools/jobs/cron/worker.py`（由 `scheduler/reminders.py` 送达） |
 | `branches.listed` / `sessions.listed` | notify | `{session, count}` / `{count}` | agent-collab 的列表工具 |
 | `skills.changed` | notify | `{}` | skills watcher（`server.py`） |
 | `plugins.update_available` | notify | `{plugin, current, latest}` | 插件更新检查（`server.py`） |

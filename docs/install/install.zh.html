@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792402545" data-alt-lang-url="/docs/install/install.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793002125" data-alt-lang-url="/docs/install/install.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,7 +121,7 @@
 </table>
 <p>只有发布在 <a href="https://github.com/fzkuji-neo/OpenProgram/releases">GitHub Release</a> 中的产物才属于 release 安装。CI artifact 和 source checkout 构建不属于 stable release。</p>
 <h2 id="桌面安装">桌面安装<a class="header-anchor" href="#桌面安装">#</a></h2>
-<p>受支持的 macOS 和 Windows 桌面产物包含 Electron 和平台 product runtime。runtime 内含受控 CPython、OpenProgram、预构建 Web UI、providers、channels、search、Playwright Chromium、GPA detector 权重，以及 GUI、Research、Wiki 三项第一方 Programs。GUI Program 已注册，但 product runtime 明确不含 PyTorch、OpenCV 和 EasyOCR；需要这些依赖的 GUI perception 路径必须单独配置 backend 或 development overlay。runtime 不读取系统 Python 或 Node.js。Session 与 Memory 历史需要 Git，<code>openprogram doctor</code> 会检查 Git。Linux 当前使用同一套 CLI/server runtime，因为 AppImage 未通过打包门禁；不发布精简的 Linux 桌面产物。</p>
+<p>受支持的 macOS 和 Windows 桌面产物包含 Electron 和平台 product runtime。runtime 内含受控 CPython、OpenProgram、预构建 Web UI、providers、channels、search、Playwright Chromium、GPA detector 权重，以及 GUI、Research 两项第一方 Programs。GUI Program 已注册，但 product runtime 明确不含 PyTorch、OpenCV 和 EasyOCR；需要这些依赖的 GUI perception 路径必须单独配置 backend 或 development overlay。runtime 不读取系统 Python 或 Node.js。Session 与 Memory 历史需要 Git，<code>openprogram doctor</code> 会检查 Git。Linux 当前使用同一套 CLI/server runtime，因为 AppImage 未通过打包门禁；不发布精简的 Linux 桌面产物。</p>
 <h3 id="macos">macOS<a class="header-anchor" href="#macos">#</a></h3>
 <ol>
 <li>从 GitHub Releases 下载与机器架构对应的 DMG。</li>
@@ -175,7 +175,7 @@ Batch launcher 会恢复原控制台代码页，并保留命令的退出码。</
 </code></pre>
 <p>Web UI 地址是 <code>http://localhost:18100</code>。runtime 已包含预构建 Web UI，不需要 Node.js。激活前，installer 会验证 Web、providers、MCP、memory、channels、search、Chromium、GPA detector 权重，以及三项第一方 Programs 的注册和导入。<code>doctor</code> 仍可能报告尚未配置 provider credential 等用户配置问题。</p>
 <h2 id="已包含产品能力与额外扩展">已包含产品能力与额外扩展<a class="header-anchor" href="#已包含产品能力与额外扩展">#</a></h2>
-<p>GUI、Research Agent 和 Wiki Agent 三个 Program 属于每个受支持的 release 安装。GUI Program 不注册自己的工具，它为 <a href="/docs/capabilities/computer-use.zh.html#%E6%8C%89%E6%8F%8F%E8%BF%B0%E5%AE%9A%E4%BD%8D"><code>computer_use_agent</code></a> 的 <code>describe</code> 提供视觉定位。其 Program package、GPA detector 权重和 Playwright Chromium 已包含。GUI Program 使用不解析依赖的方式安装：product runtime 不含 PyTorch、OpenCV 和 EasyOCR，因此使用这些依赖的 GUI perception 路径需要单独配置 backend 或 development overlay。</p>
+<p>GUI 和 Research Agent 两个 Program 属于每个受支持的 release 安装。GUI Program 不注册自己的工具，它为 <a href="/docs/capabilities/computer-use.zh.html#%E6%8C%89%E6%8F%8F%E8%BF%B0%E5%AE%9A%E4%BD%8D"><code>computer_use_agent</code></a> 的 <code>describe</code> 提供视觉定位。其 Program package、GPA detector 权重和 Playwright Chromium 已包含。GUI Program 使用不解析依赖的方式安装：product runtime 不含 PyTorch、OpenCV 和 EasyOCR，因此使用这些依赖的 GUI perception 路径需要单独配置 backend 或 development overlay。</p>
 <p>第三方 Program 是用户主动增加的额外功能，存放在只读 product runtime 之外。第一方 Program editable source、诊断工具、本地前端构建，以及 OCR/Browser 后端替换属于开发者附加能力。只有使用 product runtime 未包含依赖的 GUI perception 路径才需要替换 backend 或补充依赖；这些附加项不会改变基础 runtime manifest。</p>
 <h2 id="开发-checkout">开发 checkout<a class="header-anchor" href="#开发-checkout">#</a></h2>
 <p>贡献者使用 source checkout：</p>
@@ -210,7 +210,7 @@ Source build 不适用于普通用户，也不定义 <code>stable</code> channel
 </ul>
 <p>版本变更见<a href="/docs/install/upgrade.zh.html">升级</a>，隔离状态目录见<a href="/docs/install/profiles.zh.html">Profiles</a>。</p>
 <p>新的 macOS 发行版使用 Developer ID 签名和 Apple 公证。旧版文件名明确包含 <code>unsigned</code> 的安装包仍适用原有安全要求。本地源码构建使用单独的开发签名身份。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/faq.html" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="常见问题">FAQ</span></a><a class="pn-link pn-next" href="/docs/install/upgrade.html" data-href-en="/docs/install/upgrade.html" data-href-zh="/docs/install/upgrade.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="版本升级">Release upgrades</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/start/faq.html" data-href-en="/docs/start/faq.html" data-href-zh="/docs/start/faq.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="常见问题">FAQ</span></a><a class="pn-link pn-next" href="/docs/install/upgrade.html" data-href-en="/docs/install/upgrade.html" data-href-zh="/docs/install/upgrade.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="版本升级">Release upgrades</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

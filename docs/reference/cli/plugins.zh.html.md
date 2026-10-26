@@ -67,3 +67,19 @@ usage: openprogram plugins [-h] verb ...
 | 参数 | 说明 |
 |---|---|
 | `name` | 要禁用的插件名 |
+
+## `plugins reload`
+
+重新读取插件的 manifest 和代码并再次加载
+
+| 参数 | 说明 |
+|---|---|
+| `name` | 要重新加载的插件名 |
+
+## `plugins inspect`
+
+显示插件能注册的内容：setup(ctx) 方法、manifest 键、事件、服务、Web 插槽
+
+| 参数 | 说明 |
+|---|---|
+| `--json` | 输出 JSON |

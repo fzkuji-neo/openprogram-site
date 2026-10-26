@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792402545" data-alt-lang-url="/docs/interfaces/desktop.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793002125" data-alt-lang-url="/docs/interfaces/desktop.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -143,7 +143,7 @@
 <p>若 Agent 在你停留在聊天时打开页面，桌面端会把该实时 WebTab 显示为角落小窗。在分屏窗口里操作另一个窗格时，小窗仍留在它所属的聊天上。点击小窗标题栏的 <strong>关闭小窗（X）</strong> 只隐藏小窗，页面仍可从右侧栏的 <strong>会话资源</strong> 中重新打开；点击 <strong>打开页面</strong> 可显示完整网页。网页版（普通浏览器里的 UI，不是桌面 App）没有原生 BrowserView，同一预览降级为 iframe 或「在新标签打开」。</p>
 <p>动作始终绑定发起聊天的窗口与 WebTab。默认使用 DOM、ARIA、页面文本和 element refs；只有视觉任务或结构化方式无法定位页面时，才使用一张当前 viewport screenshot。该路径不增加 OCR、object detector、多轮裁剪、component memory、vision memory 或 workflow replay。</p>
 <p>每个预览都绑定实际会话，即使在同一个聊天标签内切换会话也不会改变归属。切换会话时隐藏原预览，并恢复当前会话自己的预览。仅保留在会话中的网页对其他 Agent 不可见、不可操作。点击 <strong>打开页面</strong> 将同一个网页显示为独立标签页，其他会话可以发现它，并在当前 Agent 释放排他控制后接管。打开标签页不会转移原会话的预览归属。</p>
-<p>预览标题旁显示“自动预览”或“固定预览”。自动预览跟踪 Agent 正在操作的页面。在 <strong>更多</strong> 菜单中勾选 <strong>自动显示 Agent 正在操作的网页</strong> 开启自动预览，取消勾选则保持当前网页。桌面端和网页端均使用应用自己的菜单，选项有明确的复选框，下方独立显示解释文字。勾选或取消时即时生效，菜单保持打开；按 Escape 或点击外部关闭。输入区的网页标记只显示网页标题，不显示左侧、右侧或中间的位置文字。此选项不表示窗口置顶。标题栏没有图钉或放大／缩小按钮。该选择不改变 Agent 的操作目标，也不会恢复或启动 Agent，也不改变页面生命周期或顶部标签。会话资源没有单独的固定控件。默认聊天预览为 300×198.75（300×168.75 画面加标题栏）。拖动标题栏移动小窗；从四边或四角调整大小。小窗保持画面比例（默认 16:9），没有可见的边角拖块，指针在外框变为调整大小光标。调整预览不会缩放或改写底层页面。资源面板每个分组标题是整行控件，右侧为与左侧边栏项目行相同的箭头。</p>
+<p>预览标题旁显示“自动预览”或“固定预览”。自动预览跟踪 Agent 正在操作的页面。在 <strong>更多</strong> 菜单中勾选 <strong>自动显示 Agent 正在操作的网页</strong> 开启自动预览，取消勾选则保持当前网页。桌面端和网页端均使用应用自己的菜单，选项有明确的复选框，下方独立显示解释文字。勾选或取消时即时生效，菜单保持打开；按 Escape 或点击外部关闭。输入区的网页标记只显示网页标题，不显示左侧、右侧或中间的位置文字。此选项不表示窗口置顶。标题栏没有图钉或放大／缩小按钮。该选择不改变 Agent 的操作目标，也不会恢复或启动 Agent，也不改变页面生命周期或顶部标签。会话资源没有单独的固定控件。默认聊天预览为 300×198.75（300×168.75 画面加标题栏）。拖动标题栏移动小窗；从四边或四角调整大小。小窗保持画面比例（默认 16:9），没有可见的边角拖块，指针在外框变为调整大小光标。调整预览不会缩放或改写底层页面。资源面板每个分组标题是整行控件，右侧有一个箭头。</p>
 <h2 id="浏览器扩展">浏览器扩展<a class="header-anchor" href="#浏览器扩展">#</a></h2>
 <p>Chrome Web Store 与 Edge Add-ons 页面可以作为普通网页打开，但 OpenProgram 不安装浏览器扩展，不下载 CRX，不从其他浏览器导入扩展，也不提供扩展管理页。应用使用标准 Electron/Chromium。Electron 只暴露部分 Chrome Extensions API，并明确不以兼容任意 Chrome Web Store 扩展为目标；OpenProgram 不维护定制 Chromium/Electron 分支，也不为扩展兼容增加另一套浏览器运行时。完整 runtime 内已有的 Playwright Chromium 只属于浏览器自动化后端，不承载 Desktop Browser Pane 或扩展。</p>
 <p>需要扩展 OpenProgram 本身时，使用 <a href="/docs/capabilities/plugins.zh.html">OpenProgram Plugins</a>、Skills、MCP servers、Programs 或 agent tools。这些能力不修改内嵌网页运行时。</p>
@@ -231,7 +231,7 @@
 <p>离开再返回“能力 → Programs”时，目录树、选中的 Program 和已加载的调用图保持显示。页面可见时每五秒后台检测展开目录和所选调用图，重新聚焦也会检测；未变化的文件复用分析结果。点击刷新不会重置选择或已展开目录。检测失败时保留已有内容，便于重试。</p>
 <p>浏览器任务可以通过 <code>upload</code>、最新文件输入框的 <code>ref</code> 和 <code>path</code> 选择用户批准的本地文件（最大 50 MiB）。即使已经选定页面，上传仍经过正常权限检查，因为选择文件可能立即发送内容。沙箱读取限制仍然生效。观察结果只展示所选文件名，不展示内容或本地路径。<code>file_selected</code> 只验证选中文件；上传被网站接受需要根据网站响应另行验证。结果不确定时不会自动重传。</p>
 <p>验证使用 <code>assertion</code> 和非空的 <code>value</code>；<code>text</code> 用于输入文字或报告阻碍。同一观察上连续三次操作失败或断言不成立会停止并返回实际原因。权限或执行拒绝后停止，不重复动作。报告阻碍不代表完成，实际操作步数统计页面修改，不统计模型调用。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页界面">Web UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/README.html" data-href-en="/docs/interfaces/README.html" data-href-zh="/docs/interfaces/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面">Interfaces</span></a><a class="pn-link pn-next" href="/docs/interfaces/web.html" data-href-en="/docs/interfaces/web.html" data-href-zh="/docs/interfaces/web.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页界面">Web UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

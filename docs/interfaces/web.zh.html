@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792402545" data-alt-lang-url="/docs/interfaces/web.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793002125" data-alt-lang-url="/docs/interfaces/web.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,7 +90,15 @@
 <p><strong>操作历史</strong>在桌面 App 和浏览器中都通过当前页面的菜单显示。聚焦按钮后按 Enter 或空格打开；Escape 关闭菜单，并将焦点返回按钮。</p>
 <p>打开当前窗口已经显示的会话时，直接选中已有标签，从入口页或另一会话打开时也如此。目标尚未打开时，复用当前会话标签或入口页。后退和前进的目标会话若已打开，也会选中已有标签，并保留来源标签的历史。唯一性按会话 ID 判断，同名会话不会合并。重新加载旧的重复标签时，保留当前激活的一份；没有激活项则保留第一份，并保留它的历史和分组，移除其他重复标签。草稿输入和后台更新的标题在导航和重新加载后保留，已删除会话会从全部历史中移除。</p>
 <p>在 Files 或文件标签页中，后退和前进会依次返回当前项目中浏览过的文件夹与文件。返回 Files 时恢复文件夹展开状态和滚动位置；后退后打开新位置会替换原有前进记录。文件位置属于当前标签保存的页面历史，与文档版本 History 分开。目录列表快照失效时，重新读取已加载范围期间保留已有文件行。</p>
-<p>Markdown 文件以渲染后的文档打开。<code>figures/a.png</code> 这类相对图片路径从文档所在文件夹加载；相对链接会在新标签中打开对应文件。文件里的原始 HTML 显示为文本，不会执行。<code>#installation</code> 这类链接只在当前文档内滚动；<code>guide.md#installation</code> 打开目标文件，并在内容加载后滚动。标题键使用小写可见文本，保留 Unicode 字母与数字，将空格替换为连字符，并为重复标题添加数字后缀。章节请求是临时状态，重开 App 后不会恢复；导航保留未保存文本。此导航功能不包含双链、文档嵌入或大纲。</p>
+<p>Markdown 文件以渲染后的文档打开。<code>figures/a.png</code> 这类相对图片路径从文档所在文件夹加载；相对链接会在新标签中打开对应文件。文件里的原始 HTML 显示为文本，不会执行。<code>#installation</code> 这类链接只在当前文档内滚动；<code>guide.md#installation</code> 打开目标文件，并在内容加载后滚动。标题键使用小写可见文本，保留 Unicode 字母与数字，将空格替换为连字符，并为重复标题添加数字后缀。章节请求是临时状态，重开 App 后不会恢复；导航保留未保存文本。</p>
+<p>文档按 Obsidian 阅读视图排版：文件名显示为标题，YAML frontmatter 显示为 <strong>属性</strong> 表，<code>tags</code> 这类列表值显示为圆角标签。Obsidian 语法同样会渲染：</p>
+<ul>
+<li><code>&gt; [!note] 标题</code> 提示块（callout），支持 note、tip、warning、danger 等标准类型。<code>&gt; [!tip]-</code> 默认折叠，<code>&gt; [!tip]+</code> 默认展开，点标题切换。</li>
+<li><code>==文字==</code> 高亮和 <code>#标签</code>。</li>
+<li><code>[[笔记]]</code>、<code>[[笔记#标题]]</code>、<code>[[笔记|显示文字]]</code> 链接到文档所在文件夹（或名字前写的文件夹）里的 <code>笔记.md</code>，在新标签中打开。</li>
+<li><code>![[image.png]]</code> 从同一位置嵌入图片，<code>![[image.png|300]]</code> 设定宽度。嵌入其他笔记时显示为链接。</li>
+</ul>
+<p>双链不会像 Obsidian 那样在整个文件夹树里查找同名文件，也没有大纲。</p>
 <p>在桌面 App 中，HTML 文件以网页形式在浏览器标签页里打开：回复中的文件卡片把它打开在所属对话旁边，文件标签页里的 <strong>网页预览</strong> 打开已保存的文件。页面通过 <code>file://</code> 地址从磁盘加载，旁边的样式表、图片和脚本会像在 Chrome 中一样加载并运行。浏览器工具栏中的 <strong>查看源文件</strong> 回到文件，编辑和历史照常可用；文件标签页的第一个按钮显示为 <strong>源代码</strong>。在普通浏览器中，或 worker 运行在另一台机器上时，HTML 文件仍作为源文件显示。</p>
 <p>PDF 文件支持连续阅读、页码跳转、缩略图、文档目录、适合宽度或页面的缩放、正文选字、搜索高亮和下载原文件。复制选中文字时默认清除排版换行，保留段落分隔和正常连字符；关闭该选项可保留原换行。项目中的文件支持高亮和文字批注，并通过文档保存与 History 写入标准 PDF 批注。附件与历史版本保持只读。PDF 解码器随程序本地安装，兼容 App 内置运行时；打开 PDF 不会将文件上传至外部查看器。预览文件大小上限为 64 MiB。</p>
 <p>项目菜单还支持在系统文件管理器中显示文件夹、创建持久 Git worktree、归档该项目聊天，以及移除侧边栏项目入口。Worktree 从当前提交创建新分支，使用源 Git 仓库外的新绝对路径；未提交改动保留在原目录。创建过程中对话框会显示当前步骤（创建分支、检出文件——大仓库会显示百分比、打开项目）；检出文件时点 <strong>停止</strong>，会删掉做了一半的文件夹和它的分支。移除项目保留文件、聊天及项目归属，可在项目页面恢复或重新打开文件夹。默认主目录项目不可移除。已归档聊天可通过“已归档”筛选查看；隐藏项目的聊天仍保留在日期或平铺历史中。</p>
@@ -120,7 +128,7 @@
 <h2 id="聊天页chats">聊天页（/chat、/s/&lt;session-id&gt;）<a class="header-anchor" href="#聊天页chats">#</a></h2>
 <p><code>/chat</code> 是聊天主界面；<code>/s/&lt;session-id&gt;</code> 是单个会话的直达链接，切换会话不重新加载页面，WebSocket 连接保持不断。</p>
 <h3 id="消息流式">消息流式<a class="header-anchor" href="#消息流式">#</a></h3>
-<p>消息写入连接后，文字立即显示在对话中，本次提交的输入框文字随即清空。服务端确认接收前，消息保留待确认状态；确认后更新同一条消息。随后显示回复占位，text、thinking、工具调用等块通过 WebSocket 按到达顺序增量渲染。多个 agent 写入同一会话时，每条回复消息都带有产出它的 agent 的头像和名字。</p>
+<p>消息写入连接后，文字立即显示在对话中，本次提交的输入框文字随即清空。服务端确认接收前，消息保留待确认状态；确认后更新同一条消息。随后显示回复占位，text、thinking、工具调用等块通过 WebSocket 按到达顺序增量渲染。多个 agent 写入同一会话时，非默认 agent 的每条回复上方标出产出它的 agent 名字。</p>
 <h3 id="回复中的卡片与排版视图">回复中的卡片与排版视图<a class="header-anchor" href="#回复中的卡片与排版视图">#</a></h3>
 <p>除了 Markdown、表格、代码和公式，回复里还可以出现小型排版视图：状态卡片、一排关键数字、清单，或用标签页对比几个方案。模型用 <a href="https://a2ui.org">A2UI</a> v0.9 格式写在 <code>a2ui</code> 代码块里，聊天区按 App 主题绘制。Web 与桌面端会话会在系统提示中告诉模型这种格式；其他渠道（微信、Telegram、TUI）不会。</p>
 <p>只绘制展示类组件：Card、Column、Row、List、Tabs、Text、Divider、Icon、Image（HTTPS 或内嵌 PNG/JPEG/GIF/WebP），以及作为只读清单项的 CheckBox。按钮、输入框和动作不会绘制，代码块里的代码或 HTML 都不会执行。代码块还在输出时显示占位卡片。不是合法 A2UI 的代码块按普通代码块显示；复制回复时复制的是原文。</p>
@@ -202,7 +210,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 </tr>
 <tr>
 <td><code>/scheduler</code></td>
-<td>定时任务：一次性、周期和监控任务，按类型筛选；可暂停、恢复或删除每个任务</td>
+<td>定时任务：一次性、周期和监控任务以及<a href="/docs/capabilities/reminders.zh.html">提醒</a>，按类型筛选；可暂停、恢复或删除每个任务</td>
 </tr>
 <tr>
 <td><code>/chats</code></td>
@@ -240,9 +248,9 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 </table>
 <p>消息导航预览和技能详情将原始 HTML 按文本显示，同时保留 Markdown 格式。技能链接不授予本地文件访问权限。</p>
 <p><code>/settings</code> 直接打开会跳到 <code>/settings/general</code>。模型凭据仍在 <code>/settings/providers</code>，见<a href="/docs/models/README.zh.html">配置模型</a>。</p>
-<p>窗口较窄（宽度不超过 900px）时，左侧栏默认收起为图标栏，直到你展开它；展开后导航到其他页面会再次收起。宽度低于 760px 时，设置导航同样默认显示为图标栏，窗口缩小到该宽度时也会自动收起。你手动展开或收起侧栏的选择会被保留。</p>
+<p>窗口较窄（宽度不超过 900px）时，左侧栏默认收起为图标栏，直到你展开它；展开后导航到其他页面会再次收起。历史（项目）、Agents 和设置页的列表列可以收成图标栏，按钮在页面标题前。宽度低于 760px 时，这些列默认显示为图标栏，窗口缩小到该宽度时也会自动收起。你手动展开或收起侧栏或列表列的选择会被保留。</p>
 <h3 id="欢迎页动画">欢迎页动画<a class="header-anchor" href="#欢迎页动画">#</a></h3>
-<p>新建的空白对话只显示输入框。在设置 → General 打开“欢迎页动画”后，输入框背后会播放代码雨：绿色的字母、数字、符号和片假名成列落下，铺满聊天区。默认关闭，保存在当前浏览器。系统开启“减少动态效果”时，代码雨只画一帧静止画面。</p>
+<p>新建的空白对话只显示输入框。在设置 → General 打开“欢迎页动画”后，输入框背后会播放代码雨：绿色的字母、数字、符号和片假名成列落下，铺满聊天区。默认关闭，保存在当前浏览器。打开后可用“代码雨密度”调整同时落下的雨滴数量，范围 10% 到 100%（默认 40%），拖动时即时生效。系统开启“减少动态效果”时，代码雨只画一帧静止画面。</p>
 <h3 id="标签拖动外观">标签拖动外观<a class="header-anchor" href="#标签拖动外观">#</a></h3>
 <p>设置 → General 的“标签拖动外观”同时控制标签栏内外的标签拖动外观，以及分屏标题的悬浮预览。透明度可调为 0–100%，背景模糊可调为 0–40px，阴影强度可调为 0–100%。修改即时生效，设置预览与实际拖动标签共用这些数值。默认透明度 20%、模糊 16px、阴影强度 25%。“恢复默认”只重置这三个选项，不改变主题或其他偏好。</p>
 <p>偏好保存在本浏览器，并同步到同源窗口。重新加载或切换明暗主题后保留数值。透明度 0% 为不透明；模糊 0px 和阴影 0% 分别关闭对应效果。这些选项不改变普通按钮或 Resources 拖放目标的描边。</p>
@@ -258,10 +266,13 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 <h2 id="管理项目文件">管理项目文件<a class="header-anchor" href="#管理项目文件">#</a></h2>
 <p>Files 顶部依次为路径行、操作行、按需展开的搜索行和列标题。列顺序为名称、大小、修改时间和类型。窄侧边栏默认显示名称和大小，横向滚动可查看其他列；宽视图完整显示四列。纵向滚动时列标题保持可见。点击列标题排序，再次点击切换升降序；搜索结果保持相关度排序。点击路径分段可以在项目树中定位对应目录。操作行提供搜索、新建文件、新建文件夹、刷新、排序与显示、查看详细信息。每个目录可以按名称、修改时间、大小或类型排列，选择升降序、文件夹优先，以及是否显示隐藏项和 Git 忽略项。设置按项目保存在本地，侧边栏和中央 Files 共用。搜索仍按相关度排列。</p>
 <p>工具栏和文件右键菜单均可打开详细信息，查看路径、文件字节数、时间和只读权限。没有缓存结果的可见文件夹通过有限队列统计大小。已结束的统计保存在本地 profile，重新打开 Files 或重启 App 后直接复用，包含有跳过条目的不完整结果。重新打开视图或详细信息不会重新扫描已有缓存。使用刷新或重新计算更新目录总大小；通过 Files 修改文件也会使共用统计失效。目录行显示完整统计或缓存估值，<code>≥</code> 表示部分结果；详情提供统计时间、跳过条目数以及继续、取消、重新计算。统计累计文件逻辑字节数，包含隐藏文件，跳过符号链接、受限目录和不可读条目。结果是在一段时间内取得的样本，不是原子快照或磁盘分配量，缓存可能过期。近期完整统计参与大小排序；计算完成后刷新可以重新排列，未知大小和部分统计排在同组末尾。</p>
+<p>移动文件时，把它拖到文件夹上（拖到空白处则放到项目根目录）；悬停在未展开的文件夹上会自动展开。⌘ 点击（Windows 和 Linux 上为 Ctrl 点击）可以加入或移出选择，Shift 点击选择一段范围，多个文件可以一起移动、剪切、复制或删除。每次移动都会显示带“撤销”的提示。服务端拒绝的移动（例如目标位置已有同名项）不会保留。在文件树上，⌘C、⌘X、⌘V（Windows 和 Linux 上为 Ctrl）复制、剪切并粘贴到选中的文件夹，⌘Backspace 或 Delete 确认后删除，F2 重命名。删除的内容移入可恢复存储。</p>
+<p>从访达或文件资源管理器把文件或文件夹拖到文件树上，即可加入项目：内容放到指针下的文件夹，拖动时会有标签写明目标文件夹。已存在的同名文件不会被覆盖，并在提示中统计数量。单个文件最大 1 GiB。</p>
+<p>回到窗口时，Files 会重新读取已展开的目录，在其他应用中做的改动无需点刷新即可看到。</p>
 <p>路径使用较大字号，最右侧按钮复制完整绝对路径。刷新保留选中路径、展开目录和已加载分页范围。普通文件行显示可读大小（包括空文件）；长文件名在剩余空间内缩略，大小保持完整宽度，悬停大小可查看准确字节数。</p>
 <p>侧边栏只显示有未归档对话的项目。空项目仍可在项目选择器和项目管理界面找到。</p>
 <p>对话历史存放在 OpenProgram 状态目录中，按稳定的项目 ID 分组。登记项目时，会在 <code>&lt;project&gt;/.openprogram/project.json</code> 写入小型标识文件。移动文件夹（包括跨磁盘移动）时应保留这个隐藏目录。启动或访问项目时，OpenProgram 在已知项目的父目录内查找标识，最多检查三级目录、4,000 个条目，不扫描整个磁盘，也不依赖操作系统书签。</p>
-<p>如果新位置不在查找范围内，重新打开一次新目录即可关联原项目及对话。原目录仍可用时，打开副本会创建独立项目。发现多个副本时需要“定位文件夹”。把一个缺失的项目定位到已经属于另一个项目的目录时，如果缺失的项目没有对话，它会被移除，并改为选中那个项目。旧项目的身份无法核实时，也需要定位一次。登记和定位时应允许写入标识文件；文件损坏或无法读取会明确报错，不会静默改变身份。</p>
+<p>如果新位置不在查找范围内，重新打开一次新目录或其中任意子目录，即可关联原项目及对话。一起移动的项目会跟着恢复：一个项目在新位置被找到或定位后，原来与它相邻的其他缺失项目只要在对应位置找到各自的标识文件，就会一并重新关联。因此在被整体移动的项目目录里定位一个项目，其余项目也会修复。原目录仍可用时，打开副本会创建独立项目。发现多个副本时需要“定位文件夹”。把一个缺失的项目定位到已经属于另一个项目的目录时，如果缺失的项目没有对话，它会被移除，并改为选中那个项目。旧项目的身份无法核实，或文件夹的身份不再匹配时，提供“就是这个位置的文件夹”：一键确认记录路径上仍在的文件夹，无需打开选择器。项目菜单、项目管理页和 Files 显示相同的提示和操作；Files 在文件树位置显示。登记和定位时应允许写入标识文件；文件损坏或无法读取会明确报错，不会静默改变身份。</p>
 <p>工作目录不可用时仍可阅读历史，该项目的新任务等到位置恢复有效后才会启动。另一个占用相同路径的目录不会继承原来的对话。原目录删除后仅剩一个副本时，按移动处理。</p>
 <p>按下顶部标签只高亮，未拖动时松开才切换页面；拖动期间保留当前页面。拖出标签栏后松开可使用现有新窗口分离功能，拖出标签栏时，标签在页面上方跟随鼠标显示，原位置隐藏；拖回标签栏或结束拖动后恢复。要把已打开的网页加入会话，先保持该会话显示，再把网页标签拖到 <strong>Resources</strong> 入口或其展开内容区，松开即绑定原页面。顶部标签和原有关联保留，绑定失败不会改变页面。</p>
 <p>长会话先加载一小页最近记录，向上滚动时继续读取历史。Activity 初始只读取运行列表，打开某次运行的“技术详情”后才读取执行事件和调试详情。短暂的状态刷新失败会自动重试；重试较久时显示普通状态提示，持续无法读取且没有已保存记录时才显示错误。</p>
@@ -276,7 +287,7 @@ Wayland display（例如通过 SSH 使用服务器），Web UI 会改为显示�
 <p>回复失败时，已生成的正文和函数记录会保留，失败提示显示在该回复末尾。展开<strong>错误详情</strong>可查看原始报错；刷新对话后仍可查看提示和详情。</p>
 <p>在输入框第一行按 ↑ 可查看历史消息；在最新历史消息上按 ↓ 会恢复尚未发送的草稿。编辑历史文本后开始新的历史查看周期；Ctrl/⌘/Alt/Shift 加方向键以及选中文本时保持正常编辑行为。</p>
 <p>Markdown 文件预览把原始 HTML 显示为文本。文档链接支持本地文件、页内片段、HTTP(S) 和 mailto；协议相对链接使用 HTTPS。图片支持经权限检查的本地文件与 HTTP(S)，并保留 SVG 片段。data 图片地址、可执行或不支持的协议不会加载；本地 URL 的查询参数不改变文件权限。数学内容在排版前保持文本，行内与围栏代码中的数学分隔符保持字面形式。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="桌面应用">Desktop App</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="终端界面">Terminal UI</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/interfaces/desktop.html" data-href-en="/docs/interfaces/desktop.html" data-href-zh="/docs/interfaces/desktop.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="桌面应用">Desktop App</span></a><a class="pn-link pn-next" href="/docs/interfaces/tui.html" data-href-en="/docs/interfaces/tui.html" data-href-zh="/docs/interfaces/tui.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="终端界面">Terminal UI</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

@@ -105,7 +105,7 @@ Entity:
   "id": "project.openprogram",
   "type": "project",
   "name": "OpenProgram",
-  "attrs": {"path": "/Users/fzkuji/OpenProgram", "lang": "python"},
+  "attrs": {"path": "~/OpenProgram", "lang": "python"},
   "scope": "global"
 }
 ```
@@ -177,7 +177,7 @@ OpenProgram Memory — project: OpenProgram, last consolidated 2026-06-18
 · 2026-06-17 Fixed the CLI attended-mode issue                       ↪ session:local_d125
 
 [Graph · current project]
-· OpenProgram at /Users/fzkuji/OpenProgram (python, next.js)
+· OpenProgram at ~/OpenProgram (python, next.js)
 · worker ──listens-on──► :18109
 
 For details: memory_open_session(<id>) / memory_git_log(<project>)

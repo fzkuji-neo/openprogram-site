@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792402545" data-alt-lang-url="/docs/start/features.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793002125" data-alt-lang-url="/docs/start/features.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -156,16 +156,12 @@ in <code>~/.openprogram/projects/&lt;project&gt;/memory/</code>, laid out the sa
 </thead>
 <tbody>
 <tr>
-<td><code>core.md</code></td>
-<td>A short always-on block, injected into every session's system prompt</td>
+<td><code>MEMORY.md</code></td>
+<td>The entry file, injected into every session's system prompt: a map of where things are, then a short always-on core rendered from <code>topics/core.md</code>. Like <code>AGENTS.md</code>, each layer has its own, and the personal one comes first, then the project's</td>
 </tr>
 <tr>
 <td><code>topics/</code></td>
-<td>One file per subject, such as <code>topics/people/dave.md</code>. Every paragraph carries an ID and cites where the fact came from</td>
-</tr>
-<tr>
-<td><code>sources/</code></td>
-<td>The conversation turns those citations point at. Added to, never rewritten</td>
+<td>One file per subject, such as <code>topics/people/dave.md</code>. Every paragraph carries an ID and a footnote linking the chat message the fact came from, <code>/s/&lt;session&gt;#&lt;message&gt;</code>; memory keeps no copy of the conversation</td>
 </tr>
 <tr>
 <td><code>timeline/</code></td>
@@ -185,8 +181,8 @@ not where it is stored, so a detail about Dave lands in
 learn. A conversation that goes quiet for half an hour is written
 whatever its size, so a short exchange is not left waiting for a
 batch that never comes.</p>
-<p>Every write lands whole or not at all. An edit that cites a source
-it did not supply, points at a paragraph that does not exist, or
+<p>Every write lands whole or not at all. An edit that cites a message
+no chat holds, points at a paragraph that does not exist, or
 breaks the topic format is refused, and the workspace is left byte
 for byte as it was. Two writers never interleave: a background
 write that finds the workspace busy gives up after a second rather
@@ -203,12 +199,15 @@ openprogram<span class="w"> </span>memory<span class="w"> </span>edit<span class
 openprogram<span class="w"> </span>memory<span class="w"> </span><span class="nb">export</span><span class="w">                        </span><span class="c1"># tar.gz the whole workspace</span>
 </code></pre>
 <p>The web UI's Memory page reads the same workspace. Agents reach it
-through <code>memory_search</code>, <code>memory_grep</code>, <code>memory_get</code>,
-<code>memory_browse</code>, <code>memory_update</code> and <code>memory_status</code>. There is no
-&quot;save this&quot; tool: recording the conversation is already happening
-in the background, and <code>memory_update</code> is for correcting what is
-there or writing down something you asked to be remembered right
-now.</p>
+through three tools: <code>memory_search</code> finds paragraphs, by meaning or
+an exact string; <code>memory_get</code> lists what memory holds, reads a file,
+section or paragraph, and given a footnote's chat link reads what was
+actually said there; <code>memory_update</code> adds, corrects, deletes or moves
+records. There is no &quot;save this&quot; tool: recording the conversation is
+already happening in the background, and <code>memory_update</code> is for
+correcting what is there or writing down something you asked to be
+remembered right now. A record it writes without naming a source
+cites the message that asked for it.</p>
 <h2 id="mini-dag-execution-view-in-the-right-rail">Mini-DAG — execution view in the right rail<a class="header-anchor" href="#mini-dag-execution-view-in-the-right-rail">#</a></h2>
 <p>Every conversation has a right-rail mini-DAG that draws each
 node (user message, LLM call, code Call, attach) and the edges
@@ -252,7 +251,7 @@ external transports (Telegram / Discord / Slack / WeChat) to
 per-account identities. Cross-channel message routing + a
 declarative tool-availability system are tracked as the next
 set of features.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

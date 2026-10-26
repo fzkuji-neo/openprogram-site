@@ -28,7 +28,9 @@ panel          raised cards:             the left and right rails
 The window is three floating cards on one page — the shadcn
 Sidebar `floating` shell for both rails (`components/ui/sidebar.tsx`,
 the registry's shell only) and its `inset` idea for the centre
-column at once. Each card has 14px corners (`rounded-2xl`) and the
+column at once. Each card has Nova's floating-Sidebar corner
+(`rounded-lg`, 12px; split panes and the canvas overview use the
+same `--radius-lg`) and the
 per-theme raised shadow (`--composer-shadow`), no border and no
 ring; the rails keep a 7px gutter on every side (`p-2`), the
 centre card sits 7px off the top and bottom edges and takes its
@@ -121,7 +123,9 @@ selected     `--bg-hover`  (same grey, never white / `--bg-input`)
 row, slightly muted text. Not italic, not a different add-style.
 
 Implementation: `.ui-list-item` in `apps/web/app/styles/base.css`
-is the source. MCP `.serverItem` must match those metrics (prefer
+is the source. A page's list column (History projects, Agents, the
+Programs tree, Settings) renders it through `RailItem`; see
+[secondary-rail.md](secondary-rail.md). MCP `.serverItem` must match those metrics (prefer
 composing `.ui-list-item` over a parallel recipe).
 
 ## Size system — list rows and Buttons
@@ -226,6 +230,47 @@ menu keeps only its placement (position, z-index, width) in the
 module and takes the frame and rows from those classes; it never
 restates their values.
 
+Every action menu opened from a small button or by right-click
+builds its rows with `MenuRow` (`apps/web/components/ui/menu-parts.tsx`),
+in the page and in the desktop overlay alike. A row reads, left to
+right:
+
+```
+[icon] label ············ [key] [check] [›]
+```
+
+- **icon**: a Solar Bold Duotone glyph (`MenuIcon`, 16px, muted),
+  the family the sidebar folder uses. Folder rows draw the folder in
+  `--folder-color`; destructive rows draw it red.
+- **key**: a price tag (`MenuKey`) in the platform's notation. The
+  tag is a fixed 10px tip, the rounded right end of Solar's
+  `tag-horizontal` outline mirrored to point left, joined to the
+  shadcn `Kbd` as its plate: 18px tall, square where it meets the tip,
+  5px round on the right, 1px / 6px padding around at least 8px of
+  text, so every single-letter tag is the same width and a longer key
+  only lengthens the plate. Both parts paint `--menu-key-bg`: the ink at
+  12% over the popover at rest, one step above the menu (`--muted` sits
+  below the menu in dark themes). The key text comes
+  from `formatMenuKeys`: `⌘T`, `⇧⌘C` on macOS, `Ctrl+T`,
+  `Ctrl+Shift+C` elsewhere. A menu shows only keys that already work:
+  real shortcuts, or single letters the open menu answers (the chat
+  menus' R/P/C/A/D). No global shortcut exists just to fill a tag.
+  A lit row lifts `--menu-key-bg` to the ink at 22%, a step above
+  the row's 9% hover fill, and turns the text bright.
+- **check**: `MenuCheck` at the row end; an uncheckable row in a
+  checkable group keeps the column empty (`CHECK_SLOT_PAD`).
+- **submenu**: a trailing chevron; submenus nest to any depth.
+- **lit row**: hover, keyboard highlight, an open submenu or the
+  active row light the whole row, not only the label: the muted icon,
+  key tag and chevron turn bright and the icon pops to 1.12, as the
+  composer's icons do. A tinted icon (folder, destructive) keeps its
+  colour and only pops.
+
+The desktop overlay receives the same fields as data:
+`DesktopContextMenuItem` carries `glyph` and `keys`, and the overlay
+page renders them with the same parts. `scripts/ui/check-menu-rows.mjs`
+holds every menu file to this row.
+
 ```
 part        Nova, at the docs' scale
 ─────────────────────────────────────────────────────────────────
@@ -236,8 +281,8 @@ row         min-h-7 (28px) · rounded-md · px-1.5 py-1 ·
 hover       bg-accent (the ink at 9%) · text-bright
 label       px-1.5 py-1 · text-xs · font-medium · muted
 separator   -mx-1 my-1 · 1px · --border
-shortcut    text-xs · tracking-widest · muted
-chosen      accent check (MenuCheck), never a fill
+shortcut    price tag (MenuKey: Solar tip + Kbd) · text-[11px] · muted
+chosen      accent check (MenuCheck) at the row end, never a fill
 ─────────────────────────────────────────────────────────────────
 ```
 
@@ -322,6 +367,19 @@ Controls inside are the official components: `Switch`, `Input`,
 `Textarea`, `Slider`, `RadioGroup` (choice cards), `ToggleGroup`,
 `Checkbox`, `Button`, `SimpleSelect`. A tab carries no row, label or
 card CSS of its own.
+
+The Settings and Info tabs of a History project use the same blocks inside
+`.shadcn-scale`, so they read like a Settings page. All four project tabs
+(Chats, Memory, Settings, Info) share one layout: the project head and tab
+bar stay put, the panel fills the rest edge to edge, and each tab scrolls
+inside it (Settings and Info with a 24px edge, like the Chats toolbar).
+The Chats tab groups chats by recency, one titled `Card` per group with
+hairline-divided rows. Each group title is a disclosure: Today, Last 7 days
+and the newest group start open, older months and years start folded, and
+the viewer's choice per group is remembered in this browser. An open group
+lists 8 chats, then "Show all N" (a group of 10 or fewer lists them all); a toolbar button expands or folds every
+group, and a search opens them all. `npm run check:project-tabs` guards
+this.
 
 ## Button variant guidance
 
@@ -471,7 +529,16 @@ carries geometry only, so the 40px row keeps its rhythm.
   delete-chat and Bypass Permissions prompts, the plugin, channel,
   branch-merge, icon-picker, function and provider-setup panels).
   The attachment lightbox keeps its own full-screen viewer.
+- Done: every part in `components/ui` is radix-nova — the command
+  palette (`Command` in the Nova `Dialog`, selected row on
+  `bg-accent` like the menus), `Popover` (Nova surface with the
+  menus' `--popover-ring` / `--popover-shadow` frame; a
+  `bg-transparent` content hosts its own `MENU_PANEL`), `Tooltip`
+  (Nova's inverted badge with an arrow; `--surface-tooltip` /
+  `--text-on-tooltip` alias `--foreground` / `--background` so the
+  hand-placed rail tips match), `Tabs` (the Agent editor uses the
+  `line` variant), `Kbd`, `ScrollArea` and the `Sidebar` shell.
 - Not yet migrated: the other Settings pages (still on
-  `settings-page.module.css` rows) and tooltips. Form inputs outside
+  `settings-page.module.css` rows). Form inputs outside
   Settings keep the 1px-edge rule above until they move to the
   shadcn input. Sidebar list rows stay on the list set above.

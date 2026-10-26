@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792402545" data-alt-lang-url="/docs/start/features.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793002125" data-alt-lang-url="/docs/start/features.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,16 +150,12 @@ docstring 与 <code>content</code> 的拆分、一份基于规则的校验清单
 </thead>
 <tbody>
 <tr>
-<td><code>core.md</code></td>
-<td>一小段常驻内容，注入每个会话的system prompt</td>
+<td><code>MEMORY.md</code></td>
+<td>入口文件，注入每个会话的system prompt：先是一张&quot;什么在哪&quot;的地图，再是从<code>topics/core.md</code>渲染出的一小段常驻核心。和<code>AGENTS.md</code>一样每层各有一份，个人的在前，项目的在后</td>
 </tr>
 <tr>
 <td><code>topics/</code></td>
-<td>一个主题一个文件，比如<code>topics/people/dave.md</code>。每个段落带一个ID，并标注这条事实的出处</td>
-</tr>
-<tr>
-<td><code>sources/</code></td>
-<td>那些出处指向的对话原文。只追加，不改写</td>
+<td>一个主题一个文件，比如<code>topics/people/dave.md</code>。每个段落带一个ID，脚注链接这条事实来自的聊天消息<code>/s/&lt;会话&gt;#&lt;消息&gt;</code>；记忆不另存对话副本</td>
 </tr>
 <tr>
 <td><code>timeline/</code></td>
@@ -176,7 +172,7 @@ docstring 与 <code>content</code> 的拆分、一份基于规则的校验清单
 它存在哪儿，所以关于Dave的细节最终都落在<code>topics/people/dave.md</code>，
 无论它是分几次对话学到的。安静超过半小时的对话不管攒了多少都会被
 写掉，短对话不会一直等一个永远凑不齐的批次。</p>
-<p>每次写入要么整体落地，要么完全不落地。引用了没提供的出处、指向了
+<p>每次写入要么整体落地，要么完全不落地。引用了聊天里不存在的消息、指向了
 不存在的段落、或者破坏了主题格式的改动会被整体拒绝，工作区一个字节
 都不变。两个写入者不会交错：后台写入发现工作区被占用时，等一秒就
 放弃，不会让你等，下一轮再来。</p>
@@ -190,11 +186,12 @@ openprogram<span class="w"> </span>memory<span class="w"> </span>show<span class
 openprogram<span class="w"> </span>memory<span class="w"> </span>edit<span class="w"> </span>topics/people/dave.md<span class="w">    </span><span class="c1"># 用$EDITOR打开，校验通过才落地</span>
 openprogram<span class="w"> </span>memory<span class="w"> </span><span class="nb">export</span><span class="w">                        </span><span class="c1"># 把整个工作区打成tar.gz</span>
 </code></pre>
-<p>Web UI的Memory页面读的是同一个工作区。agent通过<code>memory_search</code>、
-<code>memory_grep</code>、<code>memory_get</code>、<code>memory_browse</code>、<code>memory_update</code>、
-<code>memory_status</code>访问它。没有「保存这条」这样的工具：记录对话本来就在
-后台发生，<code>memory_update</code>是用来订正已有内容、或者写下你当场要求
-记住的东西的。</p>
+<p>Web UI的Memory页面读的是同一个工作区。agent通过三个工具访问它：
+<code>memory_search</code>按语义或确切字符串找段落；<code>memory_get</code>列出记忆里有什么、
+读一个文件、章节或段落，传入脚注的聊天链接时读出当时的原话；
+<code>memory_update</code>新增、订正、删除或移动记录。没有「保存这条」这样的工具：
+记录对话本来就在后台发生，<code>memory_update</code>是用来订正已有内容、或者写下
+你当场要求记住的东西的。不指定出处时，它写下的记录引用提出这个要求的那条消息。</p>
 <h2 id="mini-dag-右栏中的执行视图">Mini-DAG — 右栏中的执行视图<a class="header-anchor" href="#mini-dag-右栏中的执行视图">#</a></h2>
 <p>每个对话都有一个右栏 mini-DAG，它画出每个节点
 （用户消息、LLM 调用、代码 Call、attach）以及它们之间的边。
@@ -232,7 +229,7 @@ openprogram<span class="w"> </span>providers<span class="w"> </span>list<span cl
 外部传输（Telegram / Discord / Slack / WeChat）映射到按账户区分的身份。
 跨 channel 的消息路由 + 一套声明式的工具可用性系统，
 作为下一批特性在跟踪中。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/README.html" data-href-en="/docs/README.html" data-href-zh="/docs/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="概览">Overview</span></a><a class="pn-link pn-next" href="/docs/start/GETTING_STARTED.html" data-href-en="/docs/start/GETTING_STARTED.html" data-href-zh="/docs/start/GETTING_STARTED.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="快速上手">Getting started</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

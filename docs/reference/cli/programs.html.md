@@ -30,16 +30,16 @@ List installable programs + installed third-party harnesses
 
 ## `programs install`
 
-Install a program (gui/research/wiki/all) or any third-party harness by git URL / owner/repo
+Install a program (gui/research/all) or any third-party harness by git URL / owner/repo
 
 | Option | Description |
 |---|---|
-| `name` | gui \| research \| wiki \| all — or a git URL / owner/repo for a third-party harness |
+| `name` | gui \| research \| all — or a git URL / owner/repo for a third-party harness |
 | `--upgrade`, `-U` | Reinstall/upgrade even if already present |
 
 ## `programs uninstall`
 
-Uninstall a program (gui/research/wiki/all) or a third-party harness by its clone-dir name
+Uninstall a program (gui/research/all) or a third-party harness by its clone-dir name
 
 | Option | Description |
 |---|---|

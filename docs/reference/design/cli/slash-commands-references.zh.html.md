@@ -6,7 +6,7 @@
 参考项目都跟随上游持续演进。需要再次同步时，回到这里逐项 diff，把新增设计
 抽进 `slash-commands.zh.md` 的字段表。
 
-参考路径：`/Users/fzkuji/Documents/LLM Agent Harness/OpenProgram/references/`
+参考路径：`~/Documents/LLM Agent Harness/OpenProgram/references/`
 
 ---
 

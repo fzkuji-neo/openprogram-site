@@ -9,7 +9,7 @@ come back here, diff each entry item by item, and lift any new design into the
 field table in `slash-commands.md`.
 
 Reference checkout path:
-`/Users/fzkuji/Documents/LLM Agent Harness/OpenProgram/references/`
+`~/Documents/LLM Agent Harness/OpenProgram/references/`
 
 ---
 

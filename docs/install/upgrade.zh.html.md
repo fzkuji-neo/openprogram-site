@@ -81,6 +81,40 @@ openprogram worker restart
 已有更新的状态查询和取消仍然可用；仅有 worker 服务并不代表已经具备源码更新控制器的
 构建、激活、验证和恢复流程。
 
+### 聊天工具
+
+对话中模型只通过一个工具 `self_update` 操作更新，`action` 取 `status`（默认）、
+`prepare`、`retry` 或 `cancel`。它的 schema 保持简短；第一次调用的结果说明整个流程并
+列出各动作的说明。对话中第一次 `prepare` 或 `retry` 会先被拒绝一次，拒绝结果里附上该
+动作的完整说明（`help("self_update.prepare")`、`help("self_update.retry")`），下一次调用
+就带着这些说明进行。`prepare` 和 `retry` 即使在 bypass 下也总是请 owner 单次审批；
+`status` 不需要审批。
+
+help("self_update") 可以随时重新查看这段流程说明。
+
+### 一次更新会重启什么
+
+更新只重新构建已安装 App 所基于的提交（`Contents/Resources/openprogram-source-revision`）
+与候选之间改动的部分，并按需要做最小的重启：
+
+| 改动路径 | 重新构建 | 重启 |
+| --- | --- | --- |
+| `apps/web/**` | Web 导出 | 不重启。已打开的页面在没有未保存输入时自动刷新。 |
+| `docs/**`、`scripts/docs_site/**` | 文档站 | 不重启。 |
+| `apps/cli/**`（不含其 Python 包） | 终端 UI 包 | 不重启。新开的终端会话使用新版本。 |
+| `openprogram/**`、`apps/server/**`、`apps/cli/python/**`、`setup.py` | wheel 和文档 | 只重启 worker；App 窗口保持打开并显示正在更新。 |
+| `apps/desktop/**` | Desktop archive | App 退出后重新打开。 |
+| 依赖锁文件、各 `package.json`、`scripts/release/**`、`apps/desktop/scripts/**`、`apps/desktop/build/**` 以及其他路径 | 完整 App | App 退出后重新打开。 |
+
+测试和仓库元数据（`tests/**`、`README.md`、`.github/**` 等）不改变任何随 App 发布的
+内容。从未提交改动的 checkout 安装的 App（`-dirty`），或其提交不在该仓库中时，总是完整
+构建。`self_update(action="prepare")` 的结果给出预计的 `restart` 和 `rebuild`；控制器在构建时
+重新判定，并把计划写入更新目录的 `activation.json`。
+
+各级别的安装方式相同：新 App bundle 先暂存在已安装 App 旁边，通过重命名换入，验证后
+提交或回退。不需要任何重启的更新也不进入维护，运行中的对话和 Job 照常继续。回退以同一
+重启级别恢复上一版 bundle。
+
 更新进入维护后，普通排队 Job 保持原有身份，等待维护结束。支持持久化暂停的运行任务
 在下一个检查点暂停；活动 attempt 和资源占用结束后才替换 App。验证提交或回退完成后，
 worker 只恢复由本次更新暂停的任务。用户原本暂停、等待输入的任务保持暂停。
@@ -97,8 +131,8 @@ worker 保留旧检查点，依据原任务及历史创建一个新的规划 Job
 `scripts/release/product-runtime.json` 完全一致；控制器使用保存 runtime 中固定版本的
 构建工具，以及既有 npm/uv/Electron-builder/node-gyp 缓存的私有副本。Electron 平台归档
 必须匹配可信控制器固定的版本、架构和发布 SHA-256，并作为 candidate 只读的
-`electronDist` 输入。候选的 Web、文档、wheel 和
-Desktop archive 仍重新构建。缓存缺失或依赖基线不匹配时，在激活前停止更新；
+`electronDist` 输入。完整构建打包候选的 Web、文档、wheel 和 Desktop archive；部分构建
+从已安装 App 的副本出发，只重新构建上表列出的部分。缓存缺失或依赖基线不匹配时，在激活前停止更新；
 不会因此允许联网下载或沿用不匹配依赖。该构建过程及真实已安装验收仍是发布条件。
 
 packaged worker smoke 只使用控制器选择的单个私有 loopback 端口，且不会使用默认端口
@@ -107,7 +141,7 @@ candidate 所有可写路径之外，并要求候选浏览器资源树 hash 与�
 可写的构建 runtime 副本。两项检查都完成后才允许激活。
 固定的 macOS 图标渲染检查也由可信控制器执行，不向候选构建开放宿主图形服务。
 
-源码 checkout 的聊天工具 `self_update_prepare` 接受可选的 `verification_plan`
+源码 checkout 的聊天调用 `self_update(action="prepare")` 接受可选的 `verification_plan`
 参数。计划包含在强制 owner 审批中，并与不可变请求一起保存。例如：
 
 ```json
@@ -119,13 +153,17 @@ candidate 所有可写路径之外，并要求候选浏览器资源树 hash 与�
 check ID 唯一，最多 64 个字符，以字母或数字开头，只允许字母、数字、下划线和连字符。
 每项必须指定 1–60 秒的整数超时和 1–262144 字节的整数输出上限（`ui:main` 为 1–1572864）。
 目前支持 `/api/commands`、`/api/diagnostics`、`/api/doctor`、`/healthz`、`/chat`、
-`cli:version`、`cli:help`、`test:python` 和 `ui:main`。任意 URL、查询参数及不支持的字段都会在
+已安装文档站的页面（如 `/docs/install/upgrade.html`）、`cli:version`、`cli:help`、`test:python` 和 `ui:main`。任意 URL、查询参数及不支持的字段都会在
 创建更新前被拒绝；只有 `test:python` 还必须提供下述 `argv`。
 
 重启后的 verifier 收到相同计划，调用 `self_update_observe(check_id="diagnostics")`，
 不能另传 `entry` 或执行参数。执行层应用已批准的限制和原总期限；签名证据必须匹配
 对应 check 和 assertion，不能复用到另一验收项。省略计划时保留原有的 HTTP-only
 验收行为，不增加权限。
+
+验收、诊断和源码修复可以使用任何对话模型。不支持原生结构化输出的 provider 通过提示词作答，
+结果仍按该阶段的 schema 校验；校验不通过时结论为 inconclusive，更新随即回退。模型请求没有任何
+结果就结束时，该阶段立即停止，不会让更新一直等到期限。
 
 提供计划的更新中，验收、回退后诊断和源码修复 Job 都收到相同的已批准计划与
 iteration policy，以及本次尝试的超时。修复后的子候选保留原目标、assertion、
@@ -248,8 +286,8 @@ openprogram self-update repair UPDATE_ID
 也不覆盖原验收和回退结论。
 
 诊断期限最多为回退后的五分钟；原迭代授权期限更早时取更早值。重启不会重新计时，
-已终止的 Job 不重跑。通过普通 Job 取消入口停止诊断；`self_update_cancel` 仍只取消
-激活前的更新。新更新会取代待处理诊断。模型不可用或证据无效只终止诊断，不重新
+已终止的 Job 不重跑。通过普通 Job 取消入口或 `self_update(action="cancel")` 停止诊断。
+新更新会取代待处理诊断。模型不可用或证据无效只终止诊断，不重新
 限制已经恢复的服务。`self-update status --json` 在有结果时包含 `diagnosis_result`。
 缺少冻结诊断配置的旧请求保持原有行为。诊断报告本身不修改或安装代码。
 
@@ -259,14 +297,15 @@ openprogram self-update repair UPDATE_ID
 提出文本编辑，由控制器逐项校验、新建 linked worktree 和 commit，并在无网络、无
 App 写权限的原生沙箱运行冻结测试。原 worktree 不变。默认只修改原 changed_paths；
 `bounded_auto` 使用原授权路径模式。受保护的 runtime、审批、安装器、依赖和 Git
-文件不会自动修改。无效路径或 old_text 无法唯一匹配会停止修正。
+文件不会自动修改。这些限制针对修正编辑的文件；你批准的候选已经改动、而修正没有再动的文件保持批准时的状态。
+无效路径或 old_text 无法唯一匹配会停止修正。
 
 修正和测试共用回退后的十分钟期限，原授权期限更早时取更早值。新更新、取消或
 超时停止本阶段及测试进程。模型运行时可使用普通 Job 取消；模型结束后，在原会话
-调用 `self_update_repair_cancel(update_id)` 取消仍运行的测试。重启不重放部分编辑、
+调用 `self_update(action="cancel", update_id=…)` 取消仍运行的测试。重启不重放部分编辑、
 提交或测试。失败 worktree 和证据保留供检查。缺少冻结修正配置的旧请求不获得此能力。
 
-`self_update_status` 和 `self-update status --json` 包含 `source_repair_result`。
+`self_update()`（status）和 `self-update status --json` 包含 `source_repair_result`。
 聊天工具与需要 owner 认证的 Web 历史接口
 （`GET /api/self-updates?session_id=…`）和详情接口
 （`GET /api/self-updates/{update_id}?session_id=…`）使用同一份只读投影。
@@ -291,7 +330,7 @@ Running 无法读取更新快照时返回 `self_update_error`。
 `awaiting_tests`。测试缺失、失败或源码漂移记录 `failed`；取消与超时分别为
 `cancelled`、`expired`。这些状态均不代表已安装。
 
-对已测试的修正版本，在原 owner 会话调用 `self_update_retry(update_id, candidate_sha)`。
+对已测试的修正版本，在原 owner 会话调用 `self_update(action="retry", update_id, candidate_sha)`。
 即使使用 bypass，也必须进行单次审批，显示精确 SHA、变更路径、测试和剩余预算。
 批准返回后重新检查 Git 内容和测试日志；任一内容变化都会拒绝提交。
 `awaiting_tests` 候选不能通过这个入口批准，需要 owner 发起明确测试的新请求。
@@ -302,11 +341,11 @@ Running 无法读取更新快照时返回 `self_update_error`。
 首次更新计为 attempt=1，最多三次包含首次。预留 child 就消耗一次预算，提交失败也不退还。
 重启复用原 child 和期限，不重置预算。
 
-`self_update_iteration_cancel(update_id)` 停止整个序列，包括待批准操作、诊断、源码修正和
+`self_update(action="cancel", update_id)` 停止整个序列，包括待批准操作、诊断、源码修正和
 候选测试。已进入激活或验收的 child 必须完成事务或安全回退，但不能再创建后续 attempt。
 其他普通 Job 不受影响。
 
-聊天工具 `self_update_status` 的 `iteration` 字段提供 root、parent、attempt 限制、总期限和
+聊天工具 status 结果的 `iteration` 字段提供 root、parent、attempt 限制、总期限和
 提交状态。`submitted` 只表示请求已交给外部 supervisor，不代表安装成功。
 child 仍须完成打包、系统检查、新验证 Job，以及 commit 或 rollback。
 真实已安装 App 的验收是独立发布条件；fixture 测试不能证明当前 App 已更新。
@@ -355,7 +394,7 @@ App 或普通 CLI 无法启动时，使用本次更新保存的独立入口：
 
 ## 开发 checkout
 
-本地已安装的 macOS App 在提交改动后，从当前 checkout 运行 `scripts/refresh-local-app.sh`。脚本重新构建 wheel 与 Desktop 资源，在退出 App 之前先构建好 GUI、Research、Wiki 三个 Program 的 wheel（源码构建失败时已安装的 App 保持不变），再更新 PATH 和 App 内置的 Python 安装，并同步内置 Node 与 Ink 资源和 App 图标。完整内置运行环境通过实际检查后，脚本才重新生成能力清单并重启默认 worker。新增必需能力时，这个流程也会更新旧 App 的运行环境清单；检查失败会终止刷新，不会将未验证的能力标记为已验证。
+本地已安装的 macOS App 在提交改动后，从当前 checkout 运行 `scripts/refresh-local-app.sh`。脚本重新构建 wheel 与 Desktop 资源，在退出 App 之前先构建好 GUI、Research 两个 Program 的 wheel（源码构建失败时已安装的 App 保持不变），再更新 PATH 和 App 内置的 Python 安装，并同步内置 Node 与 Ink 资源和 App 图标。完整内置运行环境通过实际检查后，脚本才重新生成能力清单并重启默认 worker。新增必需能力时，这个流程也会更新旧 App 的运行环境清单；检查失败会终止刷新，不会将未验证的能力标记为已验证。
 
 复制后的 Node 可执行文件必须能够脱离原安装目录运行。脚本会在修改 App 之前检查这一点。如果 PATH 中的 Node 依赖相邻动态库，运行刷新脚本时将 `OPENPROGRAM_NODE_BIN` 设为独立 Node 可执行文件的路径。
 

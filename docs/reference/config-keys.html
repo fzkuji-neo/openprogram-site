@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1792402545" data-alt-lang-url="/docs/reference/config-keys.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793002125" data-alt-lang-url="/docs/reference/config-keys.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -385,12 +385,6 @@
 <td>Maximum matching records added automatically to a turn.</td>
 </tr>
 <tr>
-<td><code>memory.retrieval.include_sources</code></td>
-<td><code>True</code></td>
-<td><code>live</code></td>
-<td>Include archived evidence alongside curated Topic records.</td>
-</tr>
-<tr>
 <td><code>memory.layers.project</code></td>
 <td><code>True</code></td>
 <td><code>live</code></td>
@@ -438,31 +432,6 @@
 <td>``</td>
 <td><code>next_start</code></td>
 <td>Managed recording ID or an explicit replay file path; record mode accepts IDs only.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="goal">Goal<a class="header-anchor" href="#goal">#</a></h2>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Default</th>
-<th>Apply</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>goal.max_turns</code></td>
-<td>—</td>
-<td><code>live</code></td>
-<td>Optional round budget for new Goals. Empty (default), zero or negative means unlimited. Only an explicit positive value sets a cap. Reaching a cap stops execution without completing the Goal. Existing Goals retain their saved budget; use /goal budget max_turns=0 to remove it.</td>
-</tr>
-<tr>
-<td><code>goal.judge_model</code></td>
-<td>``</td>
-<td><code>live</code></td>
-<td>Model the Goal completion judge runs on, as <code>provider/model</code> or a bare model name. Empty (default) = the session's picked model. Set a cheaper model to cut the per-round judgment cost.</td>
 </tr>
 </tbody>
 </table>
@@ -717,9 +686,6 @@
 </li>
 <li>
 <a class="lvl-2" href="#recordings">Recordings</a>
-</li>
-<li>
-<a class="lvl-2" href="#goal">Goal</a>
 </li>
 <li>
 <a class="lvl-2" href="#agent">Agent</a>

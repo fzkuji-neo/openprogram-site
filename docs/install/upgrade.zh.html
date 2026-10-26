@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1792402545" data-alt-lang-url="/docs/install/upgrade.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793002125" data-alt-lang-url="/docs/install/upgrade.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -125,6 +125,65 @@ openprogram<span class="w"> </span>upgrade
 升级：通过发布安装器安装的 CLI 使用 <code>openprogram upgrade</code>，Desktop 使用发布更新器。
 已有更新的状态查询和取消仍然可用；仅有 worker 服务并不代表已经具备源码更新控制器的
 构建、激活、验证和恢复流程。</p>
+<h3 id="聊天工具">聊天工具<a class="header-anchor" href="#聊天工具">#</a></h3>
+<p>对话中模型只通过一个工具 <code>self_update</code> 操作更新，<code>action</code> 取 <code>status</code>（默认）、
+<code>prepare</code>、<code>retry</code> 或 <code>cancel</code>。它的 schema 保持简短；第一次调用的结果说明整个流程并
+列出各动作的说明。对话中第一次 <code>prepare</code> 或 <code>retry</code> 会先被拒绝一次，拒绝结果里附上该
+动作的完整说明（<code>help(&quot;self_update.prepare&quot;)</code>、<code>help(&quot;self_update.retry&quot;)</code>），下一次调用
+就带着这些说明进行。<code>prepare</code> 和 <code>retry</code> 即使在 bypass 下也总是请 owner 单次审批；
+<code>status</code> 不需要审批。</p>
+<p>help(&quot;self_update&quot;) 可以随时重新查看这段流程说明。</p>
+<h3 id="一次更新会重启什么">一次更新会重启什么<a class="header-anchor" href="#一次更新会重启什么">#</a></h3>
+<p>更新只重新构建已安装 App 所基于的提交（<code>Contents/Resources/openprogram-source-revision</code>）
+与候选之间改动的部分，并按需要做最小的重启：</p>
+<table>
+<thead>
+<tr>
+<th>改动路径</th>
+<th>重新构建</th>
+<th>重启</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>apps/web/**</code></td>
+<td>Web 导出</td>
+<td>不重启。已打开的页面在没有未保存输入时自动刷新。</td>
+</tr>
+<tr>
+<td><code>docs/**</code>、<code>scripts/docs_site/**</code></td>
+<td>文档站</td>
+<td>不重启。</td>
+</tr>
+<tr>
+<td><code>apps/cli/**</code>（不含其 Python 包）</td>
+<td>终端 UI 包</td>
+<td>不重启。新开的终端会话使用新版本。</td>
+</tr>
+<tr>
+<td><code>openprogram/**</code>、<code>apps/server/**</code>、<code>apps/cli/python/**</code>、<code>setup.py</code></td>
+<td>wheel 和文档</td>
+<td>只重启 worker；App 窗口保持打开并显示正在更新。</td>
+</tr>
+<tr>
+<td><code>apps/desktop/**</code></td>
+<td>Desktop archive</td>
+<td>App 退出后重新打开。</td>
+</tr>
+<tr>
+<td>依赖锁文件、各 <code>package.json</code>、<code>scripts/release/**</code>、<code>apps/desktop/scripts/**</code>、<code>apps/desktop/build/**</code> 以及其他路径</td>
+<td>完整 App</td>
+<td>App 退出后重新打开。</td>
+</tr>
+</tbody>
+</table>
+<p>测试和仓库元数据（<code>tests/**</code>、<code>README.md</code>、<code>.github/**</code> 等）不改变任何随 App 发布的
+内容。从未提交改动的 checkout 安装的 App（<code>-dirty</code>），或其提交不在该仓库中时，总是完整
+构建。<code>self_update(action=&quot;prepare&quot;)</code> 的结果给出预计的 <code>restart</code> 和 <code>rebuild</code>；控制器在构建时
+重新判定，并把计划写入更新目录的 <code>activation.json</code>。</p>
+<p>各级别的安装方式相同：新 App bundle 先暂存在已安装 App 旁边，通过重命名换入，验证后
+提交或回退。不需要任何重启的更新也不进入维护，运行中的对话和 Job 照常继续。回退以同一
+重启级别恢复上一版 bundle。</p>
 <p>更新进入维护后，普通排队 Job 保持原有身份，等待维护结束。支持持久化暂停的运行任务
 在下一个检查点暂停；活动 attempt 和资源占用结束后才替换 App。验证提交或回退完成后，
 worker 只恢复由本次更新暂停的任务。用户原本暂停、等待输入的任务保持暂停。
@@ -139,15 +198,15 @@ worker 保留旧检查点，依据原任务及历史创建一个新的规划 Job
 <code>scripts/release/product-runtime.json</code> 完全一致；控制器使用保存 runtime 中固定版本的
 构建工具，以及既有 npm/uv/Electron-builder/node-gyp 缓存的私有副本。Electron 平台归档
 必须匹配可信控制器固定的版本、架构和发布 SHA-256，并作为 candidate 只读的
-<code>electronDist</code> 输入。候选的 Web、文档、wheel 和
-Desktop archive 仍重新构建。缓存缺失或依赖基线不匹配时，在激活前停止更新；
+<code>electronDist</code> 输入。完整构建打包候选的 Web、文档、wheel 和 Desktop archive；部分构建
+从已安装 App 的副本出发，只重新构建上表列出的部分。缓存缺失或依赖基线不匹配时，在激活前停止更新；
 不会因此允许联网下载或沿用不匹配依赖。该构建过程及真实已安装验收仍是发布条件。</p>
 <p>packaged worker smoke 只使用控制器选择的单个私有 loopback 端口，且不会使用默认端口
 18100。浏览器自动化由重新校验过的保存 controller runtime 单独检查；该 runtime 位于
 candidate 所有可写路径之外，并要求候选浏览器资源树 hash 与其一致。控制器不会执行
 可写的构建 runtime 副本。两项检查都完成后才允许激活。
 固定的 macOS 图标渲染检查也由可信控制器执行，不向候选构建开放宿主图形服务。</p>
-<p>源码 checkout 的聊天工具 <code>self_update_prepare</code> 接受可选的 <code>verification_plan</code>
+<p>源码 checkout 的聊天调用 <code>self_update(action=&quot;prepare&quot;)</code> 接受可选的 <code>verification_plan</code>
 参数。计划包含在强制 owner 审批中，并与不可变请求一起保存。例如：</p>
 <pre><code class="language-json"><span class="p">{</span><span class="nt">"schema"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">"checks"</span><span class="p">:[{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"diagnostics"</span><span class="p">,</span><span class="nt">"assertion_id"</span><span class="p">:</span><span class="s2">"acceptance-1"</span><span class="p">,</span><span class="nt">"entry"</span><span class="p">:</span><span class="s2">"/api/diagnostics"</span><span class="p">,</span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="nt">"max_output_bytes"</span><span class="p">:</span><span class="mi">65536</span><span class="p">}]}</span>
 </code></pre>
@@ -156,12 +215,15 @@ candidate 所有可写路径之外，并要求候选浏览器资源树 hash 与�
 check ID 唯一，最多 64 个字符，以字母或数字开头，只允许字母、数字、下划线和连字符。
 每项必须指定 1–60 秒的整数超时和 1–262144 字节的整数输出上限（<code>ui:main</code> 为 1–1572864）。
 目前支持 <code>/api/commands</code>、<code>/api/diagnostics</code>、<code>/api/doctor</code>、<code>/healthz</code>、<code>/chat</code>、
-<code>cli:version</code>、<code>cli:help</code>、<code>test:python</code> 和 <code>ui:main</code>。任意 URL、查询参数及不支持的字段都会在
+已安装文档站的页面（如 <code>/docs/install/upgrade.html</code>）、<code>cli:version</code>、<code>cli:help</code>、<code>test:python</code> 和 <code>ui:main</code>。任意 URL、查询参数及不支持的字段都会在
 创建更新前被拒绝；只有 <code>test:python</code> 还必须提供下述 <code>argv</code>。</p>
 <p>重启后的 verifier 收到相同计划，调用 <code>self_update_observe(check_id=&quot;diagnostics&quot;)</code>，
 不能另传 <code>entry</code> 或执行参数。执行层应用已批准的限制和原总期限；签名证据必须匹配
 对应 check 和 assertion，不能复用到另一验收项。省略计划时保留原有的 HTTP-only
 验收行为，不增加权限。</p>
+<p>验收、诊断和源码修复可以使用任何对话模型。不支持原生结构化输出的 provider 通过提示词作答，
+结果仍按该阶段的 schema 校验；校验不通过时结论为 inconclusive，更新随即回退。模型请求没有任何
+结果就结束时，该阶段立即停止，不会让更新一直等到期限。</p>
 <p>提供计划的更新中，验收、回退后诊断和源码修复 Job 都收到相同的已批准计划与
 iteration policy，以及本次尝试的超时。修复后的子候选保留原目标、assertion、
 check ID、限制、模型和权限，不能重新延长迭代总期限。诊断和源码修复仍只有各自的
@@ -256,8 +318,8 @@ openprogram<span class="w"> </span>self-update<span class="w"> </span>repair<spa
 报告原因与修正建议。该任务不能修改源码、执行 shell、安装软件或授权下一次更新，
 也不覆盖原验收和回退结论。</p>
 <p>诊断期限最多为回退后的五分钟；原迭代授权期限更早时取更早值。重启不会重新计时，
-已终止的 Job 不重跑。通过普通 Job 取消入口停止诊断；<code>self_update_cancel</code> 仍只取消
-激活前的更新。新更新会取代待处理诊断。模型不可用或证据无效只终止诊断，不重新
+已终止的 Job 不重跑。通过普通 Job 取消入口或 <code>self_update(action=&quot;cancel&quot;)</code> 停止诊断。
+新更新会取代待处理诊断。模型不可用或证据无效只终止诊断，不重新
 限制已经恢复的服务。<code>self-update status --json</code> 在有结果时包含 <code>diagnosis_result</code>。
 缺少冻结诊断配置的旧请求保持原有行为。诊断报告本身不修改或安装代码。</p>
 <p>新请求独立冻结 <strong>Post-rollback source repair</strong> 阶段。首次授权包含隔离修正与所列
@@ -266,12 +328,13 @@ openprogram<span class="w"> </span>self-update<span class="w"> </span>repair<spa
 提出文本编辑，由控制器逐项校验、新建 linked worktree 和 commit，并在无网络、无
 App 写权限的原生沙箱运行冻结测试。原 worktree 不变。默认只修改原 changed_paths；
 <code>bounded_auto</code> 使用原授权路径模式。受保护的 runtime、审批、安装器、依赖和 Git
-文件不会自动修改。无效路径或 old_text 无法唯一匹配会停止修正。</p>
+文件不会自动修改。这些限制针对修正编辑的文件；你批准的候选已经改动、而修正没有再动的文件保持批准时的状态。
+无效路径或 old_text 无法唯一匹配会停止修正。</p>
 <p>修正和测试共用回退后的十分钟期限，原授权期限更早时取更早值。新更新、取消或
 超时停止本阶段及测试进程。模型运行时可使用普通 Job 取消；模型结束后，在原会话
-调用 <code>self_update_repair_cancel(update_id)</code> 取消仍运行的测试。重启不重放部分编辑、
+调用 <code>self_update(action=&quot;cancel&quot;, update_id=…)</code> 取消仍运行的测试。重启不重放部分编辑、
 提交或测试。失败 worktree 和证据保留供检查。缺少冻结修正配置的旧请求不获得此能力。</p>
-<p><code>self_update_status</code> 和 <code>self-update status --json</code> 包含 <code>source_repair_result</code>。
+<p><code>self_update()</code>（status）和 <code>self-update status --json</code> 包含 <code>source_repair_result</code>。
 聊天工具与需要 owner 认证的 Web 历史接口
 （<code>GET /api/self-updates?session_id=…</code>）和详情接口
 （<code>GET /api/self-updates/{update_id}?session_id=…</code>）使用同一份只读投影。
@@ -292,7 +355,7 @@ Running 无法读取更新快照时返回 <code>self_update_error</code>。
 <p><code>candidate_ready</code> 表示新 commit 与全部已配置测试通过校验；未配置必需测试时为
 <code>awaiting_tests</code>。测试缺失、失败或源码漂移记录 <code>failed</code>；取消与超时分别为
 <code>cancelled</code>、<code>expired</code>。这些状态均不代表已安装。</p>
-<p>对已测试的修正版本，在原 owner 会话调用 <code>self_update_retry(update_id, candidate_sha)</code>。
+<p>对已测试的修正版本，在原 owner 会话调用 <code>self_update(action=&quot;retry&quot;, update_id, candidate_sha)</code>。
 即使使用 bypass，也必须进行单次审批，显示精确 SHA、变更路径、测试和剩余预算。
 批准返回后重新检查 Git 内容和测试日志；任一内容变化都会拒绝提交。
 <code>awaiting_tests</code> 候选不能通过这个入口批准，需要 owner 发起明确测试的新请求。</p>
@@ -301,10 +364,10 @@ Running 无法读取更新快照时返回 <code>self_update_error</code>。
 每个 child 保留原目标、assertions、源码基线、model/profile 和 policy。
 首次更新计为 attempt=1，最多三次包含首次。预留 child 就消耗一次预算，提交失败也不退还。
 重启复用原 child 和期限，不重置预算。</p>
-<p><code>self_update_iteration_cancel(update_id)</code> 停止整个序列，包括待批准操作、诊断、源码修正和
+<p><code>self_update(action=&quot;cancel&quot;, update_id)</code> 停止整个序列，包括待批准操作、诊断、源码修正和
 候选测试。已进入激活或验收的 child 必须完成事务或安全回退，但不能再创建后续 attempt。
 其他普通 Job 不受影响。</p>
-<p>聊天工具 <code>self_update_status</code> 的 <code>iteration</code> 字段提供 root、parent、attempt 限制、总期限和
+<p>聊天工具 status 结果的 <code>iteration</code> 字段提供 root、parent、attempt 限制、总期限和
 提交状态。<code>submitted</code> 只表示请求已交给外部 supervisor，不代表安装成功。
 child 仍须完成打包、系统检查、新验证 Job，以及 commit 或 rollback。
 真实已安装 App 的验收是独立发布条件；fixture 测试不能证明当前 App 已更新。</p>
@@ -343,7 +406,7 @@ App 原本打开时，激活与回退都使用该 ID 重新打开；原本关闭
 清理时不再重复计算整个运行环境的哈希。恢复过程在运行环境验证和恢复 controller 前，将进度写入 <code>bootstrap.log</code>。保存的 runtime、
 脚本和证据继续保留。可信恢复文件缺失或损坏时需人工处理，不从未验证的 App 重建。</p>
 <h2 id="开发-checkout">开发 checkout<a class="header-anchor" href="#开发-checkout">#</a></h2>
-<p>本地已安装的 macOS App 在提交改动后，从当前 checkout 运行 <code>scripts/refresh-local-app.sh</code>。脚本重新构建 wheel 与 Desktop 资源，在退出 App 之前先构建好 GUI、Research、Wiki 三个 Program 的 wheel（源码构建失败时已安装的 App 保持不变），再更新 PATH 和 App 内置的 Python 安装，并同步内置 Node 与 Ink 资源和 App 图标。完整内置运行环境通过实际检查后，脚本才重新生成能力清单并重启默认 worker。新增必需能力时，这个流程也会更新旧 App 的运行环境清单；检查失败会终止刷新，不会将未验证的能力标记为已验证。</p>
+<p>本地已安装的 macOS App 在提交改动后，从当前 checkout 运行 <code>scripts/refresh-local-app.sh</code>。脚本重新构建 wheel 与 Desktop 资源，在退出 App 之前先构建好 GUI、Research 两个 Program 的 wheel（源码构建失败时已安装的 App 保持不变），再更新 PATH 和 App 内置的 Python 安装，并同步内置 Node 与 Ink 资源和 App 图标。完整内置运行环境通过实际检查后，脚本才重新生成能力清单并重启默认 worker。新增必需能力时，这个流程也会更新旧 App 的运行环境清单；检查失败会终止刷新，不会将未验证的能力标记为已验证。</p>
 <p>复制后的 Node 可执行文件必须能够脱离原安装目录运行。脚本会在修改 App 之前检查这一点。如果 PATH 中的 Node 依赖相邻动态库，运行刷新脚本时将 <code>OPENPROGRAM_NODE_BIN</code> 设为独立 Node 可执行文件的路径。</p>
 <p>刷新后的 worker 使用 App 内置 Python 和 <code>-I -B</code>。已有 launchd 服务会重新绑定到该解释器，独立进程启动也使用同一解释器。健康检查后，脚本核对真实 worker 进程的可执行文件及参数；包版本一致不等于解释器一致。已有 checkpoint 继续严格验证工具实现合同；切换 Python 安装路径可能导致实现指纹不一致。</p>
 <p>在 source checkout 中，<code>openprogram upgrade</code> 执行开发升级流程，而不是 release installer。它验证 Git 目标，仅在相关源文件变化时更新依赖与构建产物，probe 新 checkout，并且只在 probe 成功后重启 worker：</p>
@@ -355,7 +418,7 @@ openprogram<span class="w"> </span>upgrade
 <p>source checkout 的恢复细节见<a href="/docs/server/upgrading.zh.html">服务器升级</a>。
 持续维护的架构、信任边界、界面状态和实现证据见
 <a href="/docs/reference/design/distribution/automatic-updates.zh.html">正式版本自动更新</a>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-19</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/install/install.html" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="安装">Installation</span></a><a class="pn-link pn-next" href="/docs/install/profiles.html" data-href-en="/docs/install/profiles.html" data-href-zh="/docs/install/profiles.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="配置实例">Profiles</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/install/install.html" data-href-en="/docs/install/install.html" data-href-zh="/docs/install/install.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="安装">Installation</span></a><a class="pn-link pn-next" href="/docs/install/profiles.html" data-href-en="/docs/install/profiles.html" data-href-zh="/docs/install/profiles.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="配置实例">Profiles</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -373,7 +436,18 @@ openprogram<span class="w"> </span>upgrade
 <a class="lvl-2" href="#cli-和服务器-release">CLI 和服务器 release</a>
 </li>
 <li>
+<details class="toc-disclosure" open=""><summary>
 <a class="lvl-2" href="#恢复对话内自更新">恢复对话内自更新</a>
+</summary>
+<ul class="toc-list">
+<li>
+<a class="lvl-3" href="#聊天工具">聊天工具</a>
+</li>
+<li>
+<a class="lvl-3" href="#一次更新会重启什么">一次更新会重启什么</a>
+</li>
+</ul>
+</details>
 </li>
 <li>
 <a class="lvl-2" href="#开发-checkout">开发 checkout</a>

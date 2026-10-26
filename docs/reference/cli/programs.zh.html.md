@@ -30,16 +30,16 @@ usage: openprogram programs [-h] verb ...
 
 ## `programs install`
 
-安装内置程序（gui/research/wiki/all），或通过 Git URL / owner/repo 安装第三方框架
+安装内置程序（gui/research/all），或通过 Git URL / owner/repo 安装第三方框架
 
 | 参数 | 说明 |
 |---|---|
-| `name` | gui \| research \| wiki \| all，或第三方框架的 Git URL / owner/repo |
+| `name` | gui \| research \| all，或第三方框架的 Git URL / owner/repo |
 | `--upgrade`, `-U` | 即使已安装也重新安装或升级 |
 
 ## `programs uninstall`
 
-按克隆目录名卸载程序（gui/research/wiki/all）或第三方框架
+按克隆目录名卸载程序（gui/research/all）或第三方框架
 
 | 参数 | 说明 |
 |---|---|

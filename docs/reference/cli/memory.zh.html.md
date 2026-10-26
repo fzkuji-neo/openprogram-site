@@ -45,14 +45,6 @@ usage: openprogram memory [-h] verb ...
 |---|---|
 | `--model` `MODEL` | 整理记忆使用的模型（默认：当前 CLI 使用的模型） |
 
-## `memory backfill`
-
-写入尚未被任何主题引用的可信来源记录。
-
-| 参数 | 说明 |
-|---|---|
-| `--model` `MODEL` | 写入记忆使用的模型（默认：已配置的记忆写入模型） |
-
 ## `memory export`
 
 将整个记忆目录压缩为 tar.gz 并写入指定路径。

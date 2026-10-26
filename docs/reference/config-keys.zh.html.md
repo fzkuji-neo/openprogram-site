@@ -69,7 +69,6 @@
 | `memory.retrieval.hybrid.weighting` | `auto` | `live` | 混合检索中关键词与语义的权重。`auto` 在查询含日期、引号短语或人名时偏向关键词，其余情况两者均衡。 |
 | `memory.retrieval.hybrid.file_boost` | `True` | `live` | 混合检索时，若多条匹配来自同一个 Topic，提升该 Topic 中最匹配的段落。 |
 | `memory.retrieval.top_k` | `5` | `live` | 每轮自动添加的匹配记录上限。 |
-| `memory.retrieval.include_sources` | `True` | `live` | 在整理后的主题记录之外，同时检索归档证据。 |
 | `memory.layers.project` | `True` | `live` | 项目中的对话还会读取该项目自己的 Memory，存放在 ~/.openprogram/projects/&lt;project&gt;/memory。 |
 | `memory.layers.project_writes` | `True` | `live` | 开启项目记忆时，把项目对话记下的内容写入该项目的 Memory，而不是个人 Memory。 |
 | `memory.core.inject` | `True` | `live` | 将精简的核心记忆视图加入每次系统提示词。 |
@@ -81,13 +80,6 @@
 |---|---|---|---|
 | `record_replay.mode` | `off` | `next_start` | 下次进程启动时录制或严格回放全部模型服务调用。 |
 | `record_replay.file` | `` | `next_start` | 受管理录制 ID 或显式回放文件路径；录制模式仅接受 ID。 |
-
-## 目标
-
-| 配置键 | 默认值 | 生效方式 | 说明 |
-|---|---|---|---|
-| `goal.max_turns` | — | `live` | 新目标的可选轮数预算。空值（默认）、0 或负数表示不限；只有显式正数才设置上限。达到上限会停止执行，但不会将目标标记为完成。已有目标保留已存预算；使用 /goal budget max_turns=0 可移除上限。 |
-| `goal.judge_model` | `` | `live` | 目标完成判定使用的模型，格式为 `provider/model` 或模型名。空值（默认）使用会话所选模型。选择较便宜的模型可降低每轮判定成本。 |
 
 ## Agent
 
