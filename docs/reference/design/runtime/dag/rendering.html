@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793184100" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -958,18 +958,20 @@ placeholder box:</p>
 <hr />
 <h2 id="5-branch-name-badge">5. Branch-name badge<a class="header-anchor" href="#5-branch-name-badge">#</a></h2>
 <ul>
-<li><strong>Anchoring</strong>: <strong>directly below the branch's deepest currently visible node</strong>, one row
-down. In the default (folded) view that is the last conversation-layer node; when a
+<li><strong>Anchoring</strong>: <strong>on the row of the branch's deepest currently visible node</strong>, just
+right of its tile, the way a message's caption sits beside it. In the default (folded) view that is the last conversation-layer node; when a
 call thread is open the badge follows the bottom-most thread item and moves back up
-on fold. Branch membership = lane (thread items share their anchor's lane).</li>
+on fold. It follows only the branch's own descendants: a sibling branch sharing the
+lane (a scheduled job's reply threaded off a turn) keeps its own tip. Under the
+tile the name landed on the next row's line, and centred, a long name reached over
+the neighbouring lane until the collision below pushed it under another branch's
+tip. An agent's bubble on the tile hides the name, as it hides a caption.</li>
 <li><strong>No badge for a spawned agent's branch</strong>: the agent is its triangle on the
 thread (§12); a branch pill for the same fact would be a second drawing of it.
 The climb from a branch row's head that passes a spawn root stops without
 placing anything.</li>
-<li><strong>Edge avoidance</strong>: only when an edge crosses the anchor cell (the descending line of
-an expanded execution subtree, or the conversation continuing) does the badge shift
-half a column left — a badge never sits on an edge. Expanding/collapsing the execution
-layer only toggles this half-column shift; it never changes the anchor node.</li>
+<li><strong>Edge avoidance</strong>: beside the tile the name is clear of the column's descending line;
+a line running right along the row breaks around the letters (canvas-colour halo).</li>
 <li><strong>Collision</strong>: judged on <strong>measured pixel boxes</strong> (badge backing width = measured text
 width + padding, not grid cells). Short names almost never collide across the grid
 spacing; long names (branches auto-named from a message or task description) on
@@ -1027,7 +1029,7 @@ to the measured text width).</li>
 <tr>
 <td>13</td>
 <td>badge anchoring · avoidance · collision · merged</td>
-<td>see §5: anchor directly below the branch's last conversation-layer node, half-column left shift only when an edge crosses the anchor cell, collision shifts down one row, merging erases the badge (provenance moves into the merge node's tooltip)</td>
+<td>see §5: name on the row of the branch's own last visible node, just right of the tile, collision shifts down one row, merging erases the badge (provenance moves into the merge node's tooltip)</td>
 </tr>
 </tbody>
 </table>
