@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793027908" data-alt-lang-url="/docs/reference/design/ui/activity-panel.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793184100" data-alt-lang-url="/docs/reference/design/ui/activity-panel.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Activity panel · OpenProgram Docs</title>
-<meta name="description" content="The right sidebar&#x27;s Activity lists one conversation&#x27;s agents (the main agent and the sub-agents under it) and, separately, the programs and commands they run">
+<meta name="description" content="The right sidebar&#x27;s Activity lists one conversation&#x27;s main agent (the sub-agents it starts are on its page) and, separately, the programs and commands they run">
 <link rel="canonical" href="https://openprogram.io/docs/reference/design/ui/activity-panel.html">
 <link rel="alternate" type="text/markdown" href="https://openprogram.io/docs/reference/design/ui/activity-panel.html.md">
 <link rel="describedby" href="https://openprogram.io/llms.txt">
@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="OpenProgram">
 <meta property="og:url" content="https://openprogram.io/docs/reference/design/ui/activity-panel.html">
 <meta property="og:title" content="Activity panel · OpenProgram Docs">
-<meta property="og:description" content="The right sidebar&#x27;s Activity lists one conversation&#x27;s agents (the main agent and the sub-agents under it) and, separately, the programs and commands they run">
+<meta property="og:description" content="The right sidebar&#x27;s Activity lists one conversation&#x27;s main agent (the sub-agents it starts are on its page) and, separately, the programs and commands they run">
 <meta property="og:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:secure_url" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta property="og:image:type" content="image/png">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Activity panel · OpenProgram Docs">
-<meta name="twitter:description" content="The right sidebar&#x27;s Activity lists one conversation&#x27;s agents (the main agent and the sub-agents under it) and, separately, the programs and commands they run">
+<meta name="twitter:description" content="The right sidebar&#x27;s Activity lists one conversation&#x27;s main agent (the sub-agents it starts are on its page) and, separately, the programs and commands they run">
 <meta name="twitter:image" content="https://openprogram.io/docs/images/openprogram-social-card.png">
 <meta name="twitter:image:alt" content="OpenProgram: Self-Programming AI Agent Framework">
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -360,10 +360,13 @@
 </details></div>
   </nav>
   <main class="content"><button class="fs-toggle" aria-label="Fullscreen" title="Fullscreen (Esc to exit)"><svg class="ic-expand" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2H2v4.2M9.8 2H14v4.2M6.2 14H2V9.8M9.8 14H14V9.8"/></svg><svg class="ic-collapse" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.2h4.2V2M14 6.2H9.8V2M2 9.8h4.2V14M14 9.8H9.8V14"/></svg></button><article><nav class="breadcrumb"><span class="bc-seg" data-title-zh="设计">Design</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="界面与交互">Interfaces</span> <span class='bc-sep'>›</span> <span class="bc-seg" data-title-zh="对话与编辑器">Chat and composer</span> <span class='bc-sep'>›</span> <span class="bc-seg bc-current" data-title-zh="Activity 面板">Activity panel</span></nav><h1 id="activity-panel">Activity panel<a class="header-anchor" href="#activity-panel">#</a></h1>
-<p>The right sidebar's <strong>Activity</strong> lists one conversation's agents (the
-main agent and the sub-agents under it) and, separately, the programs and
-commands they run in a shell. What needs the reader is never a group of
-its own: it is the row it concerns, with a warning status.
+<p>The right sidebar's <strong>Activity</strong> lists one conversation's main agent
+(the sub-agents it starts are on its page) and, separately, the programs and
+commands they run in a shell. What waits for the reader is never a group
+of its own: it is the row it concerns, with a red count on its glyph's
+corner, like an app's badge in the Dock. Statuses use the common words:
+Running, Completed, Failed, Cancelled, Interrupted, Waiting for your
+answer, Waiting for approval; a row at rest shows only its time.
 Messages are never rows; they stay in the chat.</p>
 <p>Related: <a href="/docs/reference/design/ui/indicator-dots.html"><code>indicator-dots.md</code></a> (status dots),
 <a href="/docs/reference/design/ui/sub-agents-card.html"><code>sub-agents-card.md</code></a> (a sub-agent's own conversation).
@@ -371,7 +374,7 @@ Code: <code>apps/web/components/right-sidebar/running-panel.tsx</code>,
 <code>apps/web/components/right-sidebar/agents-view-menu.tsx</code>,
 <code>apps/web/lib/execution/activity-model.ts</code>, <code>apps/web/lib/prefs/activity-view.ts</code>,
 <code>openprogram/execution/activity_calls.py</code>.</p>
-<h2 id="branches-runs-and-issues">Branches, runs and issues<a class="header-anchor" href="#branches-runs-and-issues">#</a></h2>
+<h2 id="branches-runs-and-waits">Branches, runs and waits<a class="header-anchor" href="#branches-runs-and-waits">#</a></h2>
 <p>A <strong>sub-agent</strong> is an execution whose display kind is <code>job_agent</code>. Every
 execution belongs to one <strong>branch</strong>: a sub-agent runs its own branch and
 every execution under it that no deeper sub-agent owns; everything else is
@@ -394,57 +397,57 @@ those. A call paired with no Job <strong>failed to start</strong> (its result is
 transcript row's caller names the branch that made the call: a <code>j_…</code> reply
 is a sub-agent's, anything else the main agent's. Effects are not
 read for this: their metadata carries whole provider payloads.</p>
-<p>An <strong>issue</strong> is a concrete thing waiting on the reader:</p>
-<ul>
-<li>a stopped call: the run stopped before it returned;</li>
-<li>an execution paused on a question or approval, or stopped during an
-action that no stopped call already names;</li>
-<li>a program whose state is unknown or lost.</li>
-</ul>
+<p>Only a run paused on a question or an approval <strong>waits for the reader</strong>
+(the model's <code>issues</code> filtered to paused executions). A call or run cut
+short by a restart reads as <strong>Interrupted</strong> and a program whose
+supervisor is gone as <strong>Status unknown</strong>: both are history in the muted
+tone, with nothing to do about them.</p>
 <p>An execution whose only missing records are model responses
-(<code>provider_response_incomplete</code>) is not an issue; it reads as ended.</p>
+(<code>provider_response_incomplete</code>) reads as ended.</p>
 <h2 id="overview">Overview<a class="header-anchor" href="#overview">#</a></h2>
 <p>Two groups in a fixed order; an empty group is not shown, no group folds
 and neither header carries a count.</p>
 <ol>
 <li>
-<p><strong>Agents</strong>: the main agent (the conversation's own agent, named like
-the sub-agents and drawn with the same glyph), then every sub-agent
-under it, depth first and newest first. Each is indented under the
-agent that started it; a hairline elbow runs from under that agent's
-glyph into its own, the line carries on to its later siblings, and the
-lines of rows above with siblings still to come run past it.
-The main agent reads as running (with the call it is on, or &quot;Waiting for
-a sub-agent&quot;, and the time so far), waiting on the reader (paused, or
-holding issues of its own), idle since its last run, or that its last
-run failed. A sub-agent reads as running with its call, stopped (a
-stopped <code>agent</code> call shows as the sub-agent it started), or its final
-state with the time. An agent that needs the reader is listed once, in
-place, with the warning tone. An <code>agent</code> call that started no sub-agent
-sits in the tree where that sub-agent would, as <strong>Failed to start</strong> or
-<strong>Not started</strong>. The list shows 20 rows at a time with <strong>Show
-earlier</strong>. Calls and programs whose execution is not listed count as
+<p><strong>Agents</strong>: the main agent alone (the conversation's own agent, named
+and drawn like the sub-agents). It reads as running (with the call it
+is on, or &quot;Waiting for a sub-agent&quot;, and the time so far, in blue),
+&quot;Failed · <time>&quot; (red), or otherwise just the time of its last
+message, followed by how many sub-agents the model started (&quot;Oct 15 ·
+5 sub-agents&quot;). What waits for the reader, its own runs and its
+sub-agents', is the red count on the ghost. The sub-agents themselves are listed on the
+main agent's page, so the overview stays one row however many the
+model starts. Calls and programs whose execution is not listed count as
 the main agent's.</p>
-<p>The header's button opens the view menu, built from the composer
-options menu's pieces: the same radix wrapper and <code>MENU_PANEL</code> frame, a
-value row per setting that opens a submenu, and check rows in it.
-<strong>Show</strong> is All, Needs you (rows in the warning tone) or Running (rows
-in the running tone). By structure, a filter keeps each match and the
-agents above it (<code>pruneBranches</code>), redraws the lines for what is left,
-and the main agent stays as the root while anything under it shows.
-<strong>Arrange</strong> is By structure (the tree) or By time: one flat list, live
-rows first, then by the time each row shows, every sub-agent's status
-ending with who started it (&quot;· by Research&quot;). A filter that leaves
-nothing says so under the header, so the menu stays reachable. The
-button stays lit while the view differs from the default; the view is
-a per-browser preference in local storage.</p>
+<p>When the conversation has more than one branch (forks and edits the
+reader made in the DAG), each branch is a main agent of its own, one
+row each, all equal: the branch's name, a ghost in its lane colour, a
+<strong>Current</strong> tag on the checked-out one, and the same status and
+sub-agent line computed from the runs on that branch (the server's
+<code>branches[].execution_ids</code>; a sub-agent belongs to the branch of its
+top-level run). Unlisted calls and programs, and calls that started no
+sub-agent, count as the checked-out branch's. A branch's page is the
+main agent's page for that branch, titled <strong>Branch</strong>, with <strong>Switch to
+this branch</strong> (the Branches panel's checkout) when it is not the
+current one. A branch with no run listed shows the branch's own time.
+Sub-agents' own conversations are not branches here: an older session
+keeps a sub-agent's turns inline, and their tip, whose chain starts
+at a spawn root, comes marked <code>sub_agent</code> in the server's branch rows
+(<code>build_branches_payload</code>) and is left out.</p>
 </li>
 <li>
-<p><strong>Programs and commands</strong>: shell calls still running, shell calls still
-out when their run stopped (warning tone), and every background
-program. Running rows first, then rows that need the reader, then the
-rest, newest first within each, 20 at a time. Each status names its
-kind (&quot;Command · Running · 12 s&quot;, &quot;Background program · Exited · …&quot;).
+<p><strong>Programs and commands</strong>: shell calls still running, shell calls cut
+short when their run was interrupted (&quot;Command · Interrupted ·
+Yesterday&quot;, muted), and every background program. Running rows first,
+then the rest, newest first within each, 20 at a time. A command's status names
+its kind (&quot;Command · Running · 12 s&quot;). A program is titled by what it
+does (the bash call's <code>description</code>, else the script or module it runs,
+past setup steps such as <code>cd</code> and <code>mkdir</code>), with its command in
+monospace under the title. While it runs, the status line is its
+progress (&quot;45 / 100 samples · 3.4/s&quot;) over a thin bar with the time
+left at its end (&quot;16s left&quot;), or, with no amount known, how long it has run and its last output
+line over a sweeping bar. Once it ends the status says how (&quot;Completed ·
+10 / 10 epochs · 4 min 5 s&quot;, &quot;Failed at 62 / 200 · exit 1&quot;).
 <code>agent</code> calls never appear here; they are reached through the agents.</p>
 </li>
 </ol>
@@ -454,23 +457,50 @@ never flash as unowned.</p>
 <p>Every row opens a page; a stack of pages backs the panel, and the back
 arrow names the page it returns to. Nothing expands in place.</p>
 <ul>
-<li><strong>Main agent</strong>: the conversation title and its state. Its own issues
-come first, each naming its run, then what it is running now, its <strong>Latest run</strong>, and <strong>Sub-agents it started</strong>, including the calls that
-failed to start one; the <strong>Latest run</strong> row opens that run's page.</li>
-<li><strong>Sub-agent / run</strong>: kind, start and duration, the name or message, its
-state. Its issues come first, each with its actions as raised pills:
-<strong>Mark as ended</strong> (cancel) when the execution allows it. A pause with a
+<li>
+<p><strong>Main agent</strong>: the conversation title (one line) and its state. What
+waits for the reader comes first, each naming its message, then
+<strong>Running</strong>, <strong>Last message</strong> (the row opens that run's page), and
+<strong>Sub-agents</strong>: every sub-agent, depth first and newest first. The first
+level is the page's own list; a deeper sub-agent is indented under the
+one that started it, a hairline elbow runs from under that agent's
+glyph into its own, the line carries on to its later siblings, and the
+lines of rows above with siblings still to come run past it. A
+sub-agent reads as running with its call, Interrupted (an <code>agent</code> call
+cut short shows as the sub-agent it started), or its final state with
+the time; one waiting for the reader is listed once, in place, with the
+time and a red count on its ghost (its own waits; a sub-agent below it
+carries its own). An <code>agent</code> call that started no sub-agent sits in the
+tree where that sub-agent would, as <strong>Failed to start</strong> or <strong>Not
+started</strong>. The list shows 20 rows at a time with <strong>Show earlier</strong>.</p>
+<p>The section heading's button opens the view menu, built from the
+composer options menu's pieces: the same radix wrapper and
+<code>MENU_PANEL</code> frame, a value row per setting that opens a submenu, and
+check rows in it. <strong>Show</strong> is All, Waiting for you (rows with a red count)
+or Running (rows in the running tone). By structure, a filter keeps
+each match and the agents above it (<code>pruneBranches</code>) and redraws the
+lines for what is left. <strong>Arrange</strong> is By structure (the tree) or By
+time: one flat list, live rows first, then by the time each row shows,
+every sub-agent's status ending with who started it (&quot;· by Research&quot;).
+A filter that leaves nothing says so under the heading, so the menu
+stays reachable. The button stays lit while the view differs from the
+default; the view is a per-browser preference in local storage.</p>
+</li>
+<li>
+<p><strong>Sub-agent / run</strong>: kind, start and duration, the name or message, its
+state. A question or approval it waits on comes first, its action a
+raised pill. A pause with a
 queued decision (<code>pendingDecisions</code>, matched by execution) shows its
 prompt and choices, and <strong>Answer in chat</strong> / <strong>Review in chat</strong> scrolls
 to the composer's decision card (<code>data-decision-output</code>) and focuses its
 first control; the choice is made there, not in Activity. A pause with
 no queued decision is answered in the run page's own record (below);
-from the main page, <strong>Answer</strong> / <strong>See the run</strong> opens that page. A
-single such pause reads as &quot;Waiting for your answer&quot; or &quot;Needs your
+from the main page, <strong>Open</strong> opens that page. A
+single such pause reads as &quot;Waiting for your answer&quot; or &quot;Waiting for
 approval&quot; in the list and on the page. A sub-agent adds <strong>Open its conversation</strong>,
 <strong>Started by</strong> (the main agent or the sub-agent above it),
-<strong>From</strong> (the run of the message that started it) and <strong>Task given to
-it</strong>, from its <code>agent</code> call. Then what it did: open calls (an <code>agent</code>
+<strong>From</strong> (the run of the message that started it) and <strong>Task</strong>, from
+its <code>agent</code> call. Then <strong>Steps</strong>: open calls (an <code>agent</code>
 call is reached through the sub-agent it started), child executions,
 the sub-agents it started and the ones that failed to start, programs.
 Last, under <strong>Progress</strong>, the run's own record: the <code>DebuggerPanel</code> in
@@ -482,38 +512,74 @@ folded under <strong>Technical details</strong>. Opening a run page selects that
 execution in the inspector hook, which reads events and debugger data
 only while a run page is open. There is no separate inspector page:
 a run is one page, and the main agent's page has no inspector of its
-own.</li>
-<li><strong>Failed start</strong>: the call's description, when it was made and that it
+own.</p>
+</li>
+<li>
+<p><strong>Failed start</strong>: the call's description, when it was made and that it
 failed to start, a note that it has no conversation, <strong>Started by</strong>, the
-error line and the task.</li>
-<li><strong>Call</strong>: titled by its description, with its kind, start and state, the
-run it came from, and the task (<code>prompt</code>) or the command. Tasks read as
-prose, commands as monospace; both show a few lines until <strong>Show all</strong>.</li>
-<li><strong>Program</strong>: state, the run it came from, folder, environment, exit,
-command and output, with <strong>Stop program</strong> while it runs.</li>
+error line and the task.</p>
+</li>
+<li>
+<p><strong>Call</strong>: titled by its description, with its kind, start and state, the
+run it came from, and the task (<code>prompt</code>) or the command. A call cut
+short reads <strong>Interrupted</strong>, with a line saying the run was interrupted
+before it returned. Tasks read as
+prose, commands as monospace; both show a few lines until <strong>Show all</strong>.</p>
+</li>
+<li>
+<p><strong>Program</strong>: titled like its row. A progress card comes first: the
+count and percent, the bar, then elapsed time, speed and time left while
+it runs, or how long it took, when it ended and its exit code. Then
+<strong>Stop program</strong> while it runs, the command, and the output as a
+terminal shows it: a line redrawn with carriage returns keeps its last
+frame, colours stay, and the view follows new lines while the reader is
+at the end (marked <strong>Live</strong>). Last come the run it came from, the
+program name when a description titles it, folder and environment. An
+open program page is read every second.</p>
+</li>
 </ul>
+<h3 id="program-progress">Program progress<a class="header-anchor" href="#program-progress">#</a></h3>
+<p>The server reads progress out of a program's output
+(<code>openprogram/processes/progress.py</code>), most trusted source first:
+<code>##progress 45/100 samples</code> lines the program prints on purpose (the bash
+tool asks the model to print them for long loops), the OSC 9;4 terminal
+progress sequence, tqdm and pip bars, and counters such as <code>Epoch 3/10</code>,
+<code>step 120 of 1000</code> or <code>[45/100]</code>. Once a more trusted source has spoken,
+less trusted ones are ignored, so an inner per-batch bar never overwrites
+an explicit sample count. Speed and time left are the bar's own, or
+measured since the count began. Output is stored as a terminal shows it,
+so a redrawn bar takes one line of the 2,000-line limit, and the agent
+reading a background command gets each redraw once.</p>
 <h2 id="look">Look<a class="header-anchor" href="#look">#</a></h2>
 <p>Rows have no frame at rest: a bare glyph in its kind's colour, the name
-over a status line led by the shared indicator dot, a chevron. Hover lifts
+over a one-line status coloured by its tone (no dot), a chevron. Hover lifts
 the row into a raised card: the file cards' shadow over a solid fill a
 step toward the text colour (4%), since the panel is the input surface
 itself and a card of the same colour would show no edge. Rows stack above the
 tree lines, so a lifted card and its shadow cover the line instead of
 being crossed by it. The line is one solid colour, the muted text mixed
 into the panel's own background rather than a translucent stroke, so
-where its pieces overlap at a joint it never darkens. An issue on a page is a
+where its pieces overlap at a joint it never darkens. A wait on a page is a
 soft amber tint with no border.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/sub-agents-card.html" data-href-en="/docs/reference/design/ui/sub-agents-card.html" data-href-zh="/docs/reference/design/ui/sub-agents-card.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="子代理卡片">Sub-agents card</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-transcript-follow.html" data-href-en="/docs/reference/design/ui/chat-transcript-follow.html" data-href-zh="/docs/reference/design/ui/chat-transcript-follow.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="会话记录跟随">Transcript following</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/sub-agents-card.html" data-href-en="/docs/reference/design/ui/sub-agents-card.html" data-href-zh="/docs/reference/design/ui/sub-agents-card.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="子代理卡片">Sub-agents card</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-transcript-follow.html" data-href-en="/docs/reference/design/ui/chat-transcript-follow.html" data-href-zh="/docs/reference/design/ui/chat-transcript-follow.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="会话记录跟随">Transcript following</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
-<a class="lvl-2" href="#branches-runs-and-issues">Branches, runs and issues</a>
+<a class="lvl-2" href="#branches-runs-and-waits">Branches, runs and waits</a>
 </li>
 <li>
 <a class="lvl-2" href="#overview">Overview</a>
 </li>
 <li>
+<details class="toc-disclosure" open=""><summary>
 <a class="lvl-2" href="#pages">Pages</a>
+</summary>
+<ul class="toc-list">
+<li>
+<a class="lvl-3" href="#program-progress">Program progress</a>
+</li>
+</ul>
+</details>
 </li>
 <li>
 <a class="lvl-2" href="#look">Look</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793027908" data-alt-lang-url="/docs/reference/design/context/compaction.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793184100" data-alt-lang-url="/docs/reference/design/context/compaction.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -547,6 +547,13 @@ alone — stream deltas, turn results (upserted onto the
 mirror never syncs back to the store or the disk: <code>save_meta</code> carries no
 <code>head_id</code>, and no mirror row can ever become a stored head or a stored
 node. Storage stays upstream of every mirror, across restarts.</li>
+<li><strong>A stored HEAD on a call resolves to its reply.</strong> A call hangs off its
+reply by <code>caller</code> with no predecessor, and no append moves HEAD onto one,
+but sessions written before that guard can carry such a HEAD. Walking the
+conv edge from it finds a one-node branch, so the next request would carry
+no history and the chat would load empty. The session index therefore
+reads a stored HEAD on a call as the reply that made it
+(<code>store/session/memory_index.py</code>, <code>_conversation_head</code>).</li>
 </ul>
 <h2 id="6-what-the-graph-shows">6. What the graph shows<a class="header-anchor" href="#6-what-the-graph-shows">#</a></h2>
 <p>Defined in <a href="/docs/reference/design/runtime/dag/rendering.html">dag/rendering.md §9</a>; the wire
@@ -692,7 +699,7 @@ unchanged source prefix; the DAG remains the durable record.</p>
 with smaller chunks. They share a finite call/time budget; failures leave the
 original history intact. If protected content alone exceeds the window, the
 request fails explicitly instead of silently dropping user instructions.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/composition.html" data-href-en="/docs/reference/design/context/composition.html" data-href-zh="/docs/reference/design/context/composition.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="组成">Composition</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/compaction-diagram.html" data-href-en="/docs/reference/design/context/compaction-diagram.html" data-href-zh="/docs/reference/design/context/compaction-diagram.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="压缩图解">Compaction diagram</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/composition.html" data-href-en="/docs/reference/design/context/composition.html" data-href-zh="/docs/reference/design/context/composition.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="组成">Composition</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/compaction-diagram.html" data-href-en="/docs/reference/design/context/compaction-diagram.html" data-href-zh="/docs/reference/design/context/compaction-diagram.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="压缩图解">Compaction diagram</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

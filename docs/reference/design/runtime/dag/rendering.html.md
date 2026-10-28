@@ -150,7 +150,7 @@ gesture, and the fit centres the graph in the strip above it
 
 There is no branch strip above the canvas. Each branch's name is a button drawn
 in the graph itself, anchored below the branch's last conversation-layer node
-(`apps/web/lib/runtime-bridge/dag/render/badges.ts`, §5): the active branch's tag is outlined and tinted in its
+(`apps/web/lib/runtime-bridge/dag/render/badges.ts`, §5): the active branch's tag is a flat block tinted in its
 lane colour, and clicking any other tag checks that branch out. The graph
 already draws the branch structure; a strip above it would repeat that
 information and cut a line across the pane's floating view controls. Rename,
@@ -249,9 +249,12 @@ stub off ROOT's line. The branch starts as a line, not as a node. Only
 capsules and superseded relics — lanes with no user turns of their own —
 take the bridge straight to the glyph. Thread items
 (§12) reserve no lane width: their column is chosen after the lanes are down,
-in the first free column right of their anchor, and that column is then
-reserved so a second open thread walks further right — two open threads
-never share a cell.
+in the nearest column right of their anchor that no line runs down across
+at the insertion row (something above it and something at or below it in
+that column). Everything wholly above stays clear and everything below is
+pushed down past the thread, so threads on different rows share a column —
+two open threads still never share a cell, and a stub never runs long past
+lanes that do not reach its row.
 
 ### tier — how many columns to indent within a branch
 
@@ -303,18 +306,23 @@ up to fill, empty columns shift left to fill, no empty rows or columns are kept.
 applies to every visibility change: execution subtree collapse/expand, branch folding,
 visibility filtering — once collapsed, the rows and columns it occupied must be freed
 immediately. **Corollary: any "placeholder box" violates this rule** — the running state
-is expressed by the node's own stroke (see the legend), not by drawing a dashed
+is expressed by the node's own block (see the legend), not by drawing a dashed
 placeholder node.
 
 **③ Glyphs are cells; text is a caption.** A node occupies its grid point;
 counts hang beside it in annotation grey, never inside a shape sized to its own
 text. A glyph that grows with its label is a glyph every neighbour has to be
 measured against — that negotiation is what §12's earlier pill got wrong.
-Every glyph, the §9 compaction capsule included, is drawn on the reference
-circle and occupies exactly one cell.
-Names draw NOTHING on the canvas at all any more: a sub-agent's name lives in
-the tooltip and inspector, and the only per-node text is the fold count on the
-shoulder (§12) and the capsule's coverage count (§9).
+Every glyph is the same rounded tile (§4), the §9 compaction capsule
+included, and occupies exactly one cell; the grid leaves a gap of one tile
+between neighbours so the belt between them stays visible.
+A call or a message of yours carries a caption in annotation grey to the
+right of its icon ("Ran npm test", "Read a.ts", the start of what you wrote;
+`render/captions.ts`). A caption only takes room nobody uses: it runs along
+its row up to the next tile, branch tag or line crossing it, steps past a
+fork line that runs down right where it would start, and is dropped when
+there is too little room, so it never pushes the layout. The tile an agent stands on shows
+the agent's bubble instead, and zoomed far out captions are hidden.
 
 ---
 
@@ -333,26 +341,68 @@ is conveyed only by line style:
 | attach merge-back (source tip → embed position) | long dashes `4 4` | source branch's color | shown when both ends are visible — an agent-internal tip merged into its triangle draws no line; the spawn head's position ON the thread is the return relationship |
 | inter-branch communication (send_message) | dotted `1 5` | target branch's color | **shown only on hover** (numerous; always-on would smear) |
 
-**Every line is drawn centre to centre**, and the glyphs' background fill paints
-over the ends. Glyph edges sit at different distances per shape, so any fixed
-stand-off eventually gaps against a sloped triangle side; a line that dies under
-the glyph joins seamlessly for every shape.
+**Chain and thread edges are conveyor belts**: an 8px neutral track
+(`.dag-belt`, its own layer under every line, opaque so tracks that share a
+trunk or meet at a junction never darken where they stack) with the 2px
+branch-coloured line on it. A belt that leads to work carries goods: beads in
+the branch colour ride the track towards the working node, under the solid
+line, so a running belt never reads as a dashed ghost line. A chain belt runs
+into a node that is itself running; a thread belt runs while anything down
+the item it leads to is running — the call being made, or a sub-agent's turn
+behind its spawn — and the thread trunk runs down to that item only.
+`paintBelts` sets this from the graph through each belt's `data-to`, so the
+in-place status patch repaints it. Ghost lines keep their dashes and get no
+track: they are not what the next request carries.
+
+**Every line is drawn centre to centre**, and the tiles' background fill paints
+over the ends, so a line joins every tile seamlessly without a measured
+stand-off.
 
 ---
 
-## 4. Node legend: shape = role, stroke = status
+## 4. Node legend: icon tile = role, tone = kind, state = CSS
 
-**Shape**: ◇ ROOT · ○ user · △ llm · ■ code · ◉ merge (solid circle with a hole, the graph's unique
-"convergence" shape) · ◎ compaction summary (a double circle: the reference circle with a thin inner ring — §9) ·
-■ sub-agent spawn (a square like every call — dispatching an agent IS a
-function call; it expands into the agent's own activity — §12).
+**Every node is a rounded icon tile**, the same tile the execution timeline
+draws beside each step (`apps/web/lib/runtime-bridge/dag/render/tiles.ts`). A
+call takes the icon and tone `presentTool` gives it in the transcript, so "ran
+npm test" looks alike in both places; tones are shared CSS variables
+(`apps/web/app/styles/tool-tones.css`). Conversation nodes get their own:
+
+| Node | Icon | Tone |
+|---|---|---|
+| ROOT | house | secondary ink |
+| user | person, on a round raised button | accent |
+| agent reply | ghost (agents are ghosts across the app) | timeline llm |
+| call | per tool (`presentTool`) | per tool (shell, edit, read, search, web, …) |
+| sub-agent spawn | ghost | agent — dispatching an agent IS a call; it expands into the agent's activity (§12) |
+| compaction summary | archive | memory (§9) |
+| merge / attach | pull request / link | plan |
+
+**Agents stand on their step** (`render/agents.ts`). Every agent that is
+working puts a round token with its initial, in its branch colour, on the
+upper-left corner of the tile it is on, and a bubble beside the tile says
+"name · what it is doing" (the tile's activity text in the present tense:
+"Thinking…", "Running npm test"). Agents are read from the whole graph: a
+node belongs to the sub-agent whose spawn root its chain leads back to, else
+to the main agent, and each agent shows its latest running node. When that
+node is folded into a count, the token stands on the nearest drawn tile and
+the bubble still names the call; agents sharing a tile stack their bubbles.
+
+**Semantic zoom.** Zoomed out, tokens and bubbles keep their on-screen size,
+like unit markers on a map (`--dag-marker-scale`, set by
+`interaction/canvas.ts`; the marker is pinned to its tile in world units and
+only its body scales). Below 55% an icon is a few pixels of noise, so every
+tile becomes a solid block of its tone (`is-far`): the map reads by colour,
+and covered tiles stay brighter than the rest. With nothing
+running, the main agent's token rests on HEAD without a bubble. The layer is
+rebuilt from the node DOM, so the in-place status patch repaints it.
 
 **HEAD is a breathing glow on its own glyph**: a `drop-shadow` in the branch
 colour that swells and settles on a slow cycle (2.4s), stamped on the shape
 itself (`data-head`). The light hugs the glyph's outline at every zoom —
 unlike a drawn halo ring, which reads as a second, blurrier node beside the
 first — and unlike a solid fill, it leaves the shape vocabulary intact: HEAD
-stays visibly a triangle/circle like its neighbours, just lit. Under
+stays visibly the same tile as its neighbours, just lit. Under
 `prefers-reduced-motion` the pulse freezes to a steady glow. HEAD carries no
 coverage mark of its own: it is the one node that cannot leave the context
 window — the next request lands on it.
@@ -362,16 +412,16 @@ placeholder box:
 
 | status | Drawing |
 |---|---|
-| success | default stroke |
-| running | same-shape dashed stroke + breathing-opacity animation |
-| error | red stroke + `!` badge at the upper right |
-| cancelled | whole node grayed 50% |
+| success | the plain block |
+| running | `is-running`: the icon breathes, and its token and bubble appear |
+| error | `is-error`: the tone turns red + `!` badge at the upper right |
+| cancelled | `is-faded`: the tone turns ghost grey |
 
 **Badges** (attached to the node, no grid cell of their own):
 
 | Badge | Meaning |
 |---|---|
-| fold count (upper-right shoulder, annotation grey) | the size of the node's folded call thread — §12. Digits glued to the glyph, no enclosing shape: anything shaped would read as a node. Open, it disappears — the calls are on screen and countable |
+| fold count (upper-right shoulder, annotation grey) | the size of the node's folded call thread — §12, written `+N` ("N more inside"). Glued to the glyph, no enclosing shape: anything shaped would read as a node. Open, it disappears — the calls are on screen and countable |
 | `↗` (top-right corner) | marked on **both sides** of a cross-session spawn: `spawn_remote` on the first target-session user node and `spawn_out` on the initiating source-session node. The target projection places the external caller at ROOT; the source attach card stores the target session and branch head. A cross-session attach does not create an in-graph `attach_returns` edge because its endpoint belongs to another graph. The glyph currently indicates the cross-session relation only; clicking it does not navigate. **Cross-session only**: a same-session spawn has both ends in one graph and keeps the ordinary return edge, so it has no ↗ |
 
 ---
@@ -414,7 +464,7 @@ placeholder box:
 | 9 | cross-branch messaging (send_message) | dotted `1 5`, target branch color, hidden by default / shown on hover; a from_branch user node lands at the target branch tail |
 | 10 | spawn dispatch → return | the sub-agent's head is an item ON its caller's thread (§12): it sits in the sequence position the spawn actually happened at, between the calls before and after it. Its return needs no extra line — the followup reply it triggers merges into the same anchor (§0), so dispatch, work and return are one column read top to bottom (the chat stream still renders the Spawned card, display order moved ahead — see `ui/invariants.md` rule 9) |
 | 11 | call-thread default aggregation | see §0/§12: folded to a shoulder count by default, click to open into layout, fold reclaims rows/cols per rule ②; open state is per-node independent and recursive |
-| 12 | status & badge legend | see §4: status drawn on the node's own stroke, no placeholder boxes; both sides of a cross-session spawn carry the ↗ corner mark |
+| 12 | status & badge legend | see §4: status drawn on the node's own block, no placeholder boxes; both sides of a cross-session spawn carry the ↗ corner mark |
 | 13 | badge anchoring · avoidance · collision · merged | see §5: anchor directly below the branch's last conversation-layer node, half-column left shift only when an edge crosses the anchor cell, collision shifts down one row, merging erases the badge (provenance moves into the merge node's tooltip) |
 
 **Send-back nodes and the switcher (semantic note, no dedicated layout scene)**: a
@@ -465,7 +515,7 @@ apps/web/lib/runtime-bridge/dag/
                      computes them in `apps/server/openprogram_server/_webui/graph_layout/` and ships
                      them on the node; the front end only consumes the values.
   apps/web/lib/runtime-bridge/dag/render/edges.ts    the line-style table of section 3
-  apps/web/lib/runtime-bridge/dag/render/nodes.ts    the shapes + status strokes + badges of section 4
+  apps/web/lib/runtime-bridge/dag/render/nodes.ts    the tiles + status states + badges of section 4
   apps/web/lib/runtime-bridge/dag/render/badges.ts   the branch-name badge of section 5
   apps/web/lib/runtime-bridge/dag/store/globals.ts   expansion state, lastGraph, signatures
 ```
@@ -477,14 +527,19 @@ lane/tier/depth + an ASCII grid.
 
 ## 8. The fill means context coverage
 
-A node's fill marks it as **part of what the next LLM call will carry**. On a
-dark canvas the fill is the theme's brightest ink, near-white; on a light
-canvas that ink is near-black, and a column of black glyphs reads as heavy
-blots, so light themes fill with a 30% wash of the node's own branch colour
-over the canvas (`light-dark()` in `apps/web/lib/runtime-bridge/dag/render/visibility.ts`;
-the legend swatch uses the same expression). Either way it parts from the
-hollow glyph, which is filled with the canvas colour. "White fill" below means
-this fill.
+A node's fill marks it as **part of what the next LLM call will carry**. A
+covered tile (`is-covered`, set in
+`apps/web/lib/runtime-bridge/dag/render/visibility.ts`) shows its icon at full
+ink; an uncovered tile's icon is faint (38%), an aged one a step back (70%).
+A node is just its icon — no frame and no background (the plate under it is
+the canvas colour, there only to bury belt ends). The one exception is your
+own message, the node you press to fork or edit: it is the app's raised
+button, round, the input box's fill with the composer's shadow, so a first-time
+reader sees what can be clicked. Bubbles, captions and branch
+tags are words with no chip behind them, each with a canvas-colour halo so a
+line passing behind breaks around the letters. The same rule holds in both themes, and the
+legend swatch is a covered tile.
+"White fill" below means this fill.
 There is no mode to choose and no switch to find: whenever the graph is
 showing, it owns its pane. A lone session tab gets the chat shell plus this
 graph; two session tabs split into two `PeerSessionPane`s where the shell — and
@@ -536,12 +591,12 @@ itself**; it asks the backend and draws the answer.
 | State | Drawing |
 |---|---|
 | in context | white fill (the baseline) |
-| `aged` | stroke dimmed to 40% opacity — reads as "still here, but only the gist" |
+| `aged` | a covered block a step fainter (20% tone) — reads as "still here, but only the gist" |
 | `spilled` | `▤` at the node's upper LEFT |
 
-`aged` dims **`stroke-opacity`, never `opacity`**: the white fill is the
-coverage signal, and fading the whole node would fade that too, collapsing two
-independent facts into one. The `▤` mark takes the upper left because the upper
+`aged` lowers **the block's tone, never `opacity`**: the fill is the
+coverage signal, and fading the whole node would fade the icon and badges too,
+collapsing two independent facts into one. The `▤` mark takes the upper left because the upper
 right is spoken for (`!` error, `↗` cross-session spawn) and the lower right
 holds the fold badge; it is drawn as `<text>` so `_applyVisibility`'s
 "first shape child" scan cannot mistake it for the node body.
@@ -669,7 +724,7 @@ covered turn, and the inspector labels it `Failed turn · Recorded`. The two sta
 alike because on the only axis the graph is about they *are* alike: on disk,
 readable, and never in the next request.
 
-The grey deliberately replaces the red `!` stroke §4 gives a live error. Red
+The grey deliberately replaces the red block §4 gives a live error. Red
 means "this needs you now", and an archived line does not — the retry already
 happened. The `!` glyph itself stays, so why the line ended is still legible.
 
@@ -805,35 +860,41 @@ switch, exactly as in §9. A spawn head is visible only while every thread
 above it is open; its items likewise — visibility is the whole ancestor
 chain's, not the node's own flag.
 
-## 13. Tools, selection and deleting nodes
+## 13. The mouse, the rail, selection and deleting nodes
 
-The canvas has a tool, the way a drawing board does. A tool decides two
-things and nothing else: what a click on a node means and what a drag on empty
-canvas does. Wheel and pinch, the right-click card, the HUD and the branch tags
-behave the same under every tool. The tools sit in a vertical rail on the
-canvas's left edge:
+The canvas has one mouse and no tools to switch between. Splitting browsing,
+box-selecting and lasso-selecting into three tools made every first drag a
+question of which tool was in hand. One mouse does all of it:
 
-| Tool | Key | Click on a node | Drag on empty canvas |
-|---|---|---|---|
-| Browse (hand, the default) | H | the node's own action (§11, §12) | pan |
-| Select (pointer) | V | select it; Shift/⌘ adds or removes | a rectangle; every node it touches is selected |
-| Lasso | L | as Select | a free shape; every node it touches is selected |
+| Gesture | What it does |
+|---|---|
+| Wheel, or pinch | zoom about the cursor |
+| Drag on empty canvas | pan (the middle button pans too) |
+| Click a node | the node's own action (§11, §12) |
+| Double-click a node | fork & edit (§11) |
+| Shift/⌘ + click a node | add it to the selection, or take it out |
+| Shift/⌘ + drag on empty canvas | a box; every node it touches joins the selection |
+| Click on empty canvas | clear the selection |
 
-Clicking and box-selecting are one tool, as in every drawing app: a press on
-a node picks it, a press on empty canvas starts a box. Under the selecting
-tools a drag on empty canvas therefore does not pan. Space held turns any tool
-into the hand for the drag, the middle mouse button always pans, and a
-trackpad scroll pans under every tool. A click on empty canvas clears the selection; Shift keeps
-it, and a Shift-drag adds to it. Under a selecting tool a double click does
-nothing, so fork & edit stays a browse gesture. These are fixed by design, not
-settings: touching selects (no enclose-only mode), and clicking a user circle
-selects that circle alone.
+The wheel zooms like a map's; it does not scroll. A trackpad pinch zooms at
+its own, faster rate. These are fixed by design, not settings: touching
+selects (no enclose-only mode), and a plain click never selects, so it can
+stay the node's own action (`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts`,
+`interaction/nodes.ts`, `interaction/selection.ts`).
 
-Tools live in a registry (`registerTool` in
-`apps/web/lib/runtime-bridge/dag/interaction/selection.ts`): an id, a key,
-whether a click selects, and what a drag does. The rail renders whatever is
-registered, so a later tool (notes, annotations) is one registration plus its
-icon.
+The rail on the canvas's left edge is one raised strip of the app's button
+material (the input box's fill and the composer's shadow). It holds the
+camera. **Find the working agent** (F) glides the view to the tile a working
+agent stands on, keeping the zoom. Pressed again it moves to the next working
+agent, and with none at work it goes to HEAD (`focusAgent` in
+`interaction/canvas.ts`). **Show the whole graph** (Shift+1) sits under it. The
+HUD's Fit can be tucked behind the composer, but the rail is always there.
+Under a hairline, the keyboard button opens the **key sheet**: every gesture
+and key the canvas answers to, grouped as mouse, camera and selection, in a
+menu panel beside the rail (`components/chat/dag-key-sheet.tsx`). `?` opens it
+too. Esc, `?` again or a press outside closes it. The view keys follow design
+tools: Shift+1 fits the graph, Shift+0 returns to 100%, and + / − step the
+zoom, the same steps as the HUD's buttons (`interaction/keys.ts`).
 
 **Selection.** View state of the current session's canvas. Each selected node
 gets a dashed accent box just outside its glyph. The set is re-applied after
@@ -843,12 +904,11 @@ Selecting on the canvas takes keyboard focus from the composer, so Delete and
 Esc reach the selection rather than the draft.
 
 **The action bar.** While something is selected, a bar at the canvas's top
-left reads `N selected | Copy ID · Delete · ✕`, with Delete in the danger
-colour. After a delete it reads `Deleted N nodes | Undo` for a few seconds.
+left reads `N selected | ⌖ · Copy ID · Delete · ✕`, with Delete in the danger
+colour. ⌖ fits the view to the selection, as Shift+2 does in design tools
+(`frameSelection` in `interaction/canvas.ts`). After a delete it reads `Deleted N nodes | Undo` for a few seconds.
 It sits on the rail's left edge rather than at the top right, which belongs to
-the pane's perspective controls. Rail and bar share one quiet surface: the
-input box's fill, a hairline edge and a light contact shadow. The current tool
-is marked with a neutral grey fill.
+the pane's perspective controls. It is the same raised material as the rail.
 
 **Deleting.** Delete or ⌫ deletes the selection at once, with no
 confirmation, and ⌘Z undoes it. The store
@@ -883,6 +943,20 @@ The wire format is `delete_nodes {session_id, node_ids}` → `nodes_deleted
 A success also broadcasts `session_reload`, so the transcript and the graph
 both redraw. The undo stack is per session and lasts as long as the page.
 
+### The minimap
+
+A long session runs off the screen, so the canvas keeps a minimap in its
+lower right, above the composer, in the rail's raised material. Each node is a
+dot of its tone, and the part on screen is a frame in the accent colour. A
+press or a drag on the map moves the camera there at the same zoom. The map
+frames the graph and the view together, so the frame is never cut off, and it
+holds still while you drag. HEAD is a larger dot ringed in the accent colour,
+the "you are here" of the map, and a wheel over the map zooms the canvas about
+its middle. M hides the map and M again brings it back; the choice is kept in the browser. When the
+whole graph is already on screen, give or take a tile's width, the map fades out: there is nothing to find
+(`apps/web/lib/runtime-bridge/dag/interaction/minimap.ts`, repainted by
+`applyView` on every view change).
+
 ## Appendix: Implementation Status
 
 The whole spec is implemented. Where each part lives:
@@ -891,11 +965,11 @@ The whole spec is implemented. Where each part lives:
 |---|---|
 | Infinite canvas (pan / zoom / fit / dot lattice) | `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts` + `.history-body` in `apps/web/app/styles/dag/canvas.css`; view state in `apps/web/lib/runtime-bridge/dag/store/globals.ts`; HUD in `apps/web/components/chat/dag-view.tsx` |
 | §1 lane / tier / depth layout | `apps/web/lib/runtime-bridge/dag/layout/geometry.ts::computeGeometry` (tier-packed chain lanes with per-lane tier zeroing, preorder rows, scene-3 fork rows + gap column, recursive thread placement that inserts later chain rows and reserves thread columns); lattice, no-overlap, thread columns/rows and fork geometry all executed and asserted by `apps/web/scripts/runtime/check-dag-subagent.mjs` |
-| §2 rule ③ glyphs are cells | no shape is sized from text, and no text draws on the canvas beyond the shoulder count and the capsule note |
+| §2 rule ③ glyphs are cells | no shape is sized from text; captions take only free cells and never move the layout (`render/captions.ts`) |
 | §4 HEAD breathing glow | `apps/web/lib/runtime-bridge/dag/render/nodes.ts` stamps `data-head` + the branch colour as `color`; `dag-head-glow` keyframes in `apps/web/app/styles/dag/nodes.css` (reduced-motion → steady glow); every glyph stays hollow (`apps/web/lib/runtime-bridge/dag/render/shapes.ts`); HEAD pointing at a merged reply re-seats on its anchor (`apps/web/lib/runtime-bridge/dag/pipeline.ts` via `threadModel.anchorOf`) |
 | §0/§12 call-thread aggregation | `apps/web/lib/runtime-bridge/dag/passes/thread.ts` (`buildThreadModel`: anchor merge, event attribution, recursive visibility); `apps/web/lib/runtime-bridge/dag/render/nodes.ts` draws the shoulder count (`history-thread-count`); `_threadOpen` in `apps/web/lib/runtime-bridge/dag/store/globals.ts` |
 | Rule ② corollary (no placeholder box) | `apps/web/lib/runtime-bridge/dag/render/shapes.ts`: no `square_outline`; task renders as a plain square |
-| §4 status on the stroke | `graph_builder` emits status; `nodes.ts` draws it on the stroke (running dashed+breathing / error red+! / cancelled grayed) |
+| §4 status on the block | `graph_builder` emits status; `nodes.ts` sets it as a CSS state of the tile (running breathing / error red+! / cancelled grayed) |
 | §5 badge anchoring | `apps/web/lib/runtime-bridge/dag/render/badges.ts`: anchor at last conversation-layer node, half-column left shift when a line crosses the anchor cell, measured-pixel-box collision slides down one row |
 | Scene 8 merge shape and lines | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` `merge_dot` (◉); `edges.ts` merge-in line peer-colored 2.4px solid |
 | Scenes 8/10 attach pointer | backend filters it (display=runtime) + `graph_builder` stamps the ref onto the embed host (`attach_returns`); `edges.ts` draws the long-dash return line |
@@ -904,7 +978,7 @@ The whole spec is implemented. Where each part lives:
 | Composer shared by both perspectives | `apps/web/app/styles/chat/center-pane.css` hides `#chatArea`, not `#chatView`; asserted by `apps/web/scripts/tabs/check-center-tabs.mjs` |
 | In-graph branch tags (checkout buttons) | `apps/web/lib/runtime-bridge/dag/render/badges.ts`; hover styles on `.history-branch-tag` in `apps/web/app/styles/dag/badges.css` |
 | §8 coverage query | `routes/tree.py::_coverage_nodes` fills `/context-range`'s `nodes`; tested in `tests/unit/context/test_context_range_coverage.py` |
-| §8 aged / spilled drawing | `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (stroke-opacity + `▤`), fed by `_coverageSet` in `apps/web/lib/runtime-bridge/dag/store/globals.ts` |
+| §8 aged / spilled drawing | `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (fainter block + `▤`), fed by `_coverageSet` in `apps/web/lib/runtime-bridge/dag/store/globals.ts` |
 | §9 `covers_ids` on the wire | `apps/server/openprogram_server/_webui/graph_builder.py` resolves `metadata.covers` to ids; tested in `tests/unit/dag/test_graph_builder_covers.py` |
 | §9 capsule shape | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` `capsule` (keyed on `covers_ids`, tagged `data-shape` so `_applyShapeSize` leaves its geometry alone) |
 | §9 fold + pleats + ghosts | `apps/web/lib/runtime-bridge/dag/passes/fold-summaries.ts` (fold), `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (pleats, `Compacted · N turns` caption, ghost stroke), `apps/web/lib/runtime-bridge/dag/render/edges.ts` (dashed ghost edge), `_summaryExpanded` in `apps/web/lib/runtime-bridge/dag/store/globals.ts`; executed by `apps/web/scripts/runtime/check-dag-summary.mjs` |
@@ -913,4 +987,4 @@ The whole spec is implemented. Where each part lives:
 | §11 legend | `DagLegend` in `apps/web/components/chat/dag-view.tsx` (inside the canvas HUD), `.dag-legend` in `apps/web/app/styles/dag/hud.css` |
 | §12 call thread + agent spawn | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` (spawn → square), `apps/web/lib/runtime-bridge/dag/passes/thread.ts` (model), `apps/web/lib/runtime-bridge/dag/layout/geometry.ts` (recursive placement), `apps/web/lib/runtime-bridge/dag/render/edges.ts` (dotted thread line, centre-to-centre chain edges, scene-3 bridge), `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (`data-thread*`, shoulder count), `apps/web/lib/runtime-bridge/dag/interaction/nodes.ts` (`toggleThreadOpen`); executed by `apps/web/scripts/runtime/check-dag-subagent.mjs` |
 | §12 the name on the wire | `task/runner.py::_update_attach_card` stamps `attach.label` from the task; `ws_actions/session.py::_annotate_spawn_origin` carries it to the spawn root as `spawned_from.label`; tested in `tests/unit/test_task_attach_integration.py` |
-| §13 tools, selection, delete / undo | tool registry, selection state, hit-testing and the rubber band in `apps/web/lib/runtime-bridge/dag/interaction/selection.ts`; drags in `canvas.ts`, clicks in `nodes.ts`, keys in `keys.ts`; widening and the undo stack in `node-delete.ts`; rail and action bar in `apps/web/components/chat/dag-tools.tsx` + `apps/web/app/styles/dag/tools.css`; store splice and journal in `openprogram/store/session/session_store/node_deletion.py`; tested in `tests/component/store/test_node_deletion.py` and `apps/web/tests/execution/dag-selection.test.mjs` |
+| §13 mouse, rail, selection, delete / undo | selection state, hit-testing and the selection box in `apps/web/lib/runtime-bridge/dag/interaction/selection.ts`; drags in `canvas.ts`, clicks in `nodes.ts`, keys in `keys.ts`; widening and the undo stack in `node-delete.ts`; rail and action bar in `apps/web/components/chat/dag-tools.tsx`, key sheet in `dag-key-sheet.tsx`, minimap in `interaction/minimap.ts`, + `apps/web/app/styles/dag/tools.css`; store splice and journal in `openprogram/store/session/session_store/node_deletion.py`; tested in `tests/component/store/test_node_deletion.py` and `apps/web/tests/execution/dag-selection.test.mjs` |

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793027908" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793184100" data-alt-lang-url="/docs/reference/design/runtime/dag/rendering.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -548,7 +548,7 @@ gesture, and the fit centres the graph in the strip above it
 <h3 id="branch-switching-lives-in-the-graph">Branch switching lives in the graph<a class="header-anchor" href="#branch-switching-lives-in-the-graph">#</a></h3>
 <p>There is no branch strip above the canvas. Each branch's name is a button drawn
 in the graph itself, anchored below the branch's last conversation-layer node
-(<code>apps/web/lib/runtime-bridge/dag/render/badges.ts</code>, §5): the active branch's tag is outlined and tinted in its
+(<code>apps/web/lib/runtime-bridge/dag/render/badges.ts</code>, §5): the active branch's tag is a flat block tinted in its
 lane colour, and clicking any other tag checks that branch out. The graph
 already draws the branch structure; a strip above it would repeat that
 information and cut a line across the pane's floating view controls. Rename,
@@ -674,9 +674,12 @@ stub off ROOT's line. The branch starts as a line, not as a node. Only
 capsules and superseded relics — lanes with no user turns of their own —
 take the bridge straight to the glyph. Thread items
 (§12) reserve no lane width: their column is chosen after the lanes are down,
-in the first free column right of their anchor, and that column is then
-reserved so a second open thread walks further right — two open threads
-never share a cell.</p>
+in the nearest column right of their anchor that no line runs down across
+at the insertion row (something above it and something at or below it in
+that column). Everything wholly above stays clear and everything below is
+pushed down past the thread, so threads on different rows share a column —
+two open threads still never share a cell, and a stub never runs long past
+lanes that do not reach its row.</p>
 <h3 id="tier-how-many-columns-to-indent-within-a-branch">tier — how many columns to indent within a branch<a class="header-anchor" href="#tier-how-many-columns-to-indent-within-a-branch">#</a></h3>
 <p><strong>The conversation layer is fixed by role.</strong> The execution layer does not indent
 by caller depth any more — an open thread is one flat, time-ordered column (§12),
@@ -742,17 +745,22 @@ up to fill, empty columns shift left to fill, no empty rows or columns are kept.
 applies to every visibility change: execution subtree collapse/expand, branch folding,
 visibility filtering — once collapsed, the rows and columns it occupied must be freed
 immediately. <strong>Corollary: any &quot;placeholder box&quot; violates this rule</strong> — the running state
-is expressed by the node's own stroke (see the legend), not by drawing a dashed
+is expressed by the node's own block (see the legend), not by drawing a dashed
 placeholder node.</p>
 <p><strong>③ Glyphs are cells; text is a caption.</strong> A node occupies its grid point;
 counts hang beside it in annotation grey, never inside a shape sized to its own
 text. A glyph that grows with its label is a glyph every neighbour has to be
 measured against — that negotiation is what §12's earlier pill got wrong.
-Every glyph, the §9 compaction capsule included, is drawn on the reference
-circle and occupies exactly one cell.
-Names draw NOTHING on the canvas at all any more: a sub-agent's name lives in
-the tooltip and inspector, and the only per-node text is the fold count on the
-shoulder (§12) and the capsule's coverage count (§9).</p>
+Every glyph is the same rounded tile (§4), the §9 compaction capsule
+included, and occupies exactly one cell; the grid leaves a gap of one tile
+between neighbours so the belt between them stays visible.
+A call or a message of yours carries a caption in annotation grey to the
+right of its icon (&quot;Ran npm test&quot;, &quot;Read a.ts&quot;, the start of what you wrote;
+<code>render/captions.ts</code>). A caption only takes room nobody uses: it runs along
+its row up to the next tile, branch tag or line crossing it, steps past a
+fork line that runs down right where it would start, and is dropped when
+there is too little room, so it never pushes the layout. The tile an agent stands on shows
+the agent's bubble instead, and zoomed far out captions are hidden.</p>
 <hr />
 <h2 id="3-edges-color-branch-line-style-type-orthogonal">3. Edges: color = branch, line style = type (orthogonal)<a class="header-anchor" href="#3-edges-color-branch-line-style-type-orthogonal">#</a></h2>
 <p>Each lane has one color (<code>apps/web/lib/runtime-bridge/dag/types.ts</code> <code>LANE_COLORS</code>). Any edge uses the lane color of
@@ -806,22 +814,97 @@ is conveyed only by line style:</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Every line is drawn centre to centre</strong>, and the glyphs' background fill paints
-over the ends. Glyph edges sit at different distances per shape, so any fixed
-stand-off eventually gaps against a sloped triangle side; a line that dies under
-the glyph joins seamlessly for every shape.</p>
+<p><strong>Chain and thread edges are conveyor belts</strong>: an 8px neutral track
+(<code>.dag-belt</code>, its own layer under every line, opaque so tracks that share a
+trunk or meet at a junction never darken where they stack) with the 2px
+branch-coloured line on it. A belt that leads to work carries goods: beads in
+the branch colour ride the track towards the working node, under the solid
+line, so a running belt never reads as a dashed ghost line. A chain belt runs
+into a node that is itself running; a thread belt runs while anything down
+the item it leads to is running — the call being made, or a sub-agent's turn
+behind its spawn — and the thread trunk runs down to that item only.
+<code>paintBelts</code> sets this from the graph through each belt's <code>data-to</code>, so the
+in-place status patch repaints it. Ghost lines keep their dashes and get no
+track: they are not what the next request carries.</p>
+<p><strong>Every line is drawn centre to centre</strong>, and the tiles' background fill paints
+over the ends, so a line joins every tile seamlessly without a measured
+stand-off.</p>
 <hr />
-<h2 id="4-node-legend-shape-role-stroke-status">4. Node legend: shape = role, stroke = status<a class="header-anchor" href="#4-node-legend-shape-role-stroke-status">#</a></h2>
-<p><strong>Shape</strong>: ◇ ROOT · ○ user · △ llm · ■ code · ◉ merge (solid circle with a hole, the graph's unique
-&quot;convergence&quot; shape) · ◎ compaction summary (a double circle: the reference circle with a thin inner ring — §9) ·
-■ sub-agent spawn (a square like every call — dispatching an agent IS a
-function call; it expands into the agent's own activity — §12).</p>
+<h2 id="4-node-legend-icon-tile-role-tone-kind-state-css">4. Node legend: icon tile = role, tone = kind, state = CSS<a class="header-anchor" href="#4-node-legend-icon-tile-role-tone-kind-state-css">#</a></h2>
+<p><strong>Every node is a rounded icon tile</strong>, the same tile the execution timeline
+draws beside each step (<code>apps/web/lib/runtime-bridge/dag/render/tiles.ts</code>). A
+call takes the icon and tone <code>presentTool</code> gives it in the transcript, so &quot;ran
+npm test&quot; looks alike in both places; tones are shared CSS variables
+(<code>apps/web/app/styles/tool-tones.css</code>). Conversation nodes get their own:</p>
+<table>
+<thead>
+<tr>
+<th>Node</th>
+<th>Icon</th>
+<th>Tone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ROOT</td>
+<td>house</td>
+<td>secondary ink</td>
+</tr>
+<tr>
+<td>user</td>
+<td>person, on a round raised button</td>
+<td>accent</td>
+</tr>
+<tr>
+<td>agent reply</td>
+<td>ghost (agents are ghosts across the app)</td>
+<td>timeline llm</td>
+</tr>
+<tr>
+<td>call</td>
+<td>per tool (<code>presentTool</code>)</td>
+<td>per tool (shell, edit, read, search, web, …)</td>
+</tr>
+<tr>
+<td>sub-agent spawn</td>
+<td>ghost</td>
+<td>agent — dispatching an agent IS a call; it expands into the agent's activity (§12)</td>
+</tr>
+<tr>
+<td>compaction summary</td>
+<td>archive</td>
+<td>memory (§9)</td>
+</tr>
+<tr>
+<td>merge / attach</td>
+<td>pull request / link</td>
+<td>plan</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Agents stand on their step</strong> (<code>render/agents.ts</code>). Every agent that is
+working puts a round token with its initial, in its branch colour, on the
+upper-left corner of the tile it is on, and a bubble beside the tile says
+&quot;name · what it is doing&quot; (the tile's activity text in the present tense:
+&quot;Thinking…&quot;, &quot;Running npm test&quot;). Agents are read from the whole graph: a
+node belongs to the sub-agent whose spawn root its chain leads back to, else
+to the main agent, and each agent shows its latest running node. When that
+node is folded into a count, the token stands on the nearest drawn tile and
+the bubble still names the call; agents sharing a tile stack their bubbles.</p>
+<p><strong>Semantic zoom.</strong> Zoomed out, tokens and bubbles keep their on-screen size,
+like unit markers on a map (<code>--dag-marker-scale</code>, set by
+<code>interaction/canvas.ts</code>; the marker is pinned to its tile in world units and
+only its body scales). Below 55% an icon is a few pixels of noise, so every
+tile becomes a solid block of its tone (<code>is-far</code>): the map reads by colour,
+and covered tiles stay brighter than the rest. With nothing
+running, the main agent's token rests on HEAD without a bubble. The layer is
+rebuilt from the node DOM, so the in-place status patch repaints it.</p>
 <p><strong>HEAD is a breathing glow on its own glyph</strong>: a <code>drop-shadow</code> in the branch
 colour that swells and settles on a slow cycle (2.4s), stamped on the shape
 itself (<code>data-head</code>). The light hugs the glyph's outline at every zoom —
 unlike a drawn halo ring, which reads as a second, blurrier node beside the
 first — and unlike a solid fill, it leaves the shape vocabulary intact: HEAD
-stays visibly a triangle/circle like its neighbours, just lit. Under
+stays visibly the same tile as its neighbours, just lit. Under
 <code>prefers-reduced-motion</code> the pulse freezes to a steady glow. HEAD carries no
 coverage mark of its own: it is the one node that cannot leave the context
 window — the next request lands on it.</p>
@@ -837,19 +920,19 @@ placeholder box:</p>
 <tbody>
 <tr>
 <td>success</td>
-<td>default stroke</td>
+<td>the plain block</td>
 </tr>
 <tr>
 <td>running</td>
-<td>same-shape dashed stroke + breathing-opacity animation</td>
+<td><code>is-running</code>: the icon breathes, and its token and bubble appear</td>
 </tr>
 <tr>
 <td>error</td>
-<td>red stroke + <code>!</code> badge at the upper right</td>
+<td><code>is-error</code>: the tone turns red + <code>!</code> badge at the upper right</td>
 </tr>
 <tr>
 <td>cancelled</td>
-<td>whole node grayed 50%</td>
+<td><code>is-faded</code>: the tone turns ghost grey</td>
 </tr>
 </tbody>
 </table>
@@ -864,7 +947,7 @@ placeholder box:</p>
 <tbody>
 <tr>
 <td>fold count (upper-right shoulder, annotation grey)</td>
-<td>the size of the node's folded call thread — §12. Digits glued to the glyph, no enclosing shape: anything shaped would read as a node. Open, it disappears — the calls are on screen and countable</td>
+<td>the size of the node's folded call thread — §12, written <code>+N</code> (&quot;N more inside&quot;). Glued to the glyph, no enclosing shape: anything shaped would read as a node. Open, it disappears — the calls are on screen and countable</td>
 </tr>
 <tr>
 <td><code>↗</code> (top-right corner)</td>
@@ -939,7 +1022,7 @@ to the measured text width).</li>
 <tr>
 <td>12</td>
 <td>status &amp; badge legend</td>
-<td>see §4: status drawn on the node's own stroke, no placeholder boxes; both sides of a cross-session spawn carry the ↗ corner mark</td>
+<td>see §4: status drawn on the node's own block, no placeholder boxes; both sides of a cross-session spawn carry the ↗ corner mark</td>
 </tr>
 <tr>
 <td>13</td>
@@ -992,7 +1075,7 @@ historical multi-generation delegation chains remain drawable.</p>
                      computes them in `apps/server/openprogram_server/_webui/graph_layout/` and ships
                      them on the node; the front end only consumes the values.
   apps/web/lib/runtime-bridge/dag/render/edges.ts    the line-style table of section 3
-  apps/web/lib/runtime-bridge/dag/render/nodes.ts    the shapes + status strokes + badges of section 4
+  apps/web/lib/runtime-bridge/dag/render/nodes.ts    the tiles + status states + badges of section 4
   apps/web/lib/runtime-bridge/dag/render/badges.ts   the branch-name badge of section 5
   apps/web/lib/runtime-bridge/dag/store/globals.ts   expansion state, lastGraph, signatures
 </code></pre>
@@ -1001,14 +1084,19 @@ historical multi-generation delegation chains remain drawable.</p>
 annotation — <strong>tier specifically in <code>graph_layout/tier.py</code></strong>. Verification tool: <code>python scripts/dag_dump.py &lt;session_id&gt;</code> prints
 lane/tier/depth + an ASCII grid.</p>
 <h2 id="8-the-fill-means-context-coverage">8. The fill means context coverage<a class="header-anchor" href="#8-the-fill-means-context-coverage">#</a></h2>
-<p>A node's fill marks it as <strong>part of what the next LLM call will carry</strong>. On a
-dark canvas the fill is the theme's brightest ink, near-white; on a light
-canvas that ink is near-black, and a column of black glyphs reads as heavy
-blots, so light themes fill with a 30% wash of the node's own branch colour
-over the canvas (<code>light-dark()</code> in <code>apps/web/lib/runtime-bridge/dag/render/visibility.ts</code>;
-the legend swatch uses the same expression). Either way it parts from the
-hollow glyph, which is filled with the canvas colour. &quot;White fill&quot; below means
-this fill.
+<p>A node's fill marks it as <strong>part of what the next LLM call will carry</strong>. A
+covered tile (<code>is-covered</code>, set in
+<code>apps/web/lib/runtime-bridge/dag/render/visibility.ts</code>) shows its icon at full
+ink; an uncovered tile's icon is faint (38%), an aged one a step back (70%).
+A node is just its icon — no frame and no background (the plate under it is
+the canvas colour, there only to bury belt ends). The one exception is your
+own message, the node you press to fork or edit: it is the app's raised
+button, round, the input box's fill with the composer's shadow, so a first-time
+reader sees what can be clicked. Bubbles, captions and branch
+tags are words with no chip behind them, each with a canvas-colour halo so a
+line passing behind breaks around the letters. The same rule holds in both themes, and the
+legend swatch is a covered tile.
+&quot;White fill&quot; below means this fill.
 There is no mode to choose and no switch to find: whenever the graph is
 showing, it owns its pane. A lone session tab gets the chat shell plus this
 graph; two session tabs split into two <code>PeerSessionPane</code>s where the shell — and
@@ -1083,7 +1171,7 @@ itself</strong>; it asks the backend and draws the answer.</p>
 </tr>
 <tr>
 <td><code>aged</code></td>
-<td>stroke dimmed to 40% opacity — reads as &quot;still here, but only the gist&quot;</td>
+<td>a covered block a step fainter (20% tone) — reads as &quot;still here, but only the gist&quot;</td>
 </tr>
 <tr>
 <td><code>spilled</code></td>
@@ -1091,9 +1179,9 @@ itself</strong>; it asks the backend and draws the answer.</p>
 </tr>
 </tbody>
 </table>
-<p><code>aged</code> dims <strong><code>stroke-opacity</code>, never <code>opacity</code></strong>: the white fill is the
-coverage signal, and fading the whole node would fade that too, collapsing two
-independent facts into one. The <code>▤</code> mark takes the upper left because the upper
+<p><code>aged</code> lowers <strong>the block's tone, never <code>opacity</code></strong>: the fill is the
+coverage signal, and fading the whole node would fade the icon and badges too,
+collapsing two independent facts into one. The <code>▤</code> mark takes the upper left because the upper
 right is spoken for (<code>!</code> error, <code>↗</code> cross-session spawn) and the lower right
 holds the fold badge; it is drawn as <code>&lt;text&gt;</code> so <code>_applyVisibility</code>'s
 &quot;first shape child&quot; scan cannot mistake it for the node body.</p>
@@ -1203,7 +1291,7 @@ but it can never re-enter context.</p>
 covered turn, and the inspector labels it <code>Failed turn · Recorded</code>. The two states look
 alike because on the only axis the graph is about they <em>are</em> alike: on disk,
 readable, and never in the next request.</p>
-<p>The grey deliberately replaces the red <code>!</code> stroke §4 gives a live error. Red
+<p>The grey deliberately replaces the red block §4 gives a live error. Red
 means &quot;this needs you now&quot;, and an archived line does not — the retry already
 happened. The <code>!</code> glyph itself stays, so why the line ended is still legible.</p>
 <p>Both halves of the test matter. <code>status</code> alone would grey the error you are
@@ -1338,56 +1426,66 @@ turn or spawn head — one vocabulary). Never persisted, reset on session
 switch, exactly as in §9. A spawn head is visible only while every thread
 above it is open; its items likewise — visibility is the whole ancestor
 chain's, not the node's own flag.</p>
-<h2 id="13-tools-selection-and-deleting-nodes">13. Tools, selection and deleting nodes<a class="header-anchor" href="#13-tools-selection-and-deleting-nodes">#</a></h2>
-<p>The canvas has a tool, the way a drawing board does. A tool decides two
-things and nothing else: what a click on a node means and what a drag on empty
-canvas does. Wheel and pinch, the right-click card, the HUD and the branch tags
-behave the same under every tool. The tools sit in a vertical rail on the
-canvas's left edge:</p>
+<h2 id="13-the-mouse-the-rail-selection-and-deleting-nodes">13. The mouse, the rail, selection and deleting nodes<a class="header-anchor" href="#13-the-mouse-the-rail-selection-and-deleting-nodes">#</a></h2>
+<p>The canvas has one mouse and no tools to switch between. Splitting browsing,
+box-selecting and lasso-selecting into three tools made every first drag a
+question of which tool was in hand. One mouse does all of it:</p>
 <table>
 <thead>
 <tr>
-<th>Tool</th>
-<th>Key</th>
-<th>Click on a node</th>
-<th>Drag on empty canvas</th>
+<th>Gesture</th>
+<th>What it does</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Browse (hand, the default)</td>
-<td>H</td>
+<td>Wheel, or pinch</td>
+<td>zoom about the cursor</td>
+</tr>
+<tr>
+<td>Drag on empty canvas</td>
+<td>pan (the middle button pans too)</td>
+</tr>
+<tr>
+<td>Click a node</td>
 <td>the node's own action (§11, §12)</td>
-<td>pan</td>
 </tr>
 <tr>
-<td>Select (pointer)</td>
-<td>V</td>
-<td>select it; Shift/⌘ adds or removes</td>
-<td>a rectangle; every node it touches is selected</td>
+<td>Double-click a node</td>
+<td>fork &amp; edit (§11)</td>
 </tr>
 <tr>
-<td>Lasso</td>
-<td>L</td>
-<td>as Select</td>
-<td>a free shape; every node it touches is selected</td>
+<td>Shift/⌘ + click a node</td>
+<td>add it to the selection, or take it out</td>
+</tr>
+<tr>
+<td>Shift/⌘ + drag on empty canvas</td>
+<td>a box; every node it touches joins the selection</td>
+</tr>
+<tr>
+<td>Click on empty canvas</td>
+<td>clear the selection</td>
 </tr>
 </tbody>
 </table>
-<p>Clicking and box-selecting are one tool, as in every drawing app: a press on
-a node picks it, a press on empty canvas starts a box. Under the selecting
-tools a drag on empty canvas therefore does not pan. Space held turns any tool
-into the hand for the drag, the middle mouse button always pans, and a
-trackpad scroll pans under every tool. A click on empty canvas clears the selection; Shift keeps
-it, and a Shift-drag adds to it. Under a selecting tool a double click does
-nothing, so fork &amp; edit stays a browse gesture. These are fixed by design, not
-settings: touching selects (no enclose-only mode), and clicking a user circle
-selects that circle alone.</p>
-<p>Tools live in a registry (<code>registerTool</code> in
-<code>apps/web/lib/runtime-bridge/dag/interaction/selection.ts</code>): an id, a key,
-whether a click selects, and what a drag does. The rail renders whatever is
-registered, so a later tool (notes, annotations) is one registration plus its
-icon.</p>
+<p>The wheel zooms like a map's; it does not scroll. A trackpad pinch zooms at
+its own, faster rate. These are fixed by design, not settings: touching
+selects (no enclose-only mode), and a plain click never selects, so it can
+stay the node's own action (<code>apps/web/lib/runtime-bridge/dag/interaction/canvas.ts</code>,
+<code>interaction/nodes.ts</code>, <code>interaction/selection.ts</code>).</p>
+<p>The rail on the canvas's left edge is one raised strip of the app's button
+material (the input box's fill and the composer's shadow). It holds the
+camera. <strong>Find the working agent</strong> (F) glides the view to the tile a working
+agent stands on, keeping the zoom. Pressed again it moves to the next working
+agent, and with none at work it goes to HEAD (<code>focusAgent</code> in
+<code>interaction/canvas.ts</code>). <strong>Show the whole graph</strong> (Shift+1) sits under it. The
+HUD's Fit can be tucked behind the composer, but the rail is always there.
+Under a hairline, the keyboard button opens the <strong>key sheet</strong>: every gesture
+and key the canvas answers to, grouped as mouse, camera and selection, in a
+menu panel beside the rail (<code>components/chat/dag-key-sheet.tsx</code>). <code>?</code> opens it
+too. Esc, <code>?</code> again or a press outside closes it. The view keys follow design
+tools: Shift+1 fits the graph, Shift+0 returns to 100%, and + / − step the
+zoom, the same steps as the HUD's buttons (<code>interaction/keys.ts</code>).</p>
 <p><strong>Selection.</strong> View state of the current session's canvas. Each selected node
 gets a dashed accent box just outside its glyph. The set is re-applied after
 every repaint and pruned to the nodes the canvas still draws, so a node that is
@@ -1395,12 +1493,11 @@ deleted or folded away leaves the selection. A session switch drops it.
 Selecting on the canvas takes keyboard focus from the composer, so Delete and
 Esc reach the selection rather than the draft.</p>
 <p><strong>The action bar.</strong> While something is selected, a bar at the canvas's top
-left reads <code>N selected | Copy ID · Delete · ✕</code>, with Delete in the danger
-colour. After a delete it reads <code>Deleted N nodes | Undo</code> for a few seconds.
+left reads <code>N selected | ⌖ · Copy ID · Delete · ✕</code>, with Delete in the danger
+colour. ⌖ fits the view to the selection, as Shift+2 does in design tools
+(<code>frameSelection</code> in <code>interaction/canvas.ts</code>). After a delete it reads <code>Deleted N nodes | Undo</code> for a few seconds.
 It sits on the rail's left edge rather than at the top right, which belongs to
-the pane's perspective controls. Rail and bar share one quiet surface: the
-input box's fill, a hairline edge and a light contact shadow. The current tool
-is marked with a neutral grey fill.</p>
+the pane's perspective controls. It is the same raised material as the rail.</p>
 <p><strong>Deleting.</strong> Delete or ⌫ deletes the selection at once, with no
 confirmation, and ⌘Z undoes it. The store
 (<code>openprogram/store/session/session_store/node_deletion.py</code>) applies these
@@ -1432,6 +1529,18 @@ writing under the nodes being removed.</li>
 <code>nodes_restored</code> (<code>apps/server/openprogram_server/_webui/ws_actions/dag_nodes.py</code>).
 A success also broadcasts <code>session_reload</code>, so the transcript and the graph
 both redraw. The undo stack is per session and lasts as long as the page.</p>
+<h3 id="the-minimap">The minimap<a class="header-anchor" href="#the-minimap">#</a></h3>
+<p>A long session runs off the screen, so the canvas keeps a minimap in its
+lower right, above the composer, in the rail's raised material. Each node is a
+dot of its tone, and the part on screen is a frame in the accent colour. A
+press or a drag on the map moves the camera there at the same zoom. The map
+frames the graph and the view together, so the frame is never cut off, and it
+holds still while you drag. HEAD is a larger dot ringed in the accent colour,
+the &quot;you are here&quot; of the map, and a wheel over the map zooms the canvas about
+its middle. M hides the map and M again brings it back; the choice is kept in the browser. When the
+whole graph is already on screen, give or take a tile's width, the map fades out: there is nothing to find
+(<code>apps/web/lib/runtime-bridge/dag/interaction/minimap.ts</code>, repainted by
+<code>applyView</code> on every view change).</p>
 <h2 id="appendix-implementation-status">Appendix: Implementation Status<a class="header-anchor" href="#appendix-implementation-status">#</a></h2>
 <p>The whole spec is implemented. Where each part lives:</p>
 <table>
@@ -1452,7 +1561,7 @@ both redraw. The undo stack is per session and lasts as long as the page.</p>
 </tr>
 <tr>
 <td>§2 rule ③ glyphs are cells</td>
-<td>no shape is sized from text, and no text draws on the canvas beyond the shoulder count and the capsule note</td>
+<td>no shape is sized from text; captions take only free cells and never move the layout (<code>render/captions.ts</code>)</td>
 </tr>
 <tr>
 <td>§4 HEAD breathing glow</td>
@@ -1467,8 +1576,8 @@ both redraw. The undo stack is per session and lasts as long as the page.</p>
 <td><code>apps/web/lib/runtime-bridge/dag/render/shapes.ts</code>: no <code>square_outline</code>; task renders as a plain square</td>
 </tr>
 <tr>
-<td>§4 status on the stroke</td>
-<td><code>graph_builder</code> emits status; <code>nodes.ts</code> draws it on the stroke (running dashed+breathing / error red+! / cancelled grayed)</td>
+<td>§4 status on the block</td>
+<td><code>graph_builder</code> emits status; <code>nodes.ts</code> sets it as a CSS state of the tile (running breathing / error red+! / cancelled grayed)</td>
 </tr>
 <tr>
 <td>§5 badge anchoring</td>
@@ -1504,7 +1613,7 @@ both redraw. The undo stack is per session and lasts as long as the page.</p>
 </tr>
 <tr>
 <td>§8 aged / spilled drawing</td>
-<td><code>apps/web/lib/runtime-bridge/dag/render/nodes.ts</code> (stroke-opacity + <code>▤</code>), fed by <code>_coverageSet</code> in <code>apps/web/lib/runtime-bridge/dag/store/globals.ts</code></td>
+<td><code>apps/web/lib/runtime-bridge/dag/render/nodes.ts</code> (fainter block + <code>▤</code>), fed by <code>_coverageSet</code> in <code>apps/web/lib/runtime-bridge/dag/store/globals.ts</code></td>
 </tr>
 <tr>
 <td>§9 <code>covers_ids</code> on the wire</td>
@@ -1539,12 +1648,12 @@ both redraw. The undo stack is per session and lasts as long as the page.</p>
 <td><code>task/runner.py::_update_attach_card</code> stamps <code>attach.label</code> from the task; <code>ws_actions/session.py::_annotate_spawn_origin</code> carries it to the spawn root as <code>spawned_from.label</code>; tested in <code>tests/unit/test_task_attach_integration.py</code></td>
 </tr>
 <tr>
-<td>§13 tools, selection, delete / undo</td>
-<td>tool registry, selection state, hit-testing and the rubber band in <code>apps/web/lib/runtime-bridge/dag/interaction/selection.ts</code>; drags in <code>canvas.ts</code>, clicks in <code>nodes.ts</code>, keys in <code>keys.ts</code>; widening and the undo stack in <code>node-delete.ts</code>; rail and action bar in <code>apps/web/components/chat/dag-tools.tsx</code> + <code>apps/web/app/styles/dag/tools.css</code>; store splice and journal in <code>openprogram/store/session/session_store/node_deletion.py</code>; tested in <code>tests/component/store/test_node_deletion.py</code> and <code>apps/web/tests/execution/dag-selection.test.mjs</code></td>
+<td>§13 mouse, rail, selection, delete / undo</td>
+<td>selection state, hit-testing and the selection box in <code>apps/web/lib/runtime-bridge/dag/interaction/selection.ts</code>; drags in <code>canvas.ts</code>, clicks in <code>nodes.ts</code>, keys in <code>keys.ts</code>; widening and the undo stack in <code>node-delete.ts</code>; rail and action bar in <code>apps/web/components/chat/dag-tools.tsx</code>, key sheet in <code>dag-key-sheet.tsx</code>, minimap in <code>interaction/minimap.ts</code>, + <code>apps/web/app/styles/dag/tools.css</code>; store splice and journal in <code>openprogram/store/session/session_store/node_deletion.py</code>; tested in <code>tests/component/store/test_node_deletion.py</code> and <code>apps/web/tests/execution/dag-selection.test.mjs</code></td>
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-26</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Agent 图所有权">Agent DAG ownership</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="分支命名">Branch naming</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-en="/docs/reference/design/runtime/dag/persistence-observability.html" data-href-zh="/docs/reference/design/runtime/dag/persistence-observability.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="Agent 图所有权">Agent DAG ownership</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/operations/branch-naming.html" data-href-en="/docs/reference/design/runtime/operations/branch-naming.html" data-href-zh="/docs/reference/design/runtime/operations/branch-naming.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="分支命名">Branch naming</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
@@ -1591,7 +1700,7 @@ both redraw. The undo stack is per session and lasts as long as the page.</p>
 <a class="lvl-2" href="#3-edges-color-branch-line-style-type-orthogonal">3. Edges: color = branch, line style = type (orthogonal)</a>
 </li>
 <li>
-<a class="lvl-2" href="#4-node-legend-shape-role-stroke-status">4. Node legend: shape = role, stroke = status</a>
+<a class="lvl-2" href="#4-node-legend-icon-tile-role-tone-kind-state-css">4. Node legend: icon tile = role, tone = kind, state = CSS</a>
 </li>
 <li>
 <a class="lvl-2" href="#5-branch-name-badge">5. Branch-name badge</a>
@@ -1645,7 +1754,15 @@ both redraw. The undo stack is per session and lasts as long as the page.</p>
 <a class="lvl-2" href="#12-the-call-thread-what-a-turn-did-is-one-sequence-folded-into-one-count">12. The call thread: what a turn did is one sequence, folded into one count</a>
 </li>
 <li>
-<a class="lvl-2" href="#13-tools-selection-and-deleting-nodes">13. Tools, selection and deleting nodes</a>
+<details class="toc-disclosure" open=""><summary>
+<a class="lvl-2" href="#13-the-mouse-the-rail-selection-and-deleting-nodes">13. The mouse, the rail, selection and deleting nodes</a>
+</summary>
+<ul class="toc-list">
+<li>
+<a class="lvl-3" href="#the-minimap">The minimap</a>
+</li>
+</ul>
+</details>
 </li>
 <li>
 <a class="lvl-2" href="#appendix-implementation-status">Appendix: Implementation Status</a>
