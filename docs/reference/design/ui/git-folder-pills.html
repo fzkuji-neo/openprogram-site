@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/git-folder-pills.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/git-folder-pills.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -377,11 +377,11 @@ is OpenProgram's own storage, not the user's code.</li>
 its subfolders, say) share one branch, one change set and one PR, so
 only one git half shows. Each mounted git half claims its checkout root with an
 order, project first and then working folders in list order, and the
-lowest order wins (<code>components/chat/top-bar/git-chip-registry.ts</code>).
+lowest order wins (<code>components/chat/top-bar/chips/git-chip-registry.ts</code>).
 Separate worktrees of one repository have separate roots, so each keeps
 its own git half.</p>
 <h2 id="the-pill">The pill<a class="header-anchor" href="#the-pill">#</a></h2>
-<p>One raised pill per folder (<code>components/chat/top-bar/folder-pill.ts</code>)
+<p>One raised pill per folder (<code>components/chat/top-bar/chips/folder-pill.ts</code>)
 with two segments separated by a full-height hairline, each its own hover and
 click target. The hairline takes no width, so both hover fills meet on
 the same edge, and it fades while either segment is hovered or open. The left segment is the folder: icon, name, and for a working
@@ -541,7 +541,7 @@ today) and draft PRs: <strong>not implemented</strong>.</li>
 <li>Pull / push / fetch controls and ahead/behind against the default
 branch when there is no upstream: <strong>not implemented</strong>.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/effort-picker.html" data-href-en="/docs/reference/design/ui/effort-picker.html" data-href-zh="/docs/reference/design/ui/effort-picker.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="思考力度设置">Effort picker</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-recovery-copy.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">History rendering and conversation links</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/effort-picker.html" data-href-en="/docs/reference/design/ui/effort-picker.html" data-href-zh="/docs/reference/design/ui/effort-picker.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="思考力度设置">Effort picker</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-recovery-copy.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">History rendering and conversation links</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

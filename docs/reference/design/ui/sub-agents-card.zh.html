@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/sub-agents-card.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/sub-agents-card.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -366,9 +366,9 @@
 <p>相关：<a href="/docs/reference/design/ui/chat-turn-visual-spec.zh.html"><code>chat-turn-visual-spec.html</code></a>
 （执行时间线与子代理步骤行）、
 <a href="/docs/reference/design/ui/indicator-dots.zh.html"><code>indicator-dots.md</code></a>（标签状态点）。
-代码：<code>apps/web/components/chat/messages/sub-agents-card.tsx</code>、
-<code>apps/web/lib/chat/sub-agent-transcripts.ts</code>、
-<code>apps/web/lib/net/chat-stream.ts</code>（<code>handleSubAgentResponse</code>）、
+代码：<code>apps/web/components/chat/messages/cards/sub-agents-card.tsx</code>、
+<code>apps/web/lib/chat/transcript/sub-agent-transcripts.ts</code>、
+<code>apps/web/lib/net/ws/chat-stream.ts</code>（<code>handleSubAgentResponse</code>）、
 <code>openprogram/agent/production_driver/execution.py</code>（<code>_turn_event_sink</code>）、
 <code>apps/server/openprogram_server/_webui/ws_actions/sub_agent.py</code>
 （<code>load_sub_agent_transcript</code>）。</p>
@@ -440,7 +440,7 @@ store key <code>&lt;session_id&gt;#sub-agent:&lt;第一个 job id&gt;</code>；�
 user 行，它的 <code>caller</code> 就是派生回复。根上的 <code>spawned_from</code> 标注同样不需要
 指针的 head：Job 派生的根按同样方式找到，标签取自 <code>job_id</code> 相同的派生卡片。运行在调用途中停止时不会写派生卡片，
 这时标签取派生回复里提示词与分支开头相同的那个 <code>agent</code> 调用的 <code>description</code>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/tool-group-summary.html" data-href-en="/docs/reference/design/ui/tool-group-summary.html" data-href-zh="/docs/reference/design/ui/tool-group-summary.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工具组摘要">Tool group summary</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/activity-panel.html" data-href-en="/docs/reference/design/ui/activity-panel.html" data-href-zh="/docs/reference/design/ui/activity-panel.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="Activity 面板">Activity panel</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/tool-group-summary.html" data-href-en="/docs/reference/design/ui/tool-group-summary.html" data-href-zh="/docs/reference/design/ui/tool-group-summary.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="工具组摘要">Tool group summary</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/activity-panel.html" data-href-en="/docs/reference/design/ui/activity-panel.html" data-href-zh="/docs/reference/design/ui/activity-panel.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="Activity 面板">Activity panel</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

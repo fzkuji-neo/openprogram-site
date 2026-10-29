@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/activity-panel.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/activity-panel.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -363,7 +363,7 @@
 <p>右侧栏的 <strong>Activity</strong> 列出一个会话的主代理（它启动的子代理在它的页面里），另外单独列出它们在 shell 里运行的程序和命令。在等读者的事不单独成组，而是它所关联的那一行，图标右上角带红色数字，和程序坞里 App 的角标一样。状态用常见的词：正在运行、已完成、失败、已取消、已中断、等你回答、等你授权；没事的行只显示时间。消息从不成行，留在聊天里。</p>
 <p>相关：<a href="/docs/reference/design/ui/indicator-dots.zh.html"><code>indicator-dots.md</code></a>（状态圆点），
 <a href="/docs/reference/design/ui/sub-agents-card.zh.html"><code>sub-agents-card.md</code></a>（子代理自己的对话）。
-代码：<code>apps/web/components/right-sidebar/running-panel.tsx</code>、
+代码：<code>apps/web/components/right-sidebar/running/running-panel.tsx</code>、
 <code>apps/web/lib/execution/activity-model.ts</code>、
 <code>openprogram/execution/activity_calls.py</code>。</p>
 <h2 id="分支运行与等待">分支、运行与等待<a class="header-anchor" href="#分支运行与等待">#</a></h2>
@@ -408,7 +408,7 @@
 <p>服务端从程序输出里读出进度（<code>openprogram/processes/progress.py</code>），按可信程度依次是：程序主动打印的 <code>##progress 45/100 samples</code> 行（bash 工具会提示模型在长循环里打印）、OSC 9;4 终端进度序列、tqdm 和 pip 进度条，以及 <code>Epoch 3/10</code>、<code>step 120 of 1000</code>、<code>[45/100]</code> 这类计数。更可信的来源出现过之后，不再采用较不可信的来源，所以内层每个 batch 的进度条不会覆盖明确的样本数。速度和剩余时间取进度条自带的值，或从计数开始时测量。输出按终端显示的样子保存，重绘的进度条只占 2000 行上限中的一行，agent 读取后台命令时每次重绘只拿到一次。</p>
 <h2 id="外观">外观<a class="header-anchor" href="#外观">#</a></h2>
 <p>行在静止时没有框：裸露的类型图标用该类型的颜色，名称下面是一行状态，按状态着色，不带圆点，右侧一个箭头。悬停时整行浮起成卡片：用文件卡片的阴影，底色向文字色偏一档（4%）的实色，因为面板本身就是输入框那层底色，同色卡片看不出边缘。行叠在树线上方，浮起的卡片和它的阴影盖住连线，而不是被线穿过。连线是一种实色：把弱化文字色混进面板自身的背景色，而不是半透明描边，所以各段在拐角处重叠也不会变深。页面上在等你的事用浅琥珀色底，没有边框。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/sub-agents-card.html" data-href-en="/docs/reference/design/ui/sub-agents-card.html" data-href-zh="/docs/reference/design/ui/sub-agents-card.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="子代理卡片">Sub-agents card</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-transcript-follow.html" data-href-en="/docs/reference/design/ui/chat-transcript-follow.html" data-href-zh="/docs/reference/design/ui/chat-transcript-follow.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="会话记录跟随">Transcript following</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/sub-agents-card.html" data-href-en="/docs/reference/design/ui/sub-agents-card.html" data-href-zh="/docs/reference/design/ui/sub-agents-card.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="子代理卡片">Sub-agents card</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-transcript-follow.html" data-href-en="/docs/reference/design/ui/chat-transcript-follow.html" data-href-zh="/docs/reference/design/ui/chat-transcript-follow.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="会话记录跟随">Transcript following</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

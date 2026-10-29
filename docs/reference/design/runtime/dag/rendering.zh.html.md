@@ -26,8 +26,8 @@
 | 部件 | 位置 |
 |---|---|
 | 视角状态 | `CenterTab.dagView`（`apps/web/lib/tabs/center-tabs-store.ts`）——不持久化，刷新后回到会话记录 |
-| 控件 | `apps/web/components/chat/view-controls.tsx` |
-| 图的宿主 | `apps/web/components/chat/dag-view.tsx`——渲染 `#historyPanel` + `.history-body`，即 `apps/web/lib/runtime-bridge/dag/pipeline.ts` 与 `apps/web/lib/runtime-bridge/dag/render/visibility.ts` 选取的元素 |
+| 控件 | `apps/web/components/chat/pane/view-controls.tsx` |
+| 图的宿主 | `apps/web/components/chat/dag/dag-view.tsx`——渲染 `#historyPanel` + `.history-body`，即 `apps/web/lib/runtime-bridge/dag/pipeline.ts` 与 `apps/web/lib/runtime-bridge/dag/render/visibility.ts` 选取的元素 |
 | 视角切换 | `apps/web/app/styles/dag/view-host.css` 的 `.center-pane-chat[data-center-view]` |
 
 两个界面同时挂载，靠 `display` 互换：无论当前显示哪个视角，渲染器每次 capture
@@ -44,18 +44,21 @@
 
 | 手势 | 效果 |
 |---|---|
-| 捏合，或 ⌘/ctrl + 滚轮 | 以光标为锚缩放，限 25%–300%——指针下的节点缩放前后都在指针下 |
-| 鼠标滚轮（离散格档） | 同样的缩放，用滚轮速率——鼠标没有捏合 |
-| 触控板双指滚动 | 平移，两轴都动——滚动就是滚动 |
-| 在空白处拖拽 | 平移 |
-| 从节点上起手拖拽 | 归节点——单击、双击照常生效 |
+| 鼠标滚轮或触控板捏合 | 以光标为锚缩放，限 25%–300%——指针下的节点缩放前后都在指针下 |
+| 触控板双指滑动 | 平移 |
+| 右键（或中键）拖动 | 平移，在图上任何地方都行 |
+| 在空白处左键拖动 | 选择框（第十三节） |
+| 在节点上左键按下 | 归节点——单击、双击照常生效 |
 
-**滚轮分流**（`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts`）：ctrl/⌘ + 滚轮缩放——浏览器把触控板捏合投递成带
-`ctrlKey` 的 wheel 事件，⌘+滚轮则是显式缩放和弦——速率按捏合细密连续的
-delta 调校。鼠标滚轮按滚轮速率缩放：鼠标没有捏合。macOS 的滚动加速让它的
-`deltaY` 变成小数且不定，判据用遗留字段 `wheelDeltaY`——Chromium/WebKit 把
-物理格档报成 120 的整数倍（触控板是任意小值），非 mac 用 line 模式 delta
-兜底。其余就是触控板双指滚动，做平移、两轴都动——滚动就是滚动。
+**滚轮**（`apps/web/lib/runtime-bridge/dag/interaction/view/gestures.ts`、
+`interaction/view/wheel.ts`）：鼠标滚轮缩放，和地图一样；触控板双指滑动平移，和设计画布
+一样；捏合缩放。三者都是 `wheel` 事件，所以从事件本身判断：捏合带 `ctrlKey`（⌘ + 滚轮
+也缩放）；有横向 delta 的是双指；App 所用的 Chromium 把触控板的旧字段 `wheelDeltaY`
+报成恰好 `-3 × deltaY`，而滚轮按格报 120 的倍数。以前按 delta 大小去猜，把真实鼠标当成
+触控板，滚轮就变成了滚动；`wheelDeltaY` 判据不看大小。一次手势按第一个事件定性，事件
+停顿（180 ms）前不改，所以触控板的惯性尾巴不会翻成缩放。捏合用自己更快的速率；line、
+page 模式的 delta（部分鼠标）先换算成像素。驱动发出像素级平滑 delta 且
+`wheelDeltaY = -3 × deltaY` 的鼠标会被当成触控板而平移。
 
 按内容定尺寸的容器替用户决定了两件不该它决定的事：图能画多大才需要滚动条，
 以及"中间"在哪。宽会话给一条横滚动条，深会话给一条竖滚动条，看全貌要在两个轴
@@ -71,30 +74,32 @@ delta 调校。鼠标滚轮按滚轮速率缩放：鼠标没有捏合。macOS �
 视野拖走。平移与缩放按会话存在 `apps/web/lib/runtime-bridge/dag/store/globals.ts` 里，只有进入另一个会话才重新
 fit。改面板尺寸永不重新 fit——用户看图的角度是他自己的。
 
-**进入会话时可读，Fit 按钮才看全图。** 打开时的视野就是 fit，但下限 80%：长会话
+**进入会话时可读，Shift+1 才看全图。** 打开时的视野就是 fit，但下限 80%：长会话
 整张塞进来会缩成一根细线上的小点（40 轮的聊天打开时是 37%）。图在这个下限下
 仍比可视条带大时，溢出的那个方向跟着 HEAD——放在条带靠下处，就像会话记录打开
-时停在最新一条。HUD 的 Fit 按钮保持原来的 fit，最低到 25%：要求看全图就是要的
-这个（`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts` 的 `fitCanvas(opening)`）。
+时停在最新一条。“显示整张图”（Shift+1）保持原来的 fit，最低到 25%：要求看全图就是要的
+这个（`apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts` 的 `fitCanvas(opening)`）。
 
-**HUD。** 输入框右上角——env chip 行的右端：一个 fit 按钮、一组缩放控件、
-图例弹层，由 `dag-view.tsx` portal 进输入框的 `#dagHudSlot`，跟着输入框走、
-随它长高，只在 DAG 视角显示。缩放控件是一颗胶囊里的 − · 读数 · +：−/+ 每次
-步进恰好一个滚轮格（`ZOOM_STEP`），点读数本身重置 100%——按钮没有光标可锚，
-两者都以面板中心为锚。读数由 `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts` 在每次视角变化时命令式写入——把
-一次手势的每个 wheel 事件走 React state 会让整棵树每秒重绘六十次。
+**缩放竖列。** 在画布右上角，紧接在窗格视角切换那一条下面，所有看图的控件都在这一角的一列里：一条凸起竖条放 + · 读数 · −，
+隔一道发丝线是**全屏**和**找到正在工作的 agent**（F）；
+下面第二条竖条开关小地图，再隔一道发丝线是两份指南——图例（各种标记是什么意思）和操作说明面板（画布认哪些操作），一次只开一个。它们都在竖列左边从顶部往下展开，小地图在上、图例在下；图例和小地图点一下一直开着，再点按钮才关。操作说明面板和图例占同一个位置（小地图显示时在它下面），两者轮流出现：打开一个就关掉另一个。三块面板出现和收起都和应用里的弹层一样：100ms 内淡入、从 95% 放大、从竖列那一侧滑进 8px，收起时原样倒放（`components/chat/dag/dag-key-sheet.tsx` 的 `PANEL_MOTION`；小地图是 `app/styles/dag/panels/tools.css` 里的 `.is-hidden`）。进入图视角时，先把小地图无动画地收起（`stowMinimap`）——上次离开时它可能还开着，最初几帧画的又是清空的缓存——这样它只在第一次画出图时出现一次，不会先缩回去再弹出来。竖列里的几条按钮从上到下依次淡入并从右侧滑进 8px，每条 150ms、间隔 40ms；离开图视角仍是瞬间切换。
+**全屏**把窗口让给图：中间的主体（各个面板、画布、竖列和输入框）脱离布局，从原来的位置向外长大，盖在应用的左侧栏、右侧栏和中间的标签栏上面——它们留在原地不动——直到四边都离窗口 7px，和平时的间距一样。长大是用侧栏收起曲线的 0.25 秒过渡；退出时原路缩回原来的位置，再落回布局。这是应用内的模式，不是浏览器全屏，窗口大小不变。再点一次、按 Esc（没有选中节点时）、离开图视角或刷新都会退出（`interaction/view/fullscreen.ts` 负责定住过渡的起点和终点；样式靠 `app/styles/dag/panels/tools.css` 里的 `html[data-canvas-fullscreen]`）。这个位置以前是“显示整张图”：图小的时候它和点读数回到 100% 看起来一样，所以现在只留 Shift+1。
+开着的开关保持悬停时的灰色底，不用强调色。竖列和窗格视角切换那一条里的图标都是 Solar Bold Duotone，悬停时和输入框按钮一样弹一下（`docs/reference/design/ui/icons.zh.md`）。
+−/+ 每次步进恰好一个滚轮格（`ZOOM_STEP`），点读数本身重置 100%——按钮没有光标可锚，
+两者都以面板中心为锚。按钮和 + / −、Shift+0 这几个键都用 0.22 秒平滑过渡过去，缩放比例按对数均匀变化，放大和缩小快慢一样；过渡中再按，从目标比例接着走一步。滚轮和捏合仍是即时的——手势本身就是连续的——滚轮或平移会接管正在进行的过渡（`canvas.ts` 的 `glideZoom`）。读数由 `apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts` 在每次视角变化时命令式写入——把
+一次手势的每个 wheel 事件走 React state 会让整棵树每秒重绘六十次。这些控件以前分散在
+输入框的 env chip 行和左侧竖条上，现在合成右缘这一列，左侧竖条已经去掉。
 
-HUD 不自带任何外观。这几个胶囊带着 shadcn `elevated` `sm` 按钮的样式类
-（`buttonVariants`），和旁边的环境标签是同一套配方，永远不会跑偏。图例面板穿 `MENU_PANEL`
-（`components/chat/top-bar/menu-styles`），全应用弹层菜单共用的那一份框架；
-`apps/web/app/styles/dag/hud.css` 只留 HUD 内部排版（缩放簇的分段、图例的向上锚位和行）。
+竖列的几条共用同一套材质和按钮（`apps/web/app/styles/dag/panels/tools.css`）。图例面板和操作说明面板的内边距与滚动来自 `MENU_PANEL`
+（`components/chat/top-bar/menu-styles`），外框却和小地图一致——同样的底色、浮起阴影、10px 圆角、没有外圈描边——因为三者叠成一列 280px，带描边会比小地图左右各宽出 1px；
+`apps/web/app/styles/dag/panels/legend.css` 只留图例的锚位和行。
 
 | 部件 | 位置 |
 |---|---|
-| 平移 / 缩放 / fit | `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts`（HUD 按钮走 `zoomStep` / `resetZoom`） |
+| 平移 / 缩放 / fit | `apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts`（缩放竖列走 `zoomStep` / `resetZoom`） |
 | 视角状态 | `apps/web/lib/runtime-bridge/dag/store/globals.ts` 的 `_viewTx` / `_viewTy` / `_viewScale` / `_viewSession` |
-| 画布与点阵 | `apps/web/app/styles/dag/canvas.css` 的 `.history-body` |
-| HUD | `apps/web/components/chat/dag-view.tsx` 的 `DagHud`；胶囊外观来自 `buttonVariants`（elevated sm），图例框架来自 `MENU_PANEL`，内部排版在 `apps/web/app/styles/dag/hud.css` |
+| 画布与点阵 | `apps/web/app/styles/dag/graph/canvas.css` 的 `.history-body` |
+| 缩放竖列 | `apps/web/components/chat/dag/dag-view.tsx` 的 `DagZoomColumn`；竖条样式在 `apps/web/app/styles/dag/panels/tools.css`，图例和操作说明的内边距来自 `MENU_PANEL`、外框和小地图共用，图例的行在 `apps/web/app/styles/dag/panels/legend.css` |
 
 ### 输入框属于面板，不属于会话记录
 
@@ -113,12 +118,12 @@ HUD 不自带任何外观。这几个胶囊带着 shadcn `elevated` `sm` 按钮�
 框拽到面板中间。
 
 画布在输入框底下一直铺到边——从输入框后面平移过去只是一个手势，fit 会把图
-居中在输入框上方的空间里（`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts::fitCanvas`），所以不需要预留 padding。
+居中在输入框上方的空间里（`apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts::fitCanvas`），所以不需要预留 padding。
 
 ### 分支切换在图里
 
 画布上方没有分支条。每条分支的名字是画在图里的按钮，锚在该分支最后一个对话层
-节点下方（`apps/web/lib/runtime-bridge/dag/render/badges.ts`，第五节）：活跃分支的标签是 lane 色的扁平色块，点
+节点下方（`apps/web/lib/runtime-bridge/dag/render/labels/badges.ts`，第五节）：活跃分支的标签是 lane 色的扁平色块，点
 其他标签即 checkout。图本身已经画出分支结构，再来一条横条是重复信息，还会横穿
 面板右上角的悬浮视角按钮。重命名、删除、merge、attach 留在右侧栏的分支列表里，
 那里有这些流程需要的纵向空间。
@@ -253,7 +258,7 @@ lane 与它分叉出来的 lane 之间**多留一个空列**——分支是平�
 胶囊）都是同一种圆角图块（第四节），各占恰好一格；网格在相邻图块之间留出一格
 图块宽的空隙，图块间的传送带始终看得见。调用和你的消息在图标
 右边带一行注文灰的说明（"Ran npm test""Read a.ts"、你写的开头；
-`render/captions.ts`）。注文只占没人用的地方：沿本行一直写到下一个图块、分支标签
+`render/labels/captions.ts`）。注文只占没人用的地方：沿本行一直写到下一个图块、分支标签
 或横穿的连线为止；正好从它起点竖着走过的分叉线，它会让到线的右边；地方不够就不画，
 所以它从不挤动布局。agent 站着的那个图块改显示 agent 的气
 泡；缩得很远时注文隐藏。
@@ -264,6 +269,13 @@ lane 与它分叉出来的 lane 之间**多留一个空列**——分支是平�
 
 每条 lane 一个颜色（`apps/web/lib/runtime-bridge/dag/types.ts` `LANE_COLORS`）。任何线用它所属/指向分支的
 lane 色；**绝不给某类线固定颜色**。类型只靠线型：
+
+**通往 HEAD 的路穿 HEAD 的颜色。** 几条分支共享的轮次（从 ROOT 到分叉处）属于你当前
+所在的分支，所以它们、它们发起的调用以及它们的线都用 HEAD 的 lane 色
+（`layout/assign-lanes.ts` 的 `_stampPathLanes` 戳上 `_pathLane`，`_branchColor` 优先读
+它）。切到另一条分支，共享段就改画成那条分支的颜色；你离开的分支从分叉处往后保持自己
+的颜色。每个轮次的线都从 ROOT 沿主干往下画，线会重叠：`render/edges.ts` 最后画这条
+路，否则后画的分支会盖在它上面。
 
 | 连线类型 | 线型 | 颜色 | 默认 |
 |---|---|---|---|
@@ -290,15 +302,29 @@ lane 色；**绝不给某类线固定颜色**。类型只靠线型：
 
 ## 四、节点图例：图标图块 = 角色，色调 = 种类，状态 = CSS
 
-**每个节点都是一个圆角图标图块**，和执行时间线在每一步旁边画的图块是同一个
-（`apps/web/lib/runtime-bridge/dag/render/tiles.ts`）。调用沿用 `presentTool` 在会话
+**每个节点都是同一种圆形色块**（`apps/web/lib/runtime-bridge/dag/render/tiles.ts`）：
+28px 的圆，底色是节点自己颜色的浅色（色调 18% 混进画布色，所以不透明，能盖住下面
+的传送带线头），图标用全色。你的消息、回复和调用是同一家族；早先的版本把你的消息
+画成灰色凸起按钮、其余是黑色方底板加 38% 的图标，整张图读起来是一堆互不相干的灰色
+零件。每种状态都改变色块本身，像游戏里按下的按钮会亮起来——不在外面画任何东西：
+
+| 状态 | 色块 |
+|---|---|
+| 普通 | 18% 底色，图标全色 |
+| 悬停 | 30% 底色 |
+| 选中（第十三节） | 填满自己的颜色，图标变成画布色，放大 8% |
+| HEAD | 24% 底色，加一圈自己颜色的慢呼吸光晕 |
+| 不在下次请求里（第八节） | 10% 底色，图标 60% |
+| 报错 | 右上边缘的红色 `!` 角标 |
+
+调用沿用 `presentTool` 在会话
 记录里给它的图标和色调，"运行了 npm test"在两处长得一样；色调是共享 CSS 变量
 （`apps/web/app/styles/tool-tones.css`）。对话节点有自己的：
 
 | 节点 | 图标 | 色调 |
 |---|---|---|
 | ROOT | 房子 | 次级墨色 |
-| user | 人像，圆形凸起按钮 | 主题强调色 |
+| user | 人像 | 所在分支的颜色，分支既能从线也能从消息认出 |
 | agent 回复 | 小幽灵（全应用 agent 都是幽灵） | 时间线 llm 色 |
 | 调用 | 按工具（`presentTool`） | 按工具（shell、edit、read、search、web……） |
 | 子 agent spawn | 小幽灵 | agent——派发 agent 就是一次调用；展开进入 agent 的活动（第十二节） |
@@ -306,20 +332,41 @@ lane 色；**绝不给某类线固定颜色**。类型只靠线型：
 | merge / attach | 合并请求 / 链接 | plan |
 
 **agent 站在它正在做的那一步上**（`render/agents.ts`）。每个正在工作的 agent
-在它所在图块的左上角放一个圆形令牌：分支色、写着名字首字母；图块旁边一个气泡
+在它所在图块的左上角放一个分支色的状态圆点——就是 Activity 面板的 `indicator-dot`，工作时同样呼吸；同一图块上的第二个 agent 排在旁边；图块旁边一个气泡
 写着"名字 · 在做什么"（图块的活动文字，英文用进行时："思考中…""运行 npm
 test"）。agent 从整张图读出：一个节点属于它的链能追溯到的那个 spawn 根对应的子
 agent，否则属于主 agent；每个 agent 显示它最新的运行中节点。那个节点被折进计数时，
-令牌站在最近的已绘制图块上，气泡仍然说出那次调用；同一图块上的几个 agent 气泡上
+圆点放在最近的已绘制图块上，气泡仍然说出那次调用；同一图块上的几个 agent 气泡上
 下堆叠。
 
-**语义缩放。** 缩小时令牌和气泡保持屏幕上的大小，像地图上的单位标记
-（`--dag-marker-scale`，由 `interaction/canvas.ts` 设置；标记以世界坐标钉在图块上，
-只缩放它的本体）。低于 55% 时图标只剩几个像素的噪点，所以每个图块变成自己色调的
-实心块（`is-far`）：地图靠颜色读，被覆盖的图块仍比其余的亮。什么都没在运行时，主 agent 的令牌停在 HEAD
-上，不带气泡。这一层从节点 DOM 重建，所以原地的状态补丁也会重画它。
+早先的版本在图块角上放一个写着 agent 首字母（"M"）的圆形令牌；没人看得懂这个字母，
+而气泡本来就写着 agent 的名字；之后换成套在图块外的一圈环，又太抢眼。现在圆点标出*在哪*，气泡说出*是谁*。
 
-**HEAD 是字形自己身上的呼吸光晕**：一圈分支色的 `drop-shadow`，以 2.4 秒的
+**语义缩放。** 缩小时圆点和气泡保持屏幕上的大小，像地图上的单位标记
+（`--dag-marker-scale`，由 `interaction/view/canvas.ts` 设置；标记以世界坐标钉在图块上，
+只缩放它的本体）。低于 55% 时图标只剩几个像素的噪点，所以每个图块变成自己色调的
+实心块（`is-far`）：地图靠颜色读，被覆盖的图块仍比其余的亮。
+
+缩到这么小时，画布像地图一样读：地图缩小时地名保持可读、显示得更少；以前所有标签跟着
+图一起缩成灰色小点。所以低于 55% 时：
+
+- 圆点在屏幕上固定约 7px，相隔 14px 的相邻点不会粘在一起；线不细于 1.5px；点击范围保持约 10px；
+- **选中的节点始终醒目**：有选中时，图的其余部分（点、线、文字）淡到 25%，选中的点保持
+  本色（画布上的 `has-selection`，由 `interaction/selection/selection.ts` 设置）。不放大也不加
+  描边：放大的点会和相邻的点糊在一起，墨色在浅色主题下是黑的，选中会变成一团黑。
+  小地图用强调色把选中的节点画得更大，选中的东西在屏幕外也能在小地图上找到；
+- 分支名和你的消息开头（`is-turn` 注文，`render/labels/captions.ts`）保持可读。实际上所有
+  标签——注文、分支名、折叠数——在缩放低于 100% 时都走同一条平缓的曲线
+  （`--dag-label-scale`）：100% 时 12px，最小缩放时约 8.5px。字先跟着图缩小、到 55%
+  又跳回原大，看起来像故障；一路保持 12px，又挤成一堵字墙。从 100% 往下，
+  `interaction/view/far-labels.ts` 把离已显示标签不足 8px 的隐藏——先分支名（当前分支优先），
+  再按离 HEAD 由近到远排你的消息，最后是调用；
+- 调用注文、折叠数和角标属于细节，隐藏；放大回来再看。
+
+什么都没在运行时，主 agent 的圆点停在 HEAD
+上，不呼吸，不带气泡。这一层从节点 DOM 重建，所以原地的状态补丁也会重画它。
+
+**HEAD 是色块自己身上的呼吸光晕**：一圈色块颜色的 `drop-shadow`，以 2.4 秒的
 慢周期胀起又落下，直接盖在形状上（`data-head`）。光贴着字形轮廓走，任何缩放
 都跟随——不像画出来的光环圈，那读起来像旁边多了一个更糊的节点；也不像实心
 填充，填充改掉了形状词汇本身，而光晕下 HEAD 仍然一眼是和邻居一样的图块，只是亮着。
@@ -331,8 +378,8 @@ agent，否则属于主 agent；每个 agent 显示它最新的运行中节点�
 | status | 画法 |
 |---|---|
 | success | 普通色块 |
-| running | `is-running`：图标呼吸，令牌和气泡出现 |
-| error | `is-error`：色调变红 + 右上角 `!` 角标 |
+| running | `is-running`：图标呼吸，它的 agent 的圆点和气泡出现 |
+| error | `is-error`：右上角是 Activity 面板的红色角标，计数换成 `!`；色调不变，失败的 agent 回复仍是它自己颜色的幽灵 |
 | cancelled | `is-faded`：色调变成 ghost 灰 |
 
 **徽标**（附着在节点上，不占格）：
@@ -396,6 +443,9 @@ agent_spawn 那样的隔离，隔离规则见 `ui/invariants.md` 规则 7）。
 ```
 apps/web/lib/runtime-bridge/dag/
   pipeline.ts        调度：passes → layout → edges → nodes → badges → visibility
+  interaction/view/canvas.ts    无限画布：视角（平移 / 缩放 / fit）和显出网格的点阵
+  interaction/view/gestures.ts  滚轮、捏合与拖动，它们移动视角
+  render/seat.ts           读回已画元素的 translate(x,y)，给画完之后才跑的步骤用
   passes/            数据变换，按顺序：
     merge-runs.ts               合并同一节点的连续 run
     collapse-runtime-pairs.ts   把老式 display=runtime 的 user/assistant 包装对折成
@@ -416,9 +466,16 @@ apps/web/lib/runtime-bridge/dag/
                      前端只消费。
   apps/web/lib/runtime-bridge/dag/render/edges.ts    第三节的线型表
   apps/web/lib/runtime-bridge/dag/render/nodes.ts    第四节的图块 + 状态 + 徽标
-  apps/web/lib/runtime-bridge/dag/render/badges.ts   第五节的分支名 badge
+  apps/web/lib/runtime-bridge/dag/render/labels/badges.ts   第五节的分支名 badge
   apps/web/lib/runtime-bridge/dag/store/globals.ts   展开状态、lastGraph、签名
 ```
+
+**一次绘制的开销。** 每次 capture 都整张重画 SVG，所以绘制器把两次 capture 之间不变的
+东西留着：每个图标只解析一次、克隆进各个图块；工具的展示按名字、参数和语言缓存；文字宽度
+按字体和字符串缓存。挂上新 SVG 时立刻设好它的 transform，需要面板尺寸的事都留到下一帧，
+所以一次 capture 不会自己强制一次布局。手势只改 store 里的视角，`applyView` 每帧画一次。
+平移只改两个平移量和点阵偏移；跟缩放比例绑定的工作——语义缩放变量、标签剔除、点阵间距——
+只在比例或画出的图变化时才做。150 个节点的会话，一次重绘约占主线程 5ms。
 
 后端 `apps/server/openprogram_server/_webui/graph_builder.py` 产出节点数组（含 `branch_name` stamp、
 caller/predecessor），`graph_layout/` 做 lane/tier/depth 标注——**tier 具体在
@@ -429,10 +486,8 @@ caller/predecessor），`graph_layout/` 做 lane/tier/depth 标注——**tier �
 
 节点的填充表示它**属于下一次 LLM 调用会携带的内容**。被覆盖的图块
 （`is-covered`，由 `apps/web/lib/runtime-bridge/dag/render/visibility.ts` 设置）图标
-满墨；未覆盖的图块图标是淡的（38%），快老化出窗口的退一档（70%）。节点就是它的
-图标——不带边框、不带背景（下面那块底板是画布色，只为盖住传送带线头）。唯一的例外
-是你自己的消息：它是你按下去 fork 或编辑的那个节点，所以画成应用里的圆形凸起按钮——输入
-框的底色加 composer 的阴影，第一次看的人也知道它能点。气泡、
+在带底色的色块上满墨；未覆盖的退后一步——底色降到 10%、图标 60%——快老化出窗口的
+图标 75%。两者都看得清：38% 的图标会让长会话的大半张图都发灰。气泡、
 注文和分支标签都是没有底块的文字，带一圈画布色光晕，线从后面穿过时在字周围断开。
 两种主题同一条规则，图例色块就是一个被覆盖的图块。下文
 的"白色填充""白点"都指这个填充。没有模式可选，也没
@@ -582,7 +637,7 @@ tooltip 和检查器里。
 `失败轮 · 已留档`。两种状态长得像，是因为在图唯一关心的那根轴上它们**就是**
 一样的：在盘上、可读、永不进下一次请求。
 
-这层灰有意覆盖第四节给活跃错误的红色色块。红色的意思是"这件事现在需要你"，
+这层灰有意覆盖图块的色调。红色 `!` 的意思是"这件事现在需要你"，
 留档的线不是——重试已经发生过了。`!` 字形本身保留，所以这条线为什么终止仍然
 一眼可读。
 
@@ -611,7 +666,7 @@ id（`<回复>_t_<调用>`）前十几个字符都一样。
 没有窗口和展开抢画面。右栏 Details 仍然静默填充，用户想看随时打开。
 
 **右键 → 同一张卡原地展开**。不是第二个窗口：就是那一个卡片元素在原地加深
-（`apps/web/lib/runtime-bridge/dag/interaction/tooltip.ts expandTooltip`）——所有字段、更长的预览、覆盖状态、上下文站
+（`apps/web/lib/runtime-bridge/dag/interaction/node/tooltip.ts expandTooltip`）——所有字段、更长的预览、覆盖状态、上下文站
 位、id——动词接在卡底：checkout 到此分支 · 从此节点 fork · fork 并编辑此消
 息（仅用户轮）· 复制节点 id · 查看原始 JSON。两个状态共用一个行构建器
 （`renderNodeInfo`），不可能各说各话；覆盖行读的是节点绘制时已经戳好的 DOM
@@ -633,11 +688,11 @@ id（`<回复>_t_<调用>`）前十几个字符都一样。
 | 从节点 fork | `POST /api/chat/checkout` | fork **就是** checkout 加上意图——从一个已经有子节点的 HEAD 发出的轮，定义上就是它们的兄弟，会话记录里的"从此分支"按钮也是这么做的 |
 | fork 并编辑 | `POST /api/chat/checkout` 到该节点的**前驱**，再把文本填进输入框 | 用户改完发送；这个发送就是针对新 HEAD 的普通发送，于是分叉发生，协议不变，也不用维护"从节点 X 发"这个概念。选前驱做分叉点，正是因为编辑后的消息必须站在原消息**旁边**而不是后面——和 `POST /api/chat/edit` 产生的形状一致 |
 
-检查器与菜单用命令式方式构建（`apps/web/lib/runtime-bridge/dag/render/inspector.ts`），因为图本身就是：它们浮
+检查器与菜单用命令式方式构建（`apps/web/lib/runtime-bridge/dag/interaction/node/inspector.ts`），因为图本身就是：它们浮
 在渲染器自己拥有的 SVG 之上、锚在节点几何上，在 React 树之外。
 
-**图例**。一张可收起的卡片，说明各形状与两种灰，从画布 HUD 上 fit 按钮旁边打开
-（`apps/web/components/chat/dag-view.tsx`）。默认收起——这套词汇很小、可学会，所以图例
+**图例**。一张卡片，说明各形状与两种灰，由缩放竖列的图例按钮开关
+（`apps/web/components/chat/dag/dag-view.tsx`），点画布不会关掉。默认关着——这套词汇很小、可学会，所以图例
 是给最初几次会话用的，不是画布上的常驻件。
 
 ## 十二、调用线程：一轮干的事是一个序列，折叠成一个数
@@ -665,7 +720,7 @@ id（`<回复>_t_<调用>`）前十几个字符都一样。
 一颗节点）。agent 的内部轮不上链——归并进它（第〇节），展开后回复画三角形、
 调用画方块——它自己的线程再右移一列，点方块展开。spawn 方块在屏上期间（即所属轮次
 的线程已展开——这层选择已经保证默认画布干净），它右侧贴一枚徽章药丸（与分支
-徽章同款，apps/web/lib/runtime-bridge/dag/render/badges.ts），作方块的名牌；点击把 agent 链的末端
+徽章同款，apps/web/lib/runtime-bridge/dag/render/labels/badges.ts），作方块的名牌；点击把 agent 链的末端
 checkout 成活动分支——接管这个 agent 的对话。徽章永不压住节点：所有可见字形
 都预置进徽章碰撞盒，会压住节点的徽章自动下移一行。模型是递归的，画面也是：每一层都按同样的两
 条规则读，折叠数在肩上、展开成一列。嵌套展开的线程把父线程后面的条目往下推；
@@ -685,44 +740,45 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 上方整条线程链都展开时可见；它的条目同理——可见性属于整条祖先链，不属于节点
 自己的开关。
 
-## 十三、鼠标、竖条、选择与删除节点
+## 十三、鼠标、操作说明、选择与删除节点
 
 画布只有一个鼠标，没有可切换的工具。以前把浏览、框选、套索拆成三个工具，每次拖动前
-都得先想手里拿的是哪个。现在一个鼠标全包：
+都得先想手里拿的是哪个。现在一个鼠标全包：左键选择，右键移动镜头。
 
 | 手势 | 做什么 |
 |---|---|
-| 滚轮或捏合 | 以光标为中心缩放 |
-| 在空白处拖动 | 平移（鼠标中键也平移） |
-| 单击节点 | 节点自己的动作（第十一、十二节） |
-| 双击节点 | fork 并编辑（第十一节） |
-| Shift/⌘ + 单击节点 | 加入选择，或从选择中去掉 |
-| Shift/⌘ + 在空白处拖动 | 画框，碰到的节点全部加入选择 |
+| 单击节点 | 选中它，再执行节点自己的动作（第十一、十二节） |
+| 在空白处拖动 | 画框，碰到的节点全部选中 |
+| Shift/⌘ + 单击或拖动 | 加入选择，或把节点从选择中去掉 |
 | 单击空白处 | 清空选择 |
+| 右键拖动 | 平移，在图上任何地方都行（鼠标中键也平移） |
+| 右键单击节点 | 它的菜单（第十一节） |
+| 滚轮或捏合 | 以光标为中心缩放 |
+| 触控板双指滑动 | 平移 |
+| 双击节点 | fork 并编辑（第十一节） |
 
-滚轮像地图一样缩放，不滚动。触控板捏合用自己的、更快的速率缩放。这些是设计定死的，
-不是设置项：碰到即选（没有"必须全包住"模式）；普通单击永远不选择，所以它始终是节点
-自己的动作（`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts`、
-`interaction/nodes.ts`、`interaction/selection.ts`）。
+鼠标滚轮像地图一样缩放；触控板双指滑动平移；捏合用自己的、更快的速率缩放。macOS 在右键按下时
+就触发菜单事件，那时还不知道会不会拖动，所以画布先拦下它，松开时指针没动才打开菜单。
+这些是设计定死的，不是设置项：碰到即选（没有"必须全包住"模式）（`apps/web/lib/runtime-bridge/dag/interaction/view/gestures.ts`、
+`interaction/node/nodes.ts`、`interaction/selection/selection.ts`）。
 
-画布左缘的竖条是一整条应用按钮材质的凸起条（输入框底色加 composer 阴影），放镜头按钮。
-**找到正在工作的 agent**（F）保持缩放，把视图平滑移到正在工作的 agent 站着的图块；再按
-换到下一个正在工作的 agent，没人工作时移到 HEAD（`interaction/canvas.ts` 的
-`focusAgent`）。它下面是**显示整张图**（Shift+1）。HUD 的 Fit 可能随输入框一起收起，
-竖条却一直在。隔一道发丝线，键盘按钮打开**快捷键面板**：画布认的所有手势和按键，按鼠标、
-镜头、选择分组，显示在竖条旁的菜单面板里（`components/chat/dag-key-sheet.tsx`）。按 `?`
-也能打开；按 Esc、再按 `?` 或点面板外即关闭。视图快捷键沿用设计工具的习惯：Shift+1
-缩放到全图，Shift+0 回到 100%，+ / − 按一档放大缩小，和 HUD 按钮同一步长
-（`interaction/keys.ts`）。
+画布上的控件都是应用按钮材质的凸起条（输入框底色加 composer 阴影，鼠标放上去阴影变深，和输入框那些按钮一样）：缩放竖列、操作条、小地图和窗格右上角的按钮。画布左缘没有竖条。
+**找到正在工作的 agent**（F，在缩放竖列里）保持缩放，把视图平滑移到正在工作的 agent 站着的图块；再按
+换到下一个正在工作的 agent，没人工作时移到 HEAD（`interaction/view/canvas.ts` 的
+`focusAgent`）。缩放和全屏在右缘的缩放竖列里（见“画布是无限的”）。竖列最后一个按钮（notes 图标——面板里一半是鼠标手势，不只是按键）打开**操作说明面板**：画布认的所有手势和按键，按鼠标、
+镜头、选择分组，显示在竖列左边、从顶部展开的面板里（`components/chat/dag/dag-key-sheet.tsx`）。按 `?`
+也能打开。它和图例一样是指南，行为也一样：一直开着，直到再点它的按钮、再按 `?`，或者打开图例把位置换掉；点画布、按 Esc 都不会关掉它。Esc 一次只退一层：先取消选择，再退出全屏。视图快捷键沿用设计工具的习惯：Shift+1
+缩放到全图，Shift+0 回到 100%，+ / − 按一档放大缩小，和缩放竖列的按钮同一步长
+（`interaction/selection/keys.ts`）。
 
-**选择。** 选择是当前会话画布的视图状态。每个被选节点的字形外侧画一圈强调色虚线框。
+**选择。** 选择是当前会话画布的视图状态。被选节点原地亮起（`is-selected`）：色块填满自己的颜色，图标变成画布色，像按下的按钮。外面不画任何东西——虚线圈、套在方块外的圈、图块后面的灰色亮盘都试过，都让边缘更难看清。框选的选择框是强调色描边加 8% 的强调色底。
 每次重绘后重新套用，并裁剪到画布仍画着的节点，所以被删除或被折叠掉的节点会自动离开
 选择；切会话时清空。在画布上做选择会把键盘焦点从输入框拿走，于是 Delete 和 Esc 作用
 于选择，不作用于草稿。
 
 **操作条。** 有选择时，画布左上角出现一条操作条：`已选 N | ⌖ · 复制 ID · 删除 · ✕`，
-"删除"用危险色。⌖ 把视图缩放到正好装下所选节点，和设计工具的 Shift+2 一样（`interaction/canvas.ts` 的 `frameSelection`）。删除后几秒内它显示 `已删除 N 个节点 | 撤销`。它和竖条左边对齐，
-不放右上角——那里是窗格的视角切换按钮。操作条和竖条是同一种凸起材质。
+"删除"用危险色。⌖ 把视图缩放到正好装下所选节点，和设计工具的 Shift+2 一样（`interaction/view/canvas.ts` 的 `frameSelection`）。删除后几秒内它显示 `已删除 N 个节点 | 撤销`。它在左上角，
+不放右上角——那里是窗格的视角切换按钮。操作条和竖列是同一种凸起材质。
 
 **删除。** Delete 或 ⌫ 立即删除选择，不弹确认，⌘Z 撤销。store
 （`openprogram/store/session/session_store/node_deletion.py`）按以下规则执行：
@@ -749,11 +805,12 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 
 ### 小地图
 
-长会话会超出屏幕，所以画布右下角、输入框上方放一张小地图，材质与左侧工具栏相同。每个
-节点是一个其色调的点，屏幕上看到的部分是一个强调色的框。在地图上按下或拖动，镜头就以当前
-缩放移到那里。地图框住的是整张图加上当前视野，所以视野框不会被裁掉；拖动期间地图保持不动。HEAD 画成带强调色描边的大点，就是地图上的"你在这里"；在地图上滚动滚轮，画布以视野中心缩放。按 M 隐藏地图，再按 M 显示，选择保存在浏览器里。整张图都在屏幕上（超出不到一个图块宽）时地图淡出：没有要找的东西
-（`apps/web/lib/runtime-bridge/dag/interaction/minimap.ts`，每次视图变化由 `applyView`
-重绘）。
+长会话会超出屏幕，所以画布有一张小地图，放在画布右上角、缩放竖列左边，材质与竖列相同。每个
+节点是一个其色调的点，点下面画着图里原有的连线（细、淡、用分支颜色，主干和分支一眼可辨），屏幕上看到的部分是一个强调色的框。在地图上按下或拖动，镜头就以当前
+缩放移到那里。地图框住的是整张图加上当前视野，所以视野框不会被裁掉；拖动期间地图保持不动。HEAD 画成带强调色描边的大点，就是地图上的"你在这里"；在地图上滚动滚轮，画布以视野中心缩放。默认隐藏，点竖列里的小地图按钮或按 M 显示、再按一次隐藏，选择保存在浏览器里。显示之后它一直在屏幕上：以前整张图装得下时地图会淡出，
+随着缩放时有时无，看起来像出错
+（`apps/web/lib/runtime-bridge/dag/interaction/view/minimap.ts`，随视图每帧重绘一次；点、线和
+颜色每张图只读一次）。
 
 ## 附录：实现状态
 
@@ -761,28 +818,28 @@ checkout 成活动分支——接管这个 agent 的对话。徽章永不压住�
 
 | 规范条目 | 实现 |
 |---|---|
-| 无限画布（平移 / 缩放 / fit / 点阵） | `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts` 与 `apps/web/app/styles/dag/canvas.css` 的 `.history-body`；视角状态在 `apps/web/lib/runtime-bridge/dag/store/globals.ts`；HUD 在 `apps/web/components/chat/dag-view.tsx` |
+| 无限画布（平移 / 缩放 / fit / 点阵） | `apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts` 与 `apps/web/app/styles/dag/graph/canvas.css` 的 `.history-body`；视角状态在 `apps/web/lib/runtime-bridge/dag/store/globals.ts`；缩放竖列在 `apps/web/components/chat/dag/dag-view.tsx` |
 | 第一节 lane / tier / depth 布局 | `apps/web/lib/runtime-bridge/dag/layout/geometry.ts::computeGeometry`（链 lane 按 tier 打包并 lane 内归零、前序分行、场景3分叉行+间隔列、线程递归安放并下移后续链行、占用线程列）；格点性、无重叠、线程列行、分叉几何均由 `apps/web/scripts/runtime/check-dag-subagent.mjs` 真实执行并断言 |
-| 第二节 规则③ 字形占格 | 没有任何形状按文字定尺寸；注文只占空格子，不挤动布局（`render/captions.ts`） |
-| 第四节 HEAD 呼吸光晕 | `apps/web/lib/runtime-bridge/dag/render/nodes.ts` 戳 `data-head` 并把分支色写进 `color`；`dag-head-glow` 关键帧在 `apps/web/app/styles/dag/nodes.css`（reduced-motion → 恒定光）；所有字形保持空心（`apps/web/lib/runtime-bridge/dag/render/shapes.ts`）；HEAD 指向已归并回复时落到锚上（`apps/web/lib/runtime-bridge/dag/pipeline.ts` 经 `threadModel.anchorOf`） |
+| 第二节 规则③ 字形占格 | 没有任何形状按文字定尺寸；注文只占空格子，不挤动布局（`render/labels/captions.ts`） |
+| 第四节 HEAD 呼吸光晕 | `apps/web/lib/runtime-bridge/dag/render/nodes.ts` 戳 `data-head` 并把分支色写进 `color`；`dag-head-glow` 关键帧在 `apps/web/app/styles/dag/graph/nodes.css`（reduced-motion → 恒定光）；所有字形保持空心（`apps/web/lib/runtime-bridge/dag/render/shapes.ts`）；HEAD 指向已归并回复时落到锚上（`apps/web/lib/runtime-bridge/dag/pipeline.ts` 经 `threadModel.anchorOf`） |
 | 第〇节/第十二节 调用线程聚合 | `apps/web/lib/runtime-bridge/dag/passes/thread.ts`（`buildThreadModel`：锚归并、事件归属、递归可见性）；`apps/web/lib/runtime-bridge/dag/render/nodes.ts` 画肩上折叠数（`history-thread-count`）；`apps/web/lib/runtime-bridge/dag/store/globals.ts` 的 `_threadOpen` |
 | 规则②推论（不画占位框） | `apps/web/lib/runtime-bridge/dag/render/shapes.ts`：无 `square_outline`；task 渲染为普通方块 |
-| 第四节 状态画在描边上 | `graph_builder` 下发 status；`nodes.ts` 把它设成图块的 CSS 状态（running 呼吸 / error 红+! / cancelled 灰化） |
-| 第五节 badge 锚定 | `apps/web/lib/runtime-bridge/dag/render/badges.ts`：名字放在本分支可见末节点那一行、图块右侧、实测像素盒碰撞下移一行 |
+| 第四节 状态画在描边上 | `graph_builder` 下发 status；`nodes.ts` 把它设成图块的 CSS 状态（running 呼吸 / error 红色 ! / cancelled 灰化） |
+| 第五节 badge 锚定 | `apps/web/lib/runtime-bridge/dag/render/labels/badges.ts`：名字放在本分支可见末节点那一行、图块右侧、实测像素盒碰撞下移一行 |
 | 场景 8 merge 形状与连线 | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` `merge_dot`（◉）；`edges.ts` 汇入线 peer 色 2.4px 实线 |
 | 场景 8/10 attach 指针 | 后端 display=runtime 过滤 + `graph_builder` 把 ref 戳到嵌入位置（`attach_returns`），`edges.ts` 画回流长虚线 |
 | 第四节 跨会话 ↗ | `graph_builder` 根据目标根 provenance 打 `spawn_remote`，根据源 attach 的目标 session 打 `spawn_out`；`nodes.ts` 在两侧画 ↗。跨会话徽标点击跳转尚未实现 |
 | 第一节 spawn 根 tier | `graph_layout`：tier=1 / depth 同行 / lane 开新分支；`task_followup` 无 attach 时挂回接收轮（`filter.py` 兜底） |
-| 两个视角共用输入框 | `apps/web/app/styles/chat/center-pane.css` 隐藏 `#chatArea` 而非 `#chatView`；由 `apps/web/scripts/tabs/check-center-tabs.mjs` 断言 |
-| 图内分支标签（checkout 按钮） | `apps/web/lib/runtime-bridge/dag/render/badges.ts`；hover 样式在 `apps/web/app/styles/dag/badges.css` 的 `.history-branch-tag` |
+| 两个视角共用输入框 | `apps/web/app/styles/chat/pane/center-pane.css` 隐藏 `#chatArea` 而非 `#chatView`；由 `apps/web/scripts/tabs/check-center-tabs.mjs` 断言 |
+| 图内分支标签（checkout 按钮） | `apps/web/lib/runtime-bridge/dag/render/labels/badges.ts`；hover 样式在 `apps/web/app/styles/dag/graph/badges.css` 的 `.history-branch-tag` |
 | 第八节 覆盖查询 | `routes/tree.py::_coverage_nodes` 填 `/context-range` 的 `nodes`；测试见 `tests/unit/context/test_context_range_coverage.py` |
 | 第八节 aged / spilled 绘制 | `apps/web/lib/runtime-bridge/dag/render/nodes.ts`（淡一档的色块 + `▤`），数据来自 `apps/web/lib/runtime-bridge/dag/store/globals.ts` 的 `_coverageSet` |
 | 第九节 `covers_ids` 下发 | `apps/server/openprogram_server/_webui/graph_builder.py` 把 `metadata.covers` 解析成 id；测试见 `tests/unit/dag/test_graph_builder_covers.py` |
 | 第九节 胶囊形状 | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` 的 `capsule`（按 `covers_ids` 判定，打 `data-shape` 标让 `_applyShapeSize` 别改它的几何） |
 | 第九节 折叠 / 褶皱 / 幽灵 | `apps/web/lib/runtime-bridge/dag/passes/fold-summaries.ts`（折叠）、`apps/web/lib/runtime-bridge/dag/render/nodes.ts`（褶皱、`已压缩 · N 轮` 注记、幽灵描边）、`apps/web/lib/runtime-bridge/dag/render/edges.ts`（幽灵虚线边）、`apps/web/lib/runtime-bridge/dag/store/globals.ts` 的 `_summaryExpanded`；由 `apps/web/scripts/runtime/check-dag-summary.mjs` 实跑 |
-| 第十节 失败留档 | `apps/web/lib/runtime-bridge/dag/render/nodes.ts::_isArchivedFailure`——`status=error` **且**离开 HEAD 链；灰覆盖第四节的红 |
-| 第十一节 一张卡两个状态 / fork 并编辑 | `apps/web/lib/runtime-bridge/dag/interaction/tooltip.ts`：`renderNodeInfo` 喂两个状态，`expandTooltip` 原地加深；`apps/web/lib/runtime-bridge/dag/render/inspector.ts` 只构建动词列表（+ 原始 JSON 层），`apps/web/lib/runtime-bridge/dag/interaction/nodes.ts` 接线；动作走 `POST /api/chat/checkout` |
-| 第十一节 图例 | `apps/web/components/chat/dag-view.tsx` 的 `DagLegend`（挂在画布 HUD 里），`apps/web/app/styles/dag/hud.css` 的 `.dag-legend` |
-| 第十二节 调用线程 + agent spawn | `apps/web/lib/runtime-bridge/dag/render/shapes.ts`（spawn → 方块）、`apps/web/lib/runtime-bridge/dag/passes/thread.ts`（模型）、`apps/web/lib/runtime-bridge/dag/layout/geometry.ts`（递归安放）、`apps/web/lib/runtime-bridge/dag/render/edges.ts`（线程点线、中心连线、场景3横桥）、`apps/web/lib/runtime-bridge/dag/render/nodes.ts`（`data-thread*`、肩上折叠数）、`apps/web/lib/runtime-bridge/dag/interaction/nodes.ts`（`toggleThreadOpen`）；由 `apps/web/scripts/runtime/check-dag-subagent.mjs` 实跑 |
+| 第十节 失败留档 | `apps/web/lib/runtime-bridge/dag/render/nodes.ts::_isArchivedFailure`——`status=error` **且**离开 HEAD 链；灰覆盖色调，`!` 保留 |
+| 第十一节 一张卡两个状态 / fork 并编辑 | `apps/web/lib/runtime-bridge/dag/interaction/node/tooltip.ts`：`renderNodeInfo` 喂两个状态，`expandTooltip` 原地加深；`apps/web/lib/runtime-bridge/dag/interaction/node/inspector.ts` 只构建动词列表（+ 原始 JSON 层），`apps/web/lib/runtime-bridge/dag/interaction/node/nodes.ts` 接线；动作走 `POST /api/chat/checkout` |
+| 第十一节 图例 | `apps/web/components/chat/dag/dag-view.tsx` 的 `DagLegend`（挂在缩放竖列里），`apps/web/app/styles/dag/panels/legend.css` 的 `.dag-legend` |
+| 第十二节 调用线程 + agent spawn | `apps/web/lib/runtime-bridge/dag/render/shapes.ts`（spawn → 方块）、`apps/web/lib/runtime-bridge/dag/passes/thread.ts`（模型）、`apps/web/lib/runtime-bridge/dag/layout/geometry.ts`（递归安放）、`apps/web/lib/runtime-bridge/dag/render/edges.ts`（线程点线、中心连线、场景3横桥）、`apps/web/lib/runtime-bridge/dag/render/nodes.ts`（`data-thread*`、肩上折叠数）、`apps/web/lib/runtime-bridge/dag/interaction/node/nodes.ts`（`toggleThreadOpen`）；由 `apps/web/scripts/runtime/check-dag-subagent.mjs` 实跑 |
 | 第十二节 名字上线 | `task/runner.py::_update_attach_card` 从 task 戳出 `attach.label`；`ws_actions/session.py::_annotate_spawn_origin` 把它带到 spawn 根的 `spawned_from.label`；测试见 `tests/unit/test_task_attach_integration.py` |
-| 第十三节 鼠标、竖条、选择、删除 / 撤销 | 选择状态、命中判定和选择框在 `apps/web/lib/runtime-bridge/dag/interaction/selection.ts`；拖动在 `canvas.ts`，单击在 `nodes.ts`，快捷键在 `keys.ts`；扩展选择与撤销栈在 `node-delete.ts`；竖条与操作条在 `apps/web/components/chat/dag-tools.tsx`，快捷键面板在 `dag-key-sheet.tsx`，小地图在 `interaction/minimap.ts`，+ `apps/web/app/styles/dag/tools.css`；store 拼接与日志在 `openprogram/store/session/session_store/node_deletion.py`；测试见 `tests/component/store/test_node_deletion.py` 与 `apps/web/tests/execution/dag-selection.test.mjs` |
+| 第十三节 鼠标、操作说明、选择、删除 / 撤销 | 选择状态、命中判定和选择框在 `apps/web/lib/runtime-bridge/dag/interaction/selection/selection.ts`；拖动在 `gestures.ts`，单击在 `nodes.ts`，快捷键在 `keys.ts`；扩展选择与撤销栈在 `node-delete.ts`；操作条在 `apps/web/components/chat/dag/dag-tools.tsx`，缩放竖列在 `dag-view.tsx`，操作说明面板在 `dag-key-sheet.tsx`，小地图在 `interaction/view/minimap.ts`，+ `apps/web/app/styles/dag/panels/tools.css`；store 拼接与日志在 `openprogram/store/session/session_store/node_deletion.py`；测试见 `tests/component/store/test_node_deletion.py` 与 `apps/web/tests/dag/dag-selection.test.mjs` |

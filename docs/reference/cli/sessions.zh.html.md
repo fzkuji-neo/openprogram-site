@@ -80,3 +80,14 @@ usage: openprogram sessions [-h] verb ...
 | `session_id` | 要导出的会话 ID |
 | `--format` `EXPORT_FORMAT` | 输出格式：md（默认）或 html（单个独立文件） |
 | `--output` `OUTPUT` | 写入此路径，替代 ./&lt;session-id&gt;.&lt;format&gt; |
+
+## `sessions import`
+
+将 Claude Code / Codex 对话导入为会话（重复运行只会补充新增内容）
+
+| 参数 | 说明 |
+|---|---|
+| `paths` | 要导入的对话记录文件（默认：找到的全部） |
+| `--from` `IMPORT_FROM` | 导入哪个 agent 的对话（默认：全部） |
+| `--since` `DAYS` | 只导入最近 DAYS 天内有活动的对话 |
+| `--list` | 只列出将要导入和已导入的对话，不执行导入 |

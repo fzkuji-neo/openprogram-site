@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/state-layer.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/state-layer.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -607,7 +607,8 @@ values.</p>
 </table>
 <hr />
 <h2 id="3-the-other-stores">3. The other stores<a class="header-anchor" href="#3-the-other-stores">#</a></h2>
-<p>Beyond the main session store, <code>apps/web/lib/state/</code> holds several smaller stores.
+<p>Beyond the main session store, several smaller stores live in the <code>apps/web/lib/</code>
+folder for their area.
 None of them is on the critical path for session scoping, but knowing what
 lives where prevents duplicating state later.</p>
 <ul>
@@ -619,9 +620,9 @@ store that knows a split exists at all, so it is where the scope tree gets
 its session ids from.</li>
 <li><strong><code>apps/web/lib/tabs/center-tab-groups.ts</code></strong> — pure functions over the tab
 layout (grouping, reordering, split panes). No state of its own.</li>
-<li><strong><code>apps/web/lib/chat/chat-scroll.ts</code></strong> — scroll position helpers keyed by chat
+<li><strong><code>apps/web/lib/chat/history/chat-scroll.ts</code></strong> — scroll position helpers keyed by chat
 key, persisted through a storage interface
-(<code>apps/web/lib/chat/chat-scroll.ts:37</code>). Already per-session by construction,
+(<code>apps/web/lib/chat/history/chat-scroll.ts:37</code>). Already per-session by construction,
 just not inside the store.</li>
 <li><strong><code>apps/web/lib/abilities/functions-store.ts</code></strong>, <strong><code>skills-store.ts</code></strong>,
 <strong><code>plugins-store.ts</code></strong> — page-level catalogues and their filter/sort/search
@@ -635,37 +636,37 @@ per-session.</li>
 <p>There is a second, older state layer that predates the React store: plain
 mutable properties on the browser's <code>window</code> object, written and read by the
 modules under <code>apps/web/lib/runtime-bridge/</code>. Their types are declared inline, for
-example at <code>apps/web/lib/runtime-bridge/chat-handlers.ts:34</code> and
-<code>apps/web/lib/runtime-bridge/conversations.ts:75</code>:</p>
+example at <code>apps/web/lib/runtime-bridge/session/chat-handlers.ts:34</code> and
+<code>apps/web/lib/runtime-bridge/session/conversations.ts:75</code>:</p>
 <ul>
 <li><code>W.currentSessionId</code> — the legacy notion of the active session.</li>
 <li><code>W.conversations</code> — a heavy per-session map holding full message arrays,
 distinct from the store's lightweight <code>conversations</code> summary map.</li>
 <li><code>W.isRunning</code> — a single global &quot;something is running&quot; flag.</li>
 <li><code>W.__sessionStore</code> — an escape hatch letting legacy code reach into the
-React store, used at <code>apps/web/lib/runtime-bridge/chat-handlers.ts:895</code>.</li>
+React store, used at <code>apps/web/lib/runtime-bridge/session/chat-handlers.ts:895</code>.</li>
 </ul>
 <h3 id="how-the-two-layers-relate">How the two layers relate<a class="header-anchor" href="#how-the-two-layers-relate">#</a></h3>
 <p>They are a <strong>dual-track system kept in sync by hand</strong>. WebSocket frames arrive
 in the runtime bridge, which updates the <code>window.*</code> values <em>and</em> writes through
-to the React store. <code>apps/web/lib/runtime-bridge/conv-store-mirror.ts:4</code> documents
+to the React store. <code>apps/web/lib/runtime-bridge/session/conv-store-mirror.ts:4</code> documents
 this explicitly: the sidebar reads <code>store.conversations</code>, so every mutation of
 <code>window.conversations</code> must also call through the mirror to keep the store
 authoritative.</p>
 <p>Most incoming frames are gated on the legacy global rather than the store. The
 pattern <code>data.session_id === W.currentSessionId</code> appears throughout
-<code>apps/web/lib/runtime-bridge/chat-handlers.ts</code> (lines 226, 249, 251, 271, 451, 524,
-588, 747) and <code>apps/web/lib/runtime-bridge/conversations.ts</code> (lines 332, 387, 527,
+<code>apps/web/lib/runtime-bridge/session/chat-handlers.ts</code> (lines 226, 249, 251, 271, 451, 524,
+588, 747) and <code>apps/web/lib/runtime-bridge/session/conversations.ts</code> (lines 332, 387, 527,
 530, 536). Each of those is a place where an event for a <em>non-focused</em> session
 is dropped or misrouted.</p>
 <p><strong>What has already routed around it.</strong> The split-view pane does not go through
-the legacy shell at all. <code>apps/web/components/chat/peer-session-pane.tsx:1</code> explains
+the legacy shell at all. <code>apps/web/components/chat/pane/peer-session-pane.tsx:1</code> explains
 why: the legacy <code>#chatView</code> shell is a singleton keyed on hardcoded DOM ids
 (<code>#chatArea</code>, <code>#chatMessages</code>) read by roughly ten runtime-bridge modules, so
 it cannot be mounted twice. AppShell hides it entirely while split
 (<code>apps/web/components/app-shell.tsx:552</code>) and each pane renders pure React off the
 store instead. The pane even sends its own <code>load_session</code> request
-(<code>apps/web/components/chat/peer-session-pane.tsx:66</code>) because nothing in the legacy
+(<code>apps/web/components/chat/pane/peer-session-pane.tsx:66</code>) because nothing in the legacy
 path loads a session that is not focused.</p>
 <p><strong>What still uses it.</strong> Message rendering for the non-split path, session
 switching, branch badge refresh, and most WebSocket frame routing. The legacy
@@ -699,7 +700,7 @@ session it is open for</strong>:</p>
 <span class="nx">contextPanelFor</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 </code></pre>
 <p>The consumer then compares against its own session id
-(<code>apps/web/components/chat/context-badge.tsx:44</code>):</p>
+(<code>apps/web/components/chat/badges/context-badge.tsx:44</code>):</p>
 <pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">panelOpen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useSessionStore</span><span class="p">((</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">contextPanelFor</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">contextPanelFor</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">sid</span><span class="p">);</span>
 </code></pre>
 <p>That is the keyed-global pattern in miniature, and it works: each rendered
@@ -876,13 +877,13 @@ session — a genuine behaviour decision, not a mechanical mapping. Consumers:
 <code>apps/web/components/chat/composer/modes/resolve-mode.ts:18</code>,
 <code>apps/web/components/chat/composer/modes/fn-form/use-fn-form-state.ts</code>,
 <code>use-fn-form-wrapper.ts</code>, <code>apps/web/lib/execution/use-pending-run-function.ts</code>,
-<code>apps/web/components/sidebar/favorites-list.tsx</code>,
+<code>apps/web/components/sidebar/sessions/favorites-list.tsx</code>,
 <code>apps/web/components/sidebar/sidebar.tsx</code>,
-<code>apps/web/components/chat/messages/runtime-block.tsx</code>, and
-<code>apps/web/lib/runtime-bridge/functions-panel.ts</code>.</li>
+<code>apps/web/components/chat/messages/runtime/runtime-block.tsx</code>, and
+<code>apps/web/lib/runtime-bridge/actions/functions-panel.ts</code>.</li>
 <li><code>welcomeVisible</code> and <code>transcriptLoadingId</code> are per-session booleans, read by
-<code>apps/web/components/chat/welcome-screen.tsx</code> and
-<code>apps/web/components/chat/messages/message-list.tsx</code>.</li>
+<code>apps/web/components/chat/welcome/welcome-screen.tsx</code> and
+<code>apps/web/components/chat/messages/list/message-list.tsx</code>.</li>
 <li><code>composerFocusTick</code> is a per-session counter, so focusing one pane's textarea
 does not yank the other.</li>
 <li><code>branchInfo</code>, <code>statusBadge</code>, <code>paused</code>, <code>providerInfo</code> are per-session. They
@@ -902,12 +903,12 @@ twice.</p>
 what the store replaces. It can be removed once all of the following hold:</p>
 <ol>
 <li>Every <code>data.session_id === W.currentSessionId</code> gate in
-<code>apps/web/lib/runtime-bridge/chat-handlers.ts</code> and <code>conversations.ts</code> is a store
+<code>apps/web/lib/runtime-bridge/session/chat-handlers.ts</code> and <code>conversations.ts</code> is a store
 write keyed on <code>data.session_id</code>, so frames for background sessions land
 instead of being dropped. This requires the store to distinguish &quot;focused&quot;
 from &quot;the session&quot; first, which is what the focus pointers in section 7 do.</li>
 <li><code>window.conversations</code> has no readers the store's keyed maps do not cover,
-making <code>apps/web/lib/runtime-bridge/conv-store-mirror.ts</code> unnecessary rather than
+making <code>apps/web/lib/runtime-bridge/session/conv-store-mirror.ts</code> unnecessary rather than
 load-bearing.</li>
 <li><code>W.isRunning</code> has no readers; <code>runningTasks</code> covers it.</li>
 <li>The singleton <code>#chatView</code> DOM shell is gone, replaced by the React path that
@@ -968,7 +969,7 @@ composer arbitrates between idle, fn-form, question, and approval modes</li>
 <li><a href="/docs/reference/design/ui/interaction-feedback.html"><code>interaction-feedback.md</code></a> — the optimistic-state
 rule that shapes how these writes are ordered</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/surface-system.html" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面层次">UI surfaces</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/theme-system.html" data-href-en="/docs/reference/design/ui/theme-system.html" data-href-zh="/docs/reference/design/ui/theme-system.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="主题">Themes</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/surface-system.html" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面层次">UI surfaces</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/theme-system.html" data-href-en="/docs/reference/design/ui/theme-system.html" data-href-zh="/docs/reference/design/ui/theme-system.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="主题">Themes</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

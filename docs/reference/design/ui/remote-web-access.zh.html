@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/remote-web-access.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -366,7 +366,7 @@ HTTPS 反向代理上使用 OpenProgram 现有 Web UI。英文正文是规范基
 HTML 页面表达同一设计。关联代码：<code>apps/server/openprogram_server/_webui/owner_auth.py</code>、
 <code>openprogram/backend_endpoint.py</code>、
 <code>apps/server/openprogram_server/server.py</code>、<code>apps/cli/python/openprogram_cli/_impl/commands/web.py</code>、
-<code>apps/web/lib/net/owner-auth-bootstrap.ts</code>、<code>openprogram/agent/authority.py</code>。
+<code>apps/web/lib/net/auth/owner-auth-bootstrap.ts</code>、<code>openprogram/agent/authority.py</code>。
 关联设计：<a href="/docs/reference/design/memory/speaker-identity.html">说话人身份</a>、
 <a href="/docs/reference/design/runtime/sandbox-architecture.zh.html">权限模型</a>、<a href="/docs/reference/design/integrations/mcp-server.zh.html">MCP 服务端</a>。</p>
 </blockquote>
@@ -455,7 +455,7 @@ loopback 默认值，并拒绝没有配置 Origin 的非 loopback bind。Uvicorn
 <code>proxy_headers=False</code> 启动；只有 <code>OwnerAuthMiddleware</code> 可以使用原始 immediate peer 为
 loopback 时提供的单一 <code>X-Forwarded-Proto</code>。</p>
 <p>公共 <code>POST /api/auth/bootstrap</code> 把 fragment token 交换为派生 cookie。前端
-<code>apps/web/lib/net/owner-auth-bootstrap.ts</code> 中的 coordinator 同步清除 fragment，在挂载应用子树
+<code>apps/web/lib/net/auth/owner-auth-bootstrap.ts</code> 中的 coordinator 同步清除 fragment，在挂载应用子树
 之前完成交换，并且不使用 Web Storage。<code>openprogram web auth-url --base-url ...</code> 先通过
 nonce/HMAC ownership challenge 验证 active listener，再只为 effective Origin 输出 fragment
 URL。<code>/healthz</code> 现在只返回 <code>{&quot;status&quot;:&quot;ok&quot;}</code>；需要认证的
@@ -1203,7 +1203,7 @@ server。</li>
 </tr>
 <tr>
 <td>Fragment bootstrap backend 与 frontend coordinator</td>
-<td><code>POST /api/auth/bootstrap</code>、<code>apps/web/lib/net/owner-auth-bootstrap.ts</code> 和 <code>OwnerAuthBoundary</code> 已实现 body-token 交换、同步清除 fragment、禁止 Web Storage 与应用挂载 gate；<code>apps/web/scripts/settings/check-owner-auth-bootstrap.mjs</code>、TypeScript 检查和 production Web build 验证 frontend 契约</td>
+<td><code>POST /api/auth/bootstrap</code>、<code>apps/web/lib/net/auth/owner-auth-bootstrap.ts</code> 和 <code>OwnerAuthBoundary</code> 已实现 body-token 交换、同步清除 fragment、禁止 Web Storage 与应用挂载 gate；<code>apps/web/scripts/settings/check-owner-auth-bootstrap.mjs</code>、TypeScript 检查和 production Web build 验证 frontend 契约</td>
 </tr>
 <tr>
 <td>认证 URL 命令</td>
@@ -1300,7 +1300,7 @@ server。</li>
 </tr>
 </tbody>
 </table>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/remote-web-access.viz.html" data-href-en="/docs/reference/design/ui/remote-web-access.viz.html" data-href-zh="/docs/reference/design/ui/remote-web-access.zh.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="远程访问图解">Remote access diagram</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/web-tab-home-button.html" data-href-en="/docs/reference/design/ui/web-tab-home-button.html" data-href-zh="/docs/reference/design/ui/web-tab-home-button.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="浏览器主页">Browser home</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/remote-web-access.viz.html" data-href-en="/docs/reference/design/ui/remote-web-access.viz.html" data-href-zh="/docs/reference/design/ui/remote-web-access.zh.viz.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="远程访问图解">Remote access diagram</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/web-tab-home-button.html" data-href-en="/docs/reference/design/ui/web-tab-home-button.html" data-href-zh="/docs/reference/design/ui/web-tab-home-button.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="浏览器主页">Browser home</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

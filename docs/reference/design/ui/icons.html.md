@@ -5,11 +5,11 @@ screen never mixes a filled glyph next to a line glyph by accident.
 
 | Family | Territory | Package / source | License |
 |---|---|---|---|
-| **Solar** (Bold Duotone) | The composer area: environment-row chips, the control row and its plus menu, model / permission badges, the effort pill, the question / approval panel, the send arrow. Also the tiles of the chat execution timeline rows | `apps/web/components/solar-icons` — bodies vendored from the Iconify `solar` set into `bodies.ts` by `apps/web/scripts/icons/fetch-solar.mjs` | CC BY 4.0, Solar Icons by 480 Design |
-| **pqoqubbw animated line icons** | App chrome outside the composer: left rail, center tabs, sidebar, settings nav, function cards, DAG view | `apps/web/components/animated-icons` | MIT |
+| **Solar** (Bold Duotone) | The composer area: environment-row chips, the control row and its plus menu, model / permission badges, the effort pill, the question / approval panel, the send arrow. Also the tiles of the chat execution timeline rows, and the DAG canvas's view controls and the pane's perspective strip (view toggle, session actions) | `apps/web/components/solar-icons` — bodies vendored from the Iconify `solar` set into `bodies.ts` by `apps/web/scripts/icons/fetch-solar.mjs` | CC BY 4.0, Solar Icons by 480 Design |
+| **pqoqubbw animated line icons** | App chrome outside the composer: left rail, center tabs, sidebar, settings nav, function cards | `apps/web/components/animated-icons` | MIT |
 | **lucide-react** | Everything else that needs no motion: settings bodies, dialogs, the timeline's disclosure chevron | `lucide-react` | ISC |
 
-Provider logos come from LobeHub (`components/settings/lobe-icons.ts`) and
+Provider logos come from LobeHub (`components/settings/providers/icons/lobe-icons.ts`) and
 avatars from DiceBear identicons; neither is part of this contract.
 
 Nobody hand-authors icon SVGs. A new Solar icon is added by extending
@@ -73,7 +73,7 @@ Each row of the expanded execution timeline starts with a 24 px tinted
 square (20 px when nested) holding a 13 px glyph (11 px nested). The
 glyphs are Solar Bold Duotone, so the rows read as flat filled marks in
 the tone colour rather than line drawings. `presentTool()` in
-`apps/web/components/chat/messages/tool-presentation.ts` picks the glyph
+`apps/web/components/chat/messages/execution/tool-presentation.ts` picks the glyph
 per tool (`ToolPresentation.icon`, a `SolarIconName`); `StepRow` in
 `execution-strip.tsx` falls back to a glyph per row kind when no tool
 glyph is given. The tile and its tone colours are unchanged by the icon

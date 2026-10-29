@@ -120,7 +120,8 @@ values.
 
 ## 3. The other stores
 
-Beyond the main session store, `apps/web/lib/state/` holds several smaller stores.
+Beyond the main session store, several smaller stores live in the `apps/web/lib/`
+folder for their area.
 None of them is on the critical path for session scoping, but knowing what
 lives where prevents duplicating state later.
 
@@ -132,9 +133,9 @@ lives where prevents duplicating state later.
   its session ids from.
 - **`apps/web/lib/tabs/center-tab-groups.ts`** — pure functions over the tab
   layout (grouping, reordering, split panes). No state of its own.
-- **`apps/web/lib/chat/chat-scroll.ts`** — scroll position helpers keyed by chat
+- **`apps/web/lib/chat/history/chat-scroll.ts`** — scroll position helpers keyed by chat
   key, persisted through a storage interface
-  (`apps/web/lib/chat/chat-scroll.ts:37`). Already per-session by construction,
+  (`apps/web/lib/chat/history/chat-scroll.ts:37`). Already per-session by construction,
   just not inside the store.
 - **`apps/web/lib/abilities/functions-store.ts`**, **`skills-store.ts`**,
   **`plugins-store.ts`** — page-level catalogues and their filter/sort/search
@@ -150,40 +151,40 @@ lives where prevents duplicating state later.
 There is a second, older state layer that predates the React store: plain
 mutable properties on the browser's `window` object, written and read by the
 modules under `apps/web/lib/runtime-bridge/`. Their types are declared inline, for
-example at `apps/web/lib/runtime-bridge/chat-handlers.ts:34` and
-`apps/web/lib/runtime-bridge/conversations.ts:75`:
+example at `apps/web/lib/runtime-bridge/session/chat-handlers.ts:34` and
+`apps/web/lib/runtime-bridge/session/conversations.ts:75`:
 
 - `W.currentSessionId` — the legacy notion of the active session.
 - `W.conversations` — a heavy per-session map holding full message arrays,
   distinct from the store's lightweight `conversations` summary map.
 - `W.isRunning` — a single global "something is running" flag.
 - `W.__sessionStore` — an escape hatch letting legacy code reach into the
-  React store, used at `apps/web/lib/runtime-bridge/chat-handlers.ts:895`.
+  React store, used at `apps/web/lib/runtime-bridge/session/chat-handlers.ts:895`.
 
 ### How the two layers relate
 
 They are a **dual-track system kept in sync by hand**. WebSocket frames arrive
 in the runtime bridge, which updates the `window.*` values *and* writes through
-to the React store. `apps/web/lib/runtime-bridge/conv-store-mirror.ts:4` documents
+to the React store. `apps/web/lib/runtime-bridge/session/conv-store-mirror.ts:4` documents
 this explicitly: the sidebar reads `store.conversations`, so every mutation of
 `window.conversations` must also call through the mirror to keep the store
 authoritative.
 
 Most incoming frames are gated on the legacy global rather than the store. The
 pattern `data.session_id === W.currentSessionId` appears throughout
-`apps/web/lib/runtime-bridge/chat-handlers.ts` (lines 226, 249, 251, 271, 451, 524,
-588, 747) and `apps/web/lib/runtime-bridge/conversations.ts` (lines 332, 387, 527,
+`apps/web/lib/runtime-bridge/session/chat-handlers.ts` (lines 226, 249, 251, 271, 451, 524,
+588, 747) and `apps/web/lib/runtime-bridge/session/conversations.ts` (lines 332, 387, 527,
 530, 536). Each of those is a place where an event for a *non-focused* session
 is dropped or misrouted.
 
 **What has already routed around it.** The split-view pane does not go through
-the legacy shell at all. `apps/web/components/chat/peer-session-pane.tsx:1` explains
+the legacy shell at all. `apps/web/components/chat/pane/peer-session-pane.tsx:1` explains
 why: the legacy `#chatView` shell is a singleton keyed on hardcoded DOM ids
 (`#chatArea`, `#chatMessages`) read by roughly ten runtime-bridge modules, so
 it cannot be mounted twice. AppShell hides it entirely while split
 (`apps/web/components/app-shell.tsx:552`) and each pane renders pure React off the
 store instead. The pane even sends its own `load_session` request
-(`apps/web/components/chat/peer-session-pane.tsx:66`) because nothing in the legacy
+(`apps/web/components/chat/pane/peer-session-pane.tsx:66`) because nothing in the legacy
 path loads a session that is not focused.
 
 **What still uses it.** Message rendering for the non-split path, session
@@ -228,7 +229,7 @@ contextPanelFor: string | null;
 ```
 
 The consumer then compares against its own session id
-(`apps/web/components/chat/context-badge.tsx:44`):
+(`apps/web/components/chat/badges/context-badge.tsx:44`):
 
 ```ts
 const panelOpen = useSessionStore((s) => s.contextPanelFor != null && s.contextPanelFor === sid);
@@ -424,13 +425,13 @@ Every Group B field becomes a property of `SessionScopeState`, read through
   `apps/web/components/chat/composer/modes/resolve-mode.ts:18`,
   `apps/web/components/chat/composer/modes/fn-form/use-fn-form-state.ts`,
   `use-fn-form-wrapper.ts`, `apps/web/lib/execution/use-pending-run-function.ts`,
-  `apps/web/components/sidebar/favorites-list.tsx`,
+  `apps/web/components/sidebar/sessions/favorites-list.tsx`,
   `apps/web/components/sidebar/sidebar.tsx`,
-  `apps/web/components/chat/messages/runtime-block.tsx`, and
-  `apps/web/lib/runtime-bridge/functions-panel.ts`.
+  `apps/web/components/chat/messages/runtime/runtime-block.tsx`, and
+  `apps/web/lib/runtime-bridge/actions/functions-panel.ts`.
 - `welcomeVisible` and `transcriptLoadingId` are per-session booleans, read by
-  `apps/web/components/chat/welcome-screen.tsx` and
-  `apps/web/components/chat/messages/message-list.tsx`.
+  `apps/web/components/chat/welcome/welcome-screen.tsx` and
+  `apps/web/components/chat/messages/list/message-list.tsx`.
 - `composerFocusTick` is a per-session counter, so focusing one pane's textarea
   does not yank the other.
 - `branchInfo`, `statusBadge`, `paused`, `providerInfo` are per-session. They
@@ -452,12 +453,12 @@ The `window.*` layer described in section 4 is not part of the design; it is
 what the store replaces. It can be removed once all of the following hold:
 
 1. Every `data.session_id === W.currentSessionId` gate in
-   `apps/web/lib/runtime-bridge/chat-handlers.ts` and `conversations.ts` is a store
+   `apps/web/lib/runtime-bridge/session/chat-handlers.ts` and `conversations.ts` is a store
    write keyed on `data.session_id`, so frames for background sessions land
    instead of being dropped. This requires the store to distinguish "focused"
    from "the session" first, which is what the focus pointers in section 7 do.
 2. `window.conversations` has no readers the store's keyed maps do not cover,
-   making `apps/web/lib/runtime-bridge/conv-store-mirror.ts` unnecessary rather than
+   making `apps/web/lib/runtime-bridge/session/conv-store-mirror.ts` unnecessary rather than
    load-bearing.
 3. `W.isRunning` has no readers; `runningTasks` covers it.
 4. The singleton `#chatView` DOM shell is gone, replaced by the React path that

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/indicator-dots.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/indicator-dots.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -431,18 +431,18 @@ CSS — drop  .pulse, .pending-pulse, .status-dot[.ok/.warn/.err],
 </code></pre>
 <p>调用点（8 处 JSX，2 个 CSS 文件）：</p>
 <ul>
-<li><code>apps/web/components/chat/messages/execution-dag/index.tsx</code>（header <code>●</code>）</li>
-<li><code>apps/web/components/chat/messages/runtime-block.tsx</code>（header <code>●</code> + pending body）</li>
-<li><code>apps/web/components/chat/messages/tool-card.tsx</code>（2× header <code>●</code>）</li>
-<li><code>apps/web/components/chat/messages/message-list.tsx</code>（pending 气泡）</li>
-<li><code>apps/web/components/chat/messages/assistant-bubble.tsx</code>（嵌套的 pending）</li>
-<li><code>apps/web/components/chat/messages/attach-card.tsx</code>（状态点）</li>
+<li><code>apps/web/components/chat/messages/execution-dag/index.tsx</code>（header <code>●</code>；该文件已删除）</li>
+<li><code>apps/web/components/chat/messages/runtime/runtime-block.tsx</code>（header <code>●</code> + pending body）</li>
+<li><code>apps/web/components/chat/messages/tool-card.tsx</code>（2× header <code>●</code>；该文件已删除）</li>
+<li><code>apps/web/components/chat/messages/list/message-list.tsx</code>（pending 气泡）</li>
+<li><code>apps/web/components/chat/messages/bubbles/assistant-bubble.tsx</code>（嵌套的 pending）</li>
+<li><code>apps/web/components/chat/messages/cards/attach-card.tsx</code>（状态点）</li>
 <li><code>apps/web/components/chat/top-bar/index.tsx</code>（provider 状态）</li>
-<li><code>apps/web/app/styles/chat/indicator-dot.css</code>（及 <code>apps/web/app/styles/chat/</code> 下各组件文件）</li>
+<li><code>apps/web/app/styles/chat/execution/indicator-dot.css</code>（及 <code>apps/web/app/styles/chat/</code> 下各组件文件）</li>
 </ul>
 <h2 id="附录实现状态">附录：实现状态<a class="header-anchor" href="#附录实现状态">#</a></h2>
 <p>已实现。四个遗留类已删除，八处调用点全部改用 <code>.indicator-dot</code>。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/page-loading-performance.html" data-href-en="/docs/reference/design/ui/page-loading-performance.html" data-href-zh="/docs/reference/design/ui/page-loading-performance.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="页面加载性能">Page loading performance</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/session-status.html" data-href-en="/docs/reference/design/ui/session-status.html" data-href-zh="/docs/reference/design/ui/session-status.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="会话状态">Session status</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/page-loading-performance.html" data-href-en="/docs/reference/design/ui/page-loading-performance.html" data-href-zh="/docs/reference/design/ui/page-loading-performance.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="页面加载性能">Page loading performance</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/session-status.html" data-href-en="/docs/reference/design/ui/session-status.html" data-href-zh="/docs/reference/design/ui/session-status.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="会话状态">Session status</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

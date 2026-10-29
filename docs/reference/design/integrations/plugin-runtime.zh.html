@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/integrations/plugin-runtime.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/integrations/plugin-runtime.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -478,7 +478,7 @@ reload_plugin(name) = unload + rescan + load   （新代码失败时插件仍保
 <p>CLI 的 <code>enable</code>、<code>disable</code>、<code>install</code>、<code>uninstall</code> 和 <code>reload</code> 先调用运行中 worker 的 HTTP API，让改动立即生效；没有 worker 时退回到直接改状态文件。</p>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <p>按上文实现。未实现：按插件的进程隔离（插件代码与 worker 共用进程，信任闸门是唯一边界），以及上述五个之外的 Web 插槽。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/skills-and-plugins.html" data-href-en="/docs/reference/design/integrations/skills-and-plugins.html" data-href-zh="/docs/reference/design/integrations/skills-and-plugins.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="技能与插件">Skills and plugins</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/web-use-technical-spec.html" data-href-en="/docs/reference/design/integrations/web-use-technical-spec.html" data-href-zh="/docs/reference/design/integrations/web-use-technical-spec.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页自动化规范">Web specification</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/skills-and-plugins.html" data-href-en="/docs/reference/design/integrations/skills-and-plugins.html" data-href-zh="/docs/reference/design/integrations/skills-and-plugins.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="技能与插件">Skills and plugins</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/web-use-technical-spec.html" data-href-en="/docs/reference/design/integrations/web-use-technical-spec.html" data-href-zh="/docs/reference/design/integrations/web-use-technical-spec.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="网页自动化规范">Web specification</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

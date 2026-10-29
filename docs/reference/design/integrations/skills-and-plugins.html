@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/design/integrations/skills-and-plugins.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/reference/design/integrations/skills-and-plugins.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -631,7 +631,7 @@ skills remain an extension mechanism controlled by the user or a plugin.</p>
 </tr>
 <tr>
 <td>web</td>
-<td>Static assets are served through the worker's SPA fallback; <code>apps/web/app/plugin/page.tsx</code> parses <code>/plugin/&lt;name&gt;/&lt;slug...&gt;</code> from <code>pathname</code> and the backend serves the plugin web entrypoint</td>
+<td>Static assets are served through the worker's SPA fallback; <code>apps/web/app/(shell)/plugin/page.tsx</code> parses <code>/plugin/&lt;name&gt;/&lt;slug...&gt;</code> from <code>pathname</code> and the backend serves the plugin web entrypoint</td>
 </tr>
 <tr>
 <td>sidebar</td>
@@ -691,7 +691,7 @@ Chats
 <li>Errors: porting <code>PluginErrors</code></li>
 </ul>
 </li>
-<li><code>/plugin/&lt;name&gt;/&lt;slug...&gt;</code> — <code>apps/web/app/plugin/page.tsx</code> resolves the plugin name and slug client-side; the backend serves the plugin web entrypoint from <code>web/dist</code></li>
+<li><code>/plugin/&lt;name&gt;/&lt;slug...&gt;</code> — <code>apps/web/app/(shell)/plugin/page.tsx</code> resolves the plugin name and slug client-side; the backend serves the plugin web entrypoint from <code>web/dist</code></li>
 <li><code>/skills/[name]/trace</code> — Skill invocation record visualization (unique)</li>
 </ul>
 <h3 id="components">Components<a class="header-anchor" href="#components">#</a></h3>
@@ -705,7 +705,7 @@ apps/web/components/plugins/
 </code></pre>
 <p>Both skill detail views render SKILL.md bodies as untrusted Markdown. Raw HTML and HTML-like math are displayed as text. These views do not add local-resource resolvers or grant filesystem access through skill links.</p>
 <h3 id="store">Store<a class="header-anchor" href="#store">#</a></h3>
-<p><code>lib/skills-store.ts</code>, <code>lib/plugins-store.ts</code>, subscribing over WS to <code>skills:changed</code> / <code>plugins:changed</code> / <code>plugins:error</code>.</p>
+<p><code>apps/web/lib/abilities/skills-store.ts</code>, <code>apps/web/lib/abilities/plugins-store.ts</code>, subscribing over WS to <code>skills:changed</code> / <code>plugins:changed</code> / <code>plugins:error</code>.</p>
 <hr />
 <h2 id="4-capabilities-beyond-the-three-reference-implementations">4. Capabilities beyond the three reference implementations<a class="header-anchor" href="#4-capabilities-beyond-the-three-reference-implementations">#</a></h2>
 <ol>
@@ -740,7 +740,7 @@ apps/web/components/plugins/
 <li>How the Provider plugin entrypoint aligns with the existing abstraction in <code>openprogram/providers/</code>.</li>
 <li>Whether hook event names match claude-code's (PreToolUse and the rest).</li>
 </ol>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/mcp-server.html" data-href-en="/docs/reference/design/integrations/mcp-server.html" data-href-zh="/docs/reference/design/integrations/mcp-server.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="MCP 服务端">MCP server</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/plugin-runtime.html" data-href-en="/docs/reference/design/integrations/plugin-runtime.html" data-href-zh="/docs/reference/design/integrations/plugin-runtime.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="插件运行时">Plugin Runtime</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/mcp-server.html" data-href-en="/docs/reference/design/integrations/mcp-server.html" data-href-zh="/docs/reference/design/integrations/mcp-server.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="MCP 服务端">MCP server</span></a><a class="pn-link pn-next" href="/docs/reference/design/integrations/plugin-runtime.html" data-href-en="/docs/reference/design/integrations/plugin-runtime.html" data-href-zh="/docs/reference/design/integrations/plugin-runtime.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="插件运行时">Plugin Runtime</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

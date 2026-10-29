@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/integrations/computer-and-browser-use.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/integrations/computer-and-browser-use.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -708,7 +708,7 @@
 <p>系统访问：<code>computer_use:desktop</code> 同时是 <code>accessibility</code> 和 <code>screen_recording</code> 两项能力的操作；<code>_desktop_operation</code> 把除 <code>list_apps</code> 和 <code>guide</code> 外的每次 <code>app</code> 调用映射到它，于是缺少授权时调用进入标准的&quot;等待&quot;状态并走设置 → 系统访问流程；等待请求写明 <code>computer_use_agent</code>。</p>
 <p>工具在 <code>DEFAULT_TOOLS</code> 里且常驻：schema 很短，不延迟加载。对话有 Page 时，<code>_configure_web_use_tools</code> 保留它并移除独立的浏览器工具；<code>web_use</code> 从不提供给模型。<code>unsafe_in</code> 在微信、Telegram 渠道和规划模式下隐藏它。</p>
 <h3 id="web-展示">Web 展示<a class="header-anchor" href="#web-展示">#</a></h3>
-<p><code>lib/computer-use-agent-call.ts</code> 解读 <code>computer_use_agent</code> 调用：<code>appStepArgs</code> 把 <code>app</code> 调用变成应用渲染器接受的扁平步骤（<code>{action, app, …}</code>；多个步骤成为 batch，代码和 fresh agent 各成一个动作），<code>screenStep</code> 给出浏览器或虚拟机调用的动作。<code>tool-presentation.ts</code> 用显示器图标和 system 色调渲染 <code>app</code> 步骤；标题写动作和应用（&quot;在 Calculator 中点击&quot;），目标行在给了按键、文本、动作名或窗口时显示它们。浏览器调用显示动作和 URL，虚拟机调用显示动作，代码显示&quot;在 <app> 中运行代码&quot;，fresh agent 显示&quot;交给新代理&quot;及简报首行。审批卡片的范围按钮在&quot;允许一次&quot;和&quot;始终允许&quot;之间加入&quot;允许此对话&quot;，答案摘要打印&quot;允许此对话&quot;。早先工具（<code>computer_use</code>、<code>web_use</code>、<code>gui_agent</code>）记录的调用保留各自的渲染器，旧对话照常可读。</p>
+<p><code>lib/computer-use/computer-use-agent-call.ts</code> 解读 <code>computer_use_agent</code> 调用：<code>appStepArgs</code> 把 <code>app</code> 调用变成应用渲染器接受的扁平步骤（<code>{action, app, …}</code>；多个步骤成为 batch，代码和 fresh agent 各成一个动作），<code>screenStep</code> 给出浏览器或虚拟机调用的动作。<code>tool-presentation.ts</code> 用显示器图标和 system 色调渲染 <code>app</code> 步骤；标题写动作和应用（&quot;在 Calculator 中点击&quot;），目标行在给了按键、文本、动作名或窗口时显示它们。浏览器调用显示动作和 URL，虚拟机调用显示动作，代码显示&quot;在 <app> 中运行代码&quot;，fresh agent 显示&quot;交给新代理&quot;及简报首行。审批卡片的范围按钮在&quot;允许一次&quot;和&quot;始终允许&quot;之间加入&quot;允许此对话&quot;，答案摘要打印&quot;允许此对话&quot;。早先工具（<code>computer_use</code>、<code>web_use</code>、<code>gui_agent</code>）记录的调用保留各自的渲染器，旧对话照常可读。</p>
 <h2 id="浏览器目标web_use-运行时">浏览器目标：<code>web_use</code> 运行时<a class="header-anchor" href="#浏览器目标web_use-运行时">#</a></h2>
 <p><code>browser</code> 目标运行在 <code>web_use</code> 运行时上（<code>openprogram/programs/workflow/browser/</code> 的 <code>run_web_use</code>），其他程序仍直接调用它。它提供：<code>observe</code>，<code>act</code> 含 <code>screenshot</code>、<code>navigate</code>、<code>click</code>、<code>type</code>、<code>press</code>、<code>scroll</code>、<code>hover</code>、<code>select</code>、<code>upload</code>，<code>verify</code> 含文本、URL、标题、元素和文件断言，三个后端（Playwright MCP、Chrome DevTools MCP、App 自带 Chrome）。</p>
 <p>相对 Codex 目标 API，它覆盖：</p>
@@ -789,8 +789,8 @@
 <p>项目设置页在默认设置和权限规则之间有一个&quot;操控电脑&quot;分区（<code>computer-use-apps-section.tsx</code>）。它把项目的 <code>computer_use_agent(&lt;app&gt;)</code> 允许规则（以及以 <code>computer_use(&lt;app&gt;)</code> 保存的规则）列成每个应用一行，带图标、名字、bundle id 和移除按钮，通用规则列表不再重复这些规则。移除一行即删除该规则。对话级授权是随对话结束的会话规则，所以这里不列出。</p>
 <p>人可以像在 Codex 里那样给 agent 指东西：</p>
 <ul>
-<li>在网页标签里，<strong>评论页面元素…</strong> 选中一个元素，把它的选择器、文字和评论加进草稿；<strong>区域截图…</strong> 让人拖出一个矩形，把这块像素作为 PNG 附件加入。两者运行在同一个隔离脚本环境里（<code>apps/desktop/main/web-views.js</code> 的 <code>PICKER_WORLD</code>），共用一个取消钩子，开启一种会结束另一种。区域遮罩先被移除、再画两帧，<code>capturePage</code> 才按页面缩放截取那个矩形。文件经 <code>lib/composer-inbox.ts</code> 送到目标对话：显示这个对话的输入框把它当作拖进来的文件收下，在那之前它一直在收件箱里等。</li>
-<li>输入框的 <code>@</code> 菜单在文件之前列出已打开的网页标签和正在运行的应用（<code>attach/mention-sources.ts</code>）。标签页写成指向其地址的 markdown 链接，应用写成名称加 bundle id，所以「这个标签页」不用模型去猜。正在运行的应用来自带 <code>running: true</code> 的 <code>computer_use_apps</code>，它列出被拒应用之外的常规应用，页面里缓存十秒。</li>
+<li>在网页标签里，<strong>评论页面元素…</strong> 选中一个元素，把它的选择器、文字和评论加进草稿；<strong>区域截图…</strong> 让人拖出一个矩形，把这块像素作为 PNG 附件加入。两者运行在同一个隔离脚本环境里（<code>apps/desktop/main/web-views.js</code> 的 <code>PICKER_WORLD</code>），共用一个取消钩子，开启一种会结束另一种。区域遮罩先被移除、再画两帧，<code>capturePage</code> 才按页面缩放截取那个矩形。文件经 <code>lib/chat/composer-inbox.ts</code> 送到目标对话：显示这个对话的输入框把它当作拖进来的文件收下，在那之前它一直在收件箱里等。</li>
+<li>输入框的 <code>@</code> 菜单在文件之前列出已打开的网页标签和正在运行的应用（<code>attach/mention/mention-sources.ts</code>）。标签页写成指向其地址的 markdown 链接，应用写成名称加 bundle id，所以「这个标签页」不用模型去猜。正在运行的应用来自带 <code>running: true</code> 的 <code>computer_use_apps</code>，它列出被拒应用之外的常规应用，页面里缓存十秒。</li>
 </ul>
 <h2 id="实现状态">实现状态<a class="header-anchor" href="#实现状态">#</a></h2>
 <ul>
@@ -811,7 +811,7 @@
 <li>macOS 上已实现：窗口标识，监视、切换和空闲释放有单元测试。Linux 和 Windows 上未实现。</li>
 <li>未实现：经 Responses 和 Anthropic API 的音频输入（这两个接口的模型不收音频）；把窗口从另一个桌面空间移过来，以及用按键向它输入（见上文）；从轮廓直接认出图标的名字（模型看截图分辨）。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/web-use.html" data-href-en="/docs/reference/design/integrations/web-use.html" data-href-zh="/docs/reference/design/integrations/web-use.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="网页自动化">Web automation</span></a><a class="pn-link pn-next" href="/docs/reference/design/extension-gating/README.html" data-href-en="/docs/reference/design/extension-gating/README.html" data-href-zh="/docs/reference/design/extension-gating/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="扩展控制">Extension controls</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/integrations/web-use.html" data-href-en="/docs/reference/design/integrations/web-use.html" data-href-zh="/docs/reference/design/integrations/web-use.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="网页自动化">Web automation</span></a><a class="pn-link pn-next" href="/docs/reference/design/extension-gating/README.html" data-href-en="/docs/reference/design/extension-gating/README.html" data-href-zh="/docs/reference/design/extension-gating/README.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="扩展控制">Extension controls</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

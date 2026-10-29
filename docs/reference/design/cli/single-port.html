@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/design/cli/single-port.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/reference/design/cli/single-port.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -419,7 +419,7 @@ route markers that render null or resolve params client-side from
 <code>pathname</code>. Static export rejects them without <code>generateStaticParams</code>, so
 those page files do not exist; the SPA fallback (3.2) serves the shell for
 those paths and client-side routing handles the rest. The plugin page is
-<code>apps/web/app/plugin/page.tsx</code>; it resolves the name and slug from <code>pathname</code>.
+<code>apps/web/app/(shell)/plugin/page.tsx</code>; it resolves the name and slug from <code>pathname</code>.
 A segment that does
 real work keeps a <code>generateStaticParams</code> returning one placeholder instead.</p>
 <p><code>app/api/[...path]/route.ts</code> and <code>app/files/[...path]/route.ts</code> do not exist;
@@ -440,10 +440,11 @@ only; a packaged release ships <code>out/</code> pre-built and never invokes Nod
 <p>The current worker path does not spawn or watch a Node process. The active
 entry is <code>openprogram/worker/runner.py</code>, which calls <code>openprogram.webui.start_web</code>
 and <code>apps/server/openprogram_server/_webui/frontend.py:ensure_frontend_built</code>.
-The older <code>openprogram/worker/web.py</code> module and
-<code>apps/web/scripts/with-parent-watch.mjs</code> remain in the checkout as legacy
+The older <code>openprogram/worker/web.py</code> module remains in the checkout as legacy
 dual-port code, including <code>start_web_frontend</code>, but the current runner does not
-call them. They are retained for a separate cleanup decision.</p>
+call it. Its watcher script <code>apps/web/scripts/with-parent-watch.mjs</code> has already
+been removed, although <code>web.py</code> still names it. The module is retained for a
+separate cleanup decision.</p>
 <h3 id="34-port-semantics">3.4 Port semantics<a class="header-anchor" href="#34-port-semantics">#</a></h3>
 <p>The backend port is <em>the</em> port; web-port knobs are retired:</p>
 <table>
@@ -526,7 +527,7 @@ checkouts retain the development build flow.</p>
 mount. The legacy dual-port manager remains in the checkout but is outside the
 active call path. Desktop supervision and distribution status are tracked by
 the installation and packaging design linked above.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/cli/redesign.html" data-href-en="/docs/reference/design/cli/redesign.html" data-href-zh="/docs/reference/design/cli/redesign.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="配置界面">Configuration interface</span></a><a class="pn-link pn-next" href="/docs/reference/design/cli/slash-commands-references.html" data-href-en="/docs/reference/design/cli/slash-commands-references.html" data-href-zh="/docs/reference/design/cli/slash-commands-references.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="命令对比">Command comparison</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/cli/redesign.html" data-href-en="/docs/reference/design/cli/redesign.html" data-href-zh="/docs/reference/design/cli/redesign.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="配置界面">Configuration interface</span></a><a class="pn-link pn-next" href="/docs/reference/design/cli/slash-commands-references.html" data-href-en="/docs/reference/design/cli/slash-commands-references.html" data-href-zh="/docs/reference/design/cli/slash-commands-references.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="命令对比">Command comparison</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

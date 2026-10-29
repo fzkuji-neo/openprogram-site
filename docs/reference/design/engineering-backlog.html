@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/design/engineering-backlog.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/reference/design/engineering-backlog.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -368,7 +368,7 @@
 <p><span id="前端"></span></p>
 <h2 id="frontend-state-consolidation">Frontend state consolidation<a class="header-anchor" href="#frontend-state-consolidation">#</a></h2>
 <p>The state-layer proposal retains follow-up work to remove legacy <code>window.*</code> state entries, including <code>W.currentSessionId</code>, <code>window.conversations</code>, <code>W.isRunning</code> and <code>window.__sessionStore</code>. Audit current usage rather than relying on old occurrence counts. Untyped <code>window.dispatchEvent</code> events are part of the same review.</p>
-<p>The WebSocket layer in <code>apps/web/lib/net/use-ws.ts</code> also rebroadcasts store frames through untyped CustomEvents. Evaluate this together with legacy state retirement, since it creates a second state propagation path alongside the store.</p>
+<p>The WebSocket layer in <code>apps/web/lib/net/ws/use-ws.ts</code> also rebroadcasts store frames through untyped CustomEvents. Evaluate this together with legacy state retirement, since it creates a second state propagation path alongside the store.</p>
 <p><span id="模块规模1400-行且多职责重构窗口另排"></span></p>
 <h2 id="modules-with-multiple-responsibilities">Modules with multiple responsibilities<a class="header-anchor" href="#modules-with-multiple-responsibilities">#</a></h2>
 <p>Re-measure module size and responsibility boundaries when scheduling this work. Candidates include <code>openprogram/agentic_programming/runtime.py</code>, <code>openprogram/store/session/session_store.py</code>, <code>openprogram/agentic_programming/call_state.py</code>, <code>openprogram/auth/cli.py</code> and <code>openprogram/programs/_runtime.py</code>. Vendored yoga-layout and ink runtime code under <code>apps/cli/src/runtime/</code> is outside this refactoring proposal.</p>
@@ -471,7 +471,7 @@
 </tbody>
 </table>
 <p>Idle automatic compaction remains a product decision, not an assumed bug. Environment-variable discovery is not a substitute for the documented AuthStore boundary. External issue counts and earlier snapshot commit IDs are not evidence of current correctness.</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/documentation-gaps.html" data-href-en="/docs/reference/design/documentation-gaps.html" data-href-zh="/docs/reference/design/documentation-gaps.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="文档差异">Documentation gaps</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/unification-work.html" data-href-en="/docs/reference/design/ui/unification-work.html" data-href-zh="/docs/reference/design/ui/unification-work.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="界面统一">UI unification</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/documentation-gaps.html" data-href-en="/docs/reference/design/documentation-gaps.html" data-href-zh="/docs/reference/design/documentation-gaps.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="文档差异">Documentation gaps</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/unification-work.html" data-href-en="/docs/reference/design/ui/unification-work.html" data-href-zh="/docs/reference/design/ui/unification-work.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="界面统一">UI unification</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

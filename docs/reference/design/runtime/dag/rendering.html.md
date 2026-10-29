@@ -32,8 +32,8 @@ lanes, tiers and branch badges that a 288px rail truncates.
 | Piece | Where |
 |---|---|
 | Perspective state | `CenterTab.dagView` (`apps/web/lib/tabs/center-tabs-store.ts`) — not persisted; a reload opens on the transcript |
-| Controls | `apps/web/components/chat/view-controls.tsx` |
-| Graph host | `apps/web/components/chat/dag-view.tsx` — renders `#historyPanel` + `.history-body`, the elements `apps/web/lib/runtime-bridge/dag/pipeline.ts` and `apps/web/lib/runtime-bridge/dag/render/visibility.ts` select |
+| Controls | `apps/web/components/chat/pane/view-controls.tsx` |
+| Graph host | `apps/web/components/chat/dag/dag-view.tsx` — renders `#historyPanel` + `.history-body`, the elements `apps/web/lib/runtime-bridge/dag/pipeline.ts` and `apps/web/lib/runtime-bridge/dag/render/visibility.ts` select |
 | Perspective swap | `.center-pane-chat[data-center-view]` in `apps/web/app/styles/dag/view-host.css` |
 
 Both surfaces stay mounted and swap by `display`: the renderer paints into the
@@ -53,21 +53,26 @@ the user drives directly.
 
 | Gesture | Effect |
 |---|---|
-| pinch, or ⌘/ctrl + wheel | zoom about the cursor, clamped to 25%–300% — the node under the pointer stays under the pointer |
-| mouse wheel (discrete notches) | the same zoom, at wheel rate — a mouse has no pinch |
-| trackpad two-finger scroll | pan, both axes — scrolling stays scrolling |
-| drag on empty canvas | pan |
-| drag starting on a node | the node's — click and double-click still work |
+| mouse wheel, or trackpad pinch | zoom about the cursor, clamped to 25%–300% — the node under the pointer stays under the pointer |
+| two fingers on a trackpad | pan |
+| right (or middle) drag | pan, from anywhere on the graph |
+| left drag on empty canvas | a selection box (§13) |
+| left press on a node | the node's — click and double-click still work |
 
-**Wheel triage** (`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts`): ctrl/⌘ + wheel zooms — browsers deliver a
-trackpad pinch as a wheel event with `ctrlKey` set, and ⌘+wheel is the
-explicit zoom chord — at a rate tuned for a pinch's small continuous deltas.
-A mouse wheel zooms at wheel rate — a mouse has no pinch. macOS scroll
-acceleration makes its `deltaY` fractional and variable, so the tell is the
-legacy `wheelDeltaY`: Chromium/WebKit report a physical notch as a multiple
-of 120 (trackpads carry arbitrary small values), with line-mode deltas as
-the non-mac fallback. Everything else is a trackpad two-finger scroll and
-pans, both axes — scrolling stays scrolling.
+**Wheel** (`apps/web/lib/runtime-bridge/dag/interaction/view/gestures.ts`,
+`interaction/view/wheel.ts`): a mouse wheel zooms, the way a map does; two fingers
+on a trackpad pan, the way a design canvas does; a pinch zooms. All three are
+`wheel` events, so the kind is read from the event: a pinch carries `ctrlKey`
+(⌘ + wheel zooms too); a sideways delta is two fingers; and Chromium, which
+the App runs on, reports a trackpad's legacy `wheelDeltaY` as exactly
+`-3 × deltaY`, while a wheel's notches come as multiples of 120. An earlier
+guess read the size of the delta instead and took real mice for trackpads, so
+the wheel scrolled when it should have zoomed; the `wheelDeltaY` test does not
+look at size. A gesture is judged on its first event and keeps the verdict
+until the events pause (180 ms), so a trackpad's inertial tail never flips to
+zoom. A pinch zooms at its own, faster rate; line- and page-mode deltas (some
+mice) are turned into pixels first. A mouse whose driver sends pixel-smooth
+deltas with `wheelDeltaY = -3 × deltaY` reads as a trackpad and pans.
 
 A box sized to its content decides two things it has no business deciding: how
 big a graph may get before it needs scrollbars, and where the middle is. A wide
@@ -89,38 +94,77 @@ and zoom live in `apps/web/lib/runtime-bridge/dag/store/globals.ts` keyed by ses
 different session re-fits. Resizing the pane never re-fits — the user's angle on
 the graph is theirs to keep.
 
-**Arriving opens readable; the Fit button shows everything.** The opening view
+**Arriving opens readable; Shift+1 shows everything.** The opening view
 is the fit, floored at 80%: a long session fitted whole shrank to a hairline
 column of specks (a 40-turn chat opened at 37%). When the graph is larger than
 the strip at that floor, the overflowing axis follows HEAD — near the bottom of
-the strip, the way a transcript opens on its latest message. The HUD's Fit
-button keeps the plain fit down to 25%: asking to see everything is a request
-for exactly that (`fitCanvas(opening)` in `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts`).
+the strip, the way a transcript opens on its latest message. Showing the whole graph
+(Shift+1) keeps the plain fit down to 25%: asking to see everything is a request
+for exactly that (`fitCanvas(opening)` in `apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts`).
 
-**HUD.** At the composer's TOP-RIGHT — the right end of its env-chip row: a
-fit button, a zoom cluster, and the legend popover, portaled into the
-composer's `#dagHudSlot` (`dag-view.tsx`) so they ride the composer wherever
-it sits and however tall it grows, rendered only while the DAG perspective is
-showing. The zoom cluster is one pill holding − · readout · +: the buttons
-step by exactly one wheel notch (`ZOOM_STEP`), and clicking the readout
-resets to 100% — both anchored on the pane's centre, since a button has no
-cursor to anchor on. The readout is written imperatively by `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts` on
+**Zoom column.** In the canvas's top-right corner, right under the pane's
+perspective strip, so every view control is one column in one corner: one
+raised strip holding + · readout · − and, under a hairline, **Full screen**
+and **Find the working agent** (F); a second strip under it turns
+the minimap on and off and, under a hairline, holds the two guides — the
+legend (what the marks mean) and the controls sheet (what the canvas answers
+to), one open at a time. All open to the column's left from the top, the map above the
+legend; the legend and the map stay open until their button is pressed again.
+The controls sheet opens in the legend's spot, under the map while it is
+shown, so the two take turns: opening either closes the other. The three
+panels come and go like the app's popovers: a fade, a 95% scale and an 8px
+slide in from the column's side over 100ms, played back on the way out
+(`PANEL_MOTION` in `components/chat/dag/dag-key-sheet.tsx`; the minimap's
+`.is-hidden` in `app/styles/dag/panels/tools.css`). Entering the graph view, the map is
+put away without motion first (`stowMinimap`) — the last visit may have
+left it shown, and the first frames draw the emptied cache — so it comes in
+once, with the first paint that has a graph, instead of shrinking away and
+popping back. The column's strips slide in top to bottom with the same fade
+and 8px slide, 150ms each and 40ms apart; leaving the view is instant.
+**Full screen** gives the window to the graph: the center body — the panes,
+the canvas, its column and the composer — lifts out of the layout and grows
+over the app's left sidebar, right sidebar and center tab strip, which stay
+where they are underneath, until it sits 7px inside the window on every side,
+the gap it has everywhere else. The growth is a 0.25s glide on the sidebars'
+collapse curve from the body's slot; leaving glides it back into the slot
+before it drops into the layout again. It is a mode of the app, not the
+browser's full screen — the window keeps its size. Pressed again, Esc (once
+nothing is selected), leaving the graph view or a reload ends it
+(`interaction/view/fullscreen.ts` pins the glide's ends; the look is
+`html[data-canvas-fullscreen]` in `app/styles/dag/panels/tools.css`).
+Showing the whole graph used to hold this spot; it was a fit that, on a small
+graph, looked just like the readout's 100%, so it is Shift+1 alone now.
+A toggle that is on holds the hover grey, never an accent colour. Every glyph
+in the column and in the pane's perspective strip is Solar Bold Duotone with
+the composer's hover pop (`docs/reference/design/ui/icons.md`). The buttons step by exactly one wheel notch (`ZOOM_STEP`), and
+clicking the readout resets to 100% — both anchored on the pane's centre,
+since a button has no cursor to anchor on. A press, like the + / − and
+Shift+0 keys, glides there in 0.22s, the scale moving evenly in log space so
+in and out feel alike; a press during a glide steps on from where it is
+headed. The wheel and pinch stay immediate — a gesture already moves
+continuously — and a wheel or a pan takes over a glide in flight
+(`glideZoom` in `canvas.ts`). The readout is written
+imperatively by `apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts` on
 every view change, because routing a gesture's every wheel event through
-React state would repaint the tree sixty times a second.
+React state would repaint the tree sixty times a second. The controls used to
+sit in the composer's env-chip row and on a left rail as well; one column
+on one edge replaced both.
 
-The HUD draws no chrome of its own. The chips carry the shadcn `elevated` `sm`
-Button classes (`buttonVariants`), the same recipe as the env chips beside
-them, so they can never drift from them. The legend panel wears `MENU_PANEL`
-(`components/chat/top-bar/menu-styles`), the one frame every popover menu in
-the app shares; `apps/web/app/styles/dag/hud.css` keeps only HUD-internal layout (the zoom
-cluster's segments, the legend's upward anchoring and rows).
+The strips share one material and button style
+(`apps/web/app/styles/dag/panels/tools.css`). The legend panel and the controls sheet take
+their padding and scrolling from `MENU_PANEL`
+(`components/chat/top-bar/menu-styles`) but wear the minimap's frame — fill,
+raised shadow, 10px corners, no outer ring — since the three stack as one
+280px column and a ring would draw them a pixel wider than the map;
+`apps/web/app/styles/dag/panels/legend.css` keeps only the legend's anchoring
+and rows.
 
 | Piece | Where |
 |---|---|
-| Pan / zoom / fit | `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts` (`zoomStep` / `resetZoom` for the HUD buttons) |
+| Pan / zoom / fit | `apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts` (`zoomStep` / `resetZoom` for the zoom column) |
 | View state | `_viewTx` / `_viewTy` / `_viewScale` / `_viewSession` in `apps/web/lib/runtime-bridge/dag/store/globals.ts` |
-| Surface + lattice | `.history-body` in `apps/web/app/styles/dag/canvas.css` |
-| HUD | `DagHud` in `apps/web/components/chat/dag-view.tsx`; pill look from `buttonVariants` (elevated sm), legend frame from `MENU_PANEL`, internals in `apps/web/app/styles/dag/hud.css` |
+| Surface + lattice | `.history-body` in `apps/web/app/styles/dag/graph/canvas.css` |
+| Zoom column | `DagZoomColumn` in `apps/web/components/chat/dag/dag-view.tsx`; strips in `apps/web/app/styles/dag/panels/tools.css`, legend and sheet padding from `MENU_PANEL`, frame shared with the minimap, legend rows in `apps/web/app/styles/dag/panels/legend.css` |
 
 ### The composer belongs to the pane, not to the transcript
 
@@ -144,13 +188,13 @@ order does the rest — the graph sits under the composer's `z-index: 5`. Shrink
 
 The canvas runs edge to edge under the composer — panning past it is one
 gesture, and the fit centres the graph in the strip above it
-(`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts::fitCanvas`), so nothing needs a reserved padding band.
+(`apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts::fitCanvas`), so nothing needs a reserved padding band.
 
 ### Branch switching lives in the graph
 
 There is no branch strip above the canvas. Each branch's name is a button drawn
 in the graph itself, anchored below the branch's last conversation-layer node
-(`apps/web/lib/runtime-bridge/dag/render/badges.ts`, §5): the active branch's tag is a flat block tinted in its
+(`apps/web/lib/runtime-bridge/dag/render/labels/badges.ts`, §5): the active branch's tag is a flat block tinted in its
 lane colour, and clicking any other tag checks that branch out. The graph
 already draws the branch structure; a strip above it would repeat that
 information and cut a line across the pane's floating view controls. Rename,
@@ -318,7 +362,7 @@ included, and occupies exactly one cell; the grid leaves a gap of one tile
 between neighbours so the belt between them stays visible.
 A call or a message of yours carries a caption in annotation grey to the
 right of its icon ("Ran npm test", "Read a.ts", the start of what you wrote;
-`render/captions.ts`). A caption only takes room nobody uses: it runs along
+`render/labels/captions.ts`). A caption only takes room nobody uses: it runs along
 its row up to the next tile, branch tag or line crossing it, steps past a
 fork line that runs down right where it would start, and is dropped when
 there is too little room, so it never pushes the layout. The tile an agent stands on shows
@@ -331,6 +375,15 @@ the agent's bubble instead, and zoomed far out captions are hidden.
 Each lane has one color (`apps/web/lib/runtime-bridge/dag/types.ts` `LANE_COLORS`). Any edge uses the lane color of
 the branch it belongs to / points at; **never give a category of edge a fixed color.** Type
 is conveyed only by line style:
+
+**The road to HEAD wears HEAD's colour.** Turns shared by several branches —
+ROOT down to the fork — belong to whichever branch you are on, so they, the
+calls they made and their lines take HEAD's lane colour
+(`layout/assign-lanes.ts` `_stampPathLanes` stamps `_pathLane`, which
+`_branchColor` reads first). Check out another branch and the shared stretch
+repaints in that branch's colour; the branch you left keeps its own colour from
+the fork on. Each turn's line runs down the trunk from ROOT, so lines overlap:
+`render/edges.ts` draws the road last, else a later branch would lie over it.
 
 | Edge type | Line style | Color | Default |
 |---|---|---|---|
@@ -362,8 +415,25 @@ stand-off.
 
 ## 4. Node legend: icon tile = role, tone = kind, state = CSS
 
-**Every node is a rounded icon tile**, the same tile the execution timeline
-draws beside each step (`apps/web/lib/runtime-bridge/dag/render/tiles.ts`). A
+**Every node is the same round chip** (`apps/web/lib/runtime-bridge/dag/render/tiles.ts`):
+a 28px circle tinted with the node's own colour (18% of the tone mixed into the
+canvas, so it stays opaque and buries the belt ends under it) and its icon in
+full colour. Your message, a reply and a call are one family; an earlier version
+mixed a grey raised button for your messages with black square plates and icons
+at 38% for everything else, and the graph read as grey parts that did not
+belong together. Every state restyles the chip itself, the way a game button
+lights up when pressed — nothing is drawn around it:
+
+| State | The chip |
+|---|---|
+| normal | 18% tint, icon in full colour |
+| hover | 30% tint |
+| selected (§13) | filled solid in its colour, the icon in the canvas colour, 8% larger |
+| HEAD | 24% tint and a slow breathing glow in its colour |
+| not in the next request (§8) | 10% tint, icon at 60% |
+| error | the red `!` badge on its upper-right edge |
+
+A 
 call takes the icon and tone `presentTool` gives it in the transcript, so "ran
 npm test" looks alike in both places; tones are shared CSS variables
 (`apps/web/app/styles/tool-tones.css`). Conversation nodes get their own:
@@ -371,7 +441,7 @@ npm test" looks alike in both places; tones are shared CSS variables
 | Node | Icon | Tone |
 |---|---|---|
 | ROOT | house | secondary ink |
-| user | person, on a round raised button | accent |
+| user | person | its branch colour, so a branch reads by its messages as well as its line |
 | agent reply | ghost (agents are ghosts across the app) | timeline llm |
 | call | per tool (`presentTool`) | per tool (shell, edit, read, search, web, …) |
 | sub-agent spawn | ghost | agent — dispatching an agent IS a call; it expands into the agent's activity (§12) |
@@ -379,27 +449,61 @@ npm test" looks alike in both places; tones are shared CSS variables
 | merge / attach | pull request / link | plan |
 
 **Agents stand on their step** (`render/agents.ts`). Every agent that is
-working puts a round token with its initial, in its branch colour, on the
-upper-left corner of the tile it is on, and a bubble beside the tile says
-"name · what it is doing" (the tile's activity text in the present tense:
+working puts a status dot of its branch colour on the upper-left corner of
+the tile it is on — the Activity panel's `indicator-dot`, breathing the same
+way while it works; a second agent on the same tile sits beside it — and
+a bubble beside the tile says "name · what it is doing" (the tile's activity text in the present tense:
 "Thinking…", "Running npm test"). Agents are read from the whole graph: a
 node belongs to the sub-agent whose spawn root its chain leads back to, else
 to the main agent, and each agent shows its latest running node. When that
-node is folded into a count, the token stands on the nearest drawn tile and
+node is folded into a count, the dot sits on the nearest drawn tile and
 the bubble still names the call; agents sharing a tile stack their bubbles.
 
-**Semantic zoom.** Zoomed out, tokens and bubbles keep their on-screen size,
+An earlier version put a round token with the agent's initial ("M") on the
+tile's corner; nobody could tell what the letter meant, and the bubble already
+names the agent; a ring round the tile came next and was too loud. Now the
+dot marks *where* and the bubble says *who*.
+
+**Semantic zoom.** Zoomed out, dots and bubbles keep their on-screen size,
 like unit markers on a map (`--dag-marker-scale`, set by
-`interaction/canvas.ts`; the marker is pinned to its tile in world units and
+`interaction/view/canvas.ts`; the marker is pinned to its tile in world units and
 only its body scales). Below 55% an icon is a few pixels of noise, so every
 tile becomes a solid block of its tone (`is-far`): the map reads by colour,
-and covered tiles stay brighter than the rest. With nothing
-running, the main agent's token rests on HEAD without a bubble. The layer is
+and covered tiles stay brighter than the rest.
+
+Zoomed that far out the canvas reads like a map, which keeps its place names
+readable and shows fewer of them as you pull back; before this, every label
+shrank with the graph into specks of grey. So below 55%:
+
+- a dot is a steady 7px on screen, so neighbours 14px apart never touch,
+  and a line keeps 1.5px; the press target stays about 10px;
+- **a selected node stays obvious**: with something selected, the rest of
+  the graph (dots, lines, labels) fades to 25% and the selected dots keep
+  their full colour (`has-selection` on the canvas, set by
+  `interaction/selection/selection.ts`). Nothing grows or gains an outline: a larger
+  dot merged with its neighbours, and the ink colour, black in the light
+  theme, turned a selection into a blot. The minimap draws selected nodes
+  larger in the accent colour, so a selection off screen still shows there;
+- branch names and the opening words of your messages (`is-turn` captions,
+  `render/labels/captions.ts`) stay readable. Every label — captions, branch
+  names, fold counts — follows one gentle curve at any zoom below 100%
+  (`--dag-label-scale`): 12px at 100%, about 8.5px at the least zoom. A
+  label that shrank with the graph and jumped back to full size at 55%
+  read as a glitch; one held at 12px all the way down read as a wall of
+  text. From 100% down, `interaction/view/far-labels.ts` hides any label that
+  would come within 8px of one already shown — branch names first, the
+  current branch before the rest, then your messages nearest HEAD, then
+  calls;
+- call captions, fold counts and corner marks are detail and hide; zoom back
+  in for them.
+
+With nothing
+running, the main agent's dot rests on HEAD, steady, without a bubble. The layer is
 rebuilt from the node DOM, so the in-place status patch repaints it.
 
-**HEAD is a breathing glow on its own glyph**: a `drop-shadow` in the branch
+**HEAD is a breathing glow on its own chip**: a `drop-shadow` in the chip's
 colour that swells and settles on a slow cycle (2.4s), stamped on the shape
-itself (`data-head`). The light hugs the glyph's outline at every zoom —
+itself (`data-head`). The light hugs the chip's outline at every zoom —
 unlike a drawn halo ring, which reads as a second, blurrier node beside the
 first — and unlike a solid fill, it leaves the shape vocabulary intact: HEAD
 stays visibly the same tile as its neighbours, just lit. Under
@@ -413,8 +517,8 @@ placeholder box:
 | status | Drawing |
 |---|---|
 | success | the plain block |
-| running | `is-running`: the icon breathes, and its token and bubble appear |
-| error | `is-error`: the tone turns red + `!` badge at the upper right |
+| running | `is-running`: the icon breathes, and its agent's dot and bubble appear |
+| error | `is-error`: the Activity panel's red badge, `!` in place of a count, on the upper-right corner; the tone stays, so an agent reply that failed is still a ghost of its own colour |
 | cancelled | `is-faded`: the tone turns ghost grey |
 
 **Badges** (attached to the node, no grid cell of their own):
@@ -489,8 +593,11 @@ historical multi-generation delegation chains remain drawable.
 ```
 apps/web/lib/runtime-bridge/dag/
   pipeline.ts        orchestration: passes → layout → edges → nodes → badges → canvas
-  interaction/canvas.ts  the infinite canvas: pan / zoom / fit, and the dot lattice
-                     that makes the grid visible
+  interaction/view/canvas.ts    the infinite canvas: the view (pan / zoom / fit), and
+                           the dot lattice that makes the grid visible
+  interaction/view/gestures.ts  wheel, pinch and drags, which move the view
+  render/seat.ts           reads a drawn group's translate(x,y) back, for the
+                           passes that run after drawing
   passes/            data transforms, applied in order:
     merge-runs.ts               merge consecutive runs of the same node
     collapse-runtime-pairs.ts   fold a legacy display=runtime user/assistant
@@ -518,9 +625,21 @@ apps/web/lib/runtime-bridge/dag/
                      them on the node; the front end only consumes the values.
   apps/web/lib/runtime-bridge/dag/render/edges.ts    the line-style table of section 3
   apps/web/lib/runtime-bridge/dag/render/nodes.ts    the tiles + status states + badges of section 4
-  apps/web/lib/runtime-bridge/dag/render/badges.ts   the branch-name badge of section 5
+  apps/web/lib/runtime-bridge/dag/render/labels/badges.ts   the branch-name badge of section 5
   apps/web/lib/runtime-bridge/dag/store/globals.ts   expansion state, lastGraph, signatures
 ```
+
+**What a paint costs.** A capture redraws the whole SVG, so the drawers keep
+what does not change between captures: each icon is parsed once and cloned
+into its tiles, a tool's presentation is kept per name, arguments and
+language, and text widths per font and string. Attaching the new SVG sets
+its transform at once and leaves everything that needs the pane's size to
+the next frame, so a capture never forces a layout of its own. Gestures only
+move the view in the store; `applyView` paints it once a frame. A pan
+rewrites the two translations and the lattice offset; the work bound to the
+scale — the semantic-zoom variables, label culling, the lattice pitch — runs
+only when the scale or the drawn graph changes. On a 150-node session one
+repaint takes about 5ms of main-thread time.
 
 The backend `apps/server/openprogram_server/_webui/graph_builder.py` produces the node array (including the
 `branch_name` stamp, caller/predecessor), and `graph_layout/` does the lane/tier/depth
@@ -532,12 +651,9 @@ lane/tier/depth + an ASCII grid.
 A node's fill marks it as **part of what the next LLM call will carry**. A
 covered tile (`is-covered`, set in
 `apps/web/lib/runtime-bridge/dag/render/visibility.ts`) shows its icon at full
-ink; an uncovered tile's icon is faint (38%), an aged one a step back (70%).
-A node is just its icon — no frame and no background (the plate under it is
-the canvas colour, there only to bury belt ends). The one exception is your
-own message, the node you press to fork or edit: it is the app's raised
-button, round, the input box's fill with the composer's shadow, so a first-time
-reader sees what can be clicked. Bubbles, captions and branch
+ink on its tinted chip; an uncovered one steps back — the tint drops to 10%
+and the icon to 60% — and an aged one a step back (icon 75%). Both stay
+legible: an icon at 38% turned most of a long session grey. Bubbles, captions and branch
 tags are words with no chip behind them, each with a canvas-colour halo so a
 line passing behind breaks around the letters. The same rule holds in both themes, and the
 legend swatch is a covered tile.
@@ -726,8 +842,8 @@ covered turn, and the inspector labels it `Failed turn · Recorded`. The two sta
 alike because on the only axis the graph is about they *are* alike: on disk,
 readable, and never in the next request.
 
-The grey deliberately replaces the red block §4 gives a live error. Red
-means "this needs you now", and an archived line does not — the retry already
+The grey deliberately replaces the tile's tone. The red `!` on a live
+error means "this needs you now", and an archived line does not — the retry already
 happened. The `!` glyph itself stays, so why the line ended is still legible.
 
 Both halves of the test matter. `status` alone would grey the error you are
@@ -764,7 +880,7 @@ Nothing else — no window competes with the expansion. The right rail's
 Details view still fills quietly for whenever the user opens it.
 
 **Right-click → the SAME card expands in place.** Not a second window: the
-one card element deepens where it stands (`apps/web/lib/runtime-bridge/dag/interaction/tooltip.ts expandTooltip`) — every
+one card element deepens where it stands (`apps/web/lib/runtime-bridge/dag/interaction/node/tooltip.ts expandTooltip`) — every
 field, longer previews, coverage state, context standing, id — and the verbs
 join at its bottom: checkout to this branch · fork from this node · fork and
 edit this message (user turns only) · copy node id · view raw JSON. One row
@@ -791,13 +907,14 @@ Nothing here adds a verb to the protocol:
 | fork from node | `POST /api/chat/checkout` | fork *is* checkout plus intent — a turn sent from a HEAD that already has children is by definition a sibling of them, which is how the transcript's "branch from here" button works too |
 | fork and edit | `POST /api/chat/checkout` to the node's **predecessor**, then the text into the composer | the user edits and sends; that send is an ordinary send against the new HEAD, so it forks with no protocol change and no "send from node X" concept to keep alive. The predecessor is the fork point precisely because the edited message has to stand *beside* the original, not after it — the same shape `POST /api/chat/edit` produces |
 
-The inspector and menu are built imperatively (`apps/web/lib/runtime-bridge/dag/render/inspector.ts`) because
+The inspector and menu are built imperatively (`apps/web/lib/runtime-bridge/dag/interaction/node/inspector.ts`) because
 the graph is: they float over an SVG the renderer owns, keyed to node geometry,
 outside React's tree.
 
-**Legend.** A collapsible card names the shapes and the two greys, opened from
-the canvas HUD beside the fit button (`apps/web/components/chat/dag-view.tsx`). It starts
-collapsed — the vocabulary is small and learnable, so the legend is for the
+**Legend.** A card names the shapes and the two greys, switched on and off by
+the zoom column's legend button (`apps/web/components/chat/dag/dag-view.tsx`); a
+click on the canvas leaves it open. It starts
+closed — the vocabulary is small and learnable, so the legend is for the
 first few sessions rather than a permanent fixture on the canvas.
 
 ## 12. The call thread: what a turn did is one sequence, folded into one count
@@ -835,7 +952,7 @@ squares once opened — and its own thread sits one column further right,
 opened by clicking the square. While the spawn square is on
 screen (its owner's thread is open — the opt-in that keeps the default
 canvas clean), a badge pill (the same pill as branch badges,
-apps/web/lib/runtime-bridge/dag/render/badges.ts) sits at its RIGHT as the square's name tag; clicking it
+apps/web/lib/runtime-bridge/dag/render/labels/badges.ts) sits at its RIGHT as the square's name tag; clicking it
 checks the agent chain's tip out as the active branch — taking over the
 agent's conversation. Badges never cover a node: every visible glyph seeds the
 badge collision boxes, so a badge that would land on one steps down a row. The model is recursive and so is the picture: every level reads
@@ -862,44 +979,58 @@ switch, exactly as in §9. A spawn head is visible only while every thread
 above it is open; its items likewise — visibility is the whole ancestor
 chain's, not the node's own flag.
 
-## 13. The mouse, the rail, selection and deleting nodes
+## 13. The mouse, the controls sheet, selection and deleting nodes
 
 The canvas has one mouse and no tools to switch between. Splitting browsing,
 box-selecting and lasso-selecting into three tools made every first drag a
-question of which tool was in hand. One mouse does all of it:
+question of which tool was in hand. One mouse does all of it, the left
+button selecting and the right one moving the camera:
 
 | Gesture | What it does |
 |---|---|
-| Wheel, or pinch | zoom about the cursor |
-| Drag on empty canvas | pan (the middle button pans too) |
-| Click a node | the node's own action (§11, §12) |
-| Double-click a node | fork & edit (§11) |
-| Shift/⌘ + click a node | add it to the selection, or take it out |
-| Shift/⌘ + drag on empty canvas | a box; every node it touches joins the selection |
+| Click a node | select it, then the node's own action (§11, §12) |
+| Drag on empty canvas | a box; every node it touches is selected |
+| Shift/⌘ + click or drag | add to the selection, or take a node out |
 | Click on empty canvas | clear the selection |
+| Right drag | pan, from anywhere on the graph (the middle button pans too) |
+| Right click a node | its menu (§11) |
+| Wheel, or pinch | zoom about the cursor |
+| Two fingers on a trackpad | pan |
+| Double-click a node | fork & edit (§11) |
 
-The wheel zooms like a map's; it does not scroll. A trackpad pinch zooms at
-its own, faster rate. These are fixed by design, not settings: touching
-selects (no enclose-only mode), and a plain click never selects, so it can
-stay the node's own action (`apps/web/lib/runtime-bridge/dag/interaction/canvas.ts`,
-`interaction/nodes.ts`, `interaction/selection.ts`).
+The mouse wheel zooms like a map's; two fingers on a trackpad pan; a pinch
+zooms at its own, faster rate. macOS fires the right-click menu on the press, before a
+drag can start, so the canvas holds it and opens it on release when the
+pointer did not move. These are fixed by design, not settings: touching
+selects (no enclose-only mode) (`apps/web/lib/runtime-bridge/dag/interaction/view/gestures.ts`,
+`interaction/node/nodes.ts`, `interaction/selection/selection.ts`).
 
-The rail on the canvas's left edge is one raised strip of the app's button
-material (the input box's fill and the composer's shadow). It holds the
-camera. **Find the working agent** (F) glides the view to the tile a working
+Every canvas control is one raised strip of the app's button material (the
+input box's fill and the composer's shadow, which deepens under the pointer as
+the composer's buttons do): the zoom column, the action bar, the minimap and
+the pane's top-right controls. There is no left rail. **Find the working
+agent** (F, in the zoom column) glides the view to the tile a working
 agent stands on, keeping the zoom. Pressed again it moves to the next working
 agent, and with none at work it goes to HEAD (`focusAgent` in
-`interaction/canvas.ts`). **Show the whole graph** (Shift+1) sits under it. The
-HUD's Fit can be tucked behind the composer, but the rail is always there.
-Under a hairline, the keyboard button opens the **key sheet**: every gesture
-and key the canvas answers to, grouped as mouse, camera and selection, in a
-menu panel beside the rail (`components/chat/dag-key-sheet.tsx`). `?` opens it
-too. Esc, `?` again or a press outside closes it. The view keys follow design
+`interaction/view/canvas.ts`). Zoom and full screen are the zoom column on the
+right edge (see "The canvas is infinite"). The column's last button (a notes
+glyph, since half the sheet is mouse gestures, not keys) opens the **controls
+sheet**: every gesture and key the canvas answers to, grouped as mouse, camera
+and selection, in a panel left of the column, from the top
+(`components/chat/dag/dag-key-sheet.tsx`). `?` opens it
+too. It is a guide like the legend and behaves like it: it stays open until
+its button or `?` is pressed again, or the legend takes its spot — clicks on
+the canvas and Esc leave it be. Esc runs down one thing at a time: the
+selection, then full screen. The view keys follow design
 tools: Shift+1 fits the graph, Shift+0 returns to 100%, and + / − step the
-zoom, the same steps as the HUD's buttons (`interaction/keys.ts`).
+zoom, the same steps as the zoom column's buttons (`interaction/selection/keys.ts`).
 
 **Selection.** View state of the current session's canvas. Each selected node
-gets a dashed accent box just outside its glyph. The set is re-applied after
+lights up in place (`is-selected`): its chip fills solid in its own colour and
+its icon turns to the canvas colour, a pressed button. Nothing is drawn around
+it — dashed rings, rings round square tiles and a grey disc behind the tile were
+all tried and all made the edge harder to see. The box that selects is an
+accent outline over an 8% accent fill. The set is re-applied after
 every repaint and pruned to the nodes the canvas still draws, so a node that is
 deleted or folded away leaves the selection. A session switch drops it.
 Selecting on the canvas takes keyboard focus from the composer, so Delete and
@@ -908,9 +1039,9 @@ Esc reach the selection rather than the draft.
 **The action bar.** While something is selected, a bar at the canvas's top
 left reads `N selected | ⌖ · Copy ID · Delete · ✕`, with Delete in the danger
 colour. ⌖ fits the view to the selection, as Shift+2 does in design tools
-(`frameSelection` in `interaction/canvas.ts`). After a delete it reads `Deleted N nodes | Undo` for a few seconds.
-It sits on the rail's left edge rather than at the top right, which belongs to
-the pane's perspective controls. It is the same raised material as the rail.
+(`frameSelection` in `interaction/view/canvas.ts`). After a delete it reads `Deleted N nodes | Undo` for a few seconds.
+It sits at the top left rather than at the top right, which belongs to
+the pane's perspective controls. It is the same raised material as the column.
 
 **Deleting.** Delete or ⌫ deletes the selection at once, with no
 confirmation, and ⌘Z undoes it. The store
@@ -947,17 +1078,20 @@ both redraw. The undo stack is per session and lasts as long as the page.
 
 ### The minimap
 
-A long session runs off the screen, so the canvas keeps a minimap in its
-lower right, above the composer, in the rail's raised material. Each node is a
-dot of its tone, and the part on screen is a frame in the accent colour. A
+A long session runs off the screen, so the canvas has a minimap in its
+top-right corner, left of the zoom column, in the column's raised material. Each node is a
+dot of its tone on the graph's own lines (thin, faint, in their branch colours, so the
+trunk and its branches read at a glance), and the part on screen is a frame in the accent colour. A
 press or a drag on the map moves the camera there at the same zoom. The map
 frames the graph and the view together, so the frame is never cut off, and it
 holds still while you drag. HEAD is a larger dot ringed in the accent colour,
 the "you are here" of the map, and a wheel over the map zooms the canvas about
-its middle. M hides the map and M again brings it back; the choice is kept in the browser. When the
-whole graph is already on screen, give or take a tile's width, the map fades out: there is nothing to find
-(`apps/web/lib/runtime-bridge/dag/interaction/minimap.ts`, repainted by
-`applyView` on every view change).
+its middle. It starts hidden; the column's map button or M shows it and hides
+it again, and the choice is kept in the browser. Once shown it stays on
+screen whatever the view: a map that faded out whenever the whole graph fitted
+came and went with the zoom and read as a glitch
+(`apps/web/lib/runtime-bridge/dag/interaction/view/minimap.ts`, repainted with the
+view, once a frame; the dots, lines and colours are read once per drawn graph).
 
 ## Appendix: Implementation Status
 
@@ -965,28 +1099,28 @@ The whole spec is implemented. Where each part lives:
 
 | Spec item | Implementation |
 |---|---|
-| Infinite canvas (pan / zoom / fit / dot lattice) | `apps/web/lib/runtime-bridge/dag/interaction/canvas.ts` + `.history-body` in `apps/web/app/styles/dag/canvas.css`; view state in `apps/web/lib/runtime-bridge/dag/store/globals.ts`; HUD in `apps/web/components/chat/dag-view.tsx` |
+| Infinite canvas (pan / zoom / fit / dot lattice) | `apps/web/lib/runtime-bridge/dag/interaction/view/canvas.ts` + `.history-body` in `apps/web/app/styles/dag/graph/canvas.css`; view state in `apps/web/lib/runtime-bridge/dag/store/globals.ts`; zoom column in `apps/web/components/chat/dag/dag-view.tsx` |
 | §1 lane / tier / depth layout | `apps/web/lib/runtime-bridge/dag/layout/geometry.ts::computeGeometry` (tier-packed chain lanes with per-lane tier zeroing, preorder rows, scene-3 fork rows + gap column, recursive thread placement that inserts later chain rows and reserves thread columns); lattice, no-overlap, thread columns/rows and fork geometry all executed and asserted by `apps/web/scripts/runtime/check-dag-subagent.mjs` |
-| §2 rule ③ glyphs are cells | no shape is sized from text; captions take only free cells and never move the layout (`render/captions.ts`) |
-| §4 HEAD breathing glow | `apps/web/lib/runtime-bridge/dag/render/nodes.ts` stamps `data-head` + the branch colour as `color`; `dag-head-glow` keyframes in `apps/web/app/styles/dag/nodes.css` (reduced-motion → steady glow); every glyph stays hollow (`apps/web/lib/runtime-bridge/dag/render/shapes.ts`); HEAD pointing at a merged reply re-seats on its anchor (`apps/web/lib/runtime-bridge/dag/pipeline.ts` via `threadModel.anchorOf`) |
+| §2 rule ③ glyphs are cells | no shape is sized from text; captions take only free cells and never move the layout (`render/labels/captions.ts`) |
+| §4 HEAD breathing glow | `apps/web/lib/runtime-bridge/dag/render/nodes.ts` stamps `data-head` + the branch colour as `color`; `dag-head-glow` keyframes in `apps/web/app/styles/dag/graph/nodes.css` (reduced-motion → steady glow); every glyph stays hollow (`apps/web/lib/runtime-bridge/dag/render/shapes.ts`); HEAD pointing at a merged reply re-seats on its anchor (`apps/web/lib/runtime-bridge/dag/pipeline.ts` via `threadModel.anchorOf`) |
 | §0/§12 call-thread aggregation | `apps/web/lib/runtime-bridge/dag/passes/thread.ts` (`buildThreadModel`: anchor merge, event attribution, recursive visibility); `apps/web/lib/runtime-bridge/dag/render/nodes.ts` draws the shoulder count (`history-thread-count`); `_threadOpen` in `apps/web/lib/runtime-bridge/dag/store/globals.ts` |
 | Rule ② corollary (no placeholder box) | `apps/web/lib/runtime-bridge/dag/render/shapes.ts`: no `square_outline`; task renders as a plain square |
-| §4 status on the block | `graph_builder` emits status; `nodes.ts` sets it as a CSS state of the tile (running breathing / error red+! / cancelled grayed) |
-| §5 badge anchoring | `apps/web/lib/runtime-bridge/dag/render/badges.ts`: anchor at last conversation-layer node, half-column left shift when a line crosses the anchor cell, measured-pixel-box collision slides down one row |
+| §4 status on the block | `graph_builder` emits status; `nodes.ts` sets it as a CSS state of the tile (running breathing / error `!` / cancelled grayed) |
+| §5 badge anchoring | `apps/web/lib/runtime-bridge/dag/render/labels/badges.ts`: anchor at last conversation-layer node, half-column left shift when a line crosses the anchor cell, measured-pixel-box collision slides down one row |
 | Scene 8 merge shape and lines | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` `merge_dot` (◉); `edges.ts` merge-in line peer-colored 2.4px solid |
 | Scenes 8/10 attach pointer | backend filters it (display=runtime) + `graph_builder` stamps the ref onto the embed host (`attach_returns`); `edges.ts` draws the long-dash return line |
 | §4 cross-session ↗ | `graph_builder` stamps `spawn_remote` from target-root provenance and `spawn_out` from the source attach's target session; `nodes.ts` draws ↗ on both sides. Cross-session badge navigation is not implemented |
 | §1 spawn root tier | `graph_layout`: tier=1 / same-row depth / new lane; `task_followup` without an attach pointer re-parents onto the receiving turn (`filter.py` fallback) |
-| Composer shared by both perspectives | `apps/web/app/styles/chat/center-pane.css` hides `#chatArea`, not `#chatView`; asserted by `apps/web/scripts/tabs/check-center-tabs.mjs` |
-| In-graph branch tags (checkout buttons) | `apps/web/lib/runtime-bridge/dag/render/badges.ts`; hover styles on `.history-branch-tag` in `apps/web/app/styles/dag/badges.css` |
+| Composer shared by both perspectives | `apps/web/app/styles/chat/pane/center-pane.css` hides `#chatArea`, not `#chatView`; asserted by `apps/web/scripts/tabs/check-center-tabs.mjs` |
+| In-graph branch tags (checkout buttons) | `apps/web/lib/runtime-bridge/dag/render/labels/badges.ts`; hover styles on `.history-branch-tag` in `apps/web/app/styles/dag/graph/badges.css` |
 | §8 coverage query | `routes/tree.py::_coverage_nodes` fills `/context-range`'s `nodes`; tested in `tests/unit/context/test_context_range_coverage.py` |
 | §8 aged / spilled drawing | `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (fainter block + `▤`), fed by `_coverageSet` in `apps/web/lib/runtime-bridge/dag/store/globals.ts` |
 | §9 `covers_ids` on the wire | `apps/server/openprogram_server/_webui/graph_builder.py` resolves `metadata.covers` to ids; tested in `tests/unit/dag/test_graph_builder_covers.py` |
 | §9 capsule shape | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` `capsule` (keyed on `covers_ids`, tagged `data-shape` so `_applyShapeSize` leaves its geometry alone) |
 | §9 fold + pleats + ghosts | `apps/web/lib/runtime-bridge/dag/passes/fold-summaries.ts` (fold), `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (pleats, `Compacted · N turns` caption, ghost stroke), `apps/web/lib/runtime-bridge/dag/render/edges.ts` (dashed ghost edge), `_summaryExpanded` in `apps/web/lib/runtime-bridge/dag/store/globals.ts`; executed by `apps/web/scripts/runtime/check-dag-summary.mjs` |
-| §10 archived failure | `apps/web/lib/runtime-bridge/dag/render/nodes.ts::_isArchivedFailure` — `status=error` AND off the HEAD chain; grey overrides §4's red |
-| §11 one card, two states / fork & edit | `apps/web/lib/runtime-bridge/dag/interaction/tooltip.ts`: `renderNodeInfo` feeds both states, `expandTooltip` deepens the card in place; `apps/web/lib/runtime-bridge/dag/render/inspector.ts` builds only the verb list (+ raw JSON layer), wired in `apps/web/lib/runtime-bridge/dag/interaction/nodes.ts`; the actions go through `POST /api/chat/checkout` |
-| §11 legend | `DagLegend` in `apps/web/components/chat/dag-view.tsx` (inside the canvas HUD), `.dag-legend` in `apps/web/app/styles/dag/hud.css` |
-| §12 call thread + agent spawn | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` (spawn → square), `apps/web/lib/runtime-bridge/dag/passes/thread.ts` (model), `apps/web/lib/runtime-bridge/dag/layout/geometry.ts` (recursive placement), `apps/web/lib/runtime-bridge/dag/render/edges.ts` (dotted thread line, centre-to-centre chain edges, scene-3 bridge), `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (`data-thread*`, shoulder count), `apps/web/lib/runtime-bridge/dag/interaction/nodes.ts` (`toggleThreadOpen`); executed by `apps/web/scripts/runtime/check-dag-subagent.mjs` |
+| §10 archived failure | `apps/web/lib/runtime-bridge/dag/render/nodes.ts::_isArchivedFailure` — `status=error` AND off the HEAD chain; grey overrides the tone, the `!` stays |
+| §11 one card, two states / fork & edit | `apps/web/lib/runtime-bridge/dag/interaction/node/tooltip.ts`: `renderNodeInfo` feeds both states, `expandTooltip` deepens the card in place; `apps/web/lib/runtime-bridge/dag/interaction/node/inspector.ts` builds only the verb list (+ raw JSON layer), wired in `apps/web/lib/runtime-bridge/dag/interaction/node/nodes.ts`; the actions go through `POST /api/chat/checkout` |
+| §11 legend | `DagLegend` in `apps/web/components/chat/dag/dag-view.tsx` (in the zoom column), `.dag-legend` in `apps/web/app/styles/dag/panels/legend.css` |
+| §12 call thread + agent spawn | `apps/web/lib/runtime-bridge/dag/render/shapes.ts` (spawn → square), `apps/web/lib/runtime-bridge/dag/passes/thread.ts` (model), `apps/web/lib/runtime-bridge/dag/layout/geometry.ts` (recursive placement), `apps/web/lib/runtime-bridge/dag/render/edges.ts` (dotted thread line, centre-to-centre chain edges, scene-3 bridge), `apps/web/lib/runtime-bridge/dag/render/nodes.ts` (`data-thread*`, shoulder count), `apps/web/lib/runtime-bridge/dag/interaction/node/nodes.ts` (`toggleThreadOpen`); executed by `apps/web/scripts/runtime/check-dag-subagent.mjs` |
 | §12 the name on the wire | `task/runner.py::_update_attach_card` stamps `attach.label` from the task; `ws_actions/session.py::_annotate_spawn_origin` carries it to the spawn root as `spawned_from.label`; tested in `tests/unit/test_task_attach_integration.py` |
-| §13 mouse, rail, selection, delete / undo | selection state, hit-testing and the selection box in `apps/web/lib/runtime-bridge/dag/interaction/selection.ts`; drags in `canvas.ts`, clicks in `nodes.ts`, keys in `keys.ts`; widening and the undo stack in `node-delete.ts`; rail and action bar in `apps/web/components/chat/dag-tools.tsx`, key sheet in `dag-key-sheet.tsx`, minimap in `interaction/minimap.ts`, + `apps/web/app/styles/dag/tools.css`; store splice and journal in `openprogram/store/session/session_store/node_deletion.py`; tested in `tests/component/store/test_node_deletion.py` and `apps/web/tests/execution/dag-selection.test.mjs` |
+| §13 mouse, controls sheet, selection, delete / undo | selection state, hit-testing and the selection box in `apps/web/lib/runtime-bridge/dag/interaction/selection/selection.ts`; drags in `gestures.ts`, clicks in `nodes.ts`, keys in `keys.ts`; widening and the undo stack in `node-delete.ts`; action bar in `apps/web/components/chat/dag/dag-tools.tsx`, zoom column in `dag-view.tsx`, controls sheet in `dag-key-sheet.tsx`, minimap in `interaction/view/minimap.ts`, + `apps/web/app/styles/dag/panels/tools.css`; store splice and journal in `openprogram/store/session/session_store/node_deletion.py`; tested in `tests/component/store/test_node_deletion.py` and `apps/web/tests/dag/dag-selection.test.mjs` |

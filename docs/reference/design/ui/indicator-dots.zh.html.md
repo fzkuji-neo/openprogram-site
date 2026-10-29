@@ -84,14 +84,14 @@ CSS — drop  .pulse, .pending-pulse, .status-dot[.ok/.warn/.err],
 
 调用点（8 处 JSX，2 个 CSS 文件）：
 
-- `apps/web/components/chat/messages/execution-dag/index.tsx`（header `●`）
-- `apps/web/components/chat/messages/runtime-block.tsx`（header `●` + pending body）
-- `apps/web/components/chat/messages/tool-card.tsx`（2× header `●`）
-- `apps/web/components/chat/messages/message-list.tsx`（pending 气泡）
-- `apps/web/components/chat/messages/assistant-bubble.tsx`（嵌套的 pending）
-- `apps/web/components/chat/messages/attach-card.tsx`（状态点）
+- `apps/web/components/chat/messages/execution-dag/index.tsx`（header `●`；该文件已删除）
+- `apps/web/components/chat/messages/runtime/runtime-block.tsx`（header `●` + pending body）
+- `apps/web/components/chat/messages/tool-card.tsx`（2× header `●`；该文件已删除）
+- `apps/web/components/chat/messages/list/message-list.tsx`（pending 气泡）
+- `apps/web/components/chat/messages/bubbles/assistant-bubble.tsx`（嵌套的 pending）
+- `apps/web/components/chat/messages/cards/attach-card.tsx`（状态点）
 - `apps/web/components/chat/top-bar/index.tsx`（provider 状态）
-- `apps/web/app/styles/chat/indicator-dot.css`（及 `apps/web/app/styles/chat/` 下各组件文件）
+- `apps/web/app/styles/chat/execution/indicator-dot.css`（及 `apps/web/app/styles/chat/` 下各组件文件）
 
 ## 附录：实现状态
 

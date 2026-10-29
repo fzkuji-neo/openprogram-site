@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/surface-system.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/surface-system.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -767,7 +767,7 @@ family as the chips around it.</li>
 </ul>
 <h2 id="web-page-preview-and-browser-toolbar">Web page preview and browser toolbar<a class="header-anchor" href="#web-page-preview-and-browser-toolbar">#</a></h2>
 <p>The floating page preview over chat
-(<code>components/center-tabs/web-tab-pip.tsx</code>) is a popover card:
+(<code>components/center-tabs/pip/web-tab-pip.tsx</code>) is a popover card:
 <code>bg-popover</code>, <code>ring-1 ring-foreground/10</code> in place of a border,
 <code>shadow-lg</code>, 10px corners on all four sides, and the stage below the
 header clips the page at the same bottom radius. The radius is pinned
@@ -785,7 +785,7 @@ module rules would beat the utilities.</p>
 <p>The browser toolbar's icon buttons (back / forward / reload / home /
 bookmark / library / open in browser / menu, and the control bar) are
 the same <code>ghost</code> Button through <code>webToolbarButton()</code>
-(<code>components/center-tabs/toolbar-button.ts</code>): <code>icon-sm</code> for its 14px
+(<code>components/center-tabs/browser/toolbar/toolbar-button.ts</code>): <code>icon-sm</code> for its 14px
 icon rule, held at the toolbar's 26px by <code>.webToolbarBtn</code>, which
 carries geometry only, so the 40px row keeps its rhythm.</p>
 <h2 id="donts">Don'ts<a class="header-anchor" href="#donts">#</a></h2>
@@ -846,7 +846,7 @@ hand-placed rail tips match), <code>Tabs</code> (the Agent editor uses the
 Settings keep the 1px-edge rule above until they move to the
 shadcn input. Sidebar list rows stay on the list set above.</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/invariants.html" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面不变量">UI invariants</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/state-layer.html" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="状态存储">State stores</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/invariants.html" data-href-en="/docs/reference/design/ui/invariants.html" data-href-zh="/docs/reference/design/ui/invariants.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面不变量">UI invariants</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/state-layer.html" data-href-en="/docs/reference/design/ui/state-layer.html" data-href-zh="/docs/reference/design/ui/state-layer.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="状态存储">State stores</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

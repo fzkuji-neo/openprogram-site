@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/runtime/additional-working-directories.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -453,7 +453,7 @@ _path_is_safe → check_path_safety(path, dirs)   permissions/policy.py → prog
 </code></pre>
 <p><code>internals/_model_tools.py</code> 与 <code>agent/_model_tools.py</code> 两份副本保持一致，遵循文件头的 &quot;kept in sync&quot; 约定。</p>
 <h3 id="35-前端项目-chip-右侧的一目录一-chip">3.5 前端：项目 chip 右侧的一目录一 chip<a class="header-anchor" href="#35-前端项目-chip-右侧的一目录一-chip">#</a></h3>
-<p>composer 的 <code>envChips</code> 行从左到右就是会话的目录集合：<code>&lt;ProjectBadge /&gt;</code> 是定格的主目录，其后是 <code>&lt;WorkingDirChips /&gt;</code>——每个额外目录一个 chip，末尾一个纯图标的添加按钮（<code>apps/web/components/chat/top-bar/working-dir-chips.tsx</code>）。</p>
+<p>composer 的 <code>envChips</code> 行从左到右就是会话的目录集合：<code>&lt;ProjectBadge /&gt;</code> 是定格的主目录，其后是 <code>&lt;WorkingDirChips /&gt;</code>——每个额外目录一个 chip，末尾一个纯图标的添加按钮（<code>apps/web/components/chat/top-bar/chips/working-dir-chips.tsx</code>）。</p>
 <pre><code>[📁 my-project]  [📂 foo ✕]  [📂 bar ✕]  [＋]
 </code></pre>
 <ul>
@@ -496,7 +496,7 @@ TurnRequest.additional_working_dirs
 <li>额外目录在整个会话期内保持可编辑。定格只属于主目录；把它扩到这份列表上，会话中途就再没有扩围栏的办法了。</li>
 <li>目录缺失的主项目解析为 <code>None</code>，绝不解析成另一个目录。换成默认项目的家目录，等于把一个看着合理、用户却从未选择的 cwd 交给模型。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/unified-session-context.html" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="上下文创建">Context creation</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/comparison.html" data-href-en="/docs/reference/design/runtime/session/comparison.html" data-href-zh="/docs/reference/design/runtime/session/comparison.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="管理对比">Management comparison</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/runtime/unified-session-context.html" data-href-en="/docs/reference/design/runtime/unified-session-context.html" data-href-zh="/docs/reference/design/runtime/unified-session-context.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="上下文创建">Context creation</span></a><a class="pn-link pn-next" href="/docs/reference/design/runtime/session/comparison.html" data-href-en="/docs/reference/design/runtime/session/comparison.html" data-href-zh="/docs/reference/design/runtime/session/comparison.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="管理对比">Management comparison</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

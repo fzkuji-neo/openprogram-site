@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/git-folder-pills.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/git-folder-pills.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -367,9 +367,9 @@
 <li>每个<strong>额外工作目录</strong>。</li>
 <li>不在 Git 仓库里的目录什么都不显示。</li>
 </ul>
-<p><strong>同一个仓库</strong>里的两个目录（比如项目根目录和它的一个子目录）分支、修改、PR 都相同，只显示一个 git 半边。每个 git 半边按顺序认领自己的仓库根目录——项目在前，工作目录按列表顺序——顺序最小的显示（<code>components/chat/top-bar/git-chip-registry.ts</code>）。同一仓库的不同 worktree 根目录不同，各自保留 git 半边。</p>
+<p><strong>同一个仓库</strong>里的两个目录（比如项目根目录和它的一个子目录）分支、修改、PR 都相同，只显示一个 git 半边。每个 git 半边按顺序认领自己的仓库根目录——项目在前，工作目录按列表顺序——顺序最小的显示（<code>components/chat/top-bar/chips/git-chip-registry.ts</code>）。同一仓库的不同 worktree 根目录不同，各自保留 git 半边。</p>
 <h2 id="胶囊">胶囊<a class="header-anchor" href="#胶囊">#</a></h2>
-<p>每个文件夹一个凸起胶囊（<code>components/chat/top-bar/folder-pill.ts</code>），中间一条贯通上下的细线分成两段，各自响应 hover 和点击。细线不占宽度，两段的 hover 底色在同一条边界相接；任一段 hover 或展开时细线淡出。左段是文件夹：图标、名字；工作目录的 ✕ 只在 hover 或键盘聚焦时出现。点击打开项目菜单。右段是 git：Solar <code>git-branch</code>，分支名的最后一段（<code>claude/foo</code> 显示 <code>foo</code>；HEAD 游离时显示短提交号），再接未提交的 <code>+N −N</code> diff badge——绿半边、红半边，与文件修改卡片一致。未跟踪的新文本文件按新增行计入。改动全是二进制文件（没有行数）时，badge 显示中性灰色的“N 个文件”，第 3 级的圆点也是灰色，不显示“+0 −0”。干净的目录只显示分支。两段都撑满胶囊高度，hover 底色覆盖整个半边。tooltip 里有仓库、完整分支名和计数。</p>
+<p>每个文件夹一个凸起胶囊（<code>components/chat/top-bar/chips/folder-pill.ts</code>），中间一条贯通上下的细线分成两段，各自响应 hover 和点击。细线不占宽度，两段的 hover 底色在同一条边界相接；任一段 hover 或展开时细线淡出。左段是文件夹：图标、名字；工作目录的 ✕ 只在 hover 或键盘聚焦时出现。点击打开项目菜单。右段是 git：Solar <code>git-branch</code>，分支名的最后一段（<code>claude/foo</code> 显示 <code>foo</code>；HEAD 游离时显示短提交号），再接未提交的 <code>+N −N</code> diff badge——绿半边、红半边，与文件修改卡片一致。未跟踪的新文本文件按新增行计入。改动全是二进制文件（没有行数）时，badge 显示中性灰色的“N 个文件”，第 3 级的圆点也是灰色，不显示“+0 −0”。干净的目录只显示分支。两段都撑满胶囊高度，hover 底色覆盖整个半边。tooltip 里有仓库、完整分支名和计数。</p>
 <p>整行放不下时逐级收缩：</p>
 <table>
 <thead>
@@ -461,7 +461,7 @@
 <li>PR 的基分支选择（目前固定为仓库默认分支）和草稿 PR：<strong>未实现</strong>。</li>
 <li>pull / push / fetch 按钮，以及没有上游时相对默认分支的领先 / 落后：<strong>未实现</strong>。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/effort-picker.html" data-href-en="/docs/reference/design/ui/effort-picker.html" data-href-zh="/docs/reference/design/ui/effort-picker.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="思考力度设置">Effort picker</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-recovery-copy.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">History rendering and conversation links</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/effort-picker.html" data-href-en="/docs/reference/design/ui/effort-picker.html" data-href-zh="/docs/reference/design/ui/effort-picker.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="思考力度设置">Effort picker</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/chat-recovery-copy.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title">History rendering and conversation links</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

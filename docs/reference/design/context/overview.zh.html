@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/context/overview.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/context/overview.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -589,8 +589,8 @@ retry 分支 / merge 汇流(靠 <code>parent_ids</code> 画分叉)。</li>
 </ul>
 <h3 id="占用统计一个数两个读者">占用统计：一个数，两个读者<a class="header-anchor" href="#占用统计一个数两个读者">#</a></h3>
 <p>报告窗口占用的有两处——composer 里的进度圆环
-（<code>apps/web/components/chat/context-badge.tsx</code>）和点开它弹出的 <code>/context</code> 分解面板
-（<code>apps/web/components/chat/context-breakdown-panel.tsx</code>）。两者渲染的是服务端算好的
+（<code>apps/web/components/chat/badges/context-badge.tsx</code>）和点开它弹出的 <code>/context</code> 分解面板
+（<code>apps/web/components/chat/badges/context-breakdown-panel.tsx</code>）。两者渲染的是服务端算好的
 同一份记录，因此任何时刻都一致：</p>
 <pre><code class="language-python"><span class="p">{</span><span class="s2">"window"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"total_used"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"basis"</span><span class="p">:</span> <span class="s2">"measured"</span> <span class="o">|</span> <span class="s2">"estimated"</span><span class="p">,</span>
  <span class="s2">"estimated"</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="s2">"calibration"</span><span class="p">:</span> <span class="nb">float</span><span class="p">}</span>   <span class="c1"># calibration 仅在 measured 时给出</span>
@@ -719,7 +719,7 @@ ContextCommit 是同一想法的两种落地——annotation 是派生、可丢�
 ContextCommit 是 git JSON 里的不可变快照。系统用的是 ContextCommit；沿用下来的思想（压缩
 单向收紧、view 是纯函数、summary 不写 DAG）已在上文描述。</p>
 <p>当前上下文占用使用最后一次请求的实测值，不使用一轮多次请求的累计输入量。无用量的结束事件保留此前实测值；没有实测值时界面使用本地估算。旧累计统计格式保存的占用与校准系数失效，累计计费用量保持不变。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/README.html" data-href-en="/docs/reference/design/context/README.html" data-href-zh="/docs/reference/design/context/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="阅读指南">Reading guide</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html" data-href-en="/docs/reference/design/context/composition.html" data-href-zh="/docs/reference/design/context/composition.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="组成">Composition</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/context/README.html" data-href-en="/docs/reference/design/context/README.html" data-href-zh="/docs/reference/design/context/README.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="阅读指南">Reading guide</span></a><a class="pn-link pn-next" href="/docs/reference/design/context/composition.html" data-href-en="/docs/reference/design/context/composition.html" data-href-zh="/docs/reference/design/context/composition.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="组成">Composition</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

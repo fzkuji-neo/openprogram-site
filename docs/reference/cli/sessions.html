@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/cli/sessions.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/reference/cli/sessions.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -296,6 +296,34 @@
 </tr>
 </tbody>
 </table>
+<h2 id="sessions-import"><code>sessions import</code><a class="header-anchor" href="#sessions-import">#</a></h2>
+<p>Import Claude Code / Codex conversations as sessions (re-running only adds what is new)</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>paths</code></td>
+<td>Transcript files to import (default: every one found)</td>
+</tr>
+<tr>
+<td><code>--from</code> <code>IMPORT_FROM</code></td>
+<td>Which agent's conversations to import (default: all)</td>
+</tr>
+<tr>
+<td><code>--since</code> <code>DAYS</code></td>
+<td>Only conversations active in the last DAYS days</td>
+</tr>
+<tr>
+<td><code>--list</code></td>
+<td>List what would be imported, and what already was, without importing</td>
+</tr>
+</tbody>
+</table>
 <div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/cli/self-update.html" data-href-en="/docs/reference/cli/self-update.html" data-href-zh="/docs/reference/cli/self-update.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="应用更新">self-update</span></a><a class="pn-link pn-next" href="/docs/reference/cli/setup.html" data-href-en="/docs/reference/cli/setup.html" data-href-zh="/docs/reference/cli/setup.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="初始设置">setup</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
@@ -322,6 +350,9 @@
 </li>
 <li>
 <a class="lvl-2" href="#sessions-export">sessions export</a>
+</li>
+<li>
+<a class="lvl-2" href="#sessions-import">sessions import</a>
 </li>
 </ul></aside>
 </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/web-styles.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/web-styles.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -375,7 +375,7 @@ file, named after it.</p>
     ... (25 files)
   dag/              one file per DAG-renderer concern
     view-host.css canvas.css nodes.css edges.css badges.css
-    tooltip.css inspector.css hud.css dag-flash.css
+    tooltip.css inspector.css legend.css dag-flash.css
   right-dock/       right-sidebar panels
     view-host.css bookmarks.css branches-panel.css web-history.css
     detail.css
@@ -389,7 +389,7 @@ resolve exactly as they did before the split.</p>
 after, nothing else. Every file opens with a comment naming the
 component and its tsx/ts source path.</li>
 <li><strong>Placement follows the component tree.</strong> A DAG node style belongs in
-<code>dag/nodes.css</code> because the drawer lives in
+<code>dag/graph/nodes.css</code> because the drawer lives in
 <code>lib/runtime-bridge/dag/render/nodes.ts</code>; a chat bubble style belongs in
 <code>chat/bubbles.css</code>. New components get new files, not appended sections.</li>
 <li><strong>Genuinely global rules stay global.</strong> Tokens and theme overrides live
@@ -400,10 +400,10 @@ file, named for what it is.</li>
 <code>*.module.css</code> (the composer) keep it; this tree covers the global
 stylesheet layer only.</li>
 <li>Guard scripts that assert on style sources read the per-component file
-(<code>check-dag-subagent.mjs</code> reads <code>dag/nodes.css</code> for the head-glow
+(<code>check-dag-subagent.mjs</code> reads <code>dag/graph/nodes.css</code> for the head-glow
 keyframes).</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/window-lifecycle.html" data-href-en="/docs/reference/design/ui/window-lifecycle.html" data-href-zh="/docs/reference/design/ui/window-lifecycle.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="窗口生命周期">Window lifecycle</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/interaction-feedback.html" data-href-en="/docs/reference/design/ui/interaction-feedback.html" data-href-zh="/docs/reference/design/ui/interaction-feedback.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="交互反馈">Interaction feedback</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/window-lifecycle.html" data-href-en="/docs/reference/design/ui/window-lifecycle.html" data-href-zh="/docs/reference/design/ui/window-lifecycle.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="窗口生命周期">Window lifecycle</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/interaction-feedback.html" data-href-en="/docs/reference/design/ui/interaction-feedback.html" data-href-zh="/docs/reference/design/ui/interaction-feedback.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="交互反馈">Interaction feedback</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

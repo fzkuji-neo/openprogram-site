@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/cli/single-port.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/cli/single-port.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -412,7 +412,7 @@ PID 监视（<code>apps/web/scripts/with-parent-watch.mjs</code>）。</li>
 返回 null 或纯客户端从 <code>pathname</code> 解析参数的占位页。静态导出不带
 <code>generateStaticParams</code> 会拒绝它们，因此这些 page 文件不存在；SPA 回退
 （3.2）为这些路径返回壳页面，客户端路由处理其余部分。plugin 页面是
-<code>apps/web/app/plugin/page.tsx</code>，从 <code>pathname</code> 解析名称和 slug。若某段真有服务端
+<code>apps/web/app/(shell)/plugin/page.tsx</code>，从 <code>pathname</code> 解析名称和 slug。若某段真有服务端
 逻辑，则保留它并加一个返回占位值的 <code>generateStaticParams</code>。</p>
 <p><code>app/api/[...path]/route.ts</code> 和 <code>app/files/[...path]/route.ts</code> 不存在；当前后端路由由
 Python worker 提供。</p>
@@ -431,8 +431,9 @@ no-cache）。</li>
 <h3 id="33-当前进程看护边界">3.3 当前进程看护边界<a class="header-anchor" href="#33-当前进程看护边界">#</a></h3>
 <p>当前 worker 路径不会拉起或监视 Node 进程。活动入口是 <code>openprogram/worker/runner.py</code>，它调用
 <code>openprogram.webui.start_web</code> 和 <code>apps/server/openprogram_server/_webui/frontend.py:ensure_frontend_built</code>。
-旧的 <code>openprogram/worker/web.py</code> 与 <code>apps/web/scripts/with-parent-watch.mjs</code> 仍保留在 checkout
-中，包含 <code>start_web_frontend</code> 等双端口代码，但当前 runner 不会调用它们；这些文件的清理另行决定。</p>
+旧的 <code>openprogram/worker/web.py</code> 仍保留在 checkout 中，包含 <code>start_web_frontend</code> 等双端口代码，
+但当前 runner 不会调用它。它引用的监视脚本 <code>apps/web/scripts/with-parent-watch.mjs</code> 已被删除，
+<code>web.py</code> 里仍写着这个名字。该模块的清理另行决定。</p>
 <h3 id="34-端口语义">3.4 端口语义<a class="header-anchor" href="#34-端口语义">#</a></h3>
 <p>后端端口就是唯一端口，web 端口相关旋钮退役：</p>
 <table>
@@ -505,7 +506,7 @@ checkout 保留开发构建流程。</p>
 <h2 id="附录实现状态">附录：实现状态<a class="header-anchor" href="#附录实现状态">#</a></h2>
 <p>当前 runner 和 frontend mount 已实现单端口设计。旧双端口 manager 仍保留在 checkout 中，但不在活动
 调用路径上。桌面监管和分发状态由上面链接的安装与打包设计记录。</p>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/cli/redesign.html" data-href-en="/docs/reference/design/cli/redesign.html" data-href-zh="/docs/reference/design/cli/redesign.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="配置界面">Configuration interface</span></a><a class="pn-link pn-next" href="/docs/reference/design/cli/slash-commands-references.html" data-href-en="/docs/reference/design/cli/slash-commands-references.html" data-href-zh="/docs/reference/design/cli/slash-commands-references.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="命令对比">Command comparison</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/cli/redesign.html" data-href-en="/docs/reference/design/cli/redesign.html" data-href-zh="/docs/reference/design/cli/redesign.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="配置界面">Configuration interface</span></a><a class="pn-link pn-next" href="/docs/reference/design/cli/slash-commands-references.html" data-href-en="/docs/reference/design/cli/slash-commands-references.html" data-href-zh="/docs/reference/design/cli/slash-commands-references.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="命令对比">Command comparison</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

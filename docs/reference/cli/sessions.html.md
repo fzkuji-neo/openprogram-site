@@ -80,3 +80,14 @@ Export a session as a shareable Markdown or HTML file
 | `session_id` | Session id to export |
 | `--format` `EXPORT_FORMAT` | Output format: md (default) or html (single self-contained file) |
 | `--output` `OUTPUT` | Write here instead of ./&lt;session-id&gt;.&lt;format&gt; |
+
+## `sessions import`
+
+Import Claude Code / Codex conversations as sessions (re-running only adds what is new)
+
+| Option | Description |
+|---|---|
+| `paths` | Transcript files to import (default: every one found) |
+| `--from` `IMPORT_FROM` | Which agent's conversations to import (default: all) |
+| `--since` `DAYS` | Only conversations active in the last DAYS days |
+| `--list` | List what would be imported, and what already was, without importing |

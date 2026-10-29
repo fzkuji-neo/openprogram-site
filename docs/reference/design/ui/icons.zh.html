@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/icons.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/icons.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -373,13 +373,13 @@
 <tbody>
 <tr>
 <td><strong>Solar</strong>（Bold Duotone）</td>
-<td>输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头；以及聊天执行时间线每一行左侧的图标方块</td>
+<td>输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头；以及聊天执行时间线每一行左侧的图标方块；还有 DAG 画布的看图控件和窗格右上角那一条（视图切换、会话操作）</td>
 <td><code>apps/web/components/solar-icons</code>——图标主体由 <code>apps/web/scripts/icons/fetch-solar.mjs</code> 从 Iconify 的 <code>solar</code> 集合取回，落在 <code>bodies.ts</code></td>
 <td>CC BY 4.0，Solar Icons by 480 Design</td>
 </tr>
 <tr>
 <td><strong>pqoqubbw 动效线性图标</strong></td>
-<td>输入框以外的外壳：左侧 rail、中央标签页、侧栏、设置导航、功能卡片、DAG 视图</td>
+<td>输入框以外的外壳：左侧 rail、中央标签页、侧栏、设置导航、功能卡片</td>
 <td><code>apps/web/components/animated-icons</code></td>
 <td>MIT</td>
 </tr>
@@ -391,7 +391,7 @@
 </tr>
 </tbody>
 </table>
-<p>供应商 logo 来自 LobeHub（<code>components/settings/lobe-icons.ts</code>），头像来自 DiceBear identicon，二者不在本约定之内。</p>
+<p>供应商 logo 来自 LobeHub（<code>components/settings/providers/icons/lobe-icons.ts</code>），头像来自 DiceBear identicon，二者不在本约定之内。</p>
 <p>没有人手画图标 SVG。要加一个 Solar 图标，就在 <code>fetch-solar.mjs</code> 的 <code>ICONS</code> 里加一项再跑一遍；生成文件提交进仓库，构建不依赖网络。</p>
 <h2 id="输入框区域用-solar">输入框区域用 Solar<a class="header-anchor" href="#输入框区域用-solar">#</a></h2>
 <p>在输入框 14–16px 的尺寸下，双色图标看起来像是为这个功能专门设计的，线性图标则显得通用。所有 Solar 图标统一用 Bold Duotone 一种样式：实心主体 + 浅一档（50% 透明）的副层。</p>
@@ -505,7 +505,7 @@
 <p>反映开关的图标随状态换形，而不只靠颜色：无人值守开启后眼睛闭上；运行中模式&quot;注入&quot;是前进箭头、&quot;排队&quot;是队列列表；项目目录丢失时项目 chip 变成警告三角。</p>
 <p>输入框区域有两个<strong>不是</strong> Solar 的图标。高速（Fast）开关保留动效集里的仪表盘，由 <code>active</code> 属性转动指针。思考力度卡片里的 <code>?</code> 帮助按钮（<a href="/docs/reference/design/ui/effort-picker.zh.html">effort-picker.zh.html</a>）是 14px 的 lucide <code>CircleHelp</code>：Solar 尚未取回问号图标，而且这个按钮是静态的，不需要动效句柄。二者均见文末实现状态。</p>
 <h2 id="执行时间线用-solar">执行时间线用 Solar<a class="header-anchor" href="#执行时间线用-solar">#</a></h2>
-<p>展开后的执行时间线，每一行以一个 24px 的着色方块开头（嵌套时 20px），里面是 13px 的图标（嵌套时 11px）。图标用 Solar Bold Duotone，所以各行显示为色调色的扁平实心标记，而不是线稿。<code>apps/web/components/chat/messages/tool-presentation.ts</code> 里的 <code>presentTool()</code> 按工具选图（<code>ToolPresentation.icon</code>，类型为 <code>SolarIconName</code>）；没有工具图标时，<code>execution-strip.tsx</code> 的 <code>StepRow</code> 按行类别兜底。方块本身和色调配色不随图标族改变。</p>
+<p>展开后的执行时间线，每一行以一个 24px 的着色方块开头（嵌套时 20px），里面是 13px 的图标（嵌套时 11px）。图标用 Solar Bold Duotone，所以各行显示为色调色的扁平实心标记，而不是线稿。<code>apps/web/components/chat/messages/execution/tool-presentation.ts</code> 里的 <code>presentTool()</code> 按工具选图（<code>ToolPresentation.icon</code>，类型为 <code>SolarIconName</code>）；没有工具图标时，<code>execution-strip.tsx</code> 的 <code>StepRow</code> 按行类别兜底。方块本身和色调配色不随图标族改变。</p>
 <table>
 <thead>
 <tr>
@@ -637,7 +637,7 @@
 <li>面向用户的 Solar 第三方致谢（CC BY）：<strong>未实现</strong>。</li>
 <li>rail、标签页、侧栏、设置仍用动效线性集，不计划迁移。</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/hover-tips.html" data-href-en="/docs/reference/design/ui/hover-tips.html" data-href-zh="/docs/reference/design/ui/hover-tips.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="输入框区域的悬停提示">Hover tips in the composer</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/hover-tips.html" data-href-en="/docs/reference/design/ui/hover-tips.html" data-href-zh="/docs/reference/design/ui/hover-tips.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="输入框区域的悬停提示">Hover tips in the composer</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>

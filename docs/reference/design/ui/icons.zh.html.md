@@ -4,11 +4,11 @@ Web 端用三族图标。每一族有自己的地盘，一个界面里不会无�
 
 | 族 | 地盘 | 包 / 来源 | 许可 |
 |---|---|---|---|
-| **Solar**（Bold Duotone） | 输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头；以及聊天执行时间线每一行左侧的图标方块 | `apps/web/components/solar-icons`——图标主体由 `apps/web/scripts/icons/fetch-solar.mjs` 从 Iconify 的 `solar` 集合取回，落在 `bodies.ts` | CC BY 4.0，Solar Icons by 480 Design |
-| **pqoqubbw 动效线性图标** | 输入框以外的外壳：左侧 rail、中央标签页、侧栏、设置导航、功能卡片、DAG 视图 | `apps/web/components/animated-icons` | MIT |
+| **Solar**（Bold Duotone） | 输入框区域：环境条 chip、控制行及其 + 菜单、模型 / 权限徽章、思考力度 pill、提问 / 审批面板、发送箭头；以及聊天执行时间线每一行左侧的图标方块；还有 DAG 画布的看图控件和窗格右上角那一条（视图切换、会话操作） | `apps/web/components/solar-icons`——图标主体由 `apps/web/scripts/icons/fetch-solar.mjs` 从 Iconify 的 `solar` 集合取回，落在 `bodies.ts` | CC BY 4.0，Solar Icons by 480 Design |
+| **pqoqubbw 动效线性图标** | 输入框以外的外壳：左侧 rail、中央标签页、侧栏、设置导航、功能卡片 | `apps/web/components/animated-icons` | MIT |
 | **lucide-react** | 其余不需要动效的地方：设置正文、对话框、时间线行尾的展开箭头 | `lucide-react` | ISC |
 
-供应商 logo 来自 LobeHub（`components/settings/lobe-icons.ts`），头像来自 DiceBear identicon，二者不在本约定之内。
+供应商 logo 来自 LobeHub（`components/settings/providers/icons/lobe-icons.ts`），头像来自 DiceBear identicon，二者不在本约定之内。
 
 没有人手画图标 SVG。要加一个 Solar 图标，就在 `fetch-solar.mjs` 的 `ICONS` 里加一项再跑一遍；生成文件提交进仓库，构建不依赖网络。
 
@@ -51,7 +51,7 @@ Solar 的撤回图标都是细线箭头，在按钮尺寸下几乎看不见，�
 
 ## 执行时间线用 Solar
 
-展开后的执行时间线，每一行以一个 24px 的着色方块开头（嵌套时 20px），里面是 13px 的图标（嵌套时 11px）。图标用 Solar Bold Duotone，所以各行显示为色调色的扁平实心标记，而不是线稿。`apps/web/components/chat/messages/tool-presentation.ts` 里的 `presentTool()` 按工具选图（`ToolPresentation.icon`，类型为 `SolarIconName`）；没有工具图标时，`execution-strip.tsx` 的 `StepRow` 按行类别兜底。方块本身和色调配色不随图标族改变。
+展开后的执行时间线，每一行以一个 24px 的着色方块开头（嵌套时 20px），里面是 13px 的图标（嵌套时 11px）。图标用 Solar Bold Duotone，所以各行显示为色调色的扁平实心标记，而不是线稿。`apps/web/components/chat/messages/execution/tool-presentation.ts` 里的 `presentTool()` 按工具选图（`ToolPresentation.icon`，类型为 `SolarIconName`）；没有工具图标时，`execution-strip.tsx` 的 `StepRow` 按行类别兜底。方块本身和色调配色不随图标族改变。
 
 | 行 | Solar 图标 |
 |---|---|

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793185171" data-alt-lang-url="/docs/reference/design/ui/state-layer.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/reference/design/ui/state-layer.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -589,7 +589,7 @@
 </table>
 <hr />
 <h2 id="3-其他-store">3. 其他 store<a class="header-anchor" href="#3-其他-store">#</a></h2>
-<p>除主 session store 外，<code>apps/web/lib/state/</code> 下还有若干较小的 store。它们都不在会话隔离的
+<p>除主 session store 外，还有若干较小的 store，分别放在 <code>apps/web/lib/</code> 下各自领域的文件夹里。它们都不在会话隔离的
 关键路径上，但知道各自管什么可以避免以后重复造状态。</p>
 <ul>
 <li><strong><code>apps/web/lib/tabs/center-tabs-store.ts</code></strong>（1020 行）—— 标签条与窗格布局：<code>tabs</code>、
@@ -598,8 +598,8 @@
 窗口，不描述会话。它也是唯一知道&quot;当前存在分屏&quot;的 store，所以作用域树的会话 id 从这里来。</li>
 <li><strong><code>apps/web/lib/tabs/center-tab-groups.ts</code></strong> —— 对标签布局的纯函数（分组、重排、分屏窗格）。
 自身无状态。</li>
-<li><strong><code>apps/web/lib/chat/chat-scroll.ts</code></strong> —— 按 chat key 存的滚动位置助手，通过一个存储接口
-持久化（<code>apps/web/lib/chat/chat-scroll.ts:37</code>）。天然按会话分，只是不在 store 里。</li>
+<li><strong><code>apps/web/lib/chat/history/chat-scroll.ts</code></strong> —— 按 chat key 存的滚动位置助手，通过一个存储接口
+持久化（<code>apps/web/lib/chat/history/chat-scroll.ts:37</code>）。天然按会话分，只是不在 store 里。</li>
 <li><strong><code>apps/web/lib/abilities/functions-store.ts</code></strong>、<strong><code>skills-store.ts</code></strong>、
 <strong><code>plugins-store.ts</code></strong> —— 页面级清单及其筛选/排序/搜索的 UI 状态。确实是全局的；
 这些是设置页，不是会话。</li>
@@ -610,31 +610,31 @@
 <h2 id="4-遗留的-window-层">4. 遗留的 <code>window.*</code> 层<a class="header-anchor" href="#4-遗留的-window-层">#</a></h2>
 <p>还有第二套更老的状态层，早于 React store：直接挂在浏览器 <code>window</code> 对象上的可变属性，
 由 <code>apps/web/lib/runtime-bridge/</code> 下的模块读写。类型就地声明，比如
-<code>apps/web/lib/runtime-bridge/chat-handlers.ts:34</code> 和
-<code>apps/web/lib/runtime-bridge/conversations.ts:75</code>：</p>
+<code>apps/web/lib/runtime-bridge/session/chat-handlers.ts:34</code> 和
+<code>apps/web/lib/runtime-bridge/session/conversations.ts:75</code>：</p>
 <ul>
 <li><code>W.currentSessionId</code> —— 遗留层对&quot;活动会话&quot;的记法。</li>
 <li><code>W.conversations</code> —— 一份重量级的每会话表，存完整消息数组，与 store 里轻量的
 <code>conversations</code> 摘要表不是同一个东西。</li>
 <li><code>W.isRunning</code> —— 单个全局&quot;有东西在跑&quot;标志。</li>
 <li><code>W.__sessionStore</code> —— 让遗留代码伸手进 React store 的逃生口，用在
-<code>apps/web/lib/runtime-bridge/chat-handlers.ts:895</code>。</li>
+<code>apps/web/lib/runtime-bridge/session/chat-handlers.ts:895</code>。</li>
 </ul>
 <h3 id="两层的关系">两层的关系<a class="header-anchor" href="#两层的关系">#</a></h3>
 <p>它们是<strong>手工保持同步的双轨系统</strong>。WebSocket 帧到达 runtime bridge，bridge 更新
-<code>window.*</code> 的值，<em>同时</em>写穿到 React store。<code>apps/web/lib/runtime-bridge/conv-store-mirror.ts:4</code>
+<code>window.*</code> 的值，<em>同时</em>写穿到 React store。<code>apps/web/lib/runtime-bridge/session/conv-store-mirror.ts:4</code>
 明确写了这一点：侧栏读 <code>store.conversations</code>，所以每一处改动
 <code>window.conversations</code> 的地方都必须同时走这个镜像，才能让 store 保持权威。</p>
 <p>大部分进入的帧是用遗留全局而非 store 做闸门。<code>data.session_id === W.currentSessionId</code>
-这个模式贯穿 <code>apps/web/lib/runtime-bridge/chat-handlers.ts</code>（第 226、249、251、271、451、
-524、588、747 行）和 <code>apps/web/lib/runtime-bridge/conversations.ts</code>（第 332、387、527、530、
+这个模式贯穿 <code>apps/web/lib/runtime-bridge/session/chat-handlers.ts</code>（第 226、249、251、271、451、
+524、588、747 行）和 <code>apps/web/lib/runtime-bridge/session/conversations.ts</code>（第 332、387、527、530、
 536 行）。每一处都是一个&quot;针对<em>非聚焦</em>会话的事件会被丢弃或错投&quot;的地方。</p>
 <p><strong>哪些已经绕开了。</strong> 分屏窗格完全不走遗留 shell。
-<code>apps/web/components/chat/peer-session-pane.tsx:1</code> 解释了原因：遗留的 <code>#chatView</code> shell 是
+<code>apps/web/components/chat/pane/peer-session-pane.tsx:1</code> 解释了原因：遗留的 <code>#chatView</code> shell 是
 单例，键在写死的 DOM id（<code>#chatArea</code>、<code>#chatMessages</code>）上，被大约十个 runtime-bridge
 模块读取，因此不可能挂载两次。分屏时 AppShell 把它整个隐藏
 （<code>apps/web/components/app-shell.tsx:552</code>），每个窗格改为直接从 store 渲染纯 React。窗格
-甚至自己发 <code>load_session</code> 请求（<code>apps/web/components/chat/peer-session-pane.tsx:66</code>），因为
+甚至自己发 <code>load_session</code> 请求（<code>apps/web/components/chat/pane/peer-session-pane.tsx:66</code>），因为
 遗留路径里没有任何东西会去加载非聚焦的会话。</p>
 <p><strong>哪些还在用。</strong> 非分屏路径的消息渲染、会话切换、分支徽标刷新，以及大部分 WebSocket
 帧路由。遗留层没有死；它是默认路径，分屏才是绕开它的例外。</p>
@@ -658,7 +658,7 @@
 <span class="cm"> *  两个 composer 各渲染一个 badge，按会话区分才不会两边同时弹。*/</span>
 <span class="nx">contextPanelFor</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 </code></pre>
-<p>消费方随即与自己的会话 id 比较（<code>apps/web/components/chat/context-badge.tsx:44</code>）：</p>
+<p>消费方随即与自己的会话 id 比较（<code>apps/web/components/chat/badges/context-badge.tsx:44</code>）：</p>
 <pre><code class="language-ts"><span class="kd">const</span><span class="w"> </span><span class="nx">panelOpen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useSessionStore</span><span class="p">((</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">contextPanelFor</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">contextPanelFor</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">sid</span><span class="p">);</span>
 </code></pre>
 <p>这就是全局分键模式的缩影，而且它能跑：每一份渲染出来的副本都问&quot;这是我的吗？&quot;，只有一个
@@ -788,13 +788,13 @@ React context 提供键，让消费方读 <code>map[scopeKey]</code> 而不是�
 <code>apps/web/components/chat/composer/modes/resolve-mode.ts:18</code>、
 <code>apps/web/components/chat/composer/modes/fn-form/use-fn-form-state.ts</code>、
 <code>use-fn-form-wrapper.ts</code>、<code>apps/web/lib/execution/use-pending-run-function.ts</code>、
-<code>apps/web/components/sidebar/favorites-list.tsx</code>、
+<code>apps/web/components/sidebar/sessions/favorites-list.tsx</code>、
 <code>apps/web/components/sidebar/sidebar.tsx</code>、
-<code>apps/web/components/chat/messages/runtime-block.tsx</code>、
-<code>apps/web/lib/runtime-bridge/functions-panel.ts</code>。</li>
+<code>apps/web/components/chat/messages/runtime/runtime-block.tsx</code>、
+<code>apps/web/lib/runtime-bridge/actions/functions-panel.ts</code>。</li>
 <li><code>welcomeVisible</code>、<code>transcriptLoadingId</code> 是每会话布尔值，消费方为
-<code>apps/web/components/chat/welcome-screen.tsx</code> 和
-<code>apps/web/components/chat/messages/message-list.tsx</code>。</li>
+<code>apps/web/components/chat/welcome/welcome-screen.tsx</code> 和
+<code>apps/web/components/chat/messages/list/message-list.tsx</code>。</li>
 <li><code>composerFocusTick</code> 是每会话计数器，这样聚焦一个窗格的输入框不会把另一个拽走。</li>
 <li><code>branchInfo</code>、<code>statusBadge</code>、<code>paused</code>、<code>providerInfo</code> 按会话分。它们喂给顶栏，而顶栏
 显示的是<em>聚焦</em>会话，所以顶栏读聚焦作用域。</li>
@@ -809,12 +809,12 @@ React context 提供键，让消费方读 <code>map[scopeKey]</code> 而不是�
 <p>第 4 节描述的 <code>window.*</code> 层不属于这套设计，它正是 store 要取代的东西。下列条件全部成立
 后即可移除：</p>
 <ol>
-<li><code>apps/web/lib/runtime-bridge/chat-handlers.ts</code> 和 <code>conversations.ts</code> 里每一处
+<li><code>apps/web/lib/runtime-bridge/session/chat-handlers.ts</code> 和 <code>conversations.ts</code> 里每一处
 <code>data.session_id === W.currentSessionId</code> 闸门都成为按 <code>data.session_id</code> 分键的 store
 写入，让后台会话的帧能落地而不是被丢弃。这要求 store 先把&quot;聚焦&quot;和&quot;那个会话&quot;区分开，
 也就是第 7 节的聚焦指针所做的事。</li>
 <li><code>window.conversations</code> 没有任何 store 按键表覆盖不到的读取方，此时
-<code>apps/web/lib/runtime-bridge/conv-store-mirror.ts</code> 就不再是必需的，可以直接删掉。</li>
+<code>apps/web/lib/runtime-bridge/session/conv-store-mirror.ts</code> 就不再是必需的，可以直接删掉。</li>
 <li><code>W.isRunning</code> 没有读取方；<code>runningTasks</code> 覆盖它。</li>
 <li>单例的 <code>#chatView</code> DOM shell 消失，换成 <code>PeerSessionPane</code> 已经证明可行的 React 路径。
 这是最重的一条——大约十个 runtime-bridge 模块靠写死的 id 访问那个 shell。</li>
@@ -861,7 +861,7 @@ composer 如何在 idle、fn-form、question、approval 之间仲裁</li>
 <li><a href="/docs/reference/design/ui/interaction-feedback.zh.html"><code>interaction-feedback.md</code></a> —— 塑造这些写入顺序的
 乐观状态优先规则</li>
 </ul>
-<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-28</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/surface-system.html" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面层次">UI surfaces</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/theme-system.html" data-href-en="/docs/reference/design/ui/theme-system.html" data-href-zh="/docs/reference/design/ui/theme-system.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="主题">Themes</span></a></div></article></main>
+<div class="page-updated"><span data-i18n="updated">Last updated</span> · 2026-10-30</div><div class="prevnext"><a class="pn-link pn-prev" href="/docs/reference/design/ui/surface-system.html" data-href-en="/docs/reference/design/ui/surface-system.html" data-href-zh="/docs/reference/design/ui/surface-system.zh.html"><span class="pn-dir" data-i18n="prev">Previous</span><span class="pn-title" data-title-zh="界面层次">UI surfaces</span></a><a class="pn-link pn-next" href="/docs/reference/design/ui/theme-system.html" data-href-en="/docs/reference/design/ui/theme-system.html" data-href-zh="/docs/reference/design/ui/theme-system.zh.html"><span class="pn-dir" data-i18n="next">Next</span><span class="pn-title" data-title-zh="主题">Themes</span></a></div></article></main>
   <aside class="toc"><div class="toc-title" data-i18n="on_this_page">On this page</div>
 <ul class="toc-list">
 <li>
