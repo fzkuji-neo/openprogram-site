@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793296368" data-alt-lang-url="/docs/capabilities/computer-use.zh.html">
+<html lang="en" data-base="/docs/" data-page-lang="en" data-build="1793357320" data-alt-lang-url="/docs/capabilities/computer-use.zh.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -289,13 +289,14 @@
   {&quot;action&quot;: &quot;press_key&quot;, &quot;args&quot;: {&quot;key&quot;: &quot;KP_Enter&quot;}}
 ])
 </code></pre>
-<p>For loops, conditions and data handling the model sends <code>code</code> instead: Python with top-level <code>await</code>, run in an isolated interpreter without files, network or processes, whose variables last for the turn. Each target is an object whose methods are its actions: <code>await cu.app.click(app=&quot;Numbers&quot;, element_index=3)</code>, <code>await cu.browser.observe()</code>, <code>await cu.vm.screenshot()</code>. Inside the code, <code>dir(cu.app)</code> lists a target's actions and <code>help(cu.app.click)</code> shows one action's arguments. Code acts only on the app the call names, cannot run page scripts, upload files or open a new website, and runs at most 120 seconds and 100 actions per call. Code runs on macOS only.</p>
+<p>For loops, conditions and data handling the model sends <code>code</code> instead: Python with top-level <code>await</code>, run in an isolated interpreter without files, network or processes, whose variables last for the turn. Each target is an object whose methods are its actions: <code>await cu.app.click(app=&quot;Numbers&quot;, element_index=3)</code>, <code>await cu.browser.read()</code>, <code>await cu.vm.screenshot()</code>. Inside the code, <code>dir(cu.app)</code> lists a target's actions and <code>help(cu.app.click)</code> shows one action's arguments. Code acts only on the app the call names, cannot run page scripts, upload files or open a new website, and runs at most 120 seconds and 100 actions per call. Code runs on macOS only.</p>
 <p><code>context</code> says who does the work. <code>inherit</code>, the default, means the model operates the screen itself in this conversation and sees every result. <code>fresh</code> hands the task to a new agent of the same model and settings: it starts from a <code>brief</code> (the task, what is already known, what to report back) and the target's guide, does the work with its own <code>computer_use_agent</code> calls, and only its final reply comes back. Use it for long operations whose intermediate screens the conversation does not need. A fresh agent cannot start another one.</p>
 <h2 id="pointing-by-description">Pointing by description<a class="header-anchor" href="#pointing-by-description">#</a></h2>
 <p>Wherever an action takes <code>x</code>,<code>y</code>, the model may give <code>describe</code> instead: a short description of the target as it looks, such as &quot;the blue Send button&quot; or &quot;the gear icon top right&quot; (<code>to_describe</code> for the end of a drag). The tool takes a fresh screenshot, finds the description with the GUI perception package (an icon detector, OCR and remembered components, checked by the conversation's model) and acts at the centre of what it found. It is slower and costs model calls, so element indices and refs come first; it pairs well with a fresh agent working from a written brief.</p>
 <p>The package is the <a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI-Agent-Harness</a> Program. Every release includes it with the GPA detector weight, but the libraries its detector runs on (PyTorch, OpenCV, EasyOCR) are not in the product runtime, so <code>describe</code> works only where they are installed, such as a development environment. Elsewhere the guide says <code>describe</code> is unavailable and the other ways to point remain.</p>
 <h2 id="web-pages">Web pages<a class="header-anchor" href="#web-pages">#</a></h2>
-<p>The <code>browser</code> target drives the Pages of the App's built-in browser: <code>list_pages</code> lists them, <code>observe</code> returns refs, and every other action acts on a ref. Besides <code>navigate</code>, <code>click</code>, <code>type</code>, <code>press</code>, <code>scroll</code>, <code>hover</code>, <code>select</code>, <code>upload</code> and <code>screenshot</code>, it offers the same vocabulary as application windows:</p>
+<p>The <code>browser</code> target drives the tabs of the App's built-in browser. Each tab has a short id such as <code>tk3fa</code>, derived from the App's window and tab, so it is the same in every turn, in sub-agents and in workflow programs. <code>tabs</code> lists them, <code>open(url)</code> opens a new one, and every other action goes to the tab used last unless it names another with <code>tab</code>.</p>
+<p><code>read</code> returns the page as Playwright's accessibility outline: one line per element with its role, name, state and a ref, such as <code>- button &quot;Next&quot; [ref=e12]</code>. A ref keeps working as long as its element is on the page, through any number of actions and turns. An element can also be named by <code>role</code> and <code>name</code> instead of a ref. Every action returns what it changed: changed lines are marked <code>&lt;changed&gt;</code>, and <code>[unchanged]</code> stands for parts already seen. When the action moved the tab to another address, the whole new page comes back instead. A whole form can therefore be filled in one list of actions. If a ref's element was rendered again, it is found again by its role and name; if it is gone, the error carries the page as it is now.</p>
 <table>
 <thead>
 <tr>
@@ -306,24 +307,24 @@
 </thead>
 <tbody>
 <tr>
+<td><code>tabs</code> / <code>open</code> / <code>close</code></td>
+<td>— / <code>url</code>, <code>visible?</code> / <code>tab?</code></td>
+<td>List tabs; open a tab (in the background unless <code>visible: true</code>); close one</td>
+</tr>
+<tr>
+<td><code>read</code></td>
+<td><code>changes_only?</code></td>
+<td>The whole page, or only what changed since the last result</td>
+</tr>
+<tr>
 <td><code>click</code></td>
-<td><code>ref</code> or <code>x</code>,<code>y</code>, <code>mouse_button?</code>, <code>click_count?</code>, <code>modifiers?</code></td>
-<td>Right, middle, double and modifier clicks, e.g. <code>modifiers=&quot;cmd&quot;</code></td>
+<td><code>ref</code> or <code>role</code>,<code>name</code> or <code>x</code>,<code>y</code>, <code>mouse_button?</code>, <code>click_count?</code>, <code>modifiers?</code></td>
+<td>Right, middle, double and modifier clicks, e.g. <code>modifiers=&quot;cmd&quot;</code>; <code>x</code>,<code>y</code> are pixels of the agent's last screenshot, and stop working once the page was acted on, navigated or scrolled since</td>
 </tr>
 <tr>
-<td><code>drag</code></td>
-<td><code>ref</code> and <code>to_ref</code>, or <code>x</code>,<code>y</code> and <code>to_x</code>,<code>to_y</code></td>
-<td>Press, move in steps, release</td>
-</tr>
-<tr>
-<td><code>scroll</code></td>
-<td><code>ref?</code>, <code>direction?</code>, <code>amount?</code></td>
-<td>With <code>ref</code>, the nearest scrollable container of that element scrolls; <code>amount</code> is in pixels</td>
-</tr>
-<tr>
-<td><code>type</code> / <code>type_text</code></td>
-<td><code>ref</code>, <code>text</code> / <code>ref?</code>, <code>text</code></td>
-<td><code>type</code> replaces the field's value; <code>type_text</code> inserts at the caret, or at the page's focus without <code>ref</code></td>
+<td><code>type</code></td>
+<td><code>ref?</code>, <code>text</code>, <code>clear?</code>, <code>submit?</code></td>
+<td>Replaces the field's text; <code>clear: false</code> inserts at the caret; <code>submit: true</code> presses Enter after; without <code>ref</code> it types into the focused element</td>
 </tr>
 <tr>
 <td><code>paste</code></td>
@@ -331,29 +332,39 @@
 <td>Offers the text to the page as a paste: <code>md</code> and <code>html</code> insert formatted text in rich editors, and a page that handles paste itself receives it</td>
 </tr>
 <tr>
-<td><code>select_text</code></td>
-<td><code>ref</code>, <code>text</code>, <code>prefix?</code>, <code>suffix?</code>, <code>selection_type?</code></td>
-<td>Select text inside an element, or place the caret before or after it</td>
+<td><code>select</code></td>
+<td><code>ref</code>, <code>value</code></td>
+<td>Chooses options of a select box by value or label</td>
 </tr>
 <tr>
 <td><code>press</code></td>
-<td><code>key</code>, <code>ref?</code>, <code>duration?</code></td>
-<td>Without <code>ref</code> the key goes to the page's focus; <code>duration</code> holds it</td>
+<td><code>key</code>, <code>ref?</code></td>
+<td>Without <code>ref</code> the key goes to the page's focus</td>
 </tr>
 <tr>
-<td><code>back</code> / <code>forward</code> / <code>reload</code></td>
+<td><code>hover</code> / <code>drag</code> / <code>scroll</code></td>
+<td><code>ref</code> / <code>ref</code>, <code>to_ref</code> / <code>ref?</code>, <code>direction?</code>, <code>amount?</code></td>
+<td>With <code>ref</code>, <code>scroll</code> moves the nearest scrollable container of that element; <code>amount</code> is in pixels</td>
+</tr>
+<tr>
+<td><code>navigate</code> / <code>back</code> / <code>forward</code> / <code>reload</code> / <code>wait</code></td>
+<td><code>url</code> / — / <code>text?</code>, <code>seconds?</code></td>
+<td>History navigation; <code>wait</code> waits until a text appears, or for some seconds</td>
+</tr>
+<tr>
+<td><code>upload</code></td>
+<td><code>ref</code>, <code>path</code></td>
+<td>Puts a local file of at most 50 MiB into a file input</td>
+</tr>
+<tr>
+<td><code>screenshot</code></td>
 <td>—</td>
-<td>History navigation; <code>no_history</code> when there is nowhere to go</td>
+<td>The tab as an image, captured without bringing it forward</td>
 </tr>
 <tr>
-<td><code>console_messages</code></td>
+<td><code>console</code> / <code>network</code></td>
 <td><code>pattern?</code>, <code>only_errors?</code>, <code>limit?</code></td>
-<td>The page's console output and uncaught errors, oldest first, newest 50 by default; password field values are redacted</td>
-</tr>
-<tr>
-<td><code>network_requests</code></td>
-<td><code>pattern?</code>, <code>only_errors?</code>, <code>limit?</code></td>
-<td>Requests the page made with method, status and resource type; URLs are shown without query strings, and no bodies</td>
+<td>The page's console output and requests since the agent first used the tab</td>
 </tr>
 <tr>
 <td><code>evaluate</code></td>
@@ -362,8 +373,10 @@
 </tr>
 </tbody>
 </table>
-<p>A page in the App's browser stays in the background throughout: the events are dispatched inside the page and the tab is not activated. <code>observe</code> with a <code>url</code> opens its tab behind your work too; <code>visible: true</code> brings it to the front instead, for when you asked to watch. A <code>file://</code> URL opens a local file the same way, when the sandbox lets the agent read that file. <code>changes_only: true</code> lists in full only the elements that are new or changed since the previous observation of the same page: an unchanged element is one line with its new ref, an unchanged page text or accessibility snapshot is left out, and elements that disappeared are named. Refs always belong to the latest observation.</p>
-<p>The conversation's Pages need no approval. Opening a website outside your computer, and uploading a file, ask first. A script can read and change everything a signed-in page holds, so every <code>evaluate</code> call asks you first and shows the whole script, in every permission mode and even when a rule allows <code>computer_use_agent</code>. That approval covers the one call: there is no &quot;always allow&quot; for it, and scheduled or channel turns that cannot ask are refused. While the approval waits, the turn's browser sessions stay open, so the approved script runs on the page it was written for.</p>
+<p>Several agents can use the browser at the same time, sub-agents of one conversation included. An action holds its tab until its result is read, and a list of actions holds the tabs it touches until it ends, so another agent's input never lands in the middle of a form being filled; a tab held for a minute fails with <code>tab_busy</code>. Each agent has its own current tab, and each sees everything that changed since it last looked, whoever changed it; when another agent acted on the same tab in between, the result says so. One agent waiting for a page does not hold up the others.</p>
+<p>No action is ever sent twice. When an action fails after its input may already have reached the page, such as a timeout, the error says so and carries the page as it is, and the tab is not tried again. When an action opens a new tab, such as a link to a new window, the result names that tab; the agent keeps its current tab until it passes the new one. In a workflow program, the browser is confined to the window the program started from, and the tabs it opened close when it ends. When you turned off agent access to the page of a conversation, the browser refuses every action there.</p>
+<p>A tab in the App's browser stays in the background throughout: input reaches it without activating it, and <code>open</code> puts its tab behind your work; <code>visible: true</code> brings it to the front instead, for when you asked to watch. A <code>file://</code> URL opens a local file the same way, when the sandbox lets the agent read that file. Password field values never appear in what the model reads.</p>
+<p>The App's built-in tabs need no approval. Opening a website outside your computer, and uploading a file, ask first. A script can read and change everything a signed-in page holds, so every <code>evaluate</code> call asks you first and shows the whole script, in every permission mode and even when a rule allows <code>computer_use_agent</code>. That approval covers the one call: there is no &quot;always allow&quot; for it, and scheduled or channel turns that cannot ask are refused. The approved script runs on the tab it was written for.</p>
 <h2 id="watching-and-taking-over-pages">Watching and taking over Pages<a class="header-anchor" href="#watching-and-taking-over-pages">#</a></h2>
 <p>In the desktop App, Agent-opened Pages remain in the background. Open <strong>Resources</strong> in the right sidebar to see the current conversation's Pages grouped by branch, including Pages used by its child agents. Continuing a branch keeps its resource group. Distinct Pages stay distinct even when they have the same URL; pages without established branch ownership appear under <strong>Unassigned</strong>.</p>
 <p>A popup or new window opened by an Agent's Page loads in the background as a Page of its own and joins the same conversation and branch in <strong>Resources</strong>; it does not take over your view. The Agent's next result for the opening Page names the popup, so the Agent continues there instead of starting the same flow again. A popup from a Page you opened yourself opens in front as an ordinary tab.</p>
@@ -375,7 +388,7 @@
 <p>The chat preview also follows the other things the Agent works on. When it acts on a desktop app window, the preview shows that app with the latest screenshot the Agent took of the window, refreshed after every step. When it takes or types into a Desktop Terminal, the preview shows that terminal's live output, read-only. The same Auto preview, pin and close rules apply; the next Page the Agent works on takes the preview back. Screenshots stay in memory and are not kept after the worker restarts.</p>
 <p>These controls operate on exact OpenProgram Pages. Application windows and VM displays keep their own approvals described above.</p>
 <h2 id="your-own-chrome-or-edge">Your own Chrome or Edge<a class="header-anchor" href="#your-own-chrome-or-edge">#</a></h2>
-<p>The <code>browser</code> target works in the browser you browse with when a call sets <code>args.browser</code> to <code>chrome</code> or <code>edge</code>, so pages open with your sign-ins and cookies. The actions are the same as in the built-in browser: <code>list_pages</code> lists your tabs by index, <code>observe(page=&lt;index&gt;)</code> switches to one and <code>observe(url=…)</code> opens a new tab, and <code>click</code>, <code>type</code>, <code>press</code>, <code>scroll</code>, <code>screenshot</code>, <code>verify</code> and the rest act on refs from that observation. The model is told to use your browser only when you name it or the task needs your signed-in state, and to stay in the browser you named.</p>
+<p>The <code>browser</code> target works in the browser you browse with when a call sets <code>args.browser</code> to <code>chrome</code> or <code>edge</code>, so pages open with your sign-ins and cookies. The actions are the same as in the built-in browser: <code>tabs</code> lists your tabs by index, <code>read</code> with <code>tab=&lt;index&gt;</code> switches to one and <code>open(url)</code> opens a new tab, and <code>click</code>, <code>type</code>, <code>press</code>, <code>scroll</code>, <code>screenshot</code> and the rest act on refs from the latest snapshot. The model is told to use your browser only when you name it or the task needs your signed-in state, and to stay in the browser you named.</p>
 <p>It runs Microsoft's Playwright MCP server in extension mode (<code>@playwright/mcp --extension</code>), and the <a href="https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm">Playwright Extension</a> in your browser connects to it; Edge installs the same extension from the Chrome Web Store. Install it once; the server itself is fetched with <code>npx</code>, so Node.js must be installed. On the first action the extension asks which tab to share. To connect without that prompt, copy the token the extension shows and set it:</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>computer_use.chrome_extension_token<span class="w"> </span>&lt;token&gt;
 </code></pre>

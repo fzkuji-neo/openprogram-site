@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793296368" data-alt-lang-url="/docs/capabilities/computer-use.html">
+<html lang="zh" data-base="/docs/" data-page-lang="zh" data-build="1793357320" data-alt-lang-url="/docs/capabilities/computer-use.html">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -289,81 +289,94 @@
   {&quot;action&quot;: &quot;press_key&quot;, &quot;args&quot;: {&quot;key&quot;: &quot;KP_Enter&quot;}}
 ])
 </code></pre>
-<p>需要循环、条件判断和数据处理时，模型改为发送 <code>code</code>：带顶层 <code>await</code> 的 Python，在没有文件、网络和进程权限的隔离解释器里运行，变量在本轮内保留。每个目标是一个对象，它的方法就是它的动作：<code>await cu.app.click(app=&quot;Numbers&quot;, element_index=3)</code>、<code>await cu.browser.observe()</code>、<code>await cu.vm.screenshot()</code>。在代码里，<code>dir(cu.app)</code> 列出一个目标的动作，<code>help(cu.app.click)</code> 显示一个动作的参数。代码只能操作本次调用指定的应用，不能运行页面脚本、上传文件或打开新网站，每次调用最多运行 120 秒、执行 100 个动作。代码模式只支持 macOS。</p>
+<p>需要循环、条件判断和数据处理时，模型改为发送 <code>code</code>：带顶层 <code>await</code> 的 Python，在没有文件、网络和进程权限的隔离解释器里运行，变量在本轮内保留。每个目标是一个对象，它的方法就是它的动作：<code>await cu.app.click(app=&quot;Numbers&quot;, element_index=3)</code>、<code>await cu.browser.read()</code>、<code>await cu.vm.screenshot()</code>。在代码里，<code>dir(cu.app)</code> 列出一个目标的动作，<code>help(cu.app.click)</code> 显示一个动作的参数。代码只能操作本次调用指定的应用，不能运行页面脚本、上传文件或打开新网站，每次调用最多运行 120 秒、执行 100 个动作。代码模式只支持 macOS。</p>
 <p><code>context</code> 决定由谁来做。默认的 <code>inherit</code> 表示模型在这个对话里亲自操作，看到每一步结果。<code>fresh</code> 把任务交给一个使用相同模型和设置的新 agent：它从 <code>brief</code>（任务、已知信息、要汇报什么）和该目标的指南开始，用自己的 <code>computer_use_agent</code> 调用完成工作，只有最终回复回到对话。适合中间画面对话不需要看的长操作。新 agent 不能再启动新的 agent。</p>
 <h2 id="按描述定位">按描述定位<a class="header-anchor" href="#按描述定位">#</a></h2>
 <p>凡是接受 <code>x</code>,<code>y</code> 的动作，模型都可以改给 <code>describe</code>：按外观对目标的简短描述，如“蓝色的发送按钮”“右上角的齿轮图标”（拖拽终点用 <code>to_describe</code>）。工具会重新截图，用 GUI 感知包（图标检测器、OCR 和记住的组件，由对话的模型核对）找到描述的东西，并在它的中心执行动作。这种方式更慢且要调用模型，所以优先用元素序号和 ref；它和按书面简报工作的新 agent 搭配很好。</p>
 <p>感知包是 <a href="https://github.com/Fzkuji/GUI-Agent-Harness">GUI-Agent-Harness</a> Program。每个 release 都带着它和 GPA detector 权重，但检测器依赖的库（PyTorch、OpenCV、EasyOCR）不在 product runtime 里，所以 <code>describe</code> 只在装了这些库的环境（例如开发环境）里可用。其他环境里指南会说明 <code>describe</code> 不可用，其他定位方式照常可用。</p>
 <h2 id="网页">网页<a class="header-anchor" href="#网页">#</a></h2>
-<p><code>browser</code> 目标驱动 App 内置浏览器的 Page：<code>list_pages</code> 列出它们，<code>observe</code> 返回 ref，其他动作都作用在 ref 上。除了 <code>navigate</code>、<code>click</code>、<code>type</code>、<code>press</code>、<code>scroll</code>、<code>hover</code>、<code>select</code>、<code>upload</code> 和 <code>screenshot</code>，它还提供与应用窗口相同的词汇：</p>
+<p><code>browser</code> 目标驱动 App 内置浏览器的标签页。每个标签页有一个短 id，例如 <code>tk3fa</code>，由 App 的窗口和标签页推导而来，所以在每个轮次、子 agent 和工作流程序里都一样。<code>tabs</code> 列出它们，<code>open(url)</code> 新开一个，其他动作默认作用于最近用过的标签页，用 <code>tab</code> 可以指定别的。</p>
+<p><code>read</code> 返回 Playwright 的无障碍大纲：每个元素一行，带角色、名称、状态和 ref，例如 <code>- button &quot;Next&quot; [ref=e12]</code>。只要元素还在页面上，它的 ref 就一直有效，跨任意多个动作和轮次。也可以不用 ref，用 <code>role</code> 加 <code>name</code> 指定元素。每个动作都返回它改变了什么：变化的行标为 <code>&lt;changed&gt;</code>，<code>[unchanged]</code> 代表已经看过的部分；动作让标签页跳到了另一个地址时，返回整个新页面。所以一整张表单可以在一个动作列表里填完。ref 对应的元素被重新渲染时，会按角色和名称重新找到；元素已经不在时，错误里附带页面的当前状态。</p>
 <table>
 <thead>
 <tr>
 <th>动作</th>
 <th>参数</th>
-<th>效果</th>
+<th>作用</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><code>tabs</code> / <code>open</code> / <code>close</code></td>
+<td>— / <code>url</code>、<code>visible?</code> / <code>tab?</code></td>
+<td>列出标签页；新开标签页（默认在后台，<code>visible: true</code> 时在前台）；关闭标签页</td>
+</tr>
+<tr>
+<td><code>read</code></td>
+<td><code>changes_only?</code></td>
+<td>整个页面，或只返回上次结果之后的变化</td>
+</tr>
+<tr>
 <td><code>click</code></td>
-<td><code>ref</code> 或 <code>x</code>,<code>y</code>、<code>mouse_button?</code>、<code>click_count?</code>、<code>modifiers?</code></td>
-<td>右键、中键、双击和带修饰键的点击，如 <code>modifiers=&quot;cmd&quot;</code></td>
+<td><code>ref</code> 或 <code>role</code>、<code>name</code> 或 <code>x</code>、<code>y</code>，<code>mouse_button?</code>、<code>click_count?</code>、<code>modifiers?</code></td>
+<td>右键、中键、双击和带修饰键的点击，例如 <code>modifiers=&quot;cmd&quot;</code>；<code>x</code>、<code>y</code> 是该 agent 上一张截图的像素，截图之后页面被操作、跳转或滚动过就不再可用</td>
 </tr>
 <tr>
-<td><code>drag</code></td>
-<td><code>ref</code> 和 <code>to_ref</code>，或 <code>x</code>,<code>y</code> 和 <code>to_x</code>,<code>to_y</code></td>
-<td>按下、分步移动、松开</td>
-</tr>
-<tr>
-<td><code>scroll</code></td>
-<td><code>ref?</code>、<code>direction?</code>、<code>amount?</code></td>
-<td>给了 <code>ref</code> 时滚动该元素最近的可滚动容器；<code>amount</code> 以像素计</td>
-</tr>
-<tr>
-<td><code>type</code> / <code>type_text</code></td>
-<td><code>ref</code>、<code>text</code> / <code>ref?</code>、<code>text</code></td>
-<td><code>type</code> 替换字段的值；<code>type_text</code> 在光标处插入，不给 <code>ref</code> 时插入到页面当前焦点</td>
+<td><code>type</code></td>
+<td><code>ref?</code>、<code>text</code>、<code>clear?</code>、<code>submit?</code></td>
+<td>替换字段内容；<code>clear: false</code> 在光标处插入；<code>submit: true</code> 输入后按回车；不带 <code>ref</code> 时输入到当前焦点元素</td>
 </tr>
 <tr>
 <td><code>paste</code></td>
 <td><code>text</code>、<code>format?</code>、<code>ref?</code></td>
-<td>以粘贴的方式把文字交给页面：<code>md</code> 和 <code>html</code> 在富文本编辑器里插入带格式的文字，自己处理粘贴的页面会收到它</td>
+<td>以粘贴的方式把文字交给页面：<code>md</code> 和 <code>html</code> 在富文本编辑器里插入带格式的内容，自己处理粘贴的页面会收到这次粘贴</td>
 </tr>
 <tr>
-<td><code>select_text</code></td>
-<td><code>ref</code>、<code>text</code>、<code>prefix?</code>、<code>suffix?</code>、<code>selection_type?</code></td>
-<td>选中元素里的文字，或把光标放到它前后</td>
+<td><code>select</code></td>
+<td><code>ref</code>、<code>value</code></td>
+<td>按值或标签选择下拉框的选项</td>
 </tr>
 <tr>
 <td><code>press</code></td>
-<td><code>key</code>、<code>ref?</code>、<code>duration?</code></td>
-<td>不给 <code>ref</code> 时按键发给页面当前焦点；<code>duration</code> 是按住的秒数</td>
+<td><code>key</code>、<code>ref?</code></td>
+<td>不带 <code>ref</code> 时按键发给页面的焦点</td>
 </tr>
 <tr>
-<td><code>back</code> / <code>forward</code> / <code>reload</code></td>
+<td><code>hover</code> / <code>drag</code> / <code>scroll</code></td>
+<td><code>ref</code> / <code>ref</code>、<code>to_ref</code> / <code>ref?</code>、<code>direction?</code>、<code>amount?</code></td>
+<td>带 <code>ref</code> 时 <code>scroll</code> 滚动该元素最近的可滚动容器；<code>amount</code> 以像素计</td>
+</tr>
+<tr>
+<td><code>navigate</code> / <code>back</code> / <code>forward</code> / <code>reload</code> / <code>wait</code></td>
+<td><code>url</code> / — / <code>text?</code>、<code>seconds?</code></td>
+<td>历史导航；<code>wait</code> 等到某段文字出现，或等待若干秒</td>
+</tr>
+<tr>
+<td><code>upload</code></td>
+<td><code>ref</code>、<code>path</code></td>
+<td>把不超过 50 MiB 的本地文件放进文件输入框</td>
+</tr>
+<tr>
+<td><code>screenshot</code></td>
 <td>—</td>
-<td>历史导航；无处可去时返回 <code>no_history</code></td>
+<td>标签页的截图，截取时不把它调到前台</td>
 </tr>
 <tr>
-<td><code>console_messages</code></td>
+<td><code>console</code> / <code>network</code></td>
 <td><code>pattern?</code>、<code>only_errors?</code>、<code>limit?</code></td>
-<td>页面的控制台输出和未捕获错误，从旧到新，默认最新 50 条；密码字段的值会被脱敏</td>
-</tr>
-<tr>
-<td><code>network_requests</code></td>
-<td><code>pattern?</code>、<code>only_errors?</code>、<code>limit?</code></td>
-<td>页面发出的请求及其方法、状态码和资源类型；URL 不带查询参数，也不含请求体</td>
+<td>agent 第一次使用该标签页以来的控制台输出和网络请求</td>
 </tr>
 <tr>
 <td><code>evaluate</code></td>
 <td><code>script</code></td>
-<td>在页面里运行一个 JavaScript 表达式或函数（如 <code>() =&gt; document.title</code>），以 JSON 返回结果，最多 20,000 个字符；结果里的密码字段值会被脱敏</td>
+<td>在页面里运行 JavaScript 表达式或函数（如 <code>() =&gt; document.title</code>），以 JSON 返回结果，最多 20,000 字符；结果里的密码字段值会被遮盖</td>
 </tr>
 </tbody>
 </table>
-<p>App 浏览器里的页面全程留在后台：事件在页面内派发，标签页不会被激活。带 <code>url</code> 的 <code>observe</code> 打开的标签页同样在你的工作后面；<code>visible: true</code> 则把它放到前台，用于你要求看着它操作的时候。<code>file://</code> 地址同样能打开本地文件，前提是沙箱允许 agent 读取该文件。<code>changes_only: true</code> 只完整列出相对同一页面上一次观察新增或变化的元素：没变的元素只占一行并带上新 ref，没变的页面文字和无障碍快照会省略，消失的元素会列出名字。ref 始终属于最新一次观察。</p>
-<p>对话自己的 Page 不需要审批。打开你电脑之外的网站、上传文件会先询问。脚本能读取和修改已登录页面持有的一切，所以每次 <code>evaluate</code> 调用都会先问你并展示完整脚本，任何权限模式下都如此，即使有规则允许 <code>computer_use_agent</code> 也一样。批准只覆盖这一次调用：它没有“始终允许”，无法询问的定时任务或频道轮次会被拒绝。等待批准期间，这一轮的浏览器会话保持打开，批准后脚本就在它所针对的页面上运行。</p>
+<p>多个 agent 可以同时使用浏览器，同一对话的子 agent 也一样。一个动作在读到结果之前一直占着它的标签页，一组动作在结束之前占着它碰到的所有标签页，所以别的 agent 的输入不会插进正在填写的表单中间；一个标签页被占用一分钟仍未释放时，动作以 <code>tab_busy</code> 失败。每个 agent 有自己的当前标签页，看到的是自己上次查看之后的全部变化，不论是谁改的；期间若有别的 agent 操作过同一个标签页，结果里会注明。一个 agent 在等页面时不会挡住其他 agent。</p>
+<p>任何动作都不会被发送两次。动作在输入可能已经到达页面之后失败（例如超时）时，错误会说明这一点并附上页面的当前状态，且不会再试一次。动作打开了新标签页（例如在新窗口打开的链接）时，结果会给出那个标签页；agent 的当前标签页不变，直到它指定新的那个。在工作流程序里，浏览器限于程序启动时所在的窗口，程序打开的标签页在它结束时关闭。你关闭了某个对话对页面的 agent 访问时，浏览器在那里拒绝所有动作。</p>
+<p>App 浏览器里的标签页全程留在后台：输入送达时不会激活它，<code>open</code> 打开的标签页也在你的工作后面；<code>visible: true</code> 则把它放到前台，用于你要求看着它操作的时候。<code>file://</code> 地址同样能打开本地文件，前提是沙箱允许 agent 读取该文件。密码字段的值不会出现在模型读到的内容里。</p>
+<p>App 内置浏览器的标签页不需要审批。打开你电脑之外的网站、上传文件会先询问。脚本能读取和修改已登录页面持有的一切，所以每次 <code>evaluate</code> 调用都会先问你并展示完整脚本，任何权限模式下都如此，即使有规则允许 <code>computer_use_agent</code> 也一样。批准只覆盖这一次调用：它没有“始终允许”，无法询问的定时任务或频道轮次会被拒绝。批准后脚本在它所针对的标签页上运行。</p>
 <h2 id="查看和接管网页">查看和接管网页<a class="header-anchor" href="#查看和接管网页">#</a></h2>
 <p>在桌面 App 中，Agent 打开的网页保留在后台。右侧栏的 <strong>Resources</strong> 按分支列出当前会话的网页，包括子 Agent 使用的网页。继续同一分支时保持原有资源分组。即使 URL 相同，不同 Page 也保持独立；无法确定分支归属的网页显示在“未归属”中。</p>
 <p>Agent 的网页打开的弹窗或新窗口会作为独立的 Page 在后台加载，并归入 <strong>Resources</strong> 中同一会话和分支，不抢占你的视图。Agent 对原网页的下一次结果会告诉它这个弹窗，让它在弹窗里继续，而不是在原网页重新走一遍流程。你自己打开的网页弹出的窗口照常作为普通标签显示在前台。</p>
@@ -375,7 +388,7 @@
 <p>聊天小窗也会跟随 Agent 操作的其他东西。Agent 操作桌面应用窗口时，小窗显示这个应用，画面是 Agent 最近一次对该窗口的截图，每一步后更新。Agent 接管终端或向终端输入时，小窗只读显示该终端的实时输出。自动预览、固定和关闭的规则相同；Agent 下一次操作网页时，小窗切回网页。截图只保存在内存里，worker 重启后不保留。</p>
 <p>这些控制作用于 OpenProgram 中确切的 Page。应用窗口和虚拟机显示仍按上文各自的审批进行。</p>
 <h2 id="你自己的-chrome-或-edge">你自己的 Chrome 或 Edge<a class="header-anchor" href="#你自己的-chrome-或-edge">#</a></h2>
-<p>调用把 <code>args.browser</code> 设为 <code>chrome</code> 或 <code>edge</code> 时，<code>browser</code> 目标就在你平时浏览用的浏览器里工作，页面带着你的登录状态和 Cookie 打开。动作与内置浏览器相同：<code>list_pages</code> 按序号列出你的标签页，<code>observe(page=&lt;序号&gt;)</code> 切到其中一个，<code>observe(url=…)</code> 打开新标签页，<code>click</code>、<code>type</code>、<code>press</code>、<code>scroll</code>、<code>screenshot</code>、<code>verify</code> 等作用在那次观察给出的 ref 上。模型被要求只在你点名或任务需要你的登录状态时才用你的浏览器，并且只用你点名的那一个。</p>
+<p>调用把 <code>args.browser</code> 设为 <code>chrome</code> 或 <code>edge</code> 时，<code>browser</code> 目标就在你平时浏览用的浏览器里工作，页面带着你的登录状态和 Cookie 打开。动作与内置浏览器相同：<code>tabs</code> 按序号列出你的标签页，带 <code>tab=&lt;序号&gt;</code> 的 <code>read</code> 切到其中一个，<code>open(url)</code> 打开新标签页，<code>click</code>、<code>type</code>、<code>press</code>、<code>scroll</code>、<code>screenshot</code> 等作用在最新快照给出的 ref 上。模型被要求只在你点名或任务需要你的登录状态时才用你的浏览器，并且只用你点名的那一个。</p>
 <p>它以扩展模式运行微软的 Playwright MCP 服务器（<code>@playwright/mcp --extension</code>），由你浏览器里的 <a href="https://chromewebstore.google.com/detail/playwright-extension/mmlmfjhmonkocbjadbfplnigmagldckm">Playwright Extension</a> 连接过来；Edge 也从 Chrome 应用商店安装同一个扩展。安装一次即可；服务器本身通过 <code>npx</code> 获取，所以需要装有 Node.js。第一次动作时扩展会询问共享哪个标签页。要免去这一步，复制扩展里显示的令牌并设置：</p>
 <pre><code class="language-bash">openprogram<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>computer_use.chrome_extension_token<span class="w"> </span>&lt;token&gt;
 </code></pre>
